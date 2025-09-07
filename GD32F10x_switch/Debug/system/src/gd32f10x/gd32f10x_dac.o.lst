@@ -1,0 +1,1782 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_dac.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_dac.c"
+  18              		.section	.text.dac_deinit,"ax",%progbits
+  19              		.align	1
+  20              		.global	dac_deinit
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	dac_deinit:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_dac.c ****     \file    gd32f10x_dac.c
+   3:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief   DAC driver
+   4:../system/src/gd32f10x/gd32f10x_dac.c **** 
+   5:../system/src/gd32f10x/gd32f10x_dac.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_dac.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_dac.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_dac.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  10:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  11:../system/src/gd32f10x/gd32f10x_dac.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_dac.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  14:../system/src/gd32f10x/gd32f10x_dac.c ****     Redistribution and use in source and binary forms, with or without modification, 
+  15:../system/src/gd32f10x/gd32f10x_dac.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  17:../system/src/gd32f10x/gd32f10x_dac.c ****     1. Redistributions of source code must retain the above copyright notice, this 
+  18:../system/src/gd32f10x/gd32f10x_dac.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_dac.c ****     2. Redistributions in binary form must reproduce the above copyright notice, 
+  20:../system/src/gd32f10x/gd32f10x_dac.c ****        this list of conditions and the following disclaimer in the documentation 
+  21:../system/src/gd32f10x/gd32f10x_dac.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_dac.c ****     3. Neither the name of the copyright holder nor the names of its contributors 
+  23:../system/src/gd32f10x/gd32f10x_dac.c ****        may be used to endorse or promote products derived from this software without 
+  24:../system/src/gd32f10x/gd32f10x_dac.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  26:../system/src/gd32f10x/gd32f10x_dac.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  27:../system/src/gd32f10x/gd32f10x_dac.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  28:../system/src/gd32f10x/gd32f10x_dac.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  29:../system/src/gd32f10x/gd32f10x_dac.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  30:../system/src/gd32f10x/gd32f10x_dac.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  31:../system/src/gd32f10x/gd32f10x_dac.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  32:../system/src/gd32f10x/gd32f10x_dac.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  33:../system/src/gd32f10x/gd32f10x_dac.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  34:../system/src/gd32f10x/gd32f10x_dac.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+  35:../system/src/gd32f10x/gd32f10x_dac.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  37:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  38:../system/src/gd32f10x/gd32f10x_dac.c **** #include "gd32f10x_dac.h"
+  39:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  40:../system/src/gd32f10x/gd32f10x_dac.c **** /* DAC register bit offset */
+  41:../system/src/gd32f10x/gd32f10x_dac.c **** #define DAC1_REG_OFFSET           ((uint32_t)16U)
+  42:../system/src/gd32f10x/gd32f10x_dac.c **** #define DH_12BIT_OFFSET           ((uint32_t)16U)
+  43:../system/src/gd32f10x/gd32f10x_dac.c **** #define DH_8BIT_OFFSET            ((uint32_t)8U)
+  44:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  45:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+  46:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      deinitialize DAC
+  47:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+  48:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+  49:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+  50:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  51:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_deinit(void)
+  52:../system/src/gd32f10x/gd32f10x_dac.c **** {
+  27              		.loc 1 52 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+  53:../system/src/gd32f10x/gd32f10x_dac.c ****     rcu_periph_reset_enable(RCU_DACRST);
+  35              		.loc 1 53 5 view .LVU1
+  36 0002 40F21D40 		movw	r0, #1053
+  37 0006 FFF7FEFF 		bl	rcu_periph_reset_enable
+  38              	.LVL0:
+  54:../system/src/gd32f10x/gd32f10x_dac.c ****     rcu_periph_reset_disable(RCU_DACRST);
+  39              		.loc 1 54 5 view .LVU2
+  40 000a 40F21D40 		movw	r0, #1053
+  41 000e FFF7FEFF 		bl	rcu_periph_reset_disable
+  42              	.LVL1:
+  55:../system/src/gd32f10x/gd32f10x_dac.c **** }
+  43              		.loc 1 55 1 is_stmt 0 view .LVU3
+  44 0012 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE56:
+  48              		.section	.text.dac_enable,"ax",%progbits
+  49              		.align	1
+  50              		.global	dac_enable
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	dac_enable:
+  56              	.LVL2:
+  57              	.LFB57:
+  56:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  57:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+  58:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC
+  59:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+  60:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+  61:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+  62:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+  63:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  64:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_enable(uint32_t dac_periph)
+  65:../system/src/gd32f10x/gd32f10x_dac.c **** {
+  58              		.loc 1 65 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		@ link register save eliminated.
+  66:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+  63              		.loc 1 66 5 view .LVU5
+  64              		.loc 1 66 7 is_stmt 0 view .LVU6
+  65 0000 38B9     		cbnz	r0, .L4
+  67:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DEN0;
+  66              		.loc 1 67 9 is_stmt 1 view .LVU7
+  67 0002 084A     		ldr	r2, .L6
+  68 0004 D2F80034 		ldr	r3, [r2, #1024]
+  69              		.loc 1 67 17 is_stmt 0 view .LVU8
+  70 0008 43F00103 		orr	r3, r3, #1
+  71 000c C2F80034 		str	r3, [r2, #1024]
+  72 0010 7047     		bx	lr
+  73              	.L4:
+  68:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+  69:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DEN1;
+  74              		.loc 1 69 9 is_stmt 1 view .LVU9
+  75 0012 044A     		ldr	r2, .L6
+  76 0014 D2F80034 		ldr	r3, [r2, #1024]
+  77              		.loc 1 69 17 is_stmt 0 view .LVU10
+  78 0018 43F48033 		orr	r3, r3, #65536
+  79 001c C2F80034 		str	r3, [r2, #1024]
+  70:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+  71:../system/src/gd32f10x/gd32f10x_dac.c **** } 
+  80              		.loc 1 71 1 view .LVU11
+  81 0020 7047     		bx	lr
+  82              	.L7:
+  83 0022 00BF     		.align	2
+  84              	.L6:
+  85 0024 00700040 		.word	1073770496
+  86              		.cfi_endproc
+  87              	.LFE57:
+  89              		.section	.text.dac_disable,"ax",%progbits
+  90              		.align	1
+  91              		.global	dac_disable
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	dac_disable:
+  97              	.LVL3:
+  98              	.LFB58:
+  72:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  73:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+  74:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC
+  75:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+  76:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+  77:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+  78:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+  79:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  80:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_disable(uint32_t dac_periph)
+  81:../system/src/gd32f10x/gd32f10x_dac.c **** {
+  99              		.loc 1 81 1 is_stmt 1 view -0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		@ link register save eliminated.
+  82:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 104              		.loc 1 82 5 view .LVU13
+ 105              		.loc 1 82 7 is_stmt 0 view .LVU14
+ 106 0000 38B9     		cbnz	r0, .L9
+  83:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DEN0;
+ 107              		.loc 1 83 9 is_stmt 1 view .LVU15
+ 108 0002 084A     		ldr	r2, .L11
+ 109 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 110              		.loc 1 83 17 is_stmt 0 view .LVU16
+ 111 0008 23F00103 		bic	r3, r3, #1
+ 112 000c C2F80034 		str	r3, [r2, #1024]
+ 113 0010 7047     		bx	lr
+ 114              	.L9:
+  84:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+  85:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DEN1;
+ 115              		.loc 1 85 9 is_stmt 1 view .LVU17
+ 116 0012 044A     		ldr	r2, .L11
+ 117 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 118              		.loc 1 85 17 is_stmt 0 view .LVU18
+ 119 0018 23F48033 		bic	r3, r3, #65536
+ 120 001c C2F80034 		str	r3, [r2, #1024]
+  86:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+  87:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 121              		.loc 1 87 1 view .LVU19
+ 122 0020 7047     		bx	lr
+ 123              	.L12:
+ 124 0022 00BF     		.align	2
+ 125              	.L11:
+ 126 0024 00700040 		.word	1073770496
+ 127              		.cfi_endproc
+ 128              	.LFE58:
+ 130              		.section	.text.dac_dma_enable,"ax",%progbits
+ 131              		.align	1
+ 132              		.global	dac_dma_enable
+ 133              		.syntax unified
+ 134              		.thumb
+ 135              		.thumb_func
+ 137              	dac_dma_enable:
+ 138              	.LVL4:
+ 139              	.LFB59:
+  88:../system/src/gd32f10x/gd32f10x_dac.c **** 
+  89:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+  90:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC DMA function
+  91:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+  92:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+  93:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+  94:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+  95:../system/src/gd32f10x/gd32f10x_dac.c **** */
+  96:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_dma_enable(uint32_t dac_periph)
+  97:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 140              		.loc 1 97 1 is_stmt 1 view -0
+ 141              		.cfi_startproc
+ 142              		@ args = 0, pretend = 0, frame = 0
+ 143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144              		@ link register save eliminated.
+  98:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 145              		.loc 1 98 5 view .LVU21
+ 146              		.loc 1 98 7 is_stmt 0 view .LVU22
+ 147 0000 38B9     		cbnz	r0, .L14
+  99:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DDMAEN0;
+ 148              		.loc 1 99 9 is_stmt 1 view .LVU23
+ 149 0002 084A     		ldr	r2, .L16
+ 150 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 151              		.loc 1 99 17 is_stmt 0 view .LVU24
+ 152 0008 43F48053 		orr	r3, r3, #4096
+ 153 000c C2F80034 		str	r3, [r2, #1024]
+ 154 0010 7047     		bx	lr
+ 155              	.L14:
+ 100:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 101:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DDMAEN1;
+ 156              		.loc 1 101 9 is_stmt 1 view .LVU25
+ 157 0012 044A     		ldr	r2, .L16
+ 158 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 159              		.loc 1 101 17 is_stmt 0 view .LVU26
+ 160 0018 43F08053 		orr	r3, r3, #268435456
+ 161 001c C2F80034 		str	r3, [r2, #1024]
+ 102:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 103:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 162              		.loc 1 103 1 view .LVU27
+ 163 0020 7047     		bx	lr
+ 164              	.L17:
+ 165 0022 00BF     		.align	2
+ 166              	.L16:
+ 167 0024 00700040 		.word	1073770496
+ 168              		.cfi_endproc
+ 169              	.LFE59:
+ 171              		.section	.text.dac_dma_disable,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	dac_dma_disable
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 178              	dac_dma_disable:
+ 179              	.LVL5:
+ 180              	.LFB60:
+ 104:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 105:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 106:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC DMA function
+ 107:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 108:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 109:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 110:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 111:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 112:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_dma_disable(uint32_t dac_periph)
+ 113:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 181              		.loc 1 113 1 is_stmt 1 view -0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185              		@ link register save eliminated.
+ 114:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 186              		.loc 1 114 5 view .LVU29
+ 187              		.loc 1 114 7 is_stmt 0 view .LVU30
+ 188 0000 38B9     		cbnz	r0, .L19
+ 115:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DDMAEN0;
+ 189              		.loc 1 115 9 is_stmt 1 view .LVU31
+ 190 0002 084A     		ldr	r2, .L21
+ 191 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 192              		.loc 1 115 17 is_stmt 0 view .LVU32
+ 193 0008 23F48053 		bic	r3, r3, #4096
+ 194 000c C2F80034 		str	r3, [r2, #1024]
+ 195 0010 7047     		bx	lr
+ 196              	.L19:
+ 116:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 117:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DDMAEN1;
+ 197              		.loc 1 117 9 is_stmt 1 view .LVU33
+ 198 0012 044A     		ldr	r2, .L21
+ 199 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 200              		.loc 1 117 17 is_stmt 0 view .LVU34
+ 201 0018 23F08053 		bic	r3, r3, #268435456
+ 202 001c C2F80034 		str	r3, [r2, #1024]
+ 118:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 119:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 203              		.loc 1 119 1 view .LVU35
+ 204 0020 7047     		bx	lr
+ 205              	.L22:
+ 206 0022 00BF     		.align	2
+ 207              	.L21:
+ 208 0024 00700040 		.word	1073770496
+ 209              		.cfi_endproc
+ 210              	.LFE60:
+ 212              		.section	.text.dac_output_buffer_enable,"ax",%progbits
+ 213              		.align	1
+ 214              		.global	dac_output_buffer_enable
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 219              	dac_output_buffer_enable:
+ 220              	.LVL6:
+ 221              	.LFB61:
+ 120:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 121:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 122:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC output buffer
+ 123:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 124:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 125:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 126:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 127:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 128:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_output_buffer_enable(uint32_t dac_periph)
+ 129:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 222              		.loc 1 129 1 is_stmt 1 view -0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226              		@ link register save eliminated.
+ 130:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 227              		.loc 1 130 5 view .LVU37
+ 228              		.loc 1 130 7 is_stmt 0 view .LVU38
+ 229 0000 38B9     		cbnz	r0, .L24
+ 131:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DBOFF0;
+ 230              		.loc 1 131 9 is_stmt 1 view .LVU39
+ 231 0002 084A     		ldr	r2, .L26
+ 232 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 233              		.loc 1 131 17 is_stmt 0 view .LVU40
+ 234 0008 23F00203 		bic	r3, r3, #2
+ 235 000c C2F80034 		str	r3, [r2, #1024]
+ 236 0010 7047     		bx	lr
+ 237              	.L24:
+ 132:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 133:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DBOFF1;
+ 238              		.loc 1 133 9 is_stmt 1 view .LVU41
+ 239 0012 044A     		ldr	r2, .L26
+ 240 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 241              		.loc 1 133 17 is_stmt 0 view .LVU42
+ 242 0018 23F40033 		bic	r3, r3, #131072
+ 243 001c C2F80034 		str	r3, [r2, #1024]
+ 134:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 135:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 244              		.loc 1 135 1 view .LVU43
+ 245 0020 7047     		bx	lr
+ 246              	.L27:
+ 247 0022 00BF     		.align	2
+ 248              	.L26:
+ 249 0024 00700040 		.word	1073770496
+ 250              		.cfi_endproc
+ 251              	.LFE61:
+ 253              		.section	.text.dac_output_buffer_disable,"ax",%progbits
+ 254              		.align	1
+ 255              		.global	dac_output_buffer_disable
+ 256              		.syntax unified
+ 257              		.thumb
+ 258              		.thumb_func
+ 260              	dac_output_buffer_disable:
+ 261              	.LVL7:
+ 262              	.LFB62:
+ 136:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 137:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 138:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC output buffer
+ 139:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 140:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 141:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 142:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 143:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 144:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_output_buffer_disable(uint32_t dac_periph)
+ 145:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 263              		.loc 1 145 1 is_stmt 1 view -0
+ 264              		.cfi_startproc
+ 265              		@ args = 0, pretend = 0, frame = 0
+ 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 267              		@ link register save eliminated.
+ 146:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 268              		.loc 1 146 5 view .LVU45
+ 269              		.loc 1 146 7 is_stmt 0 view .LVU46
+ 270 0000 38B9     		cbnz	r0, .L29
+ 147:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DBOFF0;
+ 271              		.loc 1 147 9 is_stmt 1 view .LVU47
+ 272 0002 084A     		ldr	r2, .L31
+ 273 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 274              		.loc 1 147 17 is_stmt 0 view .LVU48
+ 275 0008 43F00203 		orr	r3, r3, #2
+ 276 000c C2F80034 		str	r3, [r2, #1024]
+ 277 0010 7047     		bx	lr
+ 278              	.L29:
+ 148:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 149:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DBOFF1;
+ 279              		.loc 1 149 9 is_stmt 1 view .LVU49
+ 280 0012 044A     		ldr	r2, .L31
+ 281 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 282              		.loc 1 149 17 is_stmt 0 view .LVU50
+ 283 0018 43F40033 		orr	r3, r3, #131072
+ 284 001c C2F80034 		str	r3, [r2, #1024]
+ 150:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 151:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 285              		.loc 1 151 1 view .LVU51
+ 286 0020 7047     		bx	lr
+ 287              	.L32:
+ 288 0022 00BF     		.align	2
+ 289              	.L31:
+ 290 0024 00700040 		.word	1073770496
+ 291              		.cfi_endproc
+ 292              	.LFE62:
+ 294              		.section	.text.dac_output_value_get,"ax",%progbits
+ 295              		.align	1
+ 296              		.global	dac_output_value_get
+ 297              		.syntax unified
+ 298              		.thumb
+ 299              		.thumb_func
+ 301              	dac_output_value_get:
+ 302              	.LVL8:
+ 303              	.LFB63:
+ 152:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 153:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 154:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      get DAC output value
+ 155:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 156:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 157:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 158:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     DAC output data
+ 159:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 160:../system/src/gd32f10x/gd32f10x_dac.c **** uint16_t dac_output_value_get(uint32_t dac_periph)
+ 161:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 304              		.loc 1 161 1 is_stmt 1 view -0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 0
+ 307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 308              		@ link register save eliminated.
+ 162:../system/src/gd32f10x/gd32f10x_dac.c ****     uint16_t data = 0U;
+ 309              		.loc 1 162 5 view .LVU53
+ 163:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 310              		.loc 1 163 5 view .LVU54
+ 311              		.loc 1 163 7 is_stmt 0 view .LVU55
+ 312 0000 20B9     		cbnz	r0, .L34
+ 164:../system/src/gd32f10x/gd32f10x_dac.c ****         /* store the DAC0 output value */
+ 165:../system/src/gd32f10x/gd32f10x_dac.c ****         data = (uint16_t)DAC0_DO;
+ 313              		.loc 1 165 9 is_stmt 1 view .LVU56
+ 314              		.loc 1 165 26 is_stmt 0 view .LVU57
+ 315 0002 054B     		ldr	r3, .L36
+ 316 0004 D3F82C04 		ldr	r0, [r3, #1068]
+ 317              	.LVL9:
+ 318              		.loc 1 165 14 view .LVU58
+ 319 0008 80B2     		uxth	r0, r0
+ 320              	.LVL10:
+ 321              		.loc 1 165 14 view .LVU59
+ 322 000a 7047     		bx	lr
+ 323              	.LVL11:
+ 324              	.L34:
+ 166:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 167:../system/src/gd32f10x/gd32f10x_dac.c ****         /* store the DAC1 output value */
+ 168:../system/src/gd32f10x/gd32f10x_dac.c ****         data = (uint16_t)DAC1_DO;
+ 325              		.loc 1 168 9 is_stmt 1 view .LVU60
+ 326              		.loc 1 168 26 is_stmt 0 view .LVU61
+ 327 000c 024B     		ldr	r3, .L36
+ 328 000e D3F83004 		ldr	r0, [r3, #1072]
+ 329              	.LVL12:
+ 330              		.loc 1 168 14 view .LVU62
+ 331 0012 80B2     		uxth	r0, r0
+ 332              	.LVL13:
+ 169:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 170:../system/src/gd32f10x/gd32f10x_dac.c ****     return data;
+ 333              		.loc 1 170 5 is_stmt 1 view .LVU63
+ 171:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 334              		.loc 1 171 1 is_stmt 0 view .LVU64
+ 335 0014 7047     		bx	lr
+ 336              	.L37:
+ 337 0016 00BF     		.align	2
+ 338              	.L36:
+ 339 0018 00700040 		.word	1073770496
+ 340              		.cfi_endproc
+ 341              	.LFE63:
+ 343              		.section	.text.dac_data_set,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	dac_data_set
+ 346              		.syntax unified
+ 347              		.thumb
+ 348              		.thumb_func
+ 350              	dac_data_set:
+ 351              	.LVL14:
+ 352              	.LFB64:
+ 172:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 173:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 174:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      set the DAC specified data holding register value
+ 175:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 176:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 177:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_align
+ 178:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 179:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_8B_R: data right 8b alignment
+ 180:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_12B_R: data right 12b alignment
+ 181:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_12B_L: data left 12b alignment
+ 182:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  data: data to be loaded
+ 183:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 184:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 185:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 186:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_data_set(uint32_t dac_periph, uint32_t dac_align, uint16_t data)
+ 187:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 353              		.loc 1 187 1 is_stmt 1 view -0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 0
+ 356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 357              		@ link register save eliminated.
+ 188:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 358              		.loc 1 188 5 view .LVU66
+ 359              		.loc 1 188 7 is_stmt 0 view .LVU67
+ 360 0000 88B9     		cbnz	r0, .L39
+ 189:../system/src/gd32f10x/gd32f10x_dac.c ****         switch(dac_align){
+ 361              		.loc 1 189 9 is_stmt 1 view .LVU68
+ 362 0002 0129     		cmp	r1, #1
+ 363 0004 07D0     		beq	.L40
+ 364 0006 0229     		cmp	r1, #2
+ 365 0008 09D0     		beq	.L41
+ 366 000a 01B1     		cbz	r1, .L45
+ 367              	.L38:
+ 190:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 12b alignment */
+ 191:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_12B_R:
+ 192:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC0_R12DH = data;
+ 193:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 194:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data left 12b alignment */
+ 195:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_12B_L:
+ 196:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC0_L12DH = data;
+ 197:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 198:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 8b alignment */
+ 199:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_8B_R:
+ 200:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC0_R8DH = data;
+ 201:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 202:../system/src/gd32f10x/gd32f10x_dac.c ****         default:
+ 203:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 204:../system/src/gd32f10x/gd32f10x_dac.c ****         }
+ 205:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 206:../system/src/gd32f10x/gd32f10x_dac.c ****         switch(dac_align){
+ 207:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 12b alignment */
+ 208:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_12B_R:
+ 209:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC1_R12DH = data;
+ 210:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 211:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data left 12b alignment */
+ 212:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_12B_L:
+ 213:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC1_L12DH = data;
+ 214:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 215:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 8b alignment */
+ 216:../system/src/gd32f10x/gd32f10x_dac.c ****         case DAC_ALIGN_8B_R:
+ 217:../system/src/gd32f10x/gd32f10x_dac.c ****             DAC1_R8DH = data;
+ 218:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 219:../system/src/gd32f10x/gd32f10x_dac.c ****         default:
+ 220:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 221:../system/src/gd32f10x/gd32f10x_dac.c ****         }
+ 222:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 223:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 368              		.loc 1 223 1 is_stmt 0 view .LVU69
+ 369 000c 7047     		bx	lr
+ 370              	.L45:
+ 192:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 371              		.loc 1 192 13 is_stmt 1 view .LVU70
+ 192:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 372              		.loc 1 192 24 is_stmt 0 view .LVU71
+ 373 000e 0F4B     		ldr	r3, .L46
+ 374 0010 C3F80824 		str	r2, [r3, #1032]
+ 193:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data left 12b alignment */
+ 375              		.loc 1 193 13 is_stmt 1 view .LVU72
+ 376 0014 7047     		bx	lr
+ 377              	.L40:
+ 196:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 378              		.loc 1 196 13 view .LVU73
+ 196:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 379              		.loc 1 196 24 is_stmt 0 view .LVU74
+ 380 0016 0D4B     		ldr	r3, .L46
+ 381 0018 C3F80C24 		str	r2, [r3, #1036]
+ 197:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 8b alignment */
+ 382              		.loc 1 197 13 is_stmt 1 view .LVU75
+ 383 001c 7047     		bx	lr
+ 384              	.L41:
+ 200:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 385              		.loc 1 200 13 view .LVU76
+ 200:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 386              		.loc 1 200 23 is_stmt 0 view .LVU77
+ 387 001e 0B4B     		ldr	r3, .L46
+ 388 0020 C3F81024 		str	r2, [r3, #1040]
+ 201:../system/src/gd32f10x/gd32f10x_dac.c ****         default:
+ 389              		.loc 1 201 13 is_stmt 1 view .LVU78
+ 390 0024 7047     		bx	lr
+ 391              	.L39:
+ 206:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 12b alignment */
+ 392              		.loc 1 206 9 view .LVU79
+ 393 0026 0129     		cmp	r1, #1
+ 394 0028 07D0     		beq	.L43
+ 395 002a 0229     		cmp	r1, #2
+ 396 002c 09D0     		beq	.L44
+ 397 002e 0029     		cmp	r1, #0
+ 398 0030 ECD1     		bne	.L38
+ 209:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 399              		.loc 1 209 13 view .LVU80
+ 209:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 400              		.loc 1 209 24 is_stmt 0 view .LVU81
+ 401 0032 064B     		ldr	r3, .L46
+ 402 0034 C3F81424 		str	r2, [r3, #1044]
+ 210:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data left 12b alignment */
+ 403              		.loc 1 210 13 is_stmt 1 view .LVU82
+ 404 0038 7047     		bx	lr
+ 405              	.L43:
+ 213:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 406              		.loc 1 213 13 view .LVU83
+ 213:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 407              		.loc 1 213 24 is_stmt 0 view .LVU84
+ 408 003a 044B     		ldr	r3, .L46
+ 409 003c C3F81824 		str	r2, [r3, #1048]
+ 214:../system/src/gd32f10x/gd32f10x_dac.c ****         /* data right 8b alignment */
+ 410              		.loc 1 214 13 is_stmt 1 view .LVU85
+ 411 0040 7047     		bx	lr
+ 412              	.L44:
+ 217:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 413              		.loc 1 217 13 view .LVU86
+ 217:../system/src/gd32f10x/gd32f10x_dac.c ****             break;
+ 414              		.loc 1 217 23 is_stmt 0 view .LVU87
+ 415 0042 024B     		ldr	r3, .L46
+ 416 0044 C3F81C24 		str	r2, [r3, #1052]
+ 218:../system/src/gd32f10x/gd32f10x_dac.c ****         default:
+ 417              		.loc 1 218 13 is_stmt 1 view .LVU88
+ 418              		.loc 1 223 1 is_stmt 0 view .LVU89
+ 419 0048 E0E7     		b	.L38
+ 420              	.L47:
+ 421 004a 00BF     		.align	2
+ 422              	.L46:
+ 423 004c 00700040 		.word	1073770496
+ 424              		.cfi_endproc
+ 425              	.LFE64:
+ 427              		.section	.text.dac_trigger_enable,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	dac_trigger_enable
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 434              	dac_trigger_enable:
+ 435              	.LVL15:
+ 436              	.LFB65:
+ 224:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 225:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 226:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC trigger
+ 227:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 228:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 229:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 230:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 231:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 232:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_trigger_enable(uint32_t dac_periph)
+ 233:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 437              		.loc 1 233 1 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441              		@ link register save eliminated.
+ 234:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 442              		.loc 1 234 5 view .LVU91
+ 443              		.loc 1 234 7 is_stmt 0 view .LVU92
+ 444 0000 38B9     		cbnz	r0, .L49
+ 235:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DTEN0;
+ 445              		.loc 1 235 9 is_stmt 1 view .LVU93
+ 446 0002 084A     		ldr	r2, .L51
+ 447 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 448              		.loc 1 235 17 is_stmt 0 view .LVU94
+ 449 0008 43F00403 		orr	r3, r3, #4
+ 450 000c C2F80034 		str	r3, [r2, #1024]
+ 451 0010 7047     		bx	lr
+ 452              	.L49:
+ 236:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 237:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= DAC_CTL_DTEN1;
+ 453              		.loc 1 237 9 is_stmt 1 view .LVU95
+ 454 0012 044A     		ldr	r2, .L51
+ 455 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 456              		.loc 1 237 17 is_stmt 0 view .LVU96
+ 457 0018 43F48023 		orr	r3, r3, #262144
+ 458 001c C2F80034 		str	r3, [r2, #1024]
+ 238:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 239:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 459              		.loc 1 239 1 view .LVU97
+ 460 0020 7047     		bx	lr
+ 461              	.L52:
+ 462 0022 00BF     		.align	2
+ 463              	.L51:
+ 464 0024 00700040 		.word	1073770496
+ 465              		.cfi_endproc
+ 466              	.LFE65:
+ 468              		.section	.text.dac_trigger_disable,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	dac_trigger_disable
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 475              	dac_trigger_disable:
+ 476              	.LVL16:
+ 477              	.LFB66:
+ 240:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 241:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 242:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC trigger
+ 243:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 244:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 245:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 246:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 247:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 248:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_trigger_disable(uint32_t dac_periph)
+ 249:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 478              		.loc 1 249 1 is_stmt 1 view -0
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 0
+ 481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 482              		@ link register save eliminated.
+ 250:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 483              		.loc 1 250 5 view .LVU99
+ 484              		.loc 1 250 7 is_stmt 0 view .LVU100
+ 485 0000 38B9     		cbnz	r0, .L54
+ 251:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DTEN0;
+ 486              		.loc 1 251 9 is_stmt 1 view .LVU101
+ 487 0002 084A     		ldr	r2, .L56
+ 488 0004 D2F80034 		ldr	r3, [r2, #1024]
+ 489              		.loc 1 251 17 is_stmt 0 view .LVU102
+ 490 0008 23F00403 		bic	r3, r3, #4
+ 491 000c C2F80034 		str	r3, [r2, #1024]
+ 492 0010 7047     		bx	lr
+ 493              	.L54:
+ 252:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 253:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DTEN1;
+ 494              		.loc 1 253 9 is_stmt 1 view .LVU103
+ 495 0012 044A     		ldr	r2, .L56
+ 496 0014 D2F80034 		ldr	r3, [r2, #1024]
+ 497              		.loc 1 253 17 is_stmt 0 view .LVU104
+ 498 0018 23F48023 		bic	r3, r3, #262144
+ 499 001c C2F80034 		str	r3, [r2, #1024]
+ 254:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 255:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 500              		.loc 1 255 1 view .LVU105
+ 501 0020 7047     		bx	lr
+ 502              	.L57:
+ 503 0022 00BF     		.align	2
+ 504              	.L56:
+ 505 0024 00700040 		.word	1073770496
+ 506              		.cfi_endproc
+ 507              	.LFE66:
+ 509              		.section	.text.dac_trigger_source_config,"ax",%progbits
+ 510              		.align	1
+ 511              		.global	dac_trigger_source_config
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 516              	dac_trigger_source_config:
+ 517              	.LVL17:
+ 518              	.LFB67:
+ 256:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 257:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 258:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      set DAC trigger source
+ 259:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 260:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 261:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  triggersource: external triggers of DAC
+ 262:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 263:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T1_TRGO: TIMER1 TRGO
+ 264:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T2_TRGO: TIMER2 TRGO (for GD32F10X_CL)
+ 265:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T3_TRGO: TIMER3 TRGO
+ 266:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T4_TRGO: TIMER4 TRGO
+ 267:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T5_TRGO: TIMER5 TRGO
+ 268:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T6_TRGO: TIMER6 TRGO
+ 269:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_T7_TRGO: TIMER7 TRGO (for GD32F10X_MD and GD32F10X_HD and GD32F10X_XD
+ 270:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_EXTI_9: EXTI interrupt line9 event
+ 271:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIGGER_SOFTWARE: software trigger
+ 272:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 273:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 274:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 275:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_trigger_source_config(uint32_t dac_periph,uint32_t triggersource)
+ 276:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 519              		.loc 1 276 1 is_stmt 1 view -0
+ 520              		.cfi_startproc
+ 521              		@ args = 0, pretend = 0, frame = 0
+ 522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 523              		@ link register save eliminated.
+ 277:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 524              		.loc 1 277 5 view .LVU107
+ 525              		.loc 1 277 7 is_stmt 0 view .LVU108
+ 526 0000 60B9     		cbnz	r0, .L59
+ 278:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC0 trigger source */
+ 279:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DTSEL0;
+ 527              		.loc 1 279 9 is_stmt 1 view .LVU109
+ 528 0002 0D4B     		ldr	r3, .L61
+ 529 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 530              		.loc 1 279 17 is_stmt 0 view .LVU110
+ 531 0008 22F03802 		bic	r2, r2, #56
+ 532 000c C3F80024 		str	r2, [r3, #1024]
+ 280:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= triggersource;
+ 533              		.loc 1 280 9 is_stmt 1 view .LVU111
+ 534 0010 D3F80024 		ldr	r2, [r3, #1024]
+ 535              		.loc 1 280 17 is_stmt 0 view .LVU112
+ 536 0014 0A43     		orrs	r2, r2, r1
+ 537 0016 C3F80024 		str	r2, [r3, #1024]
+ 538 001a 7047     		bx	lr
+ 539              	.L59:
+ 281:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 282:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC1 trigger source */
+ 283:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DTSEL1;
+ 540              		.loc 1 283 9 is_stmt 1 view .LVU113
+ 541 001c 064B     		ldr	r3, .L61
+ 542 001e D3F80024 		ldr	r2, [r3, #1024]
+ 543              		.loc 1 283 17 is_stmt 0 view .LVU114
+ 544 0022 22F46012 		bic	r2, r2, #3670016
+ 545 0026 C3F80024 		str	r2, [r3, #1024]
+ 284:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= (triggersource << DAC1_REG_OFFSET);
+ 546              		.loc 1 284 9 is_stmt 1 view .LVU115
+ 547 002a D3F80024 		ldr	r2, [r3, #1024]
+ 548              		.loc 1 284 17 is_stmt 0 view .LVU116
+ 549 002e 42EA0142 		orr	r2, r2, r1, lsl #16
+ 550 0032 C3F80024 		str	r2, [r3, #1024]
+ 285:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 286:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 551              		.loc 1 286 1 view .LVU117
+ 552 0036 7047     		bx	lr
+ 553              	.L62:
+ 554              		.align	2
+ 555              	.L61:
+ 556 0038 00700040 		.word	1073770496
+ 557              		.cfi_endproc
+ 558              	.LFE67:
+ 560              		.section	.text.dac_software_trigger_enable,"ax",%progbits
+ 561              		.align	1
+ 562              		.global	dac_software_trigger_enable
+ 563              		.syntax unified
+ 564              		.thumb
+ 565              		.thumb_func
+ 567              	dac_software_trigger_enable:
+ 568              	.LVL18:
+ 569              	.LFB68:
+ 287:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 288:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 289:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC software trigger
+ 290:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 291:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 292:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 293:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 294:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_software_trigger_enable(uint32_t dac_periph)
+ 295:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 570              		.loc 1 295 1 is_stmt 1 view -0
+ 571              		.cfi_startproc
+ 572              		@ args = 0, pretend = 0, frame = 0
+ 573              		@ frame_needed = 0, uses_anonymous_args = 0
+ 574              		@ link register save eliminated.
+ 296:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 575              		.loc 1 296 5 view .LVU119
+ 576              		.loc 1 296 7 is_stmt 0 view .LVU120
+ 577 0000 38B9     		cbnz	r0, .L64
+ 297:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_SWT |= DAC_SWT_SWTR0;
+ 578              		.loc 1 297 9 is_stmt 1 view .LVU121
+ 579 0002 084A     		ldr	r2, .L66
+ 580 0004 D2F80434 		ldr	r3, [r2, #1028]
+ 581              		.loc 1 297 17 is_stmt 0 view .LVU122
+ 582 0008 43F00103 		orr	r3, r3, #1
+ 583 000c C2F80434 		str	r3, [r2, #1028]
+ 584 0010 7047     		bx	lr
+ 585              	.L64:
+ 298:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 299:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_SWT |= DAC_SWT_SWTR1;
+ 586              		.loc 1 299 9 is_stmt 1 view .LVU123
+ 587 0012 044A     		ldr	r2, .L66
+ 588 0014 D2F80434 		ldr	r3, [r2, #1028]
+ 589              		.loc 1 299 17 is_stmt 0 view .LVU124
+ 590 0018 43F00203 		orr	r3, r3, #2
+ 591 001c C2F80434 		str	r3, [r2, #1028]
+ 300:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 301:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 592              		.loc 1 301 1 view .LVU125
+ 593 0020 7047     		bx	lr
+ 594              	.L67:
+ 595 0022 00BF     		.align	2
+ 596              	.L66:
+ 597 0024 00700040 		.word	1073770496
+ 598              		.cfi_endproc
+ 599              	.LFE68:
+ 601              		.section	.text.dac_software_trigger_disable,"ax",%progbits
+ 602              		.align	1
+ 603              		.global	dac_software_trigger_disable
+ 604              		.syntax unified
+ 605              		.thumb
+ 606              		.thumb_func
+ 608              	dac_software_trigger_disable:
+ 609              	.LVL19:
+ 610              	.LFB69:
+ 302:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 303:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 304:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC software trigger
+ 305:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 306:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 307:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 308:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 309:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 310:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_software_trigger_disable(uint32_t dac_periph)
+ 311:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 611              		.loc 1 311 1 is_stmt 1 view -0
+ 612              		.cfi_startproc
+ 613              		@ args = 0, pretend = 0, frame = 0
+ 614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615              		@ link register save eliminated.
+ 312:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 616              		.loc 1 312 5 view .LVU127
+ 617              		.loc 1 312 7 is_stmt 0 view .LVU128
+ 618 0000 38B9     		cbnz	r0, .L69
+ 313:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_SWT &= ~DAC_SWT_SWTR0;
+ 619              		.loc 1 313 9 is_stmt 1 view .LVU129
+ 620 0002 084A     		ldr	r2, .L71
+ 621 0004 D2F80434 		ldr	r3, [r2, #1028]
+ 622              		.loc 1 313 17 is_stmt 0 view .LVU130
+ 623 0008 23F00103 		bic	r3, r3, #1
+ 624 000c C2F80434 		str	r3, [r2, #1028]
+ 625 0010 7047     		bx	lr
+ 626              	.L69:
+ 314:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 315:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_SWT &= ~DAC_SWT_SWTR1;
+ 627              		.loc 1 315 9 is_stmt 1 view .LVU131
+ 628 0012 044A     		ldr	r2, .L71
+ 629 0014 D2F80434 		ldr	r3, [r2, #1028]
+ 630              		.loc 1 315 17 is_stmt 0 view .LVU132
+ 631 0018 23F00203 		bic	r3, r3, #2
+ 632 001c C2F80434 		str	r3, [r2, #1028]
+ 316:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 317:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 633              		.loc 1 317 1 view .LVU133
+ 634 0020 7047     		bx	lr
+ 635              	.L72:
+ 636 0022 00BF     		.align	2
+ 637              	.L71:
+ 638 0024 00700040 		.word	1073770496
+ 639              		.cfi_endproc
+ 640              	.LFE69:
+ 642              		.section	.text.dac_wave_mode_config,"ax",%progbits
+ 643              		.align	1
+ 644              		.global	dac_wave_mode_config
+ 645              		.syntax unified
+ 646              		.thumb
+ 647              		.thumb_func
+ 649              	dac_wave_mode_config:
+ 650              	.LVL20:
+ 651              	.LFB70:
+ 318:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 319:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 320:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      configure DAC wave mode
+ 321:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 322:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 323:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  wave_mode
+ 324:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 325:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_DISABLE: wave disable
+ 326:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_MODE_LFSR: LFSR noise mode
+ 327:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_MODE_TRIANGLE: triangle noise mode
+ 328:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 329:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 330:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 331:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_wave_mode_config(uint32_t dac_periph, uint32_t wave_mode)
+ 332:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 652              		.loc 1 332 1 is_stmt 1 view -0
+ 653              		.cfi_startproc
+ 654              		@ args = 0, pretend = 0, frame = 0
+ 655              		@ frame_needed = 0, uses_anonymous_args = 0
+ 656              		@ link register save eliminated.
+ 333:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 657              		.loc 1 333 5 view .LVU135
+ 658              		.loc 1 333 7 is_stmt 0 view .LVU136
+ 659 0000 60B9     		cbnz	r0, .L74
+ 334:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC0 wave mode */
+ 335:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWM0;
+ 660              		.loc 1 335 9 is_stmt 1 view .LVU137
+ 661 0002 0D4B     		ldr	r3, .L76
+ 662 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 663              		.loc 1 335 17 is_stmt 0 view .LVU138
+ 664 0008 22F0C002 		bic	r2, r2, #192
+ 665 000c C3F80024 		str	r2, [r3, #1024]
+ 336:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= wave_mode;
+ 666              		.loc 1 336 9 is_stmt 1 view .LVU139
+ 667 0010 D3F80024 		ldr	r2, [r3, #1024]
+ 668              		.loc 1 336 17 is_stmt 0 view .LVU140
+ 669 0014 0A43     		orrs	r2, r2, r1
+ 670 0016 C3F80024 		str	r2, [r3, #1024]
+ 671 001a 7047     		bx	lr
+ 672              	.L74:
+ 337:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 338:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC1 wave mode */
+ 339:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWM1;
+ 673              		.loc 1 339 9 is_stmt 1 view .LVU141
+ 674 001c 064B     		ldr	r3, .L76
+ 675 001e D3F80024 		ldr	r2, [r3, #1024]
+ 676              		.loc 1 339 17 is_stmt 0 view .LVU142
+ 677 0022 22F44002 		bic	r2, r2, #12582912
+ 678 0026 C3F80024 		str	r2, [r3, #1024]
+ 340:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= (wave_mode << DAC1_REG_OFFSET);
+ 679              		.loc 1 340 9 is_stmt 1 view .LVU143
+ 680 002a D3F80024 		ldr	r2, [r3, #1024]
+ 681              		.loc 1 340 17 is_stmt 0 view .LVU144
+ 682 002e 42EA0142 		orr	r2, r2, r1, lsl #16
+ 683 0032 C3F80024 		str	r2, [r3, #1024]
+ 341:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 342:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 684              		.loc 1 342 1 view .LVU145
+ 685 0036 7047     		bx	lr
+ 686              	.L77:
+ 687              		.align	2
+ 688              	.L76:
+ 689 0038 00700040 		.word	1073770496
+ 690              		.cfi_endproc
+ 691              	.LFE70:
+ 693              		.section	.text.dac_wave_bit_width_config,"ax",%progbits
+ 694              		.align	1
+ 695              		.global	dac_wave_bit_width_config
+ 696              		.syntax unified
+ 697              		.thumb
+ 698              		.thumb_func
+ 700              	dac_wave_bit_width_config:
+ 701              	.LVL21:
+ 702              	.LFB71:
+ 343:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 344:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 345:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      configure DAC wave bit width
+ 346:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 347:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 348:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  bit_width
+ 349:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 350:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_1: bit width of the wave signal is 1
+ 351:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_2: bit width of the wave signal is 2
+ 352:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_3: bit width of the wave signal is 3
+ 353:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_4: bit width of the wave signal is 4
+ 354:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_5: bit width of the wave signal is 5
+ 355:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_6: bit width of the wave signal is 6
+ 356:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_7: bit width of the wave signal is 7
+ 357:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_8: bit width of the wave signal is 8
+ 358:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_9: bit width of the wave signal is 9
+ 359:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_10: bit width of the wave signal is 10
+ 360:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_11: bit width of the wave signal is 11
+ 361:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_WAVE_BIT_WIDTH_12: bit width of the wave signal is 12
+ 362:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 363:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 364:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 365:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_wave_bit_width_config(uint32_t dac_periph, uint32_t bit_width)
+ 366:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 703              		.loc 1 366 1 is_stmt 1 view -0
+ 704              		.cfi_startproc
+ 705              		@ args = 0, pretend = 0, frame = 0
+ 706              		@ frame_needed = 0, uses_anonymous_args = 0
+ 707              		@ link register save eliminated.
+ 367:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 708              		.loc 1 367 5 view .LVU147
+ 709              		.loc 1 367 7 is_stmt 0 view .LVU148
+ 710 0000 60B9     		cbnz	r0, .L79
+ 368:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC0 wave bit width */
+ 369:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW0;
+ 711              		.loc 1 369 9 is_stmt 1 view .LVU149
+ 712 0002 0D4B     		ldr	r3, .L81
+ 713 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 714              		.loc 1 369 17 is_stmt 0 view .LVU150
+ 715 0008 22F47062 		bic	r2, r2, #3840
+ 716 000c C3F80024 		str	r2, [r3, #1024]
+ 370:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= bit_width;
+ 717              		.loc 1 370 9 is_stmt 1 view .LVU151
+ 718 0010 D3F80024 		ldr	r2, [r3, #1024]
+ 719              		.loc 1 370 17 is_stmt 0 view .LVU152
+ 720 0014 0A43     		orrs	r2, r2, r1
+ 721 0016 C3F80024 		str	r2, [r3, #1024]
+ 722 001a 7047     		bx	lr
+ 723              	.L79:
+ 371:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 372:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC1 wave bit width */
+ 373:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW1;
+ 724              		.loc 1 373 9 is_stmt 1 view .LVU153
+ 725 001c 064B     		ldr	r3, .L81
+ 726 001e D3F80024 		ldr	r2, [r3, #1024]
+ 727              		.loc 1 373 17 is_stmt 0 view .LVU154
+ 728 0022 22F07062 		bic	r2, r2, #251658240
+ 729 0026 C3F80024 		str	r2, [r3, #1024]
+ 374:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= (bit_width << DAC1_REG_OFFSET);
+ 730              		.loc 1 374 9 is_stmt 1 view .LVU155
+ 731 002a D3F80024 		ldr	r2, [r3, #1024]
+ 732              		.loc 1 374 17 is_stmt 0 view .LVU156
+ 733 002e 42EA0142 		orr	r2, r2, r1, lsl #16
+ 734 0032 C3F80024 		str	r2, [r3, #1024]
+ 375:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 376:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 735              		.loc 1 376 1 view .LVU157
+ 736 0036 7047     		bx	lr
+ 737              	.L82:
+ 738              		.align	2
+ 739              	.L81:
+ 740 0038 00700040 		.word	1073770496
+ 741              		.cfi_endproc
+ 742              	.LFE71:
+ 744              		.section	.text.dac_lfsr_noise_config,"ax",%progbits
+ 745              		.align	1
+ 746              		.global	dac_lfsr_noise_config
+ 747              		.syntax unified
+ 748              		.thumb
+ 749              		.thumb_func
+ 751              	dac_lfsr_noise_config:
+ 752              	.LVL22:
+ 753              	.LFB72:
+ 377:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 378:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 379:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      configure DAC LFSR noise mode
+ 380:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 381:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 382:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  unmask_bits
+ 383:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 384:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BIT0: unmask the LFSR bit0
+ 385:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS1_0: unmask the LFSR bits[1:0]
+ 386:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS2_0: unmask the LFSR bits[2:0]
+ 387:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS3_0: unmask the LFSR bits[3:0]
+ 388:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS4_0: unmask the LFSR bits[4:0]
+ 389:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS5_0: unmask the LFSR bits[5:0]
+ 390:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS6_0: unmask the LFSR bits[6:0]
+ 391:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS7_0: unmask the LFSR bits[7:0]
+ 392:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS8_0: unmask the LFSR bits[8:0]
+ 393:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS9_0: unmask the LFSR bits[9:0]
+ 394:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS10_0: unmask the LFSR bits[10:0]
+ 395:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_LFSR_BITS11_0: unmask the LFSR bits[11:0]
+ 396:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 397:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 398:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 399:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_lfsr_noise_config(uint32_t dac_periph, uint32_t unmask_bits)
+ 400:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 754              		.loc 1 400 1 is_stmt 1 view -0
+ 755              		.cfi_startproc
+ 756              		@ args = 0, pretend = 0, frame = 0
+ 757              		@ frame_needed = 0, uses_anonymous_args = 0
+ 758              		@ link register save eliminated.
+ 401:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 759              		.loc 1 401 5 view .LVU159
+ 760              		.loc 1 401 7 is_stmt 0 view .LVU160
+ 761 0000 60B9     		cbnz	r0, .L84
+ 402:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC0 LFSR noise mode */
+ 403:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW0;
+ 762              		.loc 1 403 9 is_stmt 1 view .LVU161
+ 763 0002 0D4B     		ldr	r3, .L86
+ 764 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 765              		.loc 1 403 17 is_stmt 0 view .LVU162
+ 766 0008 22F47062 		bic	r2, r2, #3840
+ 767 000c C3F80024 		str	r2, [r3, #1024]
+ 404:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= unmask_bits;
+ 768              		.loc 1 404 9 is_stmt 1 view .LVU163
+ 769 0010 D3F80024 		ldr	r2, [r3, #1024]
+ 770              		.loc 1 404 17 is_stmt 0 view .LVU164
+ 771 0014 0A43     		orrs	r2, r2, r1
+ 772 0016 C3F80024 		str	r2, [r3, #1024]
+ 773 001a 7047     		bx	lr
+ 774              	.L84:
+ 405:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 406:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC1 LFSR noise mode */
+ 407:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW1;
+ 775              		.loc 1 407 9 is_stmt 1 view .LVU165
+ 776 001c 064B     		ldr	r3, .L86
+ 777 001e D3F80024 		ldr	r2, [r3, #1024]
+ 778              		.loc 1 407 17 is_stmt 0 view .LVU166
+ 779 0022 22F07062 		bic	r2, r2, #251658240
+ 780 0026 C3F80024 		str	r2, [r3, #1024]
+ 408:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= (unmask_bits << DAC1_REG_OFFSET);
+ 781              		.loc 1 408 9 is_stmt 1 view .LVU167
+ 782 002a D3F80024 		ldr	r2, [r3, #1024]
+ 783              		.loc 1 408 17 is_stmt 0 view .LVU168
+ 784 002e 42EA0142 		orr	r2, r2, r1, lsl #16
+ 785 0032 C3F80024 		str	r2, [r3, #1024]
+ 409:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 410:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 786              		.loc 1 410 1 view .LVU169
+ 787 0036 7047     		bx	lr
+ 788              	.L87:
+ 789              		.align	2
+ 790              	.L86:
+ 791 0038 00700040 		.word	1073770496
+ 792              		.cfi_endproc
+ 793              	.LFE72:
+ 795              		.section	.text.dac_triangle_noise_config,"ax",%progbits
+ 796              		.align	1
+ 797              		.global	dac_triangle_noise_config
+ 798              		.syntax unified
+ 799              		.thumb
+ 800              		.thumb_func
+ 802              	dac_triangle_noise_config:
+ 803              	.LVL23:
+ 804              	.LFB73:
+ 411:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 412:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 413:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      configure DAC triangle noise mode
+ 414:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_periph
+ 415:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DACx(x=0,1)
+ 416:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  amplitude
+ 417:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 418:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_1: triangle amplitude is 1
+ 419:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_3: triangle amplitude is 3
+ 420:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_7: triangle amplitude is 7
+ 421:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_15: triangle amplitude is 15
+ 422:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_31: triangle amplitude is 31
+ 423:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_63: triangle amplitude is 63
+ 424:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_127: triangle amplitude is 127
+ 425:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_255: triangle amplitude is 255
+ 426:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_511: triangle amplitude is 511
+ 427:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_1023: triangle amplitude is 1023
+ 428:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_2047: triangle amplitude is 2047
+ 429:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_TRIANGLE_AMPLITUDE_4095: triangle amplitude is 4095
+ 430:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 431:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 432:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 433:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_triangle_noise_config(uint32_t dac_periph, uint32_t amplitude)
+ 434:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 805              		.loc 1 434 1 is_stmt 1 view -0
+ 806              		.cfi_startproc
+ 807              		@ args = 0, pretend = 0, frame = 0
+ 808              		@ frame_needed = 0, uses_anonymous_args = 0
+ 809              		@ link register save eliminated.
+ 435:../system/src/gd32f10x/gd32f10x_dac.c ****     if(DAC0 == dac_periph){
+ 810              		.loc 1 435 5 view .LVU171
+ 811              		.loc 1 435 7 is_stmt 0 view .LVU172
+ 812 0000 60B9     		cbnz	r0, .L89
+ 436:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC0 triangle noise mode */
+ 437:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW0;
+ 813              		.loc 1 437 9 is_stmt 1 view .LVU173
+ 814 0002 0D4B     		ldr	r3, .L91
+ 815 0004 D3F80024 		ldr	r2, [r3, #1024]
+ 816              		.loc 1 437 17 is_stmt 0 view .LVU174
+ 817 0008 22F47062 		bic	r2, r2, #3840
+ 818 000c C3F80024 		str	r2, [r3, #1024]
+ 438:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= amplitude;
+ 819              		.loc 1 438 9 is_stmt 1 view .LVU175
+ 820 0010 D3F80024 		ldr	r2, [r3, #1024]
+ 821              		.loc 1 438 17 is_stmt 0 view .LVU176
+ 822 0014 0A43     		orrs	r2, r2, r1
+ 823 0016 C3F80024 		str	r2, [r3, #1024]
+ 824 001a 7047     		bx	lr
+ 825              	.L89:
+ 439:../system/src/gd32f10x/gd32f10x_dac.c ****     }else{
+ 440:../system/src/gd32f10x/gd32f10x_dac.c ****         /* configure DAC1 triangle noise mode */
+ 441:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL &= ~DAC_CTL_DWBW1;
+ 826              		.loc 1 441 9 is_stmt 1 view .LVU177
+ 827 001c 064B     		ldr	r3, .L91
+ 828 001e D3F80024 		ldr	r2, [r3, #1024]
+ 829              		.loc 1 441 17 is_stmt 0 view .LVU178
+ 830 0022 22F07062 		bic	r2, r2, #251658240
+ 831 0026 C3F80024 		str	r2, [r3, #1024]
+ 442:../system/src/gd32f10x/gd32f10x_dac.c ****         DAC_CTL |= (amplitude << DAC1_REG_OFFSET);
+ 832              		.loc 1 442 9 is_stmt 1 view .LVU179
+ 833 002a D3F80024 		ldr	r2, [r3, #1024]
+ 834              		.loc 1 442 17 is_stmt 0 view .LVU180
+ 835 002e 42EA0142 		orr	r2, r2, r1, lsl #16
+ 836 0032 C3F80024 		str	r2, [r3, #1024]
+ 443:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 444:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 837              		.loc 1 444 1 view .LVU181
+ 838 0036 7047     		bx	lr
+ 839              	.L92:
+ 840              		.align	2
+ 841              	.L91:
+ 842 0038 00700040 		.word	1073770496
+ 843              		.cfi_endproc
+ 844              	.LFE73:
+ 846              		.section	.text.dac_concurrent_enable,"ax",%progbits
+ 847              		.align	1
+ 848              		.global	dac_concurrent_enable
+ 849              		.syntax unified
+ 850              		.thumb
+ 851              		.thumb_func
+ 853              	dac_concurrent_enable:
+ 854              	.LFB74:
+ 445:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 446:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 447:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC concurrent mode
+ 448:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 449:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 450:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 451:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 452:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_enable(void)
+ 453:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 855              		.loc 1 453 1 is_stmt 1 view -0
+ 856              		.cfi_startproc
+ 857              		@ args = 0, pretend = 0, frame = 0
+ 858              		@ frame_needed = 0, uses_anonymous_args = 0
+ 859              		@ link register save eliminated.
+ 454:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t ctl = 0U;
+ 860              		.loc 1 454 5 view .LVU183
+ 861              	.LVL24:
+ 455:../system/src/gd32f10x/gd32f10x_dac.c ****     ctl = DAC_CTL_DEN0 | DAC_CTL_DEN1;
+ 862              		.loc 1 455 5 view .LVU184
+ 456:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_CTL |= (ctl);
+ 863              		.loc 1 456 5 view .LVU185
+ 864 0000 034A     		ldr	r2, .L94
+ 865 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 866              		.loc 1 456 13 is_stmt 0 view .LVU186
+ 867 0006 43F00113 		orr	r3, r3, #65537
+ 868 000a C2F80034 		str	r3, [r2, #1024]
+ 457:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 869              		.loc 1 457 1 view .LVU187
+ 870 000e 7047     		bx	lr
+ 871              	.L95:
+ 872              		.align	2
+ 873              	.L94:
+ 874 0010 00700040 		.word	1073770496
+ 875              		.cfi_endproc
+ 876              	.LFE74:
+ 878              		.section	.text.dac_concurrent_disable,"ax",%progbits
+ 879              		.align	1
+ 880              		.global	dac_concurrent_disable
+ 881              		.syntax unified
+ 882              		.thumb
+ 883              		.thumb_func
+ 885              	dac_concurrent_disable:
+ 886              	.LFB75:
+ 458:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 459:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 460:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC concurrent mode
+ 461:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 462:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 463:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 464:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 465:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_disable(void)
+ 466:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 887              		.loc 1 466 1 is_stmt 1 view -0
+ 888              		.cfi_startproc
+ 889              		@ args = 0, pretend = 0, frame = 0
+ 890              		@ frame_needed = 0, uses_anonymous_args = 0
+ 891              		@ link register save eliminated.
+ 467:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t ctl = 0U;
+ 892              		.loc 1 467 5 view .LVU189
+ 893              	.LVL25:
+ 468:../system/src/gd32f10x/gd32f10x_dac.c ****     ctl = DAC_CTL_DEN0 | DAC_CTL_DEN1;
+ 894              		.loc 1 468 5 view .LVU190
+ 469:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_CTL &= (~ctl);
+ 895              		.loc 1 469 5 view .LVU191
+ 896 0000 034A     		ldr	r2, .L97
+ 897 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 898              		.loc 1 469 13 is_stmt 0 view .LVU192
+ 899 0006 23F00113 		bic	r3, r3, #65537
+ 900 000a C2F80034 		str	r3, [r2, #1024]
+ 470:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 901              		.loc 1 470 1 view .LVU193
+ 902 000e 7047     		bx	lr
+ 903              	.L98:
+ 904              		.align	2
+ 905              	.L97:
+ 906 0010 00700040 		.word	1073770496
+ 907              		.cfi_endproc
+ 908              	.LFE75:
+ 910              		.section	.text.dac_concurrent_software_trigger_enable,"ax",%progbits
+ 911              		.align	1
+ 912              		.global	dac_concurrent_software_trigger_enable
+ 913              		.syntax unified
+ 914              		.thumb
+ 915              		.thumb_func
+ 917              	dac_concurrent_software_trigger_enable:
+ 918              	.LFB76:
+ 471:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 472:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 473:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC concurrent software trigger function
+ 474:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 475:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 476:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 477:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 478:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_software_trigger_enable(void)
+ 479:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 919              		.loc 1 479 1 is_stmt 1 view -0
+ 920              		.cfi_startproc
+ 921              		@ args = 0, pretend = 0, frame = 0
+ 922              		@ frame_needed = 0, uses_anonymous_args = 0
+ 923              		@ link register save eliminated.
+ 480:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t swt = 0U;
+ 924              		.loc 1 480 5 view .LVU195
+ 925              	.LVL26:
+ 481:../system/src/gd32f10x/gd32f10x_dac.c ****     swt = DAC_SWT_SWTR0 | DAC_SWT_SWTR1;
+ 926              		.loc 1 481 5 view .LVU196
+ 482:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_SWT |= (swt); 
+ 927              		.loc 1 482 5 view .LVU197
+ 928 0000 034A     		ldr	r2, .L100
+ 929 0002 D2F80434 		ldr	r3, [r2, #1028]
+ 930              		.loc 1 482 13 is_stmt 0 view .LVU198
+ 931 0006 43F00303 		orr	r3, r3, #3
+ 932 000a C2F80434 		str	r3, [r2, #1028]
+ 483:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 933              		.loc 1 483 1 view .LVU199
+ 934 000e 7047     		bx	lr
+ 935              	.L101:
+ 936              		.align	2
+ 937              	.L100:
+ 938 0010 00700040 		.word	1073770496
+ 939              		.cfi_endproc
+ 940              	.LFE76:
+ 942              		.section	.text.dac_concurrent_software_trigger_disable,"ax",%progbits
+ 943              		.align	1
+ 944              		.global	dac_concurrent_software_trigger_disable
+ 945              		.syntax unified
+ 946              		.thumb
+ 947              		.thumb_func
+ 949              	dac_concurrent_software_trigger_disable:
+ 950              	.LFB77:
+ 484:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 485:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 486:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC concurrent software trigger function
+ 487:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 488:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 489:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 490:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 491:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_software_trigger_disable(void)
+ 492:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 951              		.loc 1 492 1 is_stmt 1 view -0
+ 952              		.cfi_startproc
+ 953              		@ args = 0, pretend = 0, frame = 0
+ 954              		@ frame_needed = 0, uses_anonymous_args = 0
+ 955              		@ link register save eliminated.
+ 493:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t swt = 0U;
+ 956              		.loc 1 493 5 view .LVU201
+ 957              	.LVL27:
+ 494:../system/src/gd32f10x/gd32f10x_dac.c ****     swt = DAC_SWT_SWTR0 | DAC_SWT_SWTR1;
+ 958              		.loc 1 494 5 view .LVU202
+ 495:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_SWT &= (~swt);
+ 959              		.loc 1 495 5 view .LVU203
+ 960 0000 034A     		ldr	r2, .L103
+ 961 0002 D2F80434 		ldr	r3, [r2, #1028]
+ 962              		.loc 1 495 13 is_stmt 0 view .LVU204
+ 963 0006 23F00303 		bic	r3, r3, #3
+ 964 000a C2F80434 		str	r3, [r2, #1028]
+ 496:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 965              		.loc 1 496 1 view .LVU205
+ 966 000e 7047     		bx	lr
+ 967              	.L104:
+ 968              		.align	2
+ 969              	.L103:
+ 970 0010 00700040 		.word	1073770496
+ 971              		.cfi_endproc
+ 972              	.LFE77:
+ 974              		.section	.text.dac_concurrent_output_buffer_enable,"ax",%progbits
+ 975              		.align	1
+ 976              		.global	dac_concurrent_output_buffer_enable
+ 977              		.syntax unified
+ 978              		.thumb
+ 979              		.thumb_func
+ 981              	dac_concurrent_output_buffer_enable:
+ 982              	.LFB78:
+ 497:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 498:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 499:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      enable DAC concurrent buffer function
+ 500:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 501:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 502:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 503:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 504:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_output_buffer_enable(void)
+ 505:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 983              		.loc 1 505 1 is_stmt 1 view -0
+ 984              		.cfi_startproc
+ 985              		@ args = 0, pretend = 0, frame = 0
+ 986              		@ frame_needed = 0, uses_anonymous_args = 0
+ 987              		@ link register save eliminated.
+ 506:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t ctl = 0U;
+ 988              		.loc 1 506 5 view .LVU207
+ 989              	.LVL28:
+ 507:../system/src/gd32f10x/gd32f10x_dac.c ****     ctl = DAC_CTL_DBOFF0 | DAC_CTL_DBOFF1;
+ 990              		.loc 1 507 5 view .LVU208
+ 508:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_CTL &= (~ctl);
+ 991              		.loc 1 508 5 view .LVU209
+ 992 0000 034A     		ldr	r2, .L106
+ 993 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 994              		.loc 1 508 13 is_stmt 0 view .LVU210
+ 995 0006 23F00213 		bic	r3, r3, #131074
+ 996 000a C2F80034 		str	r3, [r2, #1024]
+ 509:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 997              		.loc 1 509 1 view .LVU211
+ 998 000e 7047     		bx	lr
+ 999              	.L107:
+ 1000              		.align	2
+ 1001              	.L106:
+ 1002 0010 00700040 		.word	1073770496
+ 1003              		.cfi_endproc
+ 1004              	.LFE78:
+ 1006              		.section	.text.dac_concurrent_output_buffer_disable,"ax",%progbits
+ 1007              		.align	1
+ 1008              		.global	dac_concurrent_output_buffer_disable
+ 1009              		.syntax unified
+ 1010              		.thumb
+ 1011              		.thumb_func
+ 1013              	dac_concurrent_output_buffer_disable:
+ 1014              	.LFB79:
+ 510:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 511:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 512:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      disable DAC concurrent buffer function
+ 513:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  none
+ 514:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 515:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 516:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 517:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_output_buffer_disable(void)
+ 518:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 1015              		.loc 1 518 1 is_stmt 1 view -0
+ 1016              		.cfi_startproc
+ 1017              		@ args = 0, pretend = 0, frame = 0
+ 1018              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1019              		@ link register save eliminated.
+ 519:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t ctl = 0U;
+ 1020              		.loc 1 519 5 view .LVU213
+ 1021              	.LVL29:
+ 520:../system/src/gd32f10x/gd32f10x_dac.c ****     ctl = DAC_CTL_DBOFF0 | DAC_CTL_DBOFF1;
+ 1022              		.loc 1 520 5 view .LVU214
+ 521:../system/src/gd32f10x/gd32f10x_dac.c ****     DAC_CTL |= (ctl);
+ 1023              		.loc 1 521 5 view .LVU215
+ 1024 0000 034A     		ldr	r2, .L109
+ 1025 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 1026              		.loc 1 521 13 is_stmt 0 view .LVU216
+ 1027 0006 43F00213 		orr	r3, r3, #131074
+ 1028 000a C2F80034 		str	r3, [r2, #1024]
+ 522:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 1029              		.loc 1 522 1 view .LVU217
+ 1030 000e 7047     		bx	lr
+ 1031              	.L110:
+ 1032              		.align	2
+ 1033              	.L109:
+ 1034 0010 00700040 		.word	1073770496
+ 1035              		.cfi_endproc
+ 1036              	.LFE79:
+ 1038              		.section	.text.dac_concurrent_data_set,"ax",%progbits
+ 1039              		.align	1
+ 1040              		.global	dac_concurrent_data_set
+ 1041              		.syntax unified
+ 1042              		.thumb
+ 1043              		.thumb_func
+ 1045              	dac_concurrent_data_set:
+ 1046              	.LVL30:
+ 1047              	.LFB80:
+ 523:../system/src/gd32f10x/gd32f10x_dac.c **** 
+ 524:../system/src/gd32f10x/gd32f10x_dac.c **** /*!
+ 525:../system/src/gd32f10x/gd32f10x_dac.c ****     \brief      set DAC concurrent mode data holding register value
+ 526:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  dac_align
+ 527:../system/src/gd32f10x/gd32f10x_dac.c ****                 only one parameter can be selected which is shown as below:
+ 528:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_8B_R: data right 8b alignment
+ 529:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_12B_R: data right 12b alignment
+ 530:../system/src/gd32f10x/gd32f10x_dac.c ****       \arg        DAC_ALIGN_12B_L: data left 12b alignment
+ 531:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  data0: data to be loaded
+ 532:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[in]  data1: data to be loaded
+ 533:../system/src/gd32f10x/gd32f10x_dac.c ****     \param[out] none
+ 534:../system/src/gd32f10x/gd32f10x_dac.c ****     \retval     none
+ 535:../system/src/gd32f10x/gd32f10x_dac.c **** */
+ 536:../system/src/gd32f10x/gd32f10x_dac.c **** void dac_concurrent_data_set(uint32_t dac_align, uint16_t data0, uint16_t data1)
+ 537:../system/src/gd32f10x/gd32f10x_dac.c **** {
+ 1048              		.loc 1 537 1 is_stmt 1 view -0
+ 1049              		.cfi_startproc
+ 1050              		@ args = 0, pretend = 0, frame = 0
+ 1051              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1052              		@ link register save eliminated.
+ 538:../system/src/gd32f10x/gd32f10x_dac.c ****     uint32_t data = 0U;
+ 1053              		.loc 1 538 5 view .LVU219
+ 539:../system/src/gd32f10x/gd32f10x_dac.c ****     switch(dac_align){
+ 1054              		.loc 1 539 5 view .LVU220
+ 1055 0000 0128     		cmp	r0, #1
+ 1056 0002 09D0     		beq	.L112
+ 1057 0004 0228     		cmp	r0, #2
+ 1058 0006 0DD0     		beq	.L113
+ 1059 0008 00B1     		cbz	r0, .L115
+ 1060              	.LVL31:
+ 1061              	.L111:
+ 540:../system/src/gd32f10x/gd32f10x_dac.c ****     /* data right 12b alignment */
+ 541:../system/src/gd32f10x/gd32f10x_dac.c ****     case DAC_ALIGN_12B_R:
+ 542:../system/src/gd32f10x/gd32f10x_dac.c ****         data = ((uint32_t)data1 << DH_12BIT_OFFSET) | data0;
+ 543:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R12DH = data;
+ 544:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 545:../system/src/gd32f10x/gd32f10x_dac.c ****     /* data left 12b alignment */
+ 546:../system/src/gd32f10x/gd32f10x_dac.c ****     case DAC_ALIGN_12B_L:
+ 547:../system/src/gd32f10x/gd32f10x_dac.c ****         data = ((uint32_t)data1 << DH_12BIT_OFFSET) | data0;
+ 548:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_L12DH = data;
+ 549:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 550:../system/src/gd32f10x/gd32f10x_dac.c ****     /* data right 8b alignment */
+ 551:../system/src/gd32f10x/gd32f10x_dac.c ****     case DAC_ALIGN_8B_R:
+ 552:../system/src/gd32f10x/gd32f10x_dac.c ****         data = ((uint32_t)data1 << DH_8BIT_OFFSET) | data0;
+ 553:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R8DH = data;
+ 554:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 555:../system/src/gd32f10x/gd32f10x_dac.c ****     default:
+ 556:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 557:../system/src/gd32f10x/gd32f10x_dac.c ****     }
+ 558:../system/src/gd32f10x/gd32f10x_dac.c **** }
+ 1062              		.loc 1 558 1 is_stmt 0 view .LVU221
+ 1063 000a 7047     		bx	lr
+ 1064              	.LVL32:
+ 1065              	.L115:
+ 542:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R12DH = data;
+ 1066              		.loc 1 542 9 is_stmt 1 view .LVU222
+ 542:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R12DH = data;
+ 1067              		.loc 1 542 14 is_stmt 0 view .LVU223
+ 1068 000c 41EA0241 		orr	r1, r1, r2, lsl #16
+ 1069              	.LVL33:
+ 543:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1070              		.loc 1 543 9 is_stmt 1 view .LVU224
+ 543:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1071              		.loc 1 543 20 is_stmt 0 view .LVU225
+ 1072 0010 074B     		ldr	r3, .L116
+ 1073 0012 C3F82014 		str	r1, [r3, #1056]
+ 544:../system/src/gd32f10x/gd32f10x_dac.c ****     /* data left 12b alignment */
+ 1074              		.loc 1 544 9 is_stmt 1 view .LVU226
+ 1075 0016 7047     		bx	lr
+ 1076              	.LVL34:
+ 1077              	.L112:
+ 547:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_L12DH = data;
+ 1078              		.loc 1 547 9 view .LVU227
+ 547:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_L12DH = data;
+ 1079              		.loc 1 547 14 is_stmt 0 view .LVU228
+ 1080 0018 41EA0241 		orr	r1, r1, r2, lsl #16
+ 1081              	.LVL35:
+ 548:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1082              		.loc 1 548 9 is_stmt 1 view .LVU229
+ 548:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1083              		.loc 1 548 20 is_stmt 0 view .LVU230
+ 1084 001c 044B     		ldr	r3, .L116
+ 1085 001e C3F82414 		str	r1, [r3, #1060]
+ 549:../system/src/gd32f10x/gd32f10x_dac.c ****     /* data right 8b alignment */
+ 1086              		.loc 1 549 9 is_stmt 1 view .LVU231
+ 1087 0022 7047     		bx	lr
+ 1088              	.LVL36:
+ 1089              	.L113:
+ 552:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R8DH = data;
+ 1090              		.loc 1 552 9 view .LVU232
+ 552:../system/src/gd32f10x/gd32f10x_dac.c ****         DACC_R8DH = data;
+ 1091              		.loc 1 552 14 is_stmt 0 view .LVU233
+ 1092 0024 41EA0221 		orr	r1, r1, r2, lsl #8
+ 1093              	.LVL37:
+ 553:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1094              		.loc 1 553 9 is_stmt 1 view .LVU234
+ 553:../system/src/gd32f10x/gd32f10x_dac.c ****         break;
+ 1095              		.loc 1 553 19 is_stmt 0 view .LVU235
+ 1096 0028 014B     		ldr	r3, .L116
+ 1097 002a C3F82814 		str	r1, [r3, #1064]
+ 554:../system/src/gd32f10x/gd32f10x_dac.c ****     default:
+ 1098              		.loc 1 554 9 is_stmt 1 view .LVU236
+ 1099              		.loc 1 558 1 is_stmt 0 view .LVU237
+ 1100 002e ECE7     		b	.L111
+ 1101              	.L117:
+ 1102              		.align	2
+ 1103              	.L116:
+ 1104 0030 00700040 		.word	1073770496
+ 1105              		.cfi_endproc
+ 1106              	.LFE80:
+ 1108              		.text
+ 1109              	.Letext0:
+ 1110              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 1111              		.file 3 "../system/inc/gd32f10x/gd32f10x_rcu.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_dac.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:19     .text.dac_deinit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:25     .text.dac_deinit:00000000 dac_deinit
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:49     .text.dac_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:55     .text.dac_enable:00000000 dac_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:85     .text.dac_enable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:90     .text.dac_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:96     .text.dac_disable:00000000 dac_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:126    .text.dac_disable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:131    .text.dac_dma_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:137    .text.dac_dma_enable:00000000 dac_dma_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:167    .text.dac_dma_enable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:172    .text.dac_dma_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:178    .text.dac_dma_disable:00000000 dac_dma_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:208    .text.dac_dma_disable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:213    .text.dac_output_buffer_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:219    .text.dac_output_buffer_enable:00000000 dac_output_buffer_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:249    .text.dac_output_buffer_enable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:254    .text.dac_output_buffer_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:260    .text.dac_output_buffer_disable:00000000 dac_output_buffer_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:290    .text.dac_output_buffer_disable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:295    .text.dac_output_value_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:301    .text.dac_output_value_get:00000000 dac_output_value_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:339    .text.dac_output_value_get:00000018 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:344    .text.dac_data_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:350    .text.dac_data_set:00000000 dac_data_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:423    .text.dac_data_set:0000004c $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:428    .text.dac_trigger_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:434    .text.dac_trigger_enable:00000000 dac_trigger_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:464    .text.dac_trigger_enable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:469    .text.dac_trigger_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:475    .text.dac_trigger_disable:00000000 dac_trigger_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:505    .text.dac_trigger_disable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:510    .text.dac_trigger_source_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:516    .text.dac_trigger_source_config:00000000 dac_trigger_source_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:556    .text.dac_trigger_source_config:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:561    .text.dac_software_trigger_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:567    .text.dac_software_trigger_enable:00000000 dac_software_trigger_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:597    .text.dac_software_trigger_enable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:602    .text.dac_software_trigger_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:608    .text.dac_software_trigger_disable:00000000 dac_software_trigger_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:638    .text.dac_software_trigger_disable:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:643    .text.dac_wave_mode_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:649    .text.dac_wave_mode_config:00000000 dac_wave_mode_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:689    .text.dac_wave_mode_config:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:694    .text.dac_wave_bit_width_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:700    .text.dac_wave_bit_width_config:00000000 dac_wave_bit_width_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:740    .text.dac_wave_bit_width_config:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:745    .text.dac_lfsr_noise_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:751    .text.dac_lfsr_noise_config:00000000 dac_lfsr_noise_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:791    .text.dac_lfsr_noise_config:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:796    .text.dac_triangle_noise_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:802    .text.dac_triangle_noise_config:00000000 dac_triangle_noise_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:842    .text.dac_triangle_noise_config:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:847    .text.dac_concurrent_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:853    .text.dac_concurrent_enable:00000000 dac_concurrent_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:874    .text.dac_concurrent_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:879    .text.dac_concurrent_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:885    .text.dac_concurrent_disable:00000000 dac_concurrent_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:906    .text.dac_concurrent_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:911    .text.dac_concurrent_software_trigger_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:917    .text.dac_concurrent_software_trigger_enable:00000000 dac_concurrent_software_trigger_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:938    .text.dac_concurrent_software_trigger_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:943    .text.dac_concurrent_software_trigger_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:949    .text.dac_concurrent_software_trigger_disable:00000000 dac_concurrent_software_trigger_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:970    .text.dac_concurrent_software_trigger_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:975    .text.dac_concurrent_output_buffer_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:981    .text.dac_concurrent_output_buffer_enable:00000000 dac_concurrent_output_buffer_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1002   .text.dac_concurrent_output_buffer_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1007   .text.dac_concurrent_output_buffer_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1013   .text.dac_concurrent_output_buffer_disable:00000000 dac_concurrent_output_buffer_disable
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1034   .text.dac_concurrent_output_buffer_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1039   .text.dac_concurrent_data_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1045   .text.dac_concurrent_data_set:00000000 dac_concurrent_data_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc5QIzZg.s:1104   .text.dac_concurrent_data_set:00000030 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+                           .group:00000000 wm4.gd32f10x_dac.h.44.7d0654f51a891a190264391518f5416a
+
+UNDEFINED SYMBOLS
+rcu_periph_reset_enable
+rcu_periph_reset_disable

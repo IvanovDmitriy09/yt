@@ -1,0 +1,923 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_rtc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_rtc.c"
+  18              		.section	.text.rtc_configuration_mode_enter,"ax",%progbits
+  19              		.align	1
+  20              		.global	rtc_configuration_mode_enter
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	rtc_configuration_mode_enter:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_rtc.c ****     \file    gd32f10x_rtc.c
+   3:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief   RTC driver
+   4:../system/src/gd32f10x/gd32f10x_rtc.c ****     
+   5:../system/src/gd32f10x/gd32f10x_rtc.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_rtc.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_rtc.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_rtc.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  10:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  11:../system/src/gd32f10x/gd32f10x_rtc.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_rtc.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  14:../system/src/gd32f10x/gd32f10x_rtc.c ****     Redistribution and use in source and binary forms, with or without modification, 
+  15:../system/src/gd32f10x/gd32f10x_rtc.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  17:../system/src/gd32f10x/gd32f10x_rtc.c ****     1. Redistributions of source code must retain the above copyright notice, this 
+  18:../system/src/gd32f10x/gd32f10x_rtc.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_rtc.c ****     2. Redistributions in binary form must reproduce the above copyright notice, 
+  20:../system/src/gd32f10x/gd32f10x_rtc.c ****        this list of conditions and the following disclaimer in the documentation 
+  21:../system/src/gd32f10x/gd32f10x_rtc.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_rtc.c ****     3. Neither the name of the copyright holder nor the names of its contributors 
+  23:../system/src/gd32f10x/gd32f10x_rtc.c ****        may be used to endorse or promote products derived from this software without 
+  24:../system/src/gd32f10x/gd32f10x_rtc.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  26:../system/src/gd32f10x/gd32f10x_rtc.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  27:../system/src/gd32f10x/gd32f10x_rtc.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  28:../system/src/gd32f10x/gd32f10x_rtc.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  29:../system/src/gd32f10x/gd32f10x_rtc.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  30:../system/src/gd32f10x/gd32f10x_rtc.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  31:../system/src/gd32f10x/gd32f10x_rtc.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  32:../system/src/gd32f10x/gd32f10x_rtc.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  33:../system/src/gd32f10x/gd32f10x_rtc.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  34:../system/src/gd32f10x/gd32f10x_rtc.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+  35:../system/src/gd32f10x/gd32f10x_rtc.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  37:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  38:../system/src/gd32f10x/gd32f10x_rtc.c **** #include "gd32f10x_rtc.h"
+  39:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  40:../system/src/gd32f10x/gd32f10x_rtc.c **** /* RTC register high / low bits mask */
+  41:../system/src/gd32f10x/gd32f10x_rtc.c **** #define RTC_HIGH_BITS_MASK         ((uint32_t)0x000F0000U)  /* RTC high bits mask */
+  42:../system/src/gd32f10x/gd32f10x_rtc.c **** #define RTC_LOW_BITS_MASK          ((uint32_t)0x0000FFFFU)  /* RTC low bits mask */
+  43:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  44:../system/src/gd32f10x/gd32f10x_rtc.c **** /* RTC register high bits offset */
+  45:../system/src/gd32f10x/gd32f10x_rtc.c **** #define RTC_HIGH_BITS_OFFSET       ((uint32_t)16U)
+  46:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  47:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+  48:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      enter RTC configuration mode
+  49:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+  50:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+  51:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+  52:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  53:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_configuration_mode_enter(void)
+  54:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+  27              		.loc 1 54 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  55:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CTL |= RTC_CTL_CMF;
+  32              		.loc 1 55 5 view .LVU1
+  33 0000 034A     		ldr	r2, .L2
+  34 0002 D2F80438 		ldr	r3, [r2, #2052]
+  35              		.loc 1 55 13 is_stmt 0 view .LVU2
+  36 0006 43F01003 		orr	r3, r3, #16
+  37 000a C2F80438 		str	r3, [r2, #2052]
+  56:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+  38              		.loc 1 56 1 view .LVU3
+  39 000e 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 0010 00200040 		.word	1073750016
+  44              		.cfi_endproc
+  45              	.LFE56:
+  47              		.section	.text.rtc_configuration_mode_exit,"ax",%progbits
+  48              		.align	1
+  49              		.global	rtc_configuration_mode_exit
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	rtc_configuration_mode_exit:
+  55              	.LFB57:
+  57:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  58:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+  59:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      exit RTC configuration mode 
+  60:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+  61:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+  62:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+  63:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  64:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_configuration_mode_exit(void)
+  65:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+  56              		.loc 1 65 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  66:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CTL &= ~RTC_CTL_CMF;
+  61              		.loc 1 66 5 view .LVU5
+  62 0000 034A     		ldr	r2, .L5
+  63 0002 D2F80438 		ldr	r3, [r2, #2052]
+  64              		.loc 1 66 13 is_stmt 0 view .LVU6
+  65 0006 23F01003 		bic	r3, r3, #16
+  66 000a C2F80438 		str	r3, [r2, #2052]
+  67:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+  67              		.loc 1 67 1 view .LVU7
+  68 000e 7047     		bx	lr
+  69              	.L6:
+  70              		.align	2
+  71              	.L5:
+  72 0010 00200040 		.word	1073750016
+  73              		.cfi_endproc
+  74              	.LFE57:
+  76              		.section	.text.rtc_counter_set,"ax",%progbits
+  77              		.align	1
+  78              		.global	rtc_counter_set
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	rtc_counter_set:
+  84              	.LVL0:
+  85              	.LFB58:
+  68:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  69:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+  70:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      set RTC counter value
+  71:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  cnt: RTC counter value
+  72:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+  73:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+  74:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  75:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_counter_set(uint32_t cnt)
+  76:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+  86              		.loc 1 76 1 is_stmt 1 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		.loc 1 76 1 is_stmt 0 view .LVU9
+  91 0000 10B5     		push	{r4, lr}
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 4, -8
+  94              		.cfi_offset 14, -4
+  95 0002 0446     		mov	r4, r0
+  77:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_enter();
+  96              		.loc 1 77 5 is_stmt 1 view .LVU10
+  97 0004 FFF7FEFF 		bl	rtc_configuration_mode_enter
+  98              	.LVL1:
+  78:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the RTC counter high bits */
+  79:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CNTH = (cnt >> RTC_HIGH_BITS_OFFSET);
+  99              		.loc 1 79 5 view .LVU11
+ 100              		.loc 1 79 21 is_stmt 0 view .LVU12
+ 101 0008 220C     		lsrs	r2, r4, #16
+ 102              		.loc 1 79 14 view .LVU13
+ 103 000a 044B     		ldr	r3, .L9
+ 104 000c C3F81828 		str	r2, [r3, #2072]
+  80:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the RTC counter low bits */
+  81:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CNTL = (cnt & RTC_LOW_BITS_MASK);
+ 105              		.loc 1 81 5 is_stmt 1 view .LVU14
+ 106              		.loc 1 81 21 is_stmt 0 view .LVU15
+ 107 0010 A4B2     		uxth	r4, r4
+ 108              	.LVL2:
+ 109              		.loc 1 81 14 view .LVU16
+ 110 0012 C3F81C48 		str	r4, [r3, #2076]
+  82:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_exit();
+ 111              		.loc 1 82 5 is_stmt 1 view .LVU17
+ 112 0016 FFF7FEFF 		bl	rtc_configuration_mode_exit
+ 113              	.LVL3:
+  83:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 114              		.loc 1 83 1 is_stmt 0 view .LVU18
+ 115 001a 10BD     		pop	{r4, pc}
+ 116              	.L10:
+ 117              		.align	2
+ 118              	.L9:
+ 119 001c 00200040 		.word	1073750016
+ 120              		.cfi_endproc
+ 121              	.LFE58:
+ 123              		.section	.text.rtc_prescaler_set,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	rtc_prescaler_set
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 130              	rtc_prescaler_set:
+ 131              	.LVL4:
+ 132              	.LFB59:
+  84:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+  85:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+  86:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      set RTC prescaler value
+  87:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  psc: RTC prescaler value
+  88:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+  89:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+  90:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+  91:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_prescaler_set(uint32_t psc)
+  92:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 133              		.loc 1 92 1 is_stmt 1 view -0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		.loc 1 92 1 is_stmt 0 view .LVU20
+ 138 0000 10B5     		push	{r4, lr}
+ 139              		.cfi_def_cfa_offset 8
+ 140              		.cfi_offset 4, -8
+ 141              		.cfi_offset 14, -4
+ 142 0002 0446     		mov	r4, r0
+  93:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_enter();
+ 143              		.loc 1 93 5 is_stmt 1 view .LVU21
+ 144 0004 FFF7FEFF 		bl	rtc_configuration_mode_enter
+ 145              	.LVL5:
+  94:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the RTC prescaler high bits */
+  95:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_PSCH = ((psc & RTC_HIGH_BITS_MASK) >> RTC_HIGH_BITS_OFFSET);
+ 146              		.loc 1 95 5 view .LVU22
+ 147              		.loc 1 95 44 is_stmt 0 view .LVU23
+ 148 0008 C4F30342 		ubfx	r2, r4, #16, #4
+ 149              		.loc 1 95 14 view .LVU24
+ 150 000c 044B     		ldr	r3, .L13
+ 151 000e C3F80828 		str	r2, [r3, #2056]
+  96:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the RTC prescaler low bits */
+  97:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_PSCL = (psc & RTC_LOW_BITS_MASK);
+ 152              		.loc 1 97 5 is_stmt 1 view .LVU25
+ 153              		.loc 1 97 21 is_stmt 0 view .LVU26
+ 154 0012 A4B2     		uxth	r4, r4
+ 155              	.LVL6:
+ 156              		.loc 1 97 14 view .LVU27
+ 157 0014 C3F80C48 		str	r4, [r3, #2060]
+  98:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_exit();
+ 158              		.loc 1 98 5 is_stmt 1 view .LVU28
+ 159 0018 FFF7FEFF 		bl	rtc_configuration_mode_exit
+ 160              	.LVL7:
+  99:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 161              		.loc 1 99 1 is_stmt 0 view .LVU29
+ 162 001c 10BD     		pop	{r4, pc}
+ 163              	.L14:
+ 164 001e 00BF     		.align	2
+ 165              	.L13:
+ 166 0020 00200040 		.word	1073750016
+ 167              		.cfi_endproc
+ 168              	.LFE59:
+ 170              		.section	.text.rtc_lwoff_wait,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	rtc_lwoff_wait
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	rtc_lwoff_wait:
+ 178              	.LFB60:
+ 100:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 101:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 102:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      wait RTC last write operation finished flag set
+ 103:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+ 104:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 105:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 106:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 107:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_lwoff_wait(void)
+ 108:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 179              		.loc 1 108 1 is_stmt 1 view -0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+ 184              	.L16:
+ 109:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* loop until LWOFF flag is set */
+ 110:../system/src/gd32f10x/gd32f10x_rtc.c ****     while(RESET == (RTC_CTL & RTC_CTL_LWOFF)){
+ 111:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 185              		.loc 1 111 5 discriminator 1 view .LVU31
+ 110:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 186              		.loc 1 110 17 discriminator 1 view .LVU32
+ 110:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 187              		.loc 1 110 21 is_stmt 0 discriminator 1 view .LVU33
+ 188 0000 034B     		ldr	r3, .L17
+ 189 0002 D3F80438 		ldr	r3, [r3, #2052]
+ 110:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 190              		.loc 1 110 17 discriminator 1 view .LVU34
+ 191 0006 13F0200F 		tst	r3, #32
+ 192 000a F9D0     		beq	.L16
+ 112:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 193              		.loc 1 112 1 view .LVU35
+ 194 000c 7047     		bx	lr
+ 195              	.L18:
+ 196 000e 00BF     		.align	2
+ 197              	.L17:
+ 198 0010 00200040 		.word	1073750016
+ 199              		.cfi_endproc
+ 200              	.LFE60:
+ 202              		.section	.text.rtc_register_sync_wait,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	rtc_register_sync_wait
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	rtc_register_sync_wait:
+ 210              	.LFB61:
+ 113:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 114:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 115:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      wait RTC registers synchronized flag set
+ 116:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+ 117:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 118:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 119:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 120:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_register_sync_wait(void)
+ 121:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 211              		.loc 1 121 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 122:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* clear RSYNF flag */
+ 123:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CTL &= ~RTC_CTL_RSYNF;
+ 216              		.loc 1 123 5 view .LVU37
+ 217 0000 064A     		ldr	r2, .L21
+ 218 0002 D2F80438 		ldr	r3, [r2, #2052]
+ 219              		.loc 1 123 13 is_stmt 0 view .LVU38
+ 220 0006 23F00803 		bic	r3, r3, #8
+ 221 000a C2F80438 		str	r3, [r2, #2052]
+ 124:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* loop until RSYNF flag is set */
+ 125:../system/src/gd32f10x/gd32f10x_rtc.c ****     while(RESET == (RTC_CTL & RTC_CTL_RSYNF)){
+ 222              		.loc 1 125 5 is_stmt 1 view .LVU39
+ 223              	.L20:
+ 126:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 224              		.loc 1 126 5 discriminator 1 view .LVU40
+ 125:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 225              		.loc 1 125 17 discriminator 1 view .LVU41
+ 125:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 226              		.loc 1 125 21 is_stmt 0 discriminator 1 view .LVU42
+ 227 000e 034B     		ldr	r3, .L21
+ 228 0010 D3F80438 		ldr	r3, [r3, #2052]
+ 125:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 229              		.loc 1 125 17 discriminator 1 view .LVU43
+ 230 0014 13F0080F 		tst	r3, #8
+ 231 0018 F9D0     		beq	.L20
+ 127:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 232              		.loc 1 127 1 view .LVU44
+ 233 001a 7047     		bx	lr
+ 234              	.L22:
+ 235              		.align	2
+ 236              	.L21:
+ 237 001c 00200040 		.word	1073750016
+ 238              		.cfi_endproc
+ 239              	.LFE61:
+ 241              		.section	.text.rtc_alarm_config,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	rtc_alarm_config
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	rtc_alarm_config:
+ 249              	.LVL8:
+ 250              	.LFB62:
+ 128:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 129:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 130:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      set RTC alarm value
+ 131:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  alarm: RTC alarm value
+ 132:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 133:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 134:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 135:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_alarm_config(uint32_t alarm)
+ 136:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 251              		.loc 1 136 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              		.loc 1 136 1 is_stmt 0 view .LVU46
+ 256 0000 10B5     		push	{r4, lr}
+ 257              		.cfi_def_cfa_offset 8
+ 258              		.cfi_offset 4, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 0446     		mov	r4, r0
+ 137:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_enter();
+ 261              		.loc 1 137 5 is_stmt 1 view .LVU47
+ 262 0004 FFF7FEFF 		bl	rtc_configuration_mode_enter
+ 263              	.LVL9:
+ 138:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the alarm high bits */
+ 139:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_ALRMH = (alarm >> RTC_HIGH_BITS_OFFSET);
+ 264              		.loc 1 139 5 view .LVU48
+ 265              		.loc 1 139 24 is_stmt 0 view .LVU49
+ 266 0008 220C     		lsrs	r2, r4, #16
+ 267              		.loc 1 139 15 view .LVU50
+ 268 000a 044B     		ldr	r3, .L25
+ 269 000c C3F82028 		str	r2, [r3, #2080]
+ 140:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* set the alarm low bits */
+ 141:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_ALRML = (alarm & RTC_LOW_BITS_MASK);
+ 270              		.loc 1 141 5 is_stmt 1 view .LVU51
+ 271              		.loc 1 141 24 is_stmt 0 view .LVU52
+ 272 0010 A4B2     		uxth	r4, r4
+ 273              	.LVL10:
+ 274              		.loc 1 141 15 view .LVU53
+ 275 0012 C3F82448 		str	r4, [r3, #2084]
+ 142:../system/src/gd32f10x/gd32f10x_rtc.c ****     rtc_configuration_mode_exit();
+ 276              		.loc 1 142 5 is_stmt 1 view .LVU54
+ 277 0016 FFF7FEFF 		bl	rtc_configuration_mode_exit
+ 278              	.LVL11:
+ 143:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 279              		.loc 1 143 1 is_stmt 0 view .LVU55
+ 280 001a 10BD     		pop	{r4, pc}
+ 281              	.L26:
+ 282              		.align	2
+ 283              	.L25:
+ 284 001c 00200040 		.word	1073750016
+ 285              		.cfi_endproc
+ 286              	.LFE62:
+ 288              		.section	.text.rtc_counter_get,"ax",%progbits
+ 289              		.align	1
+ 290              		.global	rtc_counter_get
+ 291              		.syntax unified
+ 292              		.thumb
+ 293              		.thumb_func
+ 295              	rtc_counter_get:
+ 296              	.LFB63:
+ 144:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 145:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 146:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      get RTC counter value
+ 147:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+ 148:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 149:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     RTC counter value
+ 150:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 151:../system/src/gd32f10x/gd32f10x_rtc.c **** uint32_t rtc_counter_get(void)
+ 152:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 297              		.loc 1 152 1 is_stmt 1 view -0
+ 298              		.cfi_startproc
+ 299              		@ args = 0, pretend = 0, frame = 0
+ 300              		@ frame_needed = 0, uses_anonymous_args = 0
+ 301              		@ link register save eliminated.
+ 153:../system/src/gd32f10x/gd32f10x_rtc.c ****     uint32_t temp = 0x0U;
+ 302              		.loc 1 153 5 view .LVU57
+ 303              	.LVL12:
+ 154:../system/src/gd32f10x/gd32f10x_rtc.c ****     
+ 155:../system/src/gd32f10x/gd32f10x_rtc.c ****     temp = RTC_CNTL;
+ 304              		.loc 1 155 5 view .LVU58
+ 305              		.loc 1 155 10 is_stmt 0 view .LVU59
+ 306 0000 034B     		ldr	r3, .L28
+ 307 0002 D3F81C28 		ldr	r2, [r3, #2076]
+ 308              	.LVL13:
+ 156:../system/src/gd32f10x/gd32f10x_rtc.c ****     temp |= (RTC_CNTH << RTC_HIGH_BITS_OFFSET);
+ 309              		.loc 1 156 5 is_stmt 1 view .LVU60
+ 310              		.loc 1 156 14 is_stmt 0 view .LVU61
+ 311 0006 D3F81808 		ldr	r0, [r3, #2072]
+ 312              	.LVL14:
+ 157:../system/src/gd32f10x/gd32f10x_rtc.c ****     return temp;
+ 313              		.loc 1 157 5 is_stmt 1 view .LVU62
+ 158:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 314              		.loc 1 158 1 is_stmt 0 view .LVU63
+ 315 000a 42EA0040 		orr	r0, r2, r0, lsl #16
+ 316              	.LVL15:
+ 317              		.loc 1 158 1 view .LVU64
+ 318 000e 7047     		bx	lr
+ 319              	.L29:
+ 320              		.align	2
+ 321              	.L28:
+ 322 0010 00200040 		.word	1073750016
+ 323              		.cfi_endproc
+ 324              	.LFE63:
+ 326              		.section	.text.rtc_divider_get,"ax",%progbits
+ 327              		.align	1
+ 328              		.global	rtc_divider_get
+ 329              		.syntax unified
+ 330              		.thumb
+ 331              		.thumb_func
+ 333              	rtc_divider_get:
+ 334              	.LFB64:
+ 159:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 160:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 161:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      get RTC divider value
+ 162:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  none
+ 163:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 164:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     RTC divider value
+ 165:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 166:../system/src/gd32f10x/gd32f10x_rtc.c **** uint32_t rtc_divider_get(void)
+ 167:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 335              		.loc 1 167 1 is_stmt 1 view -0
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 0
+ 338              		@ frame_needed = 0, uses_anonymous_args = 0
+ 339              		@ link register save eliminated.
+ 168:../system/src/gd32f10x/gd32f10x_rtc.c ****     uint32_t temp = 0x00U;
+ 340              		.loc 1 168 5 view .LVU66
+ 341              	.LVL16:
+ 169:../system/src/gd32f10x/gd32f10x_rtc.c ****     
+ 170:../system/src/gd32f10x/gd32f10x_rtc.c ****     temp = ((RTC_DIVH & RTC_DIVH_DIV) << RTC_HIGH_BITS_OFFSET);
+ 342              		.loc 1 170 5 view .LVU67
+ 343              		.loc 1 170 14 is_stmt 0 view .LVU68
+ 344 0000 044A     		ldr	r2, .L31
+ 345 0002 D2F81038 		ldr	r3, [r2, #2064]
+ 346              		.loc 1 170 39 view .LVU69
+ 347 0006 1B04     		lsls	r3, r3, #16
+ 348              		.loc 1 170 10 view .LVU70
+ 349 0008 03F47023 		and	r3, r3, #983040
+ 350              	.LVL17:
+ 171:../system/src/gd32f10x/gd32f10x_rtc.c ****     temp |= RTC_DIVL;
+ 351              		.loc 1 171 5 is_stmt 1 view .LVU71
+ 352              		.loc 1 171 13 is_stmt 0 view .LVU72
+ 353 000c D2F81408 		ldr	r0, [r2, #2068]
+ 354              	.LVL18:
+ 172:../system/src/gd32f10x/gd32f10x_rtc.c ****     return temp;
+ 355              		.loc 1 172 5 is_stmt 1 view .LVU73
+ 173:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 356              		.loc 1 173 1 is_stmt 0 view .LVU74
+ 357 0010 1843     		orrs	r0, r0, r3
+ 358              	.LVL19:
+ 359              		.loc 1 173 1 view .LVU75
+ 360 0012 7047     		bx	lr
+ 361              	.L32:
+ 362              		.align	2
+ 363              	.L31:
+ 364 0014 00200040 		.word	1073750016
+ 365              		.cfi_endproc
+ 366              	.LFE64:
+ 368              		.section	.text.rtc_flag_get,"ax",%progbits
+ 369              		.align	1
+ 370              		.global	rtc_flag_get
+ 371              		.syntax unified
+ 372              		.thumb
+ 373              		.thumb_func
+ 375              	rtc_flag_get:
+ 376              	.LVL20:
+ 377              	.LFB65:
+ 174:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 175:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 176:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      get RTC flag status 
+ 177:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  flag: specify which flag status to get
+ 178:../system/src/gd32f10x/gd32f10x_rtc.c ****                 only one parameter can be selected which is shown as below:
+ 179:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_SECOND: second interrupt flag
+ 180:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_ALARM: alarm interrupt flag
+ 181:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_OVERFLOW: overflow interrupt flag
+ 182:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_RSYN: registers synchronized flag
+ 183:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_LWOF: last write operation finished flag
+ 184:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 185:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     SET or RESET
+ 186:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 187:../system/src/gd32f10x/gd32f10x_rtc.c **** FlagStatus rtc_flag_get(uint32_t flag)
+ 188:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 378              		.loc 1 188 1 is_stmt 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382              		@ link register save eliminated.
+ 189:../system/src/gd32f10x/gd32f10x_rtc.c ****     if(RESET != (RTC_CTL & flag)){
+ 383              		.loc 1 189 5 view .LVU77
+ 384              		.loc 1 189 18 is_stmt 0 view .LVU78
+ 385 0000 044B     		ldr	r3, .L36
+ 386 0002 D3F80438 		ldr	r3, [r3, #2052]
+ 387              		.loc 1 189 7 view .LVU79
+ 388 0006 0342     		tst	r3, r0
+ 389 0008 01D0     		beq	.L35
+ 190:../system/src/gd32f10x/gd32f10x_rtc.c ****         return SET;
+ 390              		.loc 1 190 16 view .LVU80
+ 391 000a 0120     		movs	r0, #1
+ 392              	.LVL21:
+ 393              		.loc 1 190 16 view .LVU81
+ 394 000c 7047     		bx	lr
+ 395              	.LVL22:
+ 396              	.L35:
+ 191:../system/src/gd32f10x/gd32f10x_rtc.c ****     }else{
+ 192:../system/src/gd32f10x/gd32f10x_rtc.c ****         return RESET;
+ 397              		.loc 1 192 16 view .LVU82
+ 398 000e 0020     		movs	r0, #0
+ 399              	.LVL23:
+ 193:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 194:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 400              		.loc 1 194 1 view .LVU83
+ 401 0010 7047     		bx	lr
+ 402              	.L37:
+ 403 0012 00BF     		.align	2
+ 404              	.L36:
+ 405 0014 00200040 		.word	1073750016
+ 406              		.cfi_endproc
+ 407              	.LFE65:
+ 409              		.section	.text.rtc_flag_clear,"ax",%progbits
+ 410              		.align	1
+ 411              		.global	rtc_flag_clear
+ 412              		.syntax unified
+ 413              		.thumb
+ 414              		.thumb_func
+ 416              	rtc_flag_clear:
+ 417              	.LVL24:
+ 418              	.LFB66:
+ 195:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 196:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 197:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      clear RTC flag status
+ 198:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  flag: specify which flag status to clear
+ 199:../system/src/gd32f10x/gd32f10x_rtc.c ****                 one or more parameters can be selected which are shown as below:
+ 200:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_SECOND: second interrupt flag
+ 201:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_ALARM: alarm interrupt flag
+ 202:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_OVERFLOW: overflow interrupt flag
+ 203:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_FLAG_RSYN: registers synchronized flag
+ 204:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 205:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 206:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 207:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_flag_clear(uint32_t flag)
+ 208:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 419              		.loc 1 208 1 is_stmt 1 view -0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 0
+ 422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 423              		@ link register save eliminated.
+ 209:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* clear RTC flag */
+ 210:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CTL &= ~flag;
+ 424              		.loc 1 210 5 view .LVU85
+ 425 0000 034A     		ldr	r2, .L39
+ 426 0002 D2F80438 		ldr	r3, [r2, #2052]
+ 427              		.loc 1 210 13 is_stmt 0 view .LVU86
+ 428 0006 23EA0003 		bic	r3, r3, r0
+ 429 000a C2F80438 		str	r3, [r2, #2052]
+ 211:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 430              		.loc 1 211 1 view .LVU87
+ 431 000e 7047     		bx	lr
+ 432              	.L40:
+ 433              		.align	2
+ 434              	.L39:
+ 435 0010 00200040 		.word	1073750016
+ 436              		.cfi_endproc
+ 437              	.LFE66:
+ 439              		.section	.text.rtc_interrupt_flag_get,"ax",%progbits
+ 440              		.align	1
+ 441              		.global	rtc_interrupt_flag_get
+ 442              		.syntax unified
+ 443              		.thumb
+ 444              		.thumb_func
+ 446              	rtc_interrupt_flag_get:
+ 447              	.LVL25:
+ 448              	.LFB67:
+ 212:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 213:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 214:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      get RTC interrupt flag status 
+ 215:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  flag: specify which flag status to get
+ 216:../system/src/gd32f10x/gd32f10x_rtc.c ****                 only one parameter can be selected which is shown as below:
+ 217:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_SECOND: second interrupt flag
+ 218:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_ALARM: alarm interrupt flag
+ 219:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_OVERFLOW: overflow interrupt flag
+ 220:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 221:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     SET or RESET
+ 222:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 223:../system/src/gd32f10x/gd32f10x_rtc.c **** FlagStatus rtc_interrupt_flag_get(uint32_t flag)
+ 224:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 449              		.loc 1 224 1 is_stmt 1 view -0
+ 450              		.cfi_startproc
+ 451              		@ args = 0, pretend = 0, frame = 0
+ 452              		@ frame_needed = 0, uses_anonymous_args = 0
+ 453              		@ link register save eliminated.
+ 225:../system/src/gd32f10x/gd32f10x_rtc.c ****     if(RESET != (RTC_CTL & flag)){
+ 454              		.loc 1 225 5 view .LVU89
+ 455              		.loc 1 225 18 is_stmt 0 view .LVU90
+ 456 0000 044B     		ldr	r3, .L44
+ 457 0002 D3F80438 		ldr	r3, [r3, #2052]
+ 458              		.loc 1 225 7 view .LVU91
+ 459 0006 0342     		tst	r3, r0
+ 460 0008 01D0     		beq	.L43
+ 226:../system/src/gd32f10x/gd32f10x_rtc.c ****         return SET;
+ 461              		.loc 1 226 16 view .LVU92
+ 462 000a 0120     		movs	r0, #1
+ 463              	.LVL26:
+ 464              		.loc 1 226 16 view .LVU93
+ 465 000c 7047     		bx	lr
+ 466              	.LVL27:
+ 467              	.L43:
+ 227:../system/src/gd32f10x/gd32f10x_rtc.c ****     }else{
+ 228:../system/src/gd32f10x/gd32f10x_rtc.c ****         return RESET;
+ 468              		.loc 1 228 16 view .LVU94
+ 469 000e 0020     		movs	r0, #0
+ 470              	.LVL28:
+ 229:../system/src/gd32f10x/gd32f10x_rtc.c ****     }
+ 230:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 471              		.loc 1 230 1 view .LVU95
+ 472 0010 7047     		bx	lr
+ 473              	.L45:
+ 474 0012 00BF     		.align	2
+ 475              	.L44:
+ 476 0014 00200040 		.word	1073750016
+ 477              		.cfi_endproc
+ 478              	.LFE67:
+ 480              		.section	.text.rtc_interrupt_flag_clear,"ax",%progbits
+ 481              		.align	1
+ 482              		.global	rtc_interrupt_flag_clear
+ 483              		.syntax unified
+ 484              		.thumb
+ 485              		.thumb_func
+ 487              	rtc_interrupt_flag_clear:
+ 488              	.LVL29:
+ 489              	.LFB68:
+ 231:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 232:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 233:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      clear RTC interrupt flag status
+ 234:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  flag: specify which flag status to clear
+ 235:../system/src/gd32f10x/gd32f10x_rtc.c ****                 one or more parameters can be selected which are shown as below:
+ 236:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_SECOND: second interrupt flag
+ 237:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_ALARM: alarm interrupt flag
+ 238:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_FLAG_OVERFLOW: overflow interrupt flag
+ 239:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 240:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 241:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 242:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_interrupt_flag_clear(uint32_t flag)
+ 243:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 490              		.loc 1 243 1 is_stmt 1 view -0
+ 491              		.cfi_startproc
+ 492              		@ args = 0, pretend = 0, frame = 0
+ 493              		@ frame_needed = 0, uses_anonymous_args = 0
+ 494              		@ link register save eliminated.
+ 244:../system/src/gd32f10x/gd32f10x_rtc.c ****     /* clear RTC interrupt flag */
+ 245:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_CTL &= ~flag;
+ 495              		.loc 1 245 5 view .LVU97
+ 496 0000 034A     		ldr	r2, .L47
+ 497 0002 D2F80438 		ldr	r3, [r2, #2052]
+ 498              		.loc 1 245 13 is_stmt 0 view .LVU98
+ 499 0006 23EA0003 		bic	r3, r3, r0
+ 500 000a C2F80438 		str	r3, [r2, #2052]
+ 246:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 501              		.loc 1 246 1 view .LVU99
+ 502 000e 7047     		bx	lr
+ 503              	.L48:
+ 504              		.align	2
+ 505              	.L47:
+ 506 0010 00200040 		.word	1073750016
+ 507              		.cfi_endproc
+ 508              	.LFE68:
+ 510              		.section	.text.rtc_interrupt_enable,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	rtc_interrupt_enable
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	rtc_interrupt_enable:
+ 518              	.LVL30:
+ 519              	.LFB69:
+ 247:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 248:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 249:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      enable RTC interrupt
+ 250:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  interrupt: specify which interrupt to enbale
+ 251:../system/src/gd32f10x/gd32f10x_rtc.c ****                 one or more parameters can be selected which are shown as below:
+ 252:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_SECOND: second interrupt
+ 253:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_ALARM: alarm interrupt
+ 254:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_OVERFLOW: overflow interrupt
+ 255:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 256:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 257:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 258:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_interrupt_enable(uint32_t interrupt)
+ 259:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 520              		.loc 1 259 1 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		@ link register save eliminated.
+ 260:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_INTEN |= interrupt;
+ 525              		.loc 1 260 5 view .LVU101
+ 526 0000 034A     		ldr	r2, .L50
+ 527 0002 D2F80038 		ldr	r3, [r2, #2048]
+ 528              		.loc 1 260 15 is_stmt 0 view .LVU102
+ 529 0006 0343     		orrs	r3, r3, r0
+ 530 0008 C2F80038 		str	r3, [r2, #2048]
+ 261:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 531              		.loc 1 261 1 view .LVU103
+ 532 000c 7047     		bx	lr
+ 533              	.L51:
+ 534 000e 00BF     		.align	2
+ 535              	.L50:
+ 536 0010 00200040 		.word	1073750016
+ 537              		.cfi_endproc
+ 538              	.LFE69:
+ 540              		.section	.text.rtc_interrupt_disable,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	rtc_interrupt_disable
+ 543              		.syntax unified
+ 544              		.thumb
+ 545              		.thumb_func
+ 547              	rtc_interrupt_disable:
+ 548              	.LVL31:
+ 549              	.LFB70:
+ 262:../system/src/gd32f10x/gd32f10x_rtc.c **** 
+ 263:../system/src/gd32f10x/gd32f10x_rtc.c **** /*!
+ 264:../system/src/gd32f10x/gd32f10x_rtc.c ****     \brief      disable RTC interrupt
+ 265:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[in]  interrupt: specify which interrupt to disbale
+ 266:../system/src/gd32f10x/gd32f10x_rtc.c ****                 one or more parameters can be selected which are shown as below:
+ 267:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_SECOND: second interrupt
+ 268:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_ALARM: alarm interrupt
+ 269:../system/src/gd32f10x/gd32f10x_rtc.c ****       \arg        RTC_INT_OVERFLOW: overflow interrupt
+ 270:../system/src/gd32f10x/gd32f10x_rtc.c ****     \param[out] none
+ 271:../system/src/gd32f10x/gd32f10x_rtc.c ****     \retval     none
+ 272:../system/src/gd32f10x/gd32f10x_rtc.c **** */
+ 273:../system/src/gd32f10x/gd32f10x_rtc.c **** void rtc_interrupt_disable(uint32_t interrupt)
+ 274:../system/src/gd32f10x/gd32f10x_rtc.c **** {
+ 550              		.loc 1 274 1 is_stmt 1 view -0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554              		@ link register save eliminated.
+ 275:../system/src/gd32f10x/gd32f10x_rtc.c ****     RTC_INTEN &= ~interrupt;
+ 555              		.loc 1 275 5 view .LVU105
+ 556 0000 034A     		ldr	r2, .L53
+ 557 0002 D2F80038 		ldr	r3, [r2, #2048]
+ 558              		.loc 1 275 15 is_stmt 0 view .LVU106
+ 559 0006 23EA0003 		bic	r3, r3, r0
+ 560 000a C2F80038 		str	r3, [r2, #2048]
+ 276:../system/src/gd32f10x/gd32f10x_rtc.c **** }
+ 561              		.loc 1 276 1 view .LVU107
+ 562 000e 7047     		bx	lr
+ 563              	.L54:
+ 564              		.align	2
+ 565              	.L53:
+ 566 0010 00200040 		.word	1073750016
+ 567              		.cfi_endproc
+ 568              	.LFE70:
+ 570              		.text
+ 571              	.Letext0:
+ 572              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 573              		.file 3 "../system/inc/cmsis/gd32f10x.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_rtc.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:19     .text.rtc_configuration_mode_enter:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:25     .text.rtc_configuration_mode_enter:00000000 rtc_configuration_mode_enter
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:43     .text.rtc_configuration_mode_enter:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:48     .text.rtc_configuration_mode_exit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:54     .text.rtc_configuration_mode_exit:00000000 rtc_configuration_mode_exit
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:72     .text.rtc_configuration_mode_exit:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:77     .text.rtc_counter_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:83     .text.rtc_counter_set:00000000 rtc_counter_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:119    .text.rtc_counter_set:0000001c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:124    .text.rtc_prescaler_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:130    .text.rtc_prescaler_set:00000000 rtc_prescaler_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:166    .text.rtc_prescaler_set:00000020 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:171    .text.rtc_lwoff_wait:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:177    .text.rtc_lwoff_wait:00000000 rtc_lwoff_wait
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:198    .text.rtc_lwoff_wait:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:203    .text.rtc_register_sync_wait:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:209    .text.rtc_register_sync_wait:00000000 rtc_register_sync_wait
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:237    .text.rtc_register_sync_wait:0000001c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:242    .text.rtc_alarm_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:248    .text.rtc_alarm_config:00000000 rtc_alarm_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:284    .text.rtc_alarm_config:0000001c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:289    .text.rtc_counter_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:295    .text.rtc_counter_get:00000000 rtc_counter_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:322    .text.rtc_counter_get:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:327    .text.rtc_divider_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:333    .text.rtc_divider_get:00000000 rtc_divider_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:364    .text.rtc_divider_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:369    .text.rtc_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:375    .text.rtc_flag_get:00000000 rtc_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:405    .text.rtc_flag_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:410    .text.rtc_flag_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:416    .text.rtc_flag_clear:00000000 rtc_flag_clear
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:435    .text.rtc_flag_clear:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:440    .text.rtc_interrupt_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:446    .text.rtc_interrupt_flag_get:00000000 rtc_interrupt_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:476    .text.rtc_interrupt_flag_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:481    .text.rtc_interrupt_flag_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:487    .text.rtc_interrupt_flag_clear:00000000 rtc_interrupt_flag_clear
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:506    .text.rtc_interrupt_flag_clear:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:511    .text.rtc_interrupt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:517    .text.rtc_interrupt_enable:00000000 rtc_interrupt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:536    .text.rtc_interrupt_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:541    .text.rtc_interrupt_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:547    .text.rtc_interrupt_disable:00000000 rtc_interrupt_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccSxAgve.s:566    .text.rtc_interrupt_disable:00000010 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+                           .group:00000000 wm4.gd32f10x_rtc.h.44.b3f8820cee33d355747a640f3fa55b4f
+
+NO UNDEFINED SYMBOLS

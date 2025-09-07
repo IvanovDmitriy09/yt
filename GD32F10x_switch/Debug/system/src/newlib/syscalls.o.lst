@@ -1,0 +1,298 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"syscalls.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/newlib/syscalls.c"
+  18              		.section	.text.__initialize_args,"ax",%progbits
+  19              		.align	1
+  20              		.weak	__initialize_args
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	__initialize_args:
+  26              	.LVL0:
+  27              	.LFB22:
+   1:../system/src/newlib/syscalls.c **** /*
+   2:../system/src/newlib/syscalls.c ****  * This file is part of the µOS++ distribution.
+   3:../system/src/newlib/syscalls.c ****  *   (https://github.com/micro-os-plus)
+   4:../system/src/newlib/syscalls.c ****  * Copyright (c) 2014 Liviu Ionescu.
+   5:../system/src/newlib/syscalls.c ****  *
+   6:../system/src/newlib/syscalls.c ****  * Permission is hereby granted, free of charge, to any person
+   7:../system/src/newlib/syscalls.c ****  * obtaining a copy of this software and associated documentation
+   8:../system/src/newlib/syscalls.c ****  * files (the "Software"), to deal in the Software without
+   9:../system/src/newlib/syscalls.c ****  * restriction, including without limitation the rights to use,
+  10:../system/src/newlib/syscalls.c ****  * copy, modify, merge, publish, distribute, sublicense, and/or
+  11:../system/src/newlib/syscalls.c ****  * sell copies of the Software, and to permit persons to whom
+  12:../system/src/newlib/syscalls.c ****  * the Software is furnished to do so, subject to the following
+  13:../system/src/newlib/syscalls.c ****  * conditions:
+  14:../system/src/newlib/syscalls.c ****  *
+  15:../system/src/newlib/syscalls.c ****  * The above copyright notice and this permission notice shall be
+  16:../system/src/newlib/syscalls.c ****  * included in all copies or substantial portions of the Software.
+  17:../system/src/newlib/syscalls.c ****  *
+  18:../system/src/newlib/syscalls.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  19:../system/src/newlib/syscalls.c ****  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+  20:../system/src/newlib/syscalls.c ****  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  21:../system/src/newlib/syscalls.c ****  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  22:../system/src/newlib/syscalls.c ****  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  23:../system/src/newlib/syscalls.c ****  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  24:../system/src/newlib/syscalls.c ****  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  25:../system/src/newlib/syscalls.c ****  * OTHER DEALINGS IN THE SOFTWARE.
+  26:../system/src/newlib/syscalls.c ****  */
+  27:../system/src/newlib/syscalls.c **** 
+  28:../system/src/newlib/syscalls.c **** // ----------------------------------------------------------------------------
+  29:../system/src/newlib/syscalls.c **** 
+  30:../system/src/newlib/syscalls.c **** int errno;
+  31:../system/src/newlib/syscalls.c **** void *__dso_handle __attribute__ ((weak));
+  32:../system/src/newlib/syscalls.c **** 
+  33:../system/src/newlib/syscalls.c **** // ----------------------------------------------------------------------------
+  34:../system/src/newlib/syscalls.c **** 
+  35:../system/src/newlib/syscalls.c **** #if !defined(OS_USE_SEMIHOSTING)
+  36:../system/src/newlib/syscalls.c **** 
+  37:../system/src/newlib/syscalls.c **** #include <_ansi.h>
+  38:../system/src/newlib/syscalls.c **** #include <_syslist.h>
+  39:../system/src/newlib/syscalls.c **** #include <errno.h>
+  40:../system/src/newlib/syscalls.c **** //#include <sys/types.h>
+  41:../system/src/newlib/syscalls.c **** #include <sys/stat.h>
+  42:../system/src/newlib/syscalls.c **** #include <sys/time.h>
+  43:../system/src/newlib/syscalls.c **** #include <sys/times.h>
+  44:../system/src/newlib/syscalls.c **** #include <limits.h>
+  45:../system/src/newlib/syscalls.c **** #include <signal.h>
+  46:../system/src/newlib/syscalls.c **** 
+  47:../system/src/newlib/syscalls.c **** void
+  48:../system/src/newlib/syscalls.c **** __initialize_args(int* p_argc, char*** p_argv);
+  49:../system/src/newlib/syscalls.c **** 
+  50:../system/src/newlib/syscalls.c **** // This is the standard default implementation for the routine to
+  51:../system/src/newlib/syscalls.c **** // process args. It returns a single empty arg.
+  52:../system/src/newlib/syscalls.c **** // For semihosting applications, this is redefined to get the real
+  53:../system/src/newlib/syscalls.c **** // args from the debugger. You can also use it if you decide to keep
+  54:../system/src/newlib/syscalls.c **** // some args in a non-volatile memory.
+  55:../system/src/newlib/syscalls.c **** 
+  56:../system/src/newlib/syscalls.c **** void __attribute__((weak))
+  57:../system/src/newlib/syscalls.c **** __initialize_args(int* p_argc, char*** p_argv)
+  58:../system/src/newlib/syscalls.c **** {
+  28              		.loc 1 58 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  59:../system/src/newlib/syscalls.c ****   // By the time we reach this, the data and bss should have been initialised.
+  60:../system/src/newlib/syscalls.c **** 
+  61:../system/src/newlib/syscalls.c ****   // The strings pointed to by the argv array shall be modifiable by the
+  62:../system/src/newlib/syscalls.c ****   // program, and retain their last-stored values between program startup
+  63:../system/src/newlib/syscalls.c ****   // and program termination. (static, no const)
+  64:../system/src/newlib/syscalls.c ****   static char name[] = "";
+  33              		.loc 1 64 3 view .LVU1
+  65:../system/src/newlib/syscalls.c **** 
+  66:../system/src/newlib/syscalls.c ****   // The string pointed to by argv[0] represents the program name;
+  67:../system/src/newlib/syscalls.c ****   // argv[0][0] shall be the null character if the program name is not
+  68:../system/src/newlib/syscalls.c ****   // available from the host environment. argv[argc] shall be a null pointer.
+  69:../system/src/newlib/syscalls.c ****   // (static, no const)
+  70:../system/src/newlib/syscalls.c ****   static char* argv[2] =
+  34              		.loc 1 70 3 view .LVU2
+  71:../system/src/newlib/syscalls.c ****     { name, NULL };
+  72:../system/src/newlib/syscalls.c **** 
+  73:../system/src/newlib/syscalls.c ****   *p_argc = 1;
+  35              		.loc 1 73 3 view .LVU3
+  36              		.loc 1 73 11 is_stmt 0 view .LVU4
+  37 0000 0123     		movs	r3, #1
+  38 0002 0360     		str	r3, [r0]
+  74:../system/src/newlib/syscalls.c ****   *p_argv = &argv[0];
+  39              		.loc 1 74 3 is_stmt 1 view .LVU5
+  40              		.loc 1 74 11 is_stmt 0 view .LVU6
+  41 0004 014B     		ldr	r3, .L2
+  42 0006 0B60     		str	r3, [r1]
+  75:../system/src/newlib/syscalls.c ****   return;
+  43              		.loc 1 75 3 is_stmt 1 view .LVU7
+  76:../system/src/newlib/syscalls.c **** }
+  44              		.loc 1 76 1 is_stmt 0 view .LVU8
+  45 0008 7047     		bx	lr
+  46              	.L3:
+  47 000a 00BF     		.align	2
+  48              	.L2:
+  49 000c 00000000 		.word	argv.1
+  50              		.cfi_endproc
+  51              	.LFE22:
+  53              		.section	.text.raise,"ax",%progbits
+  54              		.align	1
+  55              		.weak	raise
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	raise:
+  61              	.LVL1:
+  62              	.LFB23:
+  77:../system/src/newlib/syscalls.c **** 
+  78:../system/src/newlib/syscalls.c **** // These functions are defined here to avoid linker errors in freestanding
+  79:../system/src/newlib/syscalls.c **** // applications. They might be called in some error cases from library
+  80:../system/src/newlib/syscalls.c **** // code.
+  81:../system/src/newlib/syscalls.c **** //
+  82:../system/src/newlib/syscalls.c **** // If you detect other functions to be needed, just let us know
+  83:../system/src/newlib/syscalls.c **** // and we'll add them.
+  84:../system/src/newlib/syscalls.c **** 
+  85:../system/src/newlib/syscalls.c **** __attribute__((weak)) int
+  86:../system/src/newlib/syscalls.c **** raise(int sig __attribute__((unused)))
+  87:../system/src/newlib/syscalls.c **** {
+  63              		.loc 1 87 1 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		.loc 1 87 1 is_stmt 0 view .LVU10
+  68 0000 08B5     		push	{r3, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  88:../system/src/newlib/syscalls.c ****   errno = ENOSYS;
+  72              		.loc 1 88 3 is_stmt 1 view .LVU11
+  73 0002 FFF7FEFF 		bl	__errno
+  74              	.LVL2:
+  75              		.loc 1 88 9 is_stmt 0 view .LVU12
+  76 0006 5823     		movs	r3, #88
+  77 0008 0360     		str	r3, [r0]
+  89:../system/src/newlib/syscalls.c ****   return -1;
+  78              		.loc 1 89 3 is_stmt 1 view .LVU13
+  90:../system/src/newlib/syscalls.c **** }
+  79              		.loc 1 90 1 is_stmt 0 view .LVU14
+  80 000a 4FF0FF30 		mov	r0, #-1
+  81 000e 08BD     		pop	{r3, pc}
+  82              		.cfi_endproc
+  83              	.LFE23:
+  85              		.section	.text.kill,"ax",%progbits
+  86              		.align	1
+  87              		.weak	kill
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  92              	kill:
+  93              	.LVL3:
+  94              	.LFB24:
+  91:../system/src/newlib/syscalls.c **** 
+  92:../system/src/newlib/syscalls.c **** int
+  93:../system/src/newlib/syscalls.c **** kill(pid_t pid, int sig);
+  94:../system/src/newlib/syscalls.c **** 
+  95:../system/src/newlib/syscalls.c **** __attribute__((weak)) int
+  96:../system/src/newlib/syscalls.c **** kill(pid_t pid __attribute__((unused)), int sig __attribute__((unused)))
+  97:../system/src/newlib/syscalls.c **** {
+  95              		.loc 1 97 1 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		.loc 1 97 1 is_stmt 0 view .LVU16
+ 100 0000 08B5     		push	{r3, lr}
+ 101              		.cfi_def_cfa_offset 8
+ 102              		.cfi_offset 3, -8
+ 103              		.cfi_offset 14, -4
+  98:../system/src/newlib/syscalls.c ****   errno = ENOSYS;
+ 104              		.loc 1 98 3 is_stmt 1 view .LVU17
+ 105 0002 FFF7FEFF 		bl	__errno
+ 106              	.LVL4:
+ 107              		.loc 1 98 9 is_stmt 0 view .LVU18
+ 108 0006 5823     		movs	r3, #88
+ 109 0008 0360     		str	r3, [r0]
+  99:../system/src/newlib/syscalls.c ****   return -1;
+ 110              		.loc 1 99 3 is_stmt 1 view .LVU19
+ 100:../system/src/newlib/syscalls.c **** }
+ 111              		.loc 1 100 1 is_stmt 0 view .LVU20
+ 112 000a 4FF0FF30 		mov	r0, #-1
+ 113 000e 08BD     		pop	{r3, pc}
+ 114              		.cfi_endproc
+ 115              	.LFE24:
+ 117              		.section	.bss.name.0,"aw",%nobits
+ 118              		.align	2
+ 121              	name.0:
+ 122 0000 00       		.space	1
+ 123              		.section	.data.argv.1,"aw"
+ 124              		.align	2
+ 127              	argv.1:
+ 128 0000 00000000 		.word	name.0
+ 129 0004 00000000 		.word	0
+ 130              		.weak	__dso_handle
+ 131              		.section	.bss.__dso_handle,"aw",%nobits
+ 132              		.align	2
+ 135              	__dso_handle:
+ 136 0000 00000000 		.space	4
+ 137              		.global	errno
+ 138              		.section	.bss.errno,"aw",%nobits
+ 139              		.align	2
+ 142              	errno:
+ 143 0000 00000000 		.space	4
+ 144              		.text
+ 145              	.Letext0:
+ 146              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 147              		.file 3 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 148              		.file 4 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 149              		.file 5 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 150              		.file 6 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+DEFINED SYMBOLS
+                            *ABS*:00000000 syscalls.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:19     .text.__initialize_args:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:25     .text.__initialize_args:00000000 __initialize_args
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:49     .text.__initialize_args:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:127    .data.argv.1:00000000 argv.1
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:54     .text.raise:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:60     .text.raise:00000000 raise
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:86     .text.kill:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:92     .text.kill:00000000 kill
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:118    .bss.name.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:121    .bss.name.0:00000000 name.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:124    .data.argv.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:135    .bss.__dso_handle:00000000 __dso_handle
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:132    .bss.__dso_handle:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:142    .bss.errno:00000000 errno
+C:\Users\Dmitriy\AppData\Local\Temp\ccKu5YSI.s:139    .bss.errno:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4._syslist.h.4.cca0a711aaf6863107c5beb8fad7c2bf
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.stddef.h.39.3e0425629195acf083c9561151306b4d
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.errno.h.18.87873c1c5b242e8a4fdc43daa9aad824
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.time.h.14.849270cc7997ccc4e05edd146e568a9f
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.0e6a0fdbc9955f5707ed54246ed2e089
+                           .group:00000000 wm4.types.h.40.8b6acba56cefbb11746718204edc8f5e
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.32.bec3221fa7a9bb0bdde696c9c57e47d2
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.8f92964f85316d866d3bb193a38b5ac3
+                           .group:00000000 wm4.types.h.51.e2a6e4379b4797ffcc4841f8498fd61b
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.time.h.142.403dcded079b6de6a2d2f21a34c2ae96
+                           .group:00000000 wm4.stat.h.54.5a9b823658423102e7a8de4ed089eedc
+                           .group:00000000 wm4.time.h.40.07bdef2e51e429b46276cd6f2246b78b
+                           .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:00000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:00000000 wm4.limits.h.60.b4bc9eda7e37043243f7148a2c6d0306
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.signal.h.31.1e41f887ed1384065c2378e275de5bce
+                           .group:00000000 wm4.signal.h.18.14c8d0c03fc1e06775633fad7399cfc7
+
+UNDEFINED SYMBOLS
+__errno

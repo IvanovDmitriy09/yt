@@ -1,0 +1,507 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"bprofile_YT9218N_default_demo.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c"
+  18              		.section	.text.cal_profile_yt9218n_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	cal_profile_yt9218n_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	cal_profile_yt9218n_init:
+  26              	.LVL0:
+  27              	.LFB3:
+   1:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /******************************************************************************
+   2:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *                                                                             *
+   3:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Copyright (c), 2023, Motorcomm Electronic Technology Co.,Ltd.              *
+   4:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Motorcomm Confidential and Proprietary.                                    *
+   5:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *                                                                             *
+   6:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *******************************************************************************
+   7:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  File Name     : bprofile_yt9218n_default_demo.c
+   8:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Version       : Initial Draft
+   9:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Created       :
+  10:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Last Modified :
+  11:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *  Description   : board profile for yt9218n board,port(8 utp port)
+  12:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** *
+  13:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** ******************************************************************************/
+  14:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  15:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /**************************************************
+  16:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  *      Include header files                       *
+  17:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  **************************************************/
+  18:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** #include "cal_bprofile.h"
+  19:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** #include "yt_error.h"
+  20:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /**************************************************
+  21:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  *      Constants or macros Declaration            *
+  22:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  **************************************************/
+  23:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  24:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /**************************************************
+  25:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  *      Global variables                           *
+  26:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  **************************************************/
+  27:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  28:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /**************************************************
+  29:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  *      Functions Declaration                      *
+  30:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****  **************************************************/
+  31:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** yt_ret_t cal_profile_yt9218n_init(yt_hwProfile_info_t *hwprofile_info);
+  32:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  33:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** yt_swDescp_t yt9218n_swDescp;
+  34:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  35:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const board_profile_identify_t yt9218nProfileIdentifier = {BOARD_ID_YT9218N, "yt9218n Default Demo"
+  36:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  37:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /* port descp */
+  38:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const yt_portDescp_t yt9218nPortDescp[] =
+  39:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** {
+  40:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     /*macid	attribute		phy_index	phy_addr	serdes_index	ethtype			medium				smi */
+  41:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {0,		PORT_ATTR_ETH,	0,			0,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  42:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {1,		PORT_ATTR_ETH,	0,			1,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  43:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {2,		PORT_ATTR_ETH,	0,			2,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  44:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {3,		PORT_ATTR_ETH,	0,			3,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  45:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {4,		PORT_ATTR_ETH,	0,			4,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  46:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {5,		PORT_ATTR_ETH,	0,			5,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  47:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {6,		PORT_ATTR_ETH,	0,			6,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  48:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {7,		PORT_ATTR_ETH,	0,			7,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  49:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** #ifdef INTER_MCU
+  50:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     /* internel cpu port */
+  51:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {10,    PORT_ATTR_INT_CPU,			    INVALID_ID,	INVALID_ID,	PORT_ATTR_ETH,	ETH_TYPE_GE,	PORT_MEDI_
+  52:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** #endif
+  53:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,YT_SMI_NONE},
+  54:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** };
+  55:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  56:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /* phy.descp */
+  57:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const yt_phyDescp_t yt9218nPhyDescp[] =
+  58:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** {
+  59:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 	/*phy_id chip_model				start_mac_id	phy_max*/
+  60:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 	{0,         YT_PHY_MODEL_INT861X,	0,				8},
+  61:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 	{INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID},
+  62:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** };
+  63:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     
+  64:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /* LED description */
+  65:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const yt_sled_remapInfo_t yt9218nRemapInfo[] = 
+  66:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** {
+  67:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {9, 0}, {8, 0}, {7, 0}, {6, 0}, {5, 0}, {4, 0}, {3, 0}, {2, 0}, {1, 0}, {0, 0},
+  68:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {9, 1}, {8, 1}, {7, 1}, {6, 1}, {5, 1}, {4, 1}, {2, 1}, {3, 1}, {1, 1}, {0, 1},
+  69:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {9, 2}, {8, 2}, {7, 2}, {6, 2}, {5, 2}, {4, 2}, {3, 2}, {2, 2}, {1, 2}, {0, 2}
+  70:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** };
+  71:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  72:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** yt_sled_param_t yt9218nSLEDParam = {
+  73:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     LED_SERIAL_ACTIVE_MODE_LOW,
+  74:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     SLED_DATANUM_YT9218_30, 
+  75:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     0,
+  76:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218nRemapInfo
+  77:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** };
+  78:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  79:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const yt_ledDescp_t yt9218nLEDDescp = {LED_MODE_SCAN, &yt9218nSLEDParam};
+  80:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  81:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  82:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** /* hardware profile */
+  83:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** const yt_hwProfile_t yt9218n_default_demo =
+  84:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** {
+  85:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     .pIdentifier = &yt9218nProfileIdentifier,
+  86:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     .profile_init = cal_profile_yt9218n_init,
+  87:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** };
+  88:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  89:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** yt_ret_t cal_profile_yt9218n_init(yt_hwProfile_info_t *hwprofile_info)
+  90:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** {
+  28              		.loc 1 90 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  91:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     uint8_t	i;
+  33              		.loc 1 91 5 view .LVU1
+  92:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  93:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     hwprofile_info->pIdentifier = &yt9218nProfileIdentifier;
+  34              		.loc 1 93 5 view .LVU2
+  35              		.loc 1 93 33 is_stmt 0 view .LVU3
+  36 0000 1B4B     		ldr	r3, .L6
+  37 0002 0360     		str	r3, [r0]
+  94:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  95:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     /* switch info */
+  96:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     hwprofile_info->switch_count = 1;
+  38              		.loc 1 96 5 is_stmt 1 view .LVU4
+  39              		.loc 1 96 34 is_stmt 0 view .LVU5
+  40 0004 0122     		movs	r2, #1
+  41 0006 0272     		strb	r2, [r0, #8]
+  97:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+  98:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218n_swDescp.chip_id = YT_SW_ID_9218;
+  42              		.loc 1 98 5 is_stmt 1 view .LVU6
+  43              		.loc 1 98 29 is_stmt 0 view .LVU7
+  44 0008 1A4B     		ldr	r3, .L6+4
+  45 000a 49F20101 		movw	r1, #36865
+  46 000e 1980     		strh	r1, [r3]	@ movhi
+  99:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218n_swDescp.chip_model = YT_SW_MODEL_9218;
+  47              		.loc 1 99 5 is_stmt 1 view .LVU8
+  48              		.loc 1 99 32 is_stmt 0 view .LVU9
+  49 0010 9A70     		strb	r2, [r3, #2]
+ 100:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+ 101:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     i = 0;
+  50              		.loc 1 101 5 is_stmt 1 view .LVU10
+  51              	.LVL1:
+ 102:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     while(yt9218nPortDescp[i].mac_id != INVALID_ID)
+  52              		.loc 1 102 5 view .LVU11
+ 101:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     while(yt9218nPortDescp[i].mac_id != INVALID_ID)
+  53              		.loc 1 101 7 is_stmt 0 view .LVU12
+  54 0012 0023     		movs	r3, #0
+  55              		.loc 1 102 10 view .LVU13
+  56 0014 09E0     		b	.L2
+  57              	.LVL2:
+  58              	.L3:
+ 103:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+ 104:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****         yt9218n_swDescp.pPortDescp[i] = &yt9218nPortDescp[i];
+  59              		.loc 1 104 9 is_stmt 1 view .LVU14
+  60              		.loc 1 104 41 is_stmt 0 view .LVU15
+  61 0016 184A     		ldr	r2, .L6+8
+  62 0018 02EBC302 		add	r2, r2, r3, lsl #3
+  63              		.loc 1 104 39 view .LVU16
+  64 001c 03F1060C 		add	ip, r3, #6
+  65 0020 1449     		ldr	r1, .L6+4
+  66 0022 41F82C20 		str	r2, [r1, ip, lsl #2]
+ 105:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****         i++;
+  67              		.loc 1 105 9 is_stmt 1 view .LVU17
+  68              		.loc 1 105 10 is_stmt 0 view .LVU18
+  69 0026 0133     		adds	r3, r3, #1
+  70              	.LVL3:
+  71              		.loc 1 105 10 view .LVU19
+  72 0028 DBB2     		uxtb	r3, r3
+  73              	.LVL4:
+  74              	.L2:
+ 102:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+  75              		.loc 1 102 38 is_stmt 1 view .LVU20
+ 102:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+  76              		.loc 1 102 30 is_stmt 0 view .LVU21
+  77 002a 134A     		ldr	r2, .L6+8
+  78 002c 12F83320 		ldrb	r2, [r2, r3, lsl #3]	@ zero_extendqisi2
+ 102:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+  79              		.loc 1 102 38 view .LVU22
+  80 0030 FF2A     		cmp	r2, #255
+  81 0032 F0D1     		bne	.L3
+ 106:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     }
+ 107:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218n_swDescp.port_num = i;
+  82              		.loc 1 107 5 is_stmt 1 view .LVU23
+  83              		.loc 1 107 30 is_stmt 0 view .LVU24
+  84 0034 0F4A     		ldr	r2, .L6+4
+  85 0036 1375     		strb	r3, [r2, #20]
+ 108:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+ 109:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     i = 0;
+  86              		.loc 1 109 5 is_stmt 1 view .LVU25
+  87              	.LVL5:
+ 110:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     while(yt9218nPhyDescp[i].phy_index != INVALID_ID)
+  88              		.loc 1 110 5 view .LVU26
+ 109:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     while(yt9218nPhyDescp[i].phy_index != INVALID_ID)
+  89              		.loc 1 109 7 is_stmt 0 view .LVU27
+  90 0038 0023     		movs	r3, #0
+  91              		.loc 1 110 10 view .LVU28
+  92 003a 09E0     		b	.L4
+  93              	.LVL6:
+  94              	.L5:
+ 111:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+ 112:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****         yt9218n_swDescp.pPhyDescp[i] = &yt9218nPhyDescp[i];
+  95              		.loc 1 112 9 is_stmt 1 view .LVU29
+  96              		.loc 1 112 40 is_stmt 0 view .LVU30
+  97 003c 0F4A     		ldr	r2, .L6+12
+  98 003e 02EB8302 		add	r2, r2, r3, lsl #2
+  99              		.loc 1 112 38 view .LVU31
+ 100 0042 03F1260C 		add	ip, r3, #38
+ 101 0046 0B49     		ldr	r1, .L6+4
+ 102 0048 41F82C20 		str	r2, [r1, ip, lsl #2]
+ 113:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****         i++;
+ 103              		.loc 1 113 9 is_stmt 1 view .LVU32
+ 104              		.loc 1 113 10 is_stmt 0 view .LVU33
+ 105 004c 0133     		adds	r3, r3, #1
+ 106              	.LVL7:
+ 107              		.loc 1 113 10 view .LVU34
+ 108 004e DBB2     		uxtb	r3, r3
+ 109              	.LVL8:
+ 110              	.L4:
+ 110:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+ 111              		.loc 1 110 40 is_stmt 1 view .LVU35
+ 110:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+ 112              		.loc 1 110 29 is_stmt 0 view .LVU36
+ 113 0050 0A4A     		ldr	r2, .L6+12
+ 114 0052 12F82320 		ldrb	r2, [r2, r3, lsl #2]	@ zero_extendqisi2
+ 110:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     {
+ 115              		.loc 1 110 40 view .LVU37
+ 116 0056 FF2A     		cmp	r2, #255
+ 117 0058 F0D1     		bne	.L5
+ 114:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     }
+ 115:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+ 116:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218nSLEDParam.remapInfoNum = sizeof(yt9218nRemapInfo)/sizeof(yt_sled_remapInfo_t);
+ 118              		.loc 1 116 5 is_stmt 1 view .LVU38
+ 119              		.loc 1 116 35 is_stmt 0 view .LVU39
+ 120 005a 094B     		ldr	r3, .L6+16
+ 121              	.LVL9:
+ 122              		.loc 1 116 35 view .LVU40
+ 123 005c 1E22     		movs	r2, #30
+ 124 005e 9A70     		strb	r2, [r3, #2]
+ 117:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     yt9218n_swDescp.pLEDDescp = &yt9218nLEDDescp;
+ 125              		.loc 1 117 5 is_stmt 1 view .LVU41
+ 126              		.loc 1 117 31 is_stmt 0 view .LVU42
+ 127 0060 044B     		ldr	r3, .L6+4
+ 128 0062 084A     		ldr	r2, .L6+20
+ 129 0064 C3F8A820 		str	r2, [r3, #168]
+ 118:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     
+ 119:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     hwprofile_info->pSwDescp[0] = &yt9218n_swDescp;
+ 130              		.loc 1 119 5 is_stmt 1 view .LVU43
+ 131              		.loc 1 119 33 is_stmt 0 view .LVU44
+ 132 0068 C360     		str	r3, [r0, #12]
+ 120:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** 
+ 121:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c ****     return CMM_ERR_OK;
+ 133              		.loc 1 121 5 is_stmt 1 view .LVU45
+ 122:../Switch/common/boardprofile/bprofile_YT9218N_default_demo.c **** }
+ 134              		.loc 1 122 1 is_stmt 0 view .LVU46
+ 135 006a 0020     		movs	r0, #0
+ 136              	.LVL10:
+ 137              		.loc 1 122 1 view .LVU47
+ 138 006c 7047     		bx	lr
+ 139              	.L7:
+ 140 006e 00BF     		.align	2
+ 141              	.L6:
+ 142 0070 00000000 		.word	yt9218nProfileIdentifier
+ 143 0074 00000000 		.word	yt9218n_swDescp
+ 144 0078 00000000 		.word	yt9218nPortDescp
+ 145 007c 00000000 		.word	yt9218nPhyDescp
+ 146 0080 00000000 		.word	yt9218nSLEDParam
+ 147 0084 00000000 		.word	yt9218nLEDDescp
+ 148              		.cfi_endproc
+ 149              	.LFE3:
+ 151              		.global	yt9218n_default_demo
+ 152              		.section	.rodata.yt9218n_default_demo,"a"
+ 153              		.align	2
+ 156              	yt9218n_default_demo:
+ 157 0000 00000000 		.word	yt9218nProfileIdentifier
+ 158 0004 00000000 		.word	cal_profile_yt9218n_init
+ 159              		.global	yt9218nLEDDescp
+ 160              		.section	.rodata.yt9218nLEDDescp,"a"
+ 161              		.align	2
+ 164              	yt9218nLEDDescp:
+ 165 0000 01       		.byte	1
+ 166 0001 000000   		.space	3
+ 167 0004 00000000 		.word	yt9218nSLEDParam
+ 168              		.global	yt9218nSLEDParam
+ 169              		.section	.data.yt9218nSLEDParam,"aw"
+ 170              		.align	2
+ 173              	yt9218nSLEDParam:
+ 174 0000 01       		.byte	1
+ 175 0001 08       		.byte	8
+ 176 0002 00       		.byte	0
+ 177 0003 00       		.space	1
+ 178 0004 00000000 		.word	yt9218nRemapInfo
+ 179              		.global	yt9218nRemapInfo
+ 180              		.section	.rodata.yt9218nRemapInfo,"a"
+ 181              		.align	2
+ 184              	yt9218nRemapInfo:
+ 185 0000 09       		.byte	9
+ 186 0001 08       		.byte	8
+ 187 0002 07       		.byte	7
+ 188 0003 06       		.byte	6
+ 189 0004 05       		.byte	5
+ 190 0005 04       		.byte	4
+ 191 0006 03       		.byte	3
+ 192 0007 02       		.byte	2
+ 193 0008 01       		.byte	1
+ 194 0009 00       		.byte	0
+ 195 000a 49       		.byte	73
+ 196 000b 48       		.byte	72
+ 197 000c 47       		.byte	71
+ 198 000d 46       		.byte	70
+ 199 000e 45       		.byte	69
+ 200 000f 44       		.byte	68
+ 201 0010 42       		.byte	66
+ 202 0011 43       		.byte	67
+ 203 0012 41       		.byte	65
+ 204 0013 40       		.byte	64
+ 205 0014 89       		.byte	137
+ 206 0015 88       		.byte	136
+ 207 0016 87       		.byte	135
+ 208 0017 86       		.byte	134
+ 209 0018 85       		.byte	133
+ 210 0019 84       		.byte	132
+ 211 001a 83       		.byte	131
+ 212 001b 82       		.byte	130
+ 213 001c 81       		.byte	129
+ 214 001d 80       		.byte	128
+ 215              		.global	yt9218nPhyDescp
+ 216              		.section	.rodata.yt9218nPhyDescp,"a"
+ 217              		.align	2
+ 220              	yt9218nPhyDescp:
+ 221 0000 00       		.byte	0
+ 222 0001 00       		.byte	0
+ 223 0002 00       		.byte	0
+ 224 0003 08       		.byte	8
+ 225 0004 FF       		.byte	-1
+ 226 0005 FF       		.byte	-1
+ 227 0006 FF       		.byte	-1
+ 228 0007 FF       		.byte	-1
+ 229              		.global	yt9218nPortDescp
+ 230              		.section	.rodata.yt9218nPortDescp,"a"
+ 231              		.align	2
+ 234              	yt9218nPortDescp:
+ 235 0000 00       		.byte	0
+ 236 0001 01       		.byte	1
+ 237 0002 00       		.byte	0
+ 238 0003 00       		.byte	0
+ 239 0004 FF       		.byte	-1
+ 240 0005 02       		.byte	2
+ 241 0006 00       		.byte	0
+ 242 0007 00       		.byte	0
+ 243 0008 01       		.byte	1
+ 244 0009 01       		.byte	1
+ 245 000a 00       		.byte	0
+ 246 000b 01       		.byte	1
+ 247 000c FF       		.byte	-1
+ 248 000d 02       		.byte	2
+ 249 000e 00       		.byte	0
+ 250 000f 00       		.byte	0
+ 251 0010 02       		.byte	2
+ 252 0011 01       		.byte	1
+ 253 0012 00       		.byte	0
+ 254 0013 02       		.byte	2
+ 255 0014 FF       		.byte	-1
+ 256 0015 02       		.byte	2
+ 257 0016 00       		.byte	0
+ 258 0017 00       		.byte	0
+ 259 0018 03       		.byte	3
+ 260 0019 01       		.byte	1
+ 261 001a 00       		.byte	0
+ 262 001b 03       		.byte	3
+ 263 001c FF       		.byte	-1
+ 264 001d 02       		.byte	2
+ 265 001e 00       		.byte	0
+ 266 001f 00       		.byte	0
+ 267 0020 04       		.byte	4
+ 268 0021 01       		.byte	1
+ 269 0022 00       		.byte	0
+ 270 0023 04       		.byte	4
+ 271 0024 FF       		.byte	-1
+ 272 0025 02       		.byte	2
+ 273 0026 00       		.byte	0
+ 274 0027 00       		.byte	0
+ 275 0028 05       		.byte	5
+ 276 0029 01       		.byte	1
+ 277 002a 00       		.byte	0
+ 278 002b 05       		.byte	5
+ 279 002c FF       		.byte	-1
+ 280 002d 02       		.byte	2
+ 281 002e 00       		.byte	0
+ 282 002f 00       		.byte	0
+ 283 0030 06       		.byte	6
+ 284 0031 01       		.byte	1
+ 285 0032 00       		.byte	0
+ 286 0033 06       		.byte	6
+ 287 0034 FF       		.byte	-1
+ 288 0035 02       		.byte	2
+ 289 0036 00       		.byte	0
+ 290 0037 00       		.byte	0
+ 291 0038 07       		.byte	7
+ 292 0039 01       		.byte	1
+ 293 003a 00       		.byte	0
+ 294 003b 07       		.byte	7
+ 295 003c FF       		.byte	-1
+ 296 003d 02       		.byte	2
+ 297 003e 00       		.byte	0
+ 298 003f 00       		.byte	0
+ 299 0040 FF       		.byte	-1
+ 300 0041 FF       		.byte	-1
+ 301 0042 FF       		.byte	-1
+ 302 0043 FF       		.byte	-1
+ 303 0044 FF       		.byte	-1
+ 304 0045 FF       		.byte	-1
+ 305 0046 FF       		.byte	-1
+ 306 0047 FF       		.byte	-1
+ 307              		.global	yt9218nProfileIdentifier
+ 308              		.section	.rodata.yt9218nProfileIdentifier,"a"
+ 309              		.align	2
+ 312              	yt9218nProfileIdentifier:
+ 313 0000 15680100 		.word	92181
+ 314 0004 79743932 		.ascii	"yt9218n Default Demo\000"
+ 314      31386E20 
+ 314      44656661 
+ 314      756C7420 
+ 314      44656D6F 
+ 315 0019 00000000 		.space	11
+ 315      00000000 
+ 315      000000
+ 316              		.global	yt9218n_swDescp
+ 317              		.section	.bss.yt9218n_swDescp,"aw",%nobits
+ 318              		.align	2
+ 321              	yt9218n_swDescp:
+ 322 0000 00000000 		.space	180
+ 322      00000000 
+ 322      00000000 
+ 322      00000000 
+ 322      00000000 
+ 323              		.text
+ 324              	.Letext0:
+ 325              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 326              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 327              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\drv\\phy/phy_chipdef.h"
+ 328              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\cal/cal_bprofile.h"
+ 329              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 bprofile_YT9218N_default_demo.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:19     .text.cal_profile_yt9218n_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:25     .text.cal_profile_yt9218n_init:00000000 cal_profile_yt9218n_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:142    .text.cal_profile_yt9218n_init:00000070 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:312    .rodata.yt9218nProfileIdentifier:00000000 yt9218nProfileIdentifier
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:321    .bss.yt9218n_swDescp:00000000 yt9218n_swDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:234    .rodata.yt9218nPortDescp:00000000 yt9218nPortDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:220    .rodata.yt9218nPhyDescp:00000000 yt9218nPhyDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:173    .data.yt9218nSLEDParam:00000000 yt9218nSLEDParam
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:164    .rodata.yt9218nLEDDescp:00000000 yt9218nLEDDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:156    .rodata.yt9218n_default_demo:00000000 yt9218n_default_demo
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:153    .rodata.yt9218n_default_demo:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:161    .rodata.yt9218nLEDDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:170    .data.yt9218nSLEDParam:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:184    .rodata.yt9218nRemapInfo:00000000 yt9218nRemapInfo
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:181    .rodata.yt9218nRemapInfo:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:217    .rodata.yt9218nPhyDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:231    .rodata.yt9218nPortDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:309    .rodata.yt9218nProfileIdentifier:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdiEuFu.s:318    .bss.yt9218n_swDescp:00000000 $d
+                           .group:00000000 wm4.0.645242867a2c3890cfa09ec032a865e6
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+
+NO UNDEFINED SYMBOLS

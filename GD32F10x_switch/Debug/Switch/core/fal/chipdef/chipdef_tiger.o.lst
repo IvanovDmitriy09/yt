@@ -1,0 +1,142 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"chipdef_tiger.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/fal/chipdef/chipdef_tiger.c"
+  18              		.global	yt9214_intf_info
+  19              		.section	.rodata.yt9214_intf_info,"a"
+  20              		.align	2
+  23              	yt9214_intf_info:
+  24 0000 04       		.byte	4
+  25 0001 03       		.byte	3
+  26 0002 01       		.byte	1
+  27 0003 02       		.byte	2
+  28 0004 08       		.byte	8
+  29 0005 00       		.byte	0
+  30 0006 0A       		.byte	10
+  31              		.global	yt9213_intf_info
+  32              		.section	.rodata.yt9213_intf_info,"a"
+  33              		.align	2
+  36              	yt9213_intf_info:
+  37 0000 03       		.byte	3
+  38 0001 03       		.byte	3
+  39 0002 01       		.byte	1
+  40 0003 01       		.byte	1
+  41 0004 09       		.byte	9
+  42 0005 00       		.byte	0
+  43 0006 0A       		.byte	10
+  44              		.global	yt9215_intf_info
+  45              		.section	.rodata.yt9215_intf_info,"a"
+  46              		.align	2
+  49              	yt9215_intf_info:
+  50 0000 07       		.byte	7
+  51 0001 05       		.byte	5
+  52 0002 00       		.byte	0
+  53 0003 02       		.byte	2
+  54 0004 08       		.byte	8
+  55 0005 00       		.byte	0
+  56 0006 0A       		.byte	10
+  57              		.global	yt9218_intf_info
+  58              		.section	.rodata.yt9218_intf_info,"a"
+  59              		.align	2
+  62              	yt9218_intf_info:
+  63 0000 0A       		.byte	10
+  64 0001 08       		.byte	8
+  65 0002 00       		.byte	0
+  66 0003 02       		.byte	2
+  67 0004 08       		.byte	8
+  68 0005 00       		.byte	0
+  69 0006 0A       		.byte	10
+  70              		.global	yt9215_capacity
+  71              		.section	.rodata.yt9215_capacity,"a"
+  72              		.align	2
+  75              	yt9215_capacity:
+  76 0000 08       		.byte	8
+  77 0001 04       		.byte	4
+  78 0002 40       		.byte	64
+  79 0003 07       		.byte	7
+  80 0004 02       		.byte	2
+  81 0005 3F       		.byte	63
+  82 0006 40       		.byte	64
+  83 0007 20       		.byte	32
+  84 0008 00       		.byte	0
+  85 0009 0F       		.byte	15
+  86 000a 0A       		.byte	10
+  87 000b 20       		.byte	32
+  88              		.global	yt9218_capacity
+  89              		.section	.rodata.yt9218_capacity,"a"
+  90              		.align	2
+  93              	yt9218_capacity:
+  94 0000 08       		.byte	8
+  95 0001 04       		.byte	4
+  96 0002 40       		.byte	64
+  97 0003 07       		.byte	7
+  98 0004 02       		.byte	2
+  99 0005 3F       		.byte	63
+ 100 0006 40       		.byte	64
+ 101 0007 20       		.byte	32
+ 102 0008 04       		.byte	4
+ 103 0009 0F       		.byte	15
+ 104 000a 0A       		.byte	10
+ 105 000b 20       		.byte	32
+ 106              		.text
+ 107              	.Letext0:
+ 108              		.file 2 "../Switch/core/fal/chipdef/chipdef.h"
+ 109              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 chipdef_tiger.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:23     .rodata.yt9214_intf_info:00000000 yt9214_intf_info
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:20     .rodata.yt9214_intf_info:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:36     .rodata.yt9213_intf_info:00000000 yt9213_intf_info
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:33     .rodata.yt9213_intf_info:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:49     .rodata.yt9215_intf_info:00000000 yt9215_intf_info
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:46     .rodata.yt9215_intf_info:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:62     .rodata.yt9218_intf_info:00000000 yt9218_intf_info
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:59     .rodata.yt9218_intf_info:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:75     .rodata.yt9215_capacity:00000000 yt9215_capacity
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:72     .rodata.yt9215_capacity:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:93     .rodata.yt9218_capacity:00000000 yt9218_capacity
+C:\Users\Dmitriy\AppData\Local\Temp\ccL8iEgQ.s:90     .rodata.yt9218_capacity:00000000 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+
+NO UNDEFINED SYMBOLS

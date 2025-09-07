@@ -1,0 +1,474 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_dbg.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_dbg.c"
+  18              		.section	.text.dbg_id_get,"ax",%progbits
+  19              		.align	1
+  20              		.global	dbg_id_get
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	dbg_id_get:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_dbg.c ****     \file    gd32f10x_dbg.c
+   3:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief   DBG driver
+   4:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+   5:../system/src/gd32f10x/gd32f10x_dbg.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_dbg.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_dbg.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_dbg.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  10:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  11:../system/src/gd32f10x/gd32f10x_dbg.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_dbg.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  14:../system/src/gd32f10x/gd32f10x_dbg.c ****     Redistribution and use in source and binary forms, with or without modification, 
+  15:../system/src/gd32f10x/gd32f10x_dbg.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  17:../system/src/gd32f10x/gd32f10x_dbg.c ****     1. Redistributions of source code must retain the above copyright notice, this 
+  18:../system/src/gd32f10x/gd32f10x_dbg.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_dbg.c ****     2. Redistributions in binary form must reproduce the above copyright notice, 
+  20:../system/src/gd32f10x/gd32f10x_dbg.c ****        this list of conditions and the following disclaimer in the documentation 
+  21:../system/src/gd32f10x/gd32f10x_dbg.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_dbg.c ****     3. Neither the name of the copyright holder nor the names of its contributors 
+  23:../system/src/gd32f10x/gd32f10x_dbg.c ****        may be used to endorse or promote products derived from this software without 
+  24:../system/src/gd32f10x/gd32f10x_dbg.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  26:../system/src/gd32f10x/gd32f10x_dbg.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  27:../system/src/gd32f10x/gd32f10x_dbg.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  28:../system/src/gd32f10x/gd32f10x_dbg.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  29:../system/src/gd32f10x/gd32f10x_dbg.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  30:../system/src/gd32f10x/gd32f10x_dbg.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  31:../system/src/gd32f10x/gd32f10x_dbg.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  32:../system/src/gd32f10x/gd32f10x_dbg.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  33:../system/src/gd32f10x/gd32f10x_dbg.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  34:../system/src/gd32f10x/gd32f10x_dbg.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+  35:../system/src/gd32f10x/gd32f10x_dbg.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  37:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  38:../system/src/gd32f10x/gd32f10x_dbg.c **** #include "gd32f10x_dbg.h"
+  39:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  40:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+  41:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      read DBG_ID code register
+  42:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  none
+  43:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+  44:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     DBG_ID code
+  45:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  46:../system/src/gd32f10x/gd32f10x_dbg.c **** uint32_t dbg_id_get(void)
+  47:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+  27              		.loc 1 47 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  48:../system/src/gd32f10x/gd32f10x_dbg.c ****     return DBG_ID;
+  32              		.loc 1 48 5 view .LVU1
+  33              		.loc 1 48 12 is_stmt 0 view .LVU2
+  34 0000 014B     		ldr	r3, .L2
+  35 0002 1868     		ldr	r0, [r3]
+  49:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+  36              		.loc 1 49 1 view .LVU3
+  37 0004 7047     		bx	lr
+  38              	.L3:
+  39 0006 00BF     		.align	2
+  40              	.L2:
+  41 0008 002004E0 		.word	-536600576
+  42              		.cfi_endproc
+  43              	.LFE56:
+  45              		.section	.text.dbg_low_power_enable,"ax",%progbits
+  46              		.align	1
+  47              		.global	dbg_low_power_enable
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  52              	dbg_low_power_enable:
+  53              	.LVL0:
+  54              	.LFB57:
+  50:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  51:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+  52:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      enable low power behavior when the mcu is in debug mode
+  53:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  dbg_low_power:
+  54:../system/src/gd32f10x/gd32f10x_dbg.c ****                 one or more parameters can be selected which are shown as below:
+  55:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_SLEEP: keep debugger connection during sleep mode
+  56:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_DEEPSLEEP: keep debugger connection during deepsleep mode
+  57:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_STANDBY: keep debugger connection during standby mode
+  58:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+  59:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+  60:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  61:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_low_power_enable(uint32_t dbg_low_power)
+  62:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+  55              		.loc 1 62 1 is_stmt 1 view -0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  63:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL |= dbg_low_power;
+  60              		.loc 1 63 5 view .LVU5
+  61 0000 024A     		ldr	r2, .L5
+  62 0002 5368     		ldr	r3, [r2, #4]
+  63              		.loc 1 63 13 is_stmt 0 view .LVU6
+  64 0004 0343     		orrs	r3, r3, r0
+  65 0006 5360     		str	r3, [r2, #4]
+  64:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+  66              		.loc 1 64 1 view .LVU7
+  67 0008 7047     		bx	lr
+  68              	.L6:
+  69 000a 00BF     		.align	2
+  70              	.L5:
+  71 000c 002004E0 		.word	-536600576
+  72              		.cfi_endproc
+  73              	.LFE57:
+  75              		.section	.text.dbg_low_power_disable,"ax",%progbits
+  76              		.align	1
+  77              		.global	dbg_low_power_disable
+  78              		.syntax unified
+  79              		.thumb
+  80              		.thumb_func
+  82              	dbg_low_power_disable:
+  83              	.LVL1:
+  84              	.LFB58:
+  65:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  66:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+  67:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      disable low power behavior when the mcu is in debug mode
+  68:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  dbg_low_power:
+  69:../system/src/gd32f10x/gd32f10x_dbg.c ****                 one or more parameters can be selected which are shown as below:
+  70:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_SLEEP: donot keep debugger connection during sleep mode
+  71:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_DEEPSLEEP: donot keep debugger connection during deepsleep mode
+  72:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_LOW_POWER_STANDBY: donot keep debugger connection during standby mode
+  73:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+  74:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+  75:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  76:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_low_power_disable(uint32_t dbg_low_power)
+  77:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+  85              		.loc 1 77 1 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		@ link register save eliminated.
+  78:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL &= ~dbg_low_power;
+  90              		.loc 1 78 5 view .LVU9
+  91 0000 024A     		ldr	r2, .L8
+  92 0002 5368     		ldr	r3, [r2, #4]
+  93              		.loc 1 78 13 is_stmt 0 view .LVU10
+  94 0004 23EA0003 		bic	r3, r3, r0
+  95 0008 5360     		str	r3, [r2, #4]
+  79:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+  96              		.loc 1 79 1 view .LVU11
+  97 000a 7047     		bx	lr
+  98              	.L9:
+  99              		.align	2
+ 100              	.L8:
+ 101 000c 002004E0 		.word	-536600576
+ 102              		.cfi_endproc
+ 103              	.LFE58:
+ 105              		.section	.text.dbg_periph_enable,"ax",%progbits
+ 106              		.align	1
+ 107              		.global	dbg_periph_enable
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	dbg_periph_enable:
+ 113              	.LVL2:
+ 114              	.LFB59:
+  80:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  81:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+  82:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      enable peripheral behavior when the mcu is in debug mode
+  83:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  dbg_periph: refer to dbg_periph_enum
+  84:../system/src/gd32f10x/gd32f10x_dbg.c ****                 one or more parameters can be selected which are shown as below:
+  85:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_FWDGT_HOLD : debug FWDGT kept when core is halted
+  86:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_WWDGT_HOLD : debug WWDGT kept when core is halted
+  87:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_CANx_HOLD (x=0,1,CAN1 is only available for CL series): hold CANx counter whe
+  88:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_I2Cx_HOLD (x=0,1): hold I2Cx smbus when core is halted
+  89:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_TIMERx_HOLD (x=0,1,2,3,4,5,6,7,8,9,10,11,12,13,TIMER8..13 are not available f
+  90:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+  91:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+  92:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+  93:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_periph_enable(dbg_periph_enum dbg_periph)
+  94:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+ 115              		.loc 1 94 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+  95:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL |= (uint32_t)dbg_periph;
+ 120              		.loc 1 95 5 view .LVU13
+ 121 0000 024A     		ldr	r2, .L11
+ 122 0002 5368     		ldr	r3, [r2, #4]
+ 123              		.loc 1 95 13 is_stmt 0 view .LVU14
+ 124 0004 0343     		orrs	r3, r3, r0
+ 125 0006 5360     		str	r3, [r2, #4]
+  96:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+ 126              		.loc 1 96 1 view .LVU15
+ 127 0008 7047     		bx	lr
+ 128              	.L12:
+ 129 000a 00BF     		.align	2
+ 130              	.L11:
+ 131 000c 002004E0 		.word	-536600576
+ 132              		.cfi_endproc
+ 133              	.LFE59:
+ 135              		.section	.text.dbg_periph_disable,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	dbg_periph_disable
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	dbg_periph_disable:
+ 143              	.LVL3:
+ 144              	.LFB60:
+  97:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+  98:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+  99:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      disable peripheral behavior when the mcu is in debug mode
+ 100:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  dbg_periph: refer to dbg_periph_enum
+ 101:../system/src/gd32f10x/gd32f10x_dbg.c ****                 one or more parameters can be selected which are shown as below:
+ 102:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_FWDGT_HOLD : debug FWDGT kept when core is halted
+ 103:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_WWDGT_HOLD : debug WWDGT kept when core is halted
+ 104:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_CANx_HOLD (x=0,1,CAN1 is only available for CL series): hold CAN0 counter whe
+ 105:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_I2Cx_HOLD (x=0,1): hold I2Cx smbus when core is halted
+ 106:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        DBG_TIMERx_HOLD (x=0,1,2,3,4,5,6,7,8,9,10,11,12,13,TIMER8..13 are only available 
+ 107:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+ 108:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+ 109:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+ 110:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_periph_disable(dbg_periph_enum dbg_periph)
+ 111:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+ 145              		.loc 1 111 1 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		@ link register save eliminated.
+ 112:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL &= ~(uint32_t)dbg_periph;
+ 150              		.loc 1 112 5 view .LVU17
+ 151 0000 024A     		ldr	r2, .L14
+ 152 0002 5368     		ldr	r3, [r2, #4]
+ 153              		.loc 1 112 13 is_stmt 0 view .LVU18
+ 154 0004 23EA0003 		bic	r3, r3, r0
+ 155 0008 5360     		str	r3, [r2, #4]
+ 113:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+ 156              		.loc 1 113 1 view .LVU19
+ 157 000a 7047     		bx	lr
+ 158              	.L15:
+ 159              		.align	2
+ 160              	.L14:
+ 161 000c 002004E0 		.word	-536600576
+ 162              		.cfi_endproc
+ 163              	.LFE60:
+ 165              		.section	.text.dbg_trace_pin_enable,"ax",%progbits
+ 166              		.align	1
+ 167              		.global	dbg_trace_pin_enable
+ 168              		.syntax unified
+ 169              		.thumb
+ 170              		.thumb_func
+ 172              	dbg_trace_pin_enable:
+ 173              	.LFB61:
+ 114:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+ 115:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+ 116:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      enable trace pin assignment
+ 117:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  none
+ 118:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+ 119:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+ 120:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+ 121:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_trace_pin_enable(void)
+ 122:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+ 174              		.loc 1 122 1 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178              		@ link register save eliminated.
+ 123:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL |= DBG_CTL_TRACE_IOEN;
+ 179              		.loc 1 123 5 view .LVU21
+ 180 0000 024A     		ldr	r2, .L17
+ 181 0002 5368     		ldr	r3, [r2, #4]
+ 182              		.loc 1 123 13 is_stmt 0 view .LVU22
+ 183 0004 43F02003 		orr	r3, r3, #32
+ 184 0008 5360     		str	r3, [r2, #4]
+ 124:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+ 185              		.loc 1 124 1 view .LVU23
+ 186 000a 7047     		bx	lr
+ 187              	.L18:
+ 188              		.align	2
+ 189              	.L17:
+ 190 000c 002004E0 		.word	-536600576
+ 191              		.cfi_endproc
+ 192              	.LFE61:
+ 194              		.section	.text.dbg_trace_pin_disable,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	dbg_trace_pin_disable
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	dbg_trace_pin_disable:
+ 202              	.LFB62:
+ 125:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+ 126:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+ 127:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      disable trace pin assignment
+ 128:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  none
+ 129:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+ 130:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+ 131:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+ 132:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_trace_pin_disable(void)
+ 133:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+ 203              		.loc 1 133 1 is_stmt 1 view -0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207              		@ link register save eliminated.
+ 134:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL &= ~DBG_CTL_TRACE_IOEN;
+ 208              		.loc 1 134 5 view .LVU25
+ 209 0000 024A     		ldr	r2, .L20
+ 210 0002 5368     		ldr	r3, [r2, #4]
+ 211              		.loc 1 134 13 is_stmt 0 view .LVU26
+ 212 0004 23F02003 		bic	r3, r3, #32
+ 213 0008 5360     		str	r3, [r2, #4]
+ 135:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+ 214              		.loc 1 135 1 view .LVU27
+ 215 000a 7047     		bx	lr
+ 216              	.L21:
+ 217              		.align	2
+ 218              	.L20:
+ 219 000c 002004E0 		.word	-536600576
+ 220              		.cfi_endproc
+ 221              	.LFE62:
+ 223              		.section	.text.dbg_trace_pin_mode_set,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	dbg_trace_pin_mode_set
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 230              	dbg_trace_pin_mode_set:
+ 231              	.LVL4:
+ 232              	.LFB63:
+ 136:../system/src/gd32f10x/gd32f10x_dbg.c **** 
+ 137:../system/src/gd32f10x/gd32f10x_dbg.c **** /*!
+ 138:../system/src/gd32f10x/gd32f10x_dbg.c ****     \brief      trace pin mode selection 
+ 139:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[in]  trace_mode:
+ 140:../system/src/gd32f10x/gd32f10x_dbg.c ****                 only one parameter can be selected which is shown as below:
+ 141:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        TRACE_MODE_ASYNC: trace pin used for async mode 
+ 142:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        TRACE_MODE_SYNC_DATASIZE_1: trace pin used for sync mode and data size is 1
+ 143:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        TRACE_MODE_SYNC_DATASIZE_2: trace pin used for sync mode and data size is 2
+ 144:../system/src/gd32f10x/gd32f10x_dbg.c ****       \arg        TRACE_MODE_SYNC_DATASIZE_4: trace pin used for sync mode and data size is 4
+ 145:../system/src/gd32f10x/gd32f10x_dbg.c ****     \param[out] none
+ 146:../system/src/gd32f10x/gd32f10x_dbg.c ****     \retval     none
+ 147:../system/src/gd32f10x/gd32f10x_dbg.c **** */
+ 148:../system/src/gd32f10x/gd32f10x_dbg.c **** void dbg_trace_pin_mode_set(uint32_t trace_mode)
+ 149:../system/src/gd32f10x/gd32f10x_dbg.c **** {
+ 233              		.loc 1 149 1 is_stmt 1 view -0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              		@ link register save eliminated.
+ 150:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL &= ~DBG_CTL_TRACE_MODE;
+ 238              		.loc 1 150 5 view .LVU29
+ 239 0000 044B     		ldr	r3, .L23
+ 240 0002 5A68     		ldr	r2, [r3, #4]
+ 241              		.loc 1 150 13 is_stmt 0 view .LVU30
+ 242 0004 22F0C002 		bic	r2, r2, #192
+ 243 0008 5A60     		str	r2, [r3, #4]
+ 151:../system/src/gd32f10x/gd32f10x_dbg.c ****     DBG_CTL |= trace_mode;
+ 244              		.loc 1 151 5 is_stmt 1 view .LVU31
+ 245 000a 5A68     		ldr	r2, [r3, #4]
+ 246              		.loc 1 151 13 is_stmt 0 view .LVU32
+ 247 000c 0243     		orrs	r2, r2, r0
+ 248 000e 5A60     		str	r2, [r3, #4]
+ 152:../system/src/gd32f10x/gd32f10x_dbg.c **** }
+ 249              		.loc 1 152 1 view .LVU33
+ 250 0010 7047     		bx	lr
+ 251              	.L24:
+ 252 0012 00BF     		.align	2
+ 253              	.L23:
+ 254 0014 002004E0 		.word	-536600576
+ 255              		.cfi_endproc
+ 256              	.LFE63:
+ 258              		.text
+ 259              	.Letext0:
+ 260              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 261              		.file 3 "../system/inc/gd32f10x/gd32f10x_dbg.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_dbg.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:19     .text.dbg_id_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:25     .text.dbg_id_get:00000000 dbg_id_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:41     .text.dbg_id_get:00000008 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:46     .text.dbg_low_power_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:52     .text.dbg_low_power_enable:00000000 dbg_low_power_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:71     .text.dbg_low_power_enable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:76     .text.dbg_low_power_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:82     .text.dbg_low_power_disable:00000000 dbg_low_power_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:101    .text.dbg_low_power_disable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:106    .text.dbg_periph_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:112    .text.dbg_periph_enable:00000000 dbg_periph_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:131    .text.dbg_periph_enable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:136    .text.dbg_periph_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:142    .text.dbg_periph_disable:00000000 dbg_periph_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:161    .text.dbg_periph_disable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:166    .text.dbg_trace_pin_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:172    .text.dbg_trace_pin_enable:00000000 dbg_trace_pin_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:190    .text.dbg_trace_pin_enable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:195    .text.dbg_trace_pin_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:201    .text.dbg_trace_pin_disable:00000000 dbg_trace_pin_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:219    .text.dbg_trace_pin_disable:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:224    .text.dbg_trace_pin_mode_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:230    .text.dbg_trace_pin_mode_set:00000000 dbg_trace_pin_mode_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccj8Vh1p.s:254    .text.dbg_trace_pin_mode_set:00000014 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+                           .group:00000000 wm4.gd32f10x_dbg.h.45.8eeac004f8f0ec5831319c6fcd16711b
+
+NO UNDEFINED SYMBOLS

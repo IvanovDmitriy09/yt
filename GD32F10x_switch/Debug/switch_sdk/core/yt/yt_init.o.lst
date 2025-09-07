@@ -1,0 +1,1356 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"yt_init.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/yt/yt_init.c"
+  18              		.section	.rodata.yt_device_init.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 6472765F 		.ascii	"drv_init(dev)\000"
+  21      696E6974 
+  21      28646576 
+  21      2900
+  22 000e 0000     		.align	2
+  23              	.LC1:
+  24 0010 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+  24      206F6620 
+  24      22257322 
+  24      20696E20 
+  24      25730D0A 
+  25              		.section	.text.yt_device_init,"ax",%progbits
+  26              		.align	1
+  27              		.global	yt_device_init
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	yt_device_init:
+  33              	.LVL0:
+  34              	.LFB4:
+   1:../switch_sdk/core/yt/yt_init.c **** /*******************************************************************************
+   2:../switch_sdk/core/yt/yt_init.c **** *                                                                              *
+   3:../switch_sdk/core/yt/yt_init.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../switch_sdk/core/yt/yt_init.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../switch_sdk/core/yt/yt_init.c **** *                                                                              *
+   6:../switch_sdk/core/yt/yt_init.c **** ********************************************************************************
+   7:../switch_sdk/core/yt/yt_init.c **** */
+   8:../switch_sdk/core/yt/yt_init.c **** /*
+   9:../switch_sdk/core/yt/yt_init.c ****  * Include Files
+  10:../switch_sdk/core/yt/yt_init.c ****  */
+  11:../switch_sdk/core/yt/yt_init.c **** #include "yt_error.h"
+  12:../switch_sdk/core/yt/yt_init.c **** #include "yt_types.h"
+  13:../switch_sdk/core/yt/yt_init.c **** #include "yt_init.h"
+  14:../switch_sdk/core/yt/yt_init.c **** #include "yt_vlan.h"
+  15:../switch_sdk/core/yt/yt_init.c **** #include "cal_mgm.h"
+  16:../switch_sdk/core/yt/yt_init.c **** #include "fal_dispatch.h"
+  17:../switch_sdk/core/yt/yt_init.c **** #include "hal_cmm.h"
+  18:../switch_sdk/core/yt/yt_init.c **** #include "drv.h"
+  19:../switch_sdk/core/yt/yt_init.c **** #include "fal_init.h"
+  20:../switch_sdk/core/yt/yt_init.c **** 
+  21:../switch_sdk/core/yt/yt_init.c **** yt_ret_t  yt_basic_init(void)
+  22:../switch_sdk/core/yt/yt_init.c **** {
+  23:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(cal_mgm_init(), ret);
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+  28:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+  29:../switch_sdk/core/yt/yt_init.c **** 
+  30:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+  31:../switch_sdk/core/yt/yt_init.c **** }
+  32:../switch_sdk/core/yt/yt_init.c **** 
+  33:../switch_sdk/core/yt/yt_init.c **** yt_ret_t  yt_device_init(yt_unit_t unit, uint8_t *dev)
+  34:../switch_sdk/core/yt/yt_init.c **** {
+  35              		.loc 1 34 1 view -0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  39              		.loc 1 34 1 is_stmt 0 view .LVU1
+  40 0000 10B5     		push	{r4, lr}
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 4, -8
+  43              		.cfi_offset 14, -4
+  44 0002 82B0     		sub	sp, sp, #8
+  45              		.cfi_def_cfa_offset 16
+  35:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+  46              		.loc 1 35 5 is_stmt 1 view .LVU2
+  47              	.LVL1:
+  36:../switch_sdk/core/yt/yt_init.c ****     CMM_UNUSED_PARAM(unit);
+  48              		.loc 1 36 5 view .LVU3
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  49              		.loc 1 37 5 view .LVU4
+  50              		.loc 1 37 5 view .LVU5
+  51 0004 0846     		mov	r0, r1
+  52              	.LVL2:
+  53              		.loc 1 37 5 is_stmt 0 view .LVU6
+  54 0006 FFF7FEFF 		bl	drv_init
+  55              	.LVL3:
+  56              		.loc 1 37 5 view .LVU7
+  57 000a 10F0FF03 		ands	r3, r0, #255
+  58 000e 02D1     		bne	.L6
+  38:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+  59              		.loc 1 38 12 view .LVU8
+  60 0010 0020     		movs	r0, #0
+  61              	.LVL4:
+  62              	.L1:
+  39:../switch_sdk/core/yt/yt_init.c **** }
+  63              		.loc 1 39 1 view .LVU9
+  64 0012 02B0     		add	sp, sp, #8
+  65              		.cfi_remember_state
+  66              		.cfi_def_cfa_offset 8
+  67              		@ sp needed
+  68 0014 10BD     		pop	{r4, pc}
+  69              	.LVL5:
+  70              	.L6:
+  71              		.cfi_restore_state
+  72              		.loc 1 39 1 view .LVU10
+  73 0016 0446     		mov	r4, r0
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  74              		.loc 1 37 5 is_stmt 1 discriminator 1 view .LVU11
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  75              		.loc 1 37 5 discriminator 1 view .LVU12
+  76 0018 0A4A     		ldr	r2, .L8
+  77 001a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  78 001c 012A     		cmp	r2, #1
+  79 001e 01D8     		bhi	.L7
+  80              	.LVL6:
+  81              	.L3:
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  82              		.loc 1 37 5 discriminator 5 view .LVU13
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  83              		.loc 1 37 5 discriminator 5 view .LVU14
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  84              		.loc 1 37 5 discriminator 5 view .LVU15
+  85 0020 E0B2     		uxtb	r0, r4
+  86 0022 F6E7     		b	.L1
+  87              	.LVL7:
+  88              	.L7:
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  89              		.loc 1 37 5 discriminator 3 view .LVU16
+  90              	.LBB2:
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+  91              		.loc 1 37 5 discriminator 3 view .LVU17
+  92 0024 142B     		cmp	r3, #20
+  93 0026 28BF     		it	cs
+  94 0028 1423     		movcs	r3, #20
+  95 002a 1A46     		mov	r2, r3
+  96 002c 064B     		ldr	r3, .L8+4
+  97 002e 0093     		str	r3, [sp]
+  98 0030 064B     		ldr	r3, .L8+8
+  99 0032 0749     		ldr	r1, .L8+12
+ 100 0034 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 101 0038 0649     		ldr	r1, .L8+16
+ 102 003a 8968     		ldr	r1, [r1, #8]
+ 103 003c 0648     		ldr	r0, .L8+20
+ 104              	.LVL8:
+  37:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_init(dev),ret);
+ 105              		.loc 1 37 5 is_stmt 0 discriminator 3 view .LVU18
+ 106 003e FFF7FEFF 		bl	osal_printf
+ 107              	.LVL9:
+ 108 0042 EDE7     		b	.L3
+ 109              	.L9:
+ 110              		.align	2
+ 111              	.L8:
+ 112 0044 00000000 		.word	yt_debug_level
+ 113 0048 00000000 		.word	__FUNCTION__.4
+ 114 004c 00000000 		.word	.LC0
+ 115 0050 00000000 		.word	_yt_errmsg
+ 116 0054 00000000 		.word	_yt_prompt_msg
+ 117 0058 10000000 		.word	.LC1
+ 118              	.LBE2:
+ 119              		.cfi_endproc
+ 120              	.LFE4:
+ 122              		.section	.rodata.yt_device_close.str1.4,"aMS",%progbits,1
+ 123              		.align	2
+ 124              	.LC2:
+ 125 0000 6472765F 		.ascii	"drv_close()\000"
+ 125      636C6F73 
+ 125      65282900 
+ 126              		.section	.text.yt_device_close,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	yt_device_close
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 133              	yt_device_close:
+ 134              	.LVL10:
+ 135              	.LFB5:
+  40:../switch_sdk/core/yt/yt_init.c **** 
+  41:../switch_sdk/core/yt/yt_init.c **** yt_ret_t  yt_device_close(yt_unit_t unit)
+  42:../switch_sdk/core/yt/yt_init.c **** {
+ 136              		.loc 1 42 1 is_stmt 1 view -0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		.loc 1 42 1 is_stmt 0 view .LVU20
+ 141 0000 10B5     		push	{r4, lr}
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 4, -8
+ 144              		.cfi_offset 14, -4
+ 145 0002 82B0     		sub	sp, sp, #8
+ 146              		.cfi_def_cfa_offset 16
+  43:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 147              		.loc 1 43 5 is_stmt 1 view .LVU21
+ 148              	.LVL11:
+  44:../switch_sdk/core/yt/yt_init.c ****     CMM_UNUSED_PARAM(unit);
+ 149              		.loc 1 44 5 view .LVU22
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 150              		.loc 1 45 5 view .LVU23
+ 151              		.loc 1 45 5 view .LVU24
+ 152 0004 FFF7FEFF 		bl	drv_close
+ 153              	.LVL12:
+ 154              		.loc 1 45 5 is_stmt 0 view .LVU25
+ 155 0008 10F0FF03 		ands	r3, r0, #255
+ 156 000c 02D1     		bne	.L15
+  46:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+ 157              		.loc 1 46 12 view .LVU26
+ 158 000e 0020     		movs	r0, #0
+ 159              	.LVL13:
+ 160              	.L10:
+  47:../switch_sdk/core/yt/yt_init.c **** }
+ 161              		.loc 1 47 1 view .LVU27
+ 162 0010 02B0     		add	sp, sp, #8
+ 163              		.cfi_remember_state
+ 164              		.cfi_def_cfa_offset 8
+ 165              		@ sp needed
+ 166 0012 10BD     		pop	{r4, pc}
+ 167              	.LVL14:
+ 168              	.L15:
+ 169              		.cfi_restore_state
+ 170              		.loc 1 47 1 view .LVU28
+ 171 0014 0446     		mov	r4, r0
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 172              		.loc 1 45 5 is_stmt 1 discriminator 1 view .LVU29
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 173              		.loc 1 45 5 discriminator 1 view .LVU30
+ 174 0016 0B4A     		ldr	r2, .L17
+ 175 0018 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 176 001a 012A     		cmp	r2, #1
+ 177 001c 01D8     		bhi	.L16
+ 178              	.LVL15:
+ 179              	.L12:
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 180              		.loc 1 45 5 discriminator 5 view .LVU31
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 181              		.loc 1 45 5 discriminator 5 view .LVU32
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 182              		.loc 1 45 5 discriminator 5 view .LVU33
+ 183 001e E0B2     		uxtb	r0, r4
+ 184 0020 F6E7     		b	.L10
+ 185              	.LVL16:
+ 186              	.L16:
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 187              		.loc 1 45 5 discriminator 3 view .LVU34
+ 188              	.LBB3:
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 189              		.loc 1 45 5 discriminator 3 view .LVU35
+ 190 0022 142B     		cmp	r3, #20
+ 191 0024 28BF     		it	cs
+ 192 0026 1423     		movcs	r3, #20
+ 193 0028 1A46     		mov	r2, r3
+ 194 002a 074B     		ldr	r3, .L17+4
+ 195 002c 0093     		str	r3, [sp]
+ 196 002e 074B     		ldr	r3, .L17+8
+ 197 0030 0749     		ldr	r1, .L17+12
+ 198 0032 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 199 0036 0749     		ldr	r1, .L17+16
+ 200 0038 8968     		ldr	r1, [r1, #8]
+ 201 003a 0748     		ldr	r0, .L17+20
+ 202              	.LVL17:
+  45:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(drv_close(),ret);
+ 203              		.loc 1 45 5 is_stmt 0 discriminator 3 view .LVU36
+ 204 003c FFF7FEFF 		bl	osal_printf
+ 205              	.LVL18:
+ 206 0040 EDE7     		b	.L12
+ 207              	.L18:
+ 208 0042 00BF     		.align	2
+ 209              	.L17:
+ 210 0044 00000000 		.word	yt_debug_level
+ 211 0048 00000000 		.word	__FUNCTION__.3
+ 212 004c 00000000 		.word	.LC2
+ 213 0050 00000000 		.word	_yt_errmsg
+ 214 0054 00000000 		.word	_yt_prompt_msg
+ 215 0058 10000000 		.word	.LC1
+ 216              	.LBE3:
+ 217              		.cfi_endproc
+ 218              	.LFE5:
+ 220              		.section	.rodata.yt_modules_init.str1.4,"aMS",%progbits,1
+ 221              		.align	2
+ 222              	.LC3:
+ 223 0000 79745F70 		.ascii	"yt_port_init(unit)\000"
+ 223      6F72745F 
+ 223      696E6974 
+ 223      28756E69 
+ 223      742900
+ 224              		.section	.text.yt_modules_init,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	yt_modules_init
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 231              	yt_modules_init:
+ 232              	.LFB6:
+  48:../switch_sdk/core/yt/yt_init.c **** 
+  49:../switch_sdk/core/yt/yt_init.c **** yt_ret_t yt_modules_init(void)
+  50:../switch_sdk/core/yt/yt_init.c **** {
+ 233              		.loc 1 50 1 is_stmt 1 view -0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237 0000 30B5     		push	{r4, r5, lr}
+ 238              		.cfi_def_cfa_offset 12
+ 239              		.cfi_offset 4, -12
+ 240              		.cfi_offset 5, -8
+ 241              		.cfi_offset 14, -4
+ 242 0002 83B0     		sub	sp, sp, #12
+ 243              		.cfi_def_cfa_offset 24
+  51:../switch_sdk/core/yt/yt_init.c ****     yt_unit_t unit;
+ 244              		.loc 1 51 5 view .LVU38
+  52:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 245              		.loc 1 52 5 view .LVU39
+ 246              	.LVL19:
+  53:../switch_sdk/core/yt/yt_init.c ****     
+  54:../switch_sdk/core/yt/yt_init.c ****     for(unit = 0; unit < YT_UNIT_NUM; unit++)
+ 247              		.loc 1 54 5 view .LVU40
+ 248              		.loc 1 54 14 is_stmt 0 view .LVU41
+ 249 0004 0024     		movs	r4, #0
+ 250              	.LVL20:
+ 251              	.L20:
+ 252              		.loc 1 54 24 is_stmt 1 discriminator 2 view .LVU42
+ 253 0006 14B1     		cbz	r4, .L24
+  55:../switch_sdk/core/yt/yt_init.c ****     {
+  56:../switch_sdk/core/yt/yt_init.c **** #ifdef L2_INCLUDED
+  57:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_l2_init(unit),ret);
+  58:../switch_sdk/core/yt/yt_init.c **** #endif
+  59:../switch_sdk/core/yt/yt_init.c **** #ifdef PORT_INCLUDED    
+  60:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_port_init(unit),ret);
+  61:../switch_sdk/core/yt/yt_init.c **** #endif
+  62:../switch_sdk/core/yt/yt_init.c **** #ifdef VLAN_INCLUDED
+  63:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_vlan_init(unit),ret);
+  64:../switch_sdk/core/yt/yt_init.c **** #endif
+  65:../switch_sdk/core/yt/yt_init.c **** #ifdef RATE_INCLUDED
+  66:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_rate_init(unit),ret);
+  67:../switch_sdk/core/yt/yt_init.c **** #endif
+  68:../switch_sdk/core/yt/yt_init.c **** #ifdef STORM_CTRL_INCLUDED
+  69:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_storm_ctrl_init(unit),ret);
+  70:../switch_sdk/core/yt/yt_init.c **** #endif
+  71:../switch_sdk/core/yt/yt_init.c **** #ifdef ACL_INCLUDED
+  72:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_acl_init(unit),ret);
+  73:../switch_sdk/core/yt/yt_init.c **** #endif
+  74:../switch_sdk/core/yt/yt_init.c **** #ifdef DOT1X_INCLUDED
+  75:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_dot1x_init(unit),ret);
+  76:../switch_sdk/core/yt/yt_init.c **** #endif
+  77:../switch_sdk/core/yt/yt_init.c **** #ifdef STAT_INCLUDED
+  78:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_stat_mib_init(unit),ret);
+  79:../switch_sdk/core/yt/yt_init.c **** #endif
+  80:../switch_sdk/core/yt/yt_init.c **** #ifdef NIC_INCLUDED
+  81:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_nic_init(unit),ret);
+  82:../switch_sdk/core/yt/yt_init.c **** #endif
+  83:../switch_sdk/core/yt/yt_init.c **** #ifdef DOS_INCLUDED
+  84:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_dos_init(unit),ret);
+  85:../switch_sdk/core/yt/yt_init.c **** #endif
+  86:../switch_sdk/core/yt/yt_init.c ****     }
+  87:../switch_sdk/core/yt/yt_init.c ****     
+  88:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+ 254              		.loc 1 88 12 is_stmt 0 view .LVU43
+ 255 0008 0020     		movs	r0, #0
+ 256              	.L19:
+  89:../switch_sdk/core/yt/yt_init.c **** }
+ 257              		.loc 1 89 1 view .LVU44
+ 258 000a 03B0     		add	sp, sp, #12
+ 259              		.cfi_remember_state
+ 260              		.cfi_def_cfa_offset 12
+ 261              		@ sp needed
+ 262 000c 30BD     		pop	{r4, r5, pc}
+ 263              	.LVL21:
+ 264              	.L24:
+ 265              		.cfi_restore_state
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 266              		.loc 1 60 9 is_stmt 1 view .LVU45
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 267              		.loc 1 60 9 view .LVU46
+ 268 000e 2046     		mov	r0, r4
+ 269 0010 FFF7FEFF 		bl	yt_port_init
+ 270              	.LVL22:
+ 271 0014 0546     		mov	r5, r0
+ 272              	.LVL23:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 273              		.loc 1 60 9 is_stmt 0 view .LVU47
+ 274 0016 10F0FF03 		ands	r3, r0, #255
+ 275 001a 02D1     		bne	.L26
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 276              		.loc 1 60 9 is_stmt 1 discriminator 2 view .LVU48
+  54:../switch_sdk/core/yt/yt_init.c ****     {
+ 277              		.loc 1 54 43 discriminator 2 view .LVU49
+ 278 001c 0134     		adds	r4, r4, #1
+ 279              	.LVL24:
+  54:../switch_sdk/core/yt/yt_init.c ****     {
+ 280              		.loc 1 54 43 is_stmt 0 discriminator 2 view .LVU50
+ 281 001e E4B2     		uxtb	r4, r4
+ 282              	.LVL25:
+  54:../switch_sdk/core/yt/yt_init.c ****     {
+ 283              		.loc 1 54 43 discriminator 2 view .LVU51
+ 284 0020 F1E7     		b	.L20
+ 285              	.L26:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 286              		.loc 1 60 9 is_stmt 1 discriminator 1 view .LVU52
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 287              		.loc 1 60 9 discriminator 1 view .LVU53
+ 288 0022 0B4A     		ldr	r2, .L28
+ 289 0024 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 290 0026 012A     		cmp	r2, #1
+ 291 0028 01D8     		bhi	.L27
+ 292              	.LVL26:
+ 293              	.L22:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 294              		.loc 1 60 9 discriminator 5 view .LVU54
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 295              		.loc 1 60 9 discriminator 5 view .LVU55
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 296              		.loc 1 60 9 discriminator 5 view .LVU56
+ 297 002a E8B2     		uxtb	r0, r5
+ 298 002c EDE7     		b	.L19
+ 299              	.LVL27:
+ 300              	.L27:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 301              		.loc 1 60 9 discriminator 3 view .LVU57
+ 302              	.LBB4:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 303              		.loc 1 60 9 discriminator 3 view .LVU58
+ 304 002e 142B     		cmp	r3, #20
+ 305 0030 28BF     		it	cs
+ 306 0032 1423     		movcs	r3, #20
+ 307 0034 1A46     		mov	r2, r3
+ 308 0036 074B     		ldr	r3, .L28+4
+ 309 0038 0093     		str	r3, [sp]
+ 310 003a 074B     		ldr	r3, .L28+8
+ 311 003c 0749     		ldr	r1, .L28+12
+ 312 003e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 313 0042 0749     		ldr	r1, .L28+16
+ 314 0044 8968     		ldr	r1, [r1, #8]
+ 315 0046 0748     		ldr	r0, .L28+20
+ 316              	.LVL28:
+  60:../switch_sdk/core/yt/yt_init.c **** #endif
+ 317              		.loc 1 60 9 is_stmt 0 discriminator 3 view .LVU59
+ 318 0048 FFF7FEFF 		bl	osal_printf
+ 319              	.LVL29:
+ 320 004c EDE7     		b	.L22
+ 321              	.L29:
+ 322 004e 00BF     		.align	2
+ 323              	.L28:
+ 324 0050 00000000 		.word	yt_debug_level
+ 325 0054 00000000 		.word	__FUNCTION__.2
+ 326 0058 00000000 		.word	.LC3
+ 327 005c 00000000 		.word	_yt_errmsg
+ 328 0060 00000000 		.word	_yt_prompt_msg
+ 329 0064 10000000 		.word	.LC1
+ 330              	.LBE4:
+ 331              		.cfi_endproc
+ 332              	.LFE6:
+ 334              		.section	.rodata.yt_drv_init.str1.4,"aMS",%progbits,1
+ 335              		.align	2
+ 336              	.LC4:
+ 337 0000 79745F64 		.ascii	"yt_device_init(unit, ((void *)0))\000"
+ 337      65766963 
+ 337      655F696E 
+ 337      69742875 
+ 337      6E69742C 
+ 338              		.section	.text.yt_drv_init,"ax",%progbits
+ 339              		.align	1
+ 340              		.global	yt_drv_init
+ 341              		.syntax unified
+ 342              		.thumb
+ 343              		.thumb_func
+ 345              	yt_drv_init:
+ 346              	.LFB8:
+  90:../switch_sdk/core/yt/yt_init.c **** 
+  91:../switch_sdk/core/yt/yt_init.c **** yt_ret_t  yt_init(void)
+  92:../switch_sdk/core/yt/yt_init.c **** {
+  93:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+  94:../switch_sdk/core/yt/yt_init.c **** 
+  95:../switch_sdk/core/yt/yt_init.c ****     YT_DEBUG_LEVEL(YT_DEBUG_NONE);
+  96:../switch_sdk/core/yt/yt_init.c **** 
+  97:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_basic_init(),ret);
+  98:../switch_sdk/core/yt/yt_init.c **** 
+  99:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_modules_init(),ret);
+ 100:../switch_sdk/core/yt/yt_init.c **** 
+ 101:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+ 102:../switch_sdk/core/yt/yt_init.c **** }
+ 103:../switch_sdk/core/yt/yt_init.c **** 
+ 104:../switch_sdk/core/yt/yt_init.c **** yt_ret_t  yt_drv_init(void)
+ 105:../switch_sdk/core/yt/yt_init.c **** {
+ 347              		.loc 1 105 1 is_stmt 1 view -0
+ 348              		.cfi_startproc
+ 349              		@ args = 0, pretend = 0, frame = 0
+ 350              		@ frame_needed = 0, uses_anonymous_args = 0
+ 351 0000 30B5     		push	{r4, r5, lr}
+ 352              		.cfi_def_cfa_offset 12
+ 353              		.cfi_offset 4, -12
+ 354              		.cfi_offset 5, -8
+ 355              		.cfi_offset 14, -4
+ 356 0002 83B0     		sub	sp, sp, #12
+ 357              		.cfi_def_cfa_offset 24
+ 106:../switch_sdk/core/yt/yt_init.c ****     yt_unit_t unit;
+ 358              		.loc 1 106 5 view .LVU61
+ 107:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 359              		.loc 1 107 5 view .LVU62
+ 360              	.LVL30:
+ 108:../switch_sdk/core/yt/yt_init.c **** 
+ 109:../switch_sdk/core/yt/yt_init.c ****     for(unit = 0; unit < YT_UNIT_NUM; unit++)
+ 361              		.loc 1 109 5 view .LVU63
+ 362              		.loc 1 109 14 is_stmt 0 view .LVU64
+ 363 0004 0024     		movs	r4, #0
+ 364              	.LVL31:
+ 365              	.L31:
+ 366              		.loc 1 109 24 is_stmt 1 discriminator 2 view .LVU65
+ 367 0006 14B1     		cbz	r4, .L35
+ 110:../switch_sdk/core/yt/yt_init.c ****     {
+ 111:../switch_sdk/core/yt/yt_init.c **** #ifdef ACC_UART
+ 112:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_device_init(unit, "ttyS2"),ret);
+ 113:../switch_sdk/core/yt/yt_init.c **** #else
+ 114:../switch_sdk/core/yt/yt_init.c ****         CMM_ERR_CHK(yt_device_init(unit, NULL),ret);
+ 115:../switch_sdk/core/yt/yt_init.c **** #endif
+ 116:../switch_sdk/core/yt/yt_init.c ****     }
+ 117:../switch_sdk/core/yt/yt_init.c **** 
+ 118:../switch_sdk/core/yt/yt_init.c ****     return CMM_ERR_OK;
+ 368              		.loc 1 118 12 is_stmt 0 view .LVU66
+ 369 0008 0020     		movs	r0, #0
+ 370              	.L30:
+ 119:../switch_sdk/core/yt/yt_init.c **** }
+ 371              		.loc 1 119 1 view .LVU67
+ 372 000a 03B0     		add	sp, sp, #12
+ 373              		.cfi_remember_state
+ 374              		.cfi_def_cfa_offset 12
+ 375              		@ sp needed
+ 376 000c 30BD     		pop	{r4, r5, pc}
+ 377              	.LVL32:
+ 378              	.L35:
+ 379              		.cfi_restore_state
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 380              		.loc 1 114 9 is_stmt 1 view .LVU68
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 381              		.loc 1 114 9 view .LVU69
+ 382 000e 0021     		movs	r1, #0
+ 383 0010 2046     		mov	r0, r4
+ 384 0012 FFF7FEFF 		bl	yt_device_init
+ 385              	.LVL33:
+ 386 0016 0546     		mov	r5, r0
+ 387              	.LVL34:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 388              		.loc 1 114 9 is_stmt 0 view .LVU70
+ 389 0018 10F0FF03 		ands	r3, r0, #255
+ 390 001c 02D1     		bne	.L37
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 391              		.loc 1 114 9 is_stmt 1 discriminator 2 view .LVU71
+ 109:../switch_sdk/core/yt/yt_init.c ****     {
+ 392              		.loc 1 109 43 discriminator 2 view .LVU72
+ 393 001e 0134     		adds	r4, r4, #1
+ 394              	.LVL35:
+ 109:../switch_sdk/core/yt/yt_init.c ****     {
+ 395              		.loc 1 109 43 is_stmt 0 discriminator 2 view .LVU73
+ 396 0020 E4B2     		uxtb	r4, r4
+ 397              	.LVL36:
+ 109:../switch_sdk/core/yt/yt_init.c ****     {
+ 398              		.loc 1 109 43 discriminator 2 view .LVU74
+ 399 0022 F0E7     		b	.L31
+ 400              	.L37:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 401              		.loc 1 114 9 is_stmt 1 discriminator 1 view .LVU75
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 402              		.loc 1 114 9 discriminator 1 view .LVU76
+ 403 0024 0A4A     		ldr	r2, .L39
+ 404 0026 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 405 0028 012A     		cmp	r2, #1
+ 406 002a 01D8     		bhi	.L38
+ 407              	.LVL37:
+ 408              	.L33:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 409              		.loc 1 114 9 discriminator 5 view .LVU77
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 410              		.loc 1 114 9 discriminator 5 view .LVU78
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 411              		.loc 1 114 9 discriminator 5 view .LVU79
+ 412 002c E8B2     		uxtb	r0, r5
+ 413 002e ECE7     		b	.L30
+ 414              	.LVL38:
+ 415              	.L38:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 416              		.loc 1 114 9 discriminator 3 view .LVU80
+ 417              	.LBB5:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 418              		.loc 1 114 9 discriminator 3 view .LVU81
+ 419 0030 142B     		cmp	r3, #20
+ 420 0032 28BF     		it	cs
+ 421 0034 1423     		movcs	r3, #20
+ 422 0036 1A46     		mov	r2, r3
+ 423 0038 064B     		ldr	r3, .L39+4
+ 424 003a 0093     		str	r3, [sp]
+ 425 003c 064B     		ldr	r3, .L39+8
+ 426 003e 0749     		ldr	r1, .L39+12
+ 427 0040 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 428 0044 0649     		ldr	r1, .L39+16
+ 429 0046 8968     		ldr	r1, [r1, #8]
+ 430 0048 0648     		ldr	r0, .L39+20
+ 431              	.LVL39:
+ 114:../switch_sdk/core/yt/yt_init.c **** #endif
+ 432              		.loc 1 114 9 is_stmt 0 discriminator 3 view .LVU82
+ 433 004a FFF7FEFF 		bl	osal_printf
+ 434              	.LVL40:
+ 435 004e EDE7     		b	.L33
+ 436              	.L40:
+ 437              		.align	2
+ 438              	.L39:
+ 439 0050 00000000 		.word	yt_debug_level
+ 440 0054 00000000 		.word	__FUNCTION__.0
+ 441 0058 00000000 		.word	.LC4
+ 442 005c 00000000 		.word	_yt_errmsg
+ 443 0060 00000000 		.word	_yt_prompt_msg
+ 444 0064 10000000 		.word	.LC1
+ 445              	.LBE5:
+ 446              		.cfi_endproc
+ 447              	.LFE8:
+ 449              		.section	.rodata.yt_basic_init.str1.4,"aMS",%progbits,1
+ 450              		.align	2
+ 451              	.LC5:
+ 452 0000 63616C5F 		.ascii	"cal_mgm_init()\000"
+ 452      6D676D5F 
+ 452      696E6974 
+ 452      282900
+ 453 000f 00       		.align	2
+ 454              	.LC6:
+ 455 0010 68616C5F 		.ascii	"hal_init()\000"
+ 455      696E6974 
+ 455      282900
+ 456 001b 00       		.align	2
+ 457              	.LC7:
+ 458 001c 66616C5F 		.ascii	"fal_dispatch_init()\000"
+ 458      64697370 
+ 458      61746368 
+ 458      5F696E69 
+ 458      74282900 
+ 459              		.align	2
+ 460              	.LC8:
+ 461 0030 79745F64 		.ascii	"yt_drv_init()\000"
+ 461      72765F69 
+ 461      6E697428 
+ 461      2900
+ 462 003e 0000     		.align	2
+ 463              	.LC9:
+ 464 0040 66616C5F 		.ascii	"fal_init()\000"
+ 464      696E6974 
+ 464      282900
+ 465              		.section	.text.yt_basic_init,"ax",%progbits
+ 466              		.align	1
+ 467              		.global	yt_basic_init
+ 468              		.syntax unified
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	yt_basic_init:
+ 473              	.LFB3:
+  22:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 474              		.loc 1 22 1 is_stmt 1 view -0
+ 475              		.cfi_startproc
+ 476              		@ args = 0, pretend = 0, frame = 0
+ 477              		@ frame_needed = 0, uses_anonymous_args = 0
+ 478 0000 10B5     		push	{r4, lr}
+ 479              		.cfi_def_cfa_offset 8
+ 480              		.cfi_offset 4, -8
+ 481              		.cfi_offset 14, -4
+ 482 0002 82B0     		sub	sp, sp, #8
+ 483              		.cfi_def_cfa_offset 16
+  23:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(cal_mgm_init(), ret);
+ 484              		.loc 1 23 5 view .LVU84
+ 485              	.LVL41:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 486              		.loc 1 24 5 view .LVU85
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 487              		.loc 1 24 5 view .LVU86
+ 488 0004 FFF7FEFF 		bl	cal_mgm_init
+ 489              	.LVL42:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 490              		.loc 1 24 5 is_stmt 0 view .LVU87
+ 491 0008 10F0FF03 		ands	r3, r0, #255
+ 492 000c 17D0     		beq	.L42
+ 493 000e 0446     		mov	r4, r0
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 494              		.loc 1 24 5 is_stmt 1 discriminator 1 view .LVU88
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 495              		.loc 1 24 5 discriminator 1 view .LVU89
+ 496 0010 444A     		ldr	r2, .L60
+ 497 0012 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 498 0014 012A     		cmp	r2, #1
+ 499 0016 02D8     		bhi	.L54
+ 500              	.LVL43:
+ 501              	.L43:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 502              		.loc 1 24 5 discriminator 5 view .LVU90
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 503              		.loc 1 24 5 discriminator 5 view .LVU91
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 504              		.loc 1 24 5 discriminator 5 view .LVU92
+ 505 0018 E0B2     		uxtb	r0, r4
+ 506              	.LVL44:
+ 507              	.L41:
+  31:../switch_sdk/core/yt/yt_init.c **** 
+ 508              		.loc 1 31 1 is_stmt 0 view .LVU93
+ 509 001a 02B0     		add	sp, sp, #8
+ 510              		.cfi_remember_state
+ 511              		.cfi_def_cfa_offset 8
+ 512              		@ sp needed
+ 513 001c 10BD     		pop	{r4, pc}
+ 514              	.LVL45:
+ 515              	.L54:
+ 516              		.cfi_restore_state
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 517              		.loc 1 24 5 is_stmt 1 discriminator 3 view .LVU94
+ 518              	.LBB6:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 519              		.loc 1 24 5 discriminator 3 view .LVU95
+ 520 001e 142B     		cmp	r3, #20
+ 521 0020 28BF     		it	cs
+ 522 0022 1423     		movcs	r3, #20
+ 523 0024 1A46     		mov	r2, r3
+ 524 0026 404B     		ldr	r3, .L60+4
+ 525 0028 0093     		str	r3, [sp]
+ 526 002a 404B     		ldr	r3, .L60+8
+ 527 002c 4049     		ldr	r1, .L60+12
+ 528 002e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 529 0032 4049     		ldr	r1, .L60+16
+ 530 0034 8968     		ldr	r1, [r1, #8]
+ 531 0036 4048     		ldr	r0, .L60+20
+ 532              	.LVL46:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 533              		.loc 1 24 5 is_stmt 0 discriminator 3 view .LVU96
+ 534 0038 FFF7FEFF 		bl	osal_printf
+ 535              	.LVL47:
+ 536 003c ECE7     		b	.L43
+ 537              	.LVL48:
+ 538              	.L42:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 539              		.loc 1 24 5 discriminator 3 view .LVU97
+ 540              	.LBE6:
+  24:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(hal_init(), ret);
+ 541              		.loc 1 24 5 is_stmt 1 discriminator 2 view .LVU98
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 542              		.loc 1 25 5 discriminator 2 view .LVU99
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 543              		.loc 1 25 5 discriminator 2 view .LVU100
+ 544 003e FFF7FEFF 		bl	hal_init
+ 545              	.LVL49:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 546              		.loc 1 25 5 is_stmt 0 discriminator 2 view .LVU101
+ 547 0042 0446     		mov	r4, r0
+ 548              	.LVL50:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 549              		.loc 1 25 5 discriminator 2 view .LVU102
+ 550 0044 10F0FF03 		ands	r3, r0, #255
+ 551 0048 15D0     		beq	.L45
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 552              		.loc 1 25 5 is_stmt 1 discriminator 1 view .LVU103
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 553              		.loc 1 25 5 discriminator 1 view .LVU104
+ 554 004a 364A     		ldr	r2, .L60
+ 555 004c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 556 004e 012A     		cmp	r2, #1
+ 557 0050 01D8     		bhi	.L55
+ 558              	.LVL51:
+ 559              	.L46:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 560              		.loc 1 25 5 discriminator 5 view .LVU105
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 561              		.loc 1 25 5 discriminator 5 view .LVU106
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 562              		.loc 1 25 5 discriminator 5 view .LVU107
+ 563 0052 E0B2     		uxtb	r0, r4
+ 564 0054 E1E7     		b	.L41
+ 565              	.LVL52:
+ 566              	.L55:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 567              		.loc 1 25 5 discriminator 3 view .LVU108
+ 568              	.LBB7:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 569              		.loc 1 25 5 discriminator 3 view .LVU109
+ 570 0056 142B     		cmp	r3, #20
+ 571 0058 28BF     		it	cs
+ 572 005a 1423     		movcs	r3, #20
+ 573 005c 1A46     		mov	r2, r3
+ 574 005e 324B     		ldr	r3, .L60+4
+ 575 0060 0093     		str	r3, [sp]
+ 576 0062 364B     		ldr	r3, .L60+24
+ 577 0064 3249     		ldr	r1, .L60+12
+ 578 0066 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 579 006a 3249     		ldr	r1, .L60+16
+ 580 006c 8968     		ldr	r1, [r1, #8]
+ 581 006e 3248     		ldr	r0, .L60+20
+ 582              	.LVL53:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 583              		.loc 1 25 5 is_stmt 0 discriminator 3 view .LVU110
+ 584 0070 FFF7FEFF 		bl	osal_printf
+ 585              	.LVL54:
+ 586 0074 EDE7     		b	.L46
+ 587              	.LVL55:
+ 588              	.L45:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 589              		.loc 1 25 5 discriminator 3 view .LVU111
+ 590              	.LBE7:
+  25:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_dispatch_init(), ret);
+ 591              		.loc 1 25 5 is_stmt 1 discriminator 2 view .LVU112
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 592              		.loc 1 26 5 discriminator 2 view .LVU113
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 593              		.loc 1 26 5 discriminator 2 view .LVU114
+ 594 0076 FFF7FEFF 		bl	fal_dispatch_init
+ 595              	.LVL56:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 596              		.loc 1 26 5 is_stmt 0 discriminator 2 view .LVU115
+ 597 007a 0446     		mov	r4, r0
+ 598              	.LVL57:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 599              		.loc 1 26 5 discriminator 2 view .LVU116
+ 600 007c 10F0FF03 		ands	r3, r0, #255
+ 601 0080 15D0     		beq	.L47
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 602              		.loc 1 26 5 is_stmt 1 discriminator 1 view .LVU117
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 603              		.loc 1 26 5 discriminator 1 view .LVU118
+ 604 0082 284A     		ldr	r2, .L60
+ 605 0084 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 606 0086 012A     		cmp	r2, #1
+ 607 0088 01D8     		bhi	.L56
+ 608              	.LVL58:
+ 609              	.L48:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 610              		.loc 1 26 5 discriminator 5 view .LVU119
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 611              		.loc 1 26 5 discriminator 5 view .LVU120
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 612              		.loc 1 26 5 discriminator 5 view .LVU121
+ 613 008a E0B2     		uxtb	r0, r4
+ 614 008c C5E7     		b	.L41
+ 615              	.LVL59:
+ 616              	.L56:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 617              		.loc 1 26 5 discriminator 3 view .LVU122
+ 618              	.LBB8:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 619              		.loc 1 26 5 discriminator 3 view .LVU123
+ 620 008e 142B     		cmp	r3, #20
+ 621 0090 28BF     		it	cs
+ 622 0092 1423     		movcs	r3, #20
+ 623 0094 1A46     		mov	r2, r3
+ 624 0096 244B     		ldr	r3, .L60+4
+ 625 0098 0093     		str	r3, [sp]
+ 626 009a 294B     		ldr	r3, .L60+28
+ 627 009c 2449     		ldr	r1, .L60+12
+ 628 009e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 629 00a2 2449     		ldr	r1, .L60+16
+ 630 00a4 8968     		ldr	r1, [r1, #8]
+ 631 00a6 2448     		ldr	r0, .L60+20
+ 632              	.LVL60:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 633              		.loc 1 26 5 is_stmt 0 discriminator 3 view .LVU124
+ 634 00a8 FFF7FEFF 		bl	osal_printf
+ 635              	.LVL61:
+ 636 00ac EDE7     		b	.L48
+ 637              	.LVL62:
+ 638              	.L47:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 639              		.loc 1 26 5 discriminator 3 view .LVU125
+ 640              	.LBE8:
+  26:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(yt_drv_init(), ret);
+ 641              		.loc 1 26 5 is_stmt 1 discriminator 2 view .LVU126
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 642              		.loc 1 27 5 discriminator 2 view .LVU127
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 643              		.loc 1 27 5 discriminator 2 view .LVU128
+ 644 00ae FFF7FEFF 		bl	yt_drv_init
+ 645              	.LVL63:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 646              		.loc 1 27 5 is_stmt 0 discriminator 2 view .LVU129
+ 647 00b2 0446     		mov	r4, r0
+ 648              	.LVL64:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 649              		.loc 1 27 5 discriminator 2 view .LVU130
+ 650 00b4 10F0FF03 		ands	r3, r0, #255
+ 651 00b8 15D0     		beq	.L49
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 652              		.loc 1 27 5 is_stmt 1 discriminator 1 view .LVU131
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 653              		.loc 1 27 5 discriminator 1 view .LVU132
+ 654 00ba 1A4A     		ldr	r2, .L60
+ 655 00bc 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 656 00be 012A     		cmp	r2, #1
+ 657 00c0 01D8     		bhi	.L57
+ 658              	.LVL65:
+ 659              	.L50:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 660              		.loc 1 27 5 discriminator 5 view .LVU133
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 661              		.loc 1 27 5 discriminator 5 view .LVU134
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 662              		.loc 1 27 5 discriminator 5 view .LVU135
+ 663 00c2 E0B2     		uxtb	r0, r4
+ 664 00c4 A9E7     		b	.L41
+ 665              	.LVL66:
+ 666              	.L57:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 667              		.loc 1 27 5 discriminator 3 view .LVU136
+ 668              	.LBB9:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 669              		.loc 1 27 5 discriminator 3 view .LVU137
+ 670 00c6 142B     		cmp	r3, #20
+ 671 00c8 28BF     		it	cs
+ 672 00ca 1423     		movcs	r3, #20
+ 673 00cc 1A46     		mov	r2, r3
+ 674 00ce 164B     		ldr	r3, .L60+4
+ 675 00d0 0093     		str	r3, [sp]
+ 676 00d2 1C4B     		ldr	r3, .L60+32
+ 677 00d4 1649     		ldr	r1, .L60+12
+ 678 00d6 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 679 00da 1649     		ldr	r1, .L60+16
+ 680 00dc 8968     		ldr	r1, [r1, #8]
+ 681 00de 1648     		ldr	r0, .L60+20
+ 682              	.LVL67:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 683              		.loc 1 27 5 is_stmt 0 discriminator 3 view .LVU138
+ 684 00e0 FFF7FEFF 		bl	osal_printf
+ 685              	.LVL68:
+ 686 00e4 EDE7     		b	.L50
+ 687              	.LVL69:
+ 688              	.L49:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 689              		.loc 1 27 5 discriminator 3 view .LVU139
+ 690              	.LBE9:
+  27:../switch_sdk/core/yt/yt_init.c ****     CMM_ERR_CHK(fal_init(), ret);
+ 691              		.loc 1 27 5 is_stmt 1 discriminator 2 view .LVU140
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 692              		.loc 1 28 5 discriminator 2 view .LVU141
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 693              		.loc 1 28 5 discriminator 2 view .LVU142
+ 694 00e6 FFF7FEFF 		bl	fal_init
+ 695              	.LVL70:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 696              		.loc 1 28 5 is_stmt 0 discriminator 2 view .LVU143
+ 697 00ea 0446     		mov	r4, r0
+ 698              	.LVL71:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 699              		.loc 1 28 5 discriminator 2 view .LVU144
+ 700 00ec 10F0FF03 		ands	r3, r0, #255
+ 701 00f0 01D1     		bne	.L58
+  30:../switch_sdk/core/yt/yt_init.c **** }
+ 702              		.loc 1 30 12 view .LVU145
+ 703 00f2 0020     		movs	r0, #0
+ 704              	.LVL72:
+  30:../switch_sdk/core/yt/yt_init.c **** }
+ 705              		.loc 1 30 12 view .LVU146
+ 706 00f4 91E7     		b	.L41
+ 707              	.LVL73:
+ 708              	.L58:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 709              		.loc 1 28 5 is_stmt 1 discriminator 1 view .LVU147
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 710              		.loc 1 28 5 discriminator 1 view .LVU148
+ 711 00f6 0B4A     		ldr	r2, .L60
+ 712 00f8 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 713 00fa 012A     		cmp	r2, #1
+ 714 00fc 01D8     		bhi	.L59
+ 715              	.LVL74:
+ 716              	.L51:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 717              		.loc 1 28 5 discriminator 5 view .LVU149
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 718              		.loc 1 28 5 discriminator 5 view .LVU150
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 719              		.loc 1 28 5 discriminator 5 view .LVU151
+ 720 00fe E0B2     		uxtb	r0, r4
+ 721 0100 8BE7     		b	.L41
+ 722              	.LVL75:
+ 723              	.L59:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 724              		.loc 1 28 5 discriminator 3 view .LVU152
+ 725              	.LBB10:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 726              		.loc 1 28 5 discriminator 3 view .LVU153
+ 727 0102 142B     		cmp	r3, #20
+ 728 0104 28BF     		it	cs
+ 729 0106 1423     		movcs	r3, #20
+ 730 0108 1A46     		mov	r2, r3
+ 731 010a 074B     		ldr	r3, .L60+4
+ 732 010c 0093     		str	r3, [sp]
+ 733 010e 0E4B     		ldr	r3, .L60+36
+ 734 0110 0749     		ldr	r1, .L60+12
+ 735 0112 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 736 0116 0749     		ldr	r1, .L60+16
+ 737 0118 8968     		ldr	r1, [r1, #8]
+ 738 011a 0748     		ldr	r0, .L60+20
+ 739              	.LVL76:
+  28:../switch_sdk/core/yt/yt_init.c **** 
+ 740              		.loc 1 28 5 is_stmt 0 discriminator 3 view .LVU154
+ 741 011c FFF7FEFF 		bl	osal_printf
+ 742              	.LVL77:
+ 743 0120 EDE7     		b	.L51
+ 744              	.L61:
+ 745 0122 00BF     		.align	2
+ 746              	.L60:
+ 747 0124 00000000 		.word	yt_debug_level
+ 748 0128 00000000 		.word	__FUNCTION__.5
+ 749 012c 00000000 		.word	.LC5
+ 750 0130 00000000 		.word	_yt_errmsg
+ 751 0134 00000000 		.word	_yt_prompt_msg
+ 752 0138 10000000 		.word	.LC1
+ 753 013c 10000000 		.word	.LC6
+ 754 0140 1C000000 		.word	.LC7
+ 755 0144 30000000 		.word	.LC8
+ 756 0148 40000000 		.word	.LC9
+ 757              	.LBE10:
+ 758              		.cfi_endproc
+ 759              	.LFE3:
+ 761              		.section	.rodata.yt_init.str1.4,"aMS",%progbits,1
+ 762              		.align	2
+ 763              	.LC10:
+ 764 0000 79745F62 		.ascii	"yt_basic_init()\000"
+ 764      61736963 
+ 764      5F696E69 
+ 764      74282900 
+ 765              		.align	2
+ 766              	.LC11:
+ 767 0010 79745F6D 		.ascii	"yt_modules_init()\000"
+ 767      6F64756C 
+ 767      65735F69 
+ 767      6E697428 
+ 767      2900
+ 768              		.section	.text.yt_init,"ax",%progbits
+ 769              		.align	1
+ 770              		.global	yt_init
+ 771              		.syntax unified
+ 772              		.thumb
+ 773              		.thumb_func
+ 775              	yt_init:
+ 776              	.LFB7:
+  92:../switch_sdk/core/yt/yt_init.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 777              		.loc 1 92 1 is_stmt 1 view -0
+ 778              		.cfi_startproc
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+ 781 0000 10B5     		push	{r4, lr}
+ 782              		.cfi_def_cfa_offset 8
+ 783              		.cfi_offset 4, -8
+ 784              		.cfi_offset 14, -4
+ 785 0002 82B0     		sub	sp, sp, #8
+ 786              		.cfi_def_cfa_offset 16
+  93:../switch_sdk/core/yt/yt_init.c **** 
+ 787              		.loc 1 93 5 view .LVU156
+ 788              	.LVL78:
+  95:../switch_sdk/core/yt/yt_init.c **** 
+ 789              		.loc 1 95 5 view .LVU157
+  95:../switch_sdk/core/yt/yt_init.c **** 
+ 790              		.loc 1 95 5 view .LVU158
+ 791 0004 1E4B     		ldr	r3, .L72
+ 792 0006 0022     		movs	r2, #0
+ 793 0008 1A70     		strb	r2, [r3]
+  95:../switch_sdk/core/yt/yt_init.c **** 
+ 794              		.loc 1 95 5 view .LVU159
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 795              		.loc 1 97 5 view .LVU160
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 796              		.loc 1 97 5 view .LVU161
+ 797 000a FFF7FEFF 		bl	yt_basic_init
+ 798              	.LVL79:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 799              		.loc 1 97 5 is_stmt 0 view .LVU162
+ 800 000e 10F0FF03 		ands	r3, r0, #255
+ 801 0012 17D0     		beq	.L63
+ 802 0014 0446     		mov	r4, r0
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 803              		.loc 1 97 5 is_stmt 1 discriminator 1 view .LVU163
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 804              		.loc 1 97 5 discriminator 1 view .LVU164
+ 805 0016 1A4A     		ldr	r2, .L72
+ 806 0018 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 807 001a 012A     		cmp	r2, #1
+ 808 001c 02D8     		bhi	.L69
+ 809              	.LVL80:
+ 810              	.L64:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 811              		.loc 1 97 5 discriminator 5 view .LVU165
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 812              		.loc 1 97 5 discriminator 5 view .LVU166
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 813              		.loc 1 97 5 discriminator 5 view .LVU167
+ 814 001e E0B2     		uxtb	r0, r4
+ 815              	.LVL81:
+ 816              	.L62:
+ 102:../switch_sdk/core/yt/yt_init.c **** 
+ 817              		.loc 1 102 1 is_stmt 0 view .LVU168
+ 818 0020 02B0     		add	sp, sp, #8
+ 819              		.cfi_remember_state
+ 820              		.cfi_def_cfa_offset 8
+ 821              		@ sp needed
+ 822 0022 10BD     		pop	{r4, pc}
+ 823              	.LVL82:
+ 824              	.L69:
+ 825              		.cfi_restore_state
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 826              		.loc 1 97 5 is_stmt 1 discriminator 3 view .LVU169
+ 827              	.LBB11:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 828              		.loc 1 97 5 discriminator 3 view .LVU170
+ 829 0024 142B     		cmp	r3, #20
+ 830 0026 28BF     		it	cs
+ 831 0028 1423     		movcs	r3, #20
+ 832 002a 1A46     		mov	r2, r3
+ 833 002c 154B     		ldr	r3, .L72+4
+ 834 002e 0093     		str	r3, [sp]
+ 835 0030 154B     		ldr	r3, .L72+8
+ 836 0032 1649     		ldr	r1, .L72+12
+ 837 0034 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 838 0038 1549     		ldr	r1, .L72+16
+ 839 003a 8968     		ldr	r1, [r1, #8]
+ 840 003c 1548     		ldr	r0, .L72+20
+ 841              	.LVL83:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 842              		.loc 1 97 5 is_stmt 0 discriminator 3 view .LVU171
+ 843 003e FFF7FEFF 		bl	osal_printf
+ 844              	.LVL84:
+ 845 0042 ECE7     		b	.L64
+ 846              	.LVL85:
+ 847              	.L63:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 848              		.loc 1 97 5 discriminator 3 view .LVU172
+ 849              	.LBE11:
+  97:../switch_sdk/core/yt/yt_init.c **** 
+ 850              		.loc 1 97 5 is_stmt 1 discriminator 2 view .LVU173
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 851              		.loc 1 99 5 discriminator 2 view .LVU174
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 852              		.loc 1 99 5 discriminator 2 view .LVU175
+ 853 0044 FFF7FEFF 		bl	yt_modules_init
+ 854              	.LVL86:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 855              		.loc 1 99 5 is_stmt 0 discriminator 2 view .LVU176
+ 856 0048 0446     		mov	r4, r0
+ 857              	.LVL87:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 858              		.loc 1 99 5 discriminator 2 view .LVU177
+ 859 004a 10F0FF03 		ands	r3, r0, #255
+ 860 004e 01D1     		bne	.L70
+ 101:../switch_sdk/core/yt/yt_init.c **** }
+ 861              		.loc 1 101 12 view .LVU178
+ 862 0050 0020     		movs	r0, #0
+ 863              	.LVL88:
+ 101:../switch_sdk/core/yt/yt_init.c **** }
+ 864              		.loc 1 101 12 view .LVU179
+ 865 0052 E5E7     		b	.L62
+ 866              	.LVL89:
+ 867              	.L70:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 868              		.loc 1 99 5 is_stmt 1 discriminator 1 view .LVU180
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 869              		.loc 1 99 5 discriminator 1 view .LVU181
+ 870 0054 0A4A     		ldr	r2, .L72
+ 871 0056 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 872 0058 012A     		cmp	r2, #1
+ 873 005a 01D8     		bhi	.L71
+ 874              	.LVL90:
+ 875              	.L66:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 876              		.loc 1 99 5 discriminator 5 view .LVU182
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 877              		.loc 1 99 5 discriminator 5 view .LVU183
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 878              		.loc 1 99 5 discriminator 5 view .LVU184
+ 879 005c E0B2     		uxtb	r0, r4
+ 880 005e DFE7     		b	.L62
+ 881              	.LVL91:
+ 882              	.L71:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 883              		.loc 1 99 5 discriminator 3 view .LVU185
+ 884              	.LBB12:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 885              		.loc 1 99 5 discriminator 3 view .LVU186
+ 886 0060 142B     		cmp	r3, #20
+ 887 0062 28BF     		it	cs
+ 888 0064 1423     		movcs	r3, #20
+ 889 0066 1A46     		mov	r2, r3
+ 890 0068 064B     		ldr	r3, .L72+4
+ 891 006a 0093     		str	r3, [sp]
+ 892 006c 0A4B     		ldr	r3, .L72+24
+ 893 006e 0749     		ldr	r1, .L72+12
+ 894 0070 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 895 0074 0649     		ldr	r1, .L72+16
+ 896 0076 8968     		ldr	r1, [r1, #8]
+ 897 0078 0648     		ldr	r0, .L72+20
+ 898              	.LVL92:
+  99:../switch_sdk/core/yt/yt_init.c **** 
+ 899              		.loc 1 99 5 is_stmt 0 discriminator 3 view .LVU187
+ 900 007a FFF7FEFF 		bl	osal_printf
+ 901              	.LVL93:
+ 902 007e EDE7     		b	.L66
+ 903              	.L73:
+ 904              		.align	2
+ 905              	.L72:
+ 906 0080 00000000 		.word	yt_debug_level
+ 907 0084 00000000 		.word	__FUNCTION__.1
+ 908 0088 00000000 		.word	.LC10
+ 909 008c 00000000 		.word	_yt_errmsg
+ 910 0090 00000000 		.word	_yt_prompt_msg
+ 911 0094 10000000 		.word	.LC1
+ 912 0098 10000000 		.word	.LC11
+ 913              	.LBE12:
+ 914              		.cfi_endproc
+ 915              	.LFE7:
+ 917              		.section	.rodata.__FUNCTION__.0,"a"
+ 918              		.align	2
+ 921              	__FUNCTION__.0:
+ 922 0000 79745F64 		.ascii	"yt_drv_init\000"
+ 922      72765F69 
+ 922      6E697400 
+ 923              		.section	.rodata.__FUNCTION__.1,"a"
+ 924              		.align	2
+ 927              	__FUNCTION__.1:
+ 928 0000 79745F69 		.ascii	"yt_init\000"
+ 928      6E697400 
+ 929              		.section	.rodata.__FUNCTION__.2,"a"
+ 930              		.align	2
+ 933              	__FUNCTION__.2:
+ 934 0000 79745F6D 		.ascii	"yt_modules_init\000"
+ 934      6F64756C 
+ 934      65735F69 
+ 934      6E697400 
+ 935              		.section	.rodata.__FUNCTION__.3,"a"
+ 936              		.align	2
+ 939              	__FUNCTION__.3:
+ 940 0000 79745F64 		.ascii	"yt_device_close\000"
+ 940      65766963 
+ 940      655F636C 
+ 940      6F736500 
+ 941              		.section	.rodata.__FUNCTION__.4,"a"
+ 942              		.align	2
+ 945              	__FUNCTION__.4:
+ 946 0000 79745F64 		.ascii	"yt_device_init\000"
+ 946      65766963 
+ 946      655F696E 
+ 946      697400
+ 947              		.section	.rodata.__FUNCTION__.5,"a"
+ 948              		.align	2
+ 951              	__FUNCTION__.5:
+ 952 0000 79745F62 		.ascii	"yt_basic_init\000"
+ 952      61736963 
+ 952      5F696E69 
+ 952      7400
+ 953              		.text
+ 954              	.Letext0:
+ 955              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 956              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+ 957              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_port.h"
+ 958              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\drv\\sw_ctrl/drv.h"
+ 959              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal/fal_init.h"
+ 960              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal/fal_dispatch.h"
+ 961              		.file 8 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\hal/hal_cmm.h"
+ 962              		.file 9 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\cal/cal_mgm.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 yt_init.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:19     .rodata.yt_device_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:26     .text.yt_device_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:32     .text.yt_device_init:00000000 yt_device_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:112    .text.yt_device_init:00000044 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:945    .rodata.__FUNCTION__.4:00000000 __FUNCTION__.4
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:123    .rodata.yt_device_close.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:127    .text.yt_device_close:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:133    .text.yt_device_close:00000000 yt_device_close
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:210    .text.yt_device_close:00000044 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:939    .rodata.__FUNCTION__.3:00000000 __FUNCTION__.3
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:221    .rodata.yt_modules_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:225    .text.yt_modules_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:231    .text.yt_modules_init:00000000 yt_modules_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:324    .text.yt_modules_init:00000050 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:933    .rodata.__FUNCTION__.2:00000000 __FUNCTION__.2
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:335    .rodata.yt_drv_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:339    .text.yt_drv_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:345    .text.yt_drv_init:00000000 yt_drv_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:439    .text.yt_drv_init:00000050 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:921    .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:450    .rodata.yt_basic_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:466    .text.yt_basic_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:472    .text.yt_basic_init:00000000 yt_basic_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:747    .text.yt_basic_init:00000124 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:951    .rodata.__FUNCTION__.5:00000000 __FUNCTION__.5
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:762    .rodata.yt_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:769    .text.yt_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:775    .text.yt_init:00000000 yt_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:906    .text.yt_init:00000080 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:927    .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:918    .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:924    .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:930    .rodata.__FUNCTION__.2:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:936    .rodata.__FUNCTION__.3:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:942    .rodata.__FUNCTION__.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccdENy8O.s:948    .rodata.__FUNCTION__.5:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_vlan.h.27.cbfc53d6b95550ade50fea715c623f6e
+                           .group:00000000 wm4.yt_acl.h.25.ad9531373d966dccc96222e31e0234b5
+                           .group:00000000 wm4.yt_nic.h.17.4e5ceed38d9cfbd9b5db2d4b069b6961
+                           .group:00000000 wm4.yt_loopdetect.h.17.4739c2e436a8e779d4d8c89037b81aea
+                           .group:00000000 wm4.yt_multicast.h.17.9c1d51b153e5e1785468d9c0ad6414a4
+                           .group:00000000 wm4.yt_port.h.17.f9740394ebf086646c9c567db1605abb
+                           .group:00000000 wm4.yt_stat.h.17.f87caec2ee71e59f920ea3778bda3fad
+
+UNDEFINED SYMBOLS
+drv_init
+osal_printf
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+drv_close
+yt_port_init
+cal_mgm_init
+hal_init
+fal_dispatch_init
+fal_init

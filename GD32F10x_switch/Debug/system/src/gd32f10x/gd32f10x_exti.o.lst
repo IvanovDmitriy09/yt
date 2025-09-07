@@ -1,0 +1,864 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_exti.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_exti.c"
+  18              		.section	.text.exti_deinit,"ax",%progbits
+  19              		.align	1
+  20              		.global	exti_deinit
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	exti_deinit:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_exti.c ****     \file    gd32f10x_exti.c
+   3:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief   EXTI driver
+   4:../system/src/gd32f10x/gd32f10x_exti.c **** 
+   5:../system/src/gd32f10x/gd32f10x_exti.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_exti.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_exti.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_exti.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_exti.c **** */
+  10:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  11:../system/src/gd32f10x/gd32f10x_exti.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_exti.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  14:../system/src/gd32f10x/gd32f10x_exti.c ****     Redistribution and use in source and binary forms, with or without modification,
+  15:../system/src/gd32f10x/gd32f10x_exti.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  17:../system/src/gd32f10x/gd32f10x_exti.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  18:../system/src/gd32f10x/gd32f10x_exti.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_exti.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  20:../system/src/gd32f10x/gd32f10x_exti.c ****        this list of conditions and the following disclaimer in the documentation
+  21:../system/src/gd32f10x/gd32f10x_exti.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_exti.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  23:../system/src/gd32f10x/gd32f10x_exti.c ****        may be used to endorse or promote products derived from this software without
+  24:../system/src/gd32f10x/gd32f10x_exti.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  26:../system/src/gd32f10x/gd32f10x_exti.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:../system/src/gd32f10x/gd32f10x_exti.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  28:../system/src/gd32f10x/gd32f10x_exti.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  29:../system/src/gd32f10x/gd32f10x_exti.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  30:../system/src/gd32f10x/gd32f10x_exti.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  31:../system/src/gd32f10x/gd32f10x_exti.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  32:../system/src/gd32f10x/gd32f10x_exti.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  33:../system/src/gd32f10x/gd32f10x_exti.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  34:../system/src/gd32f10x/gd32f10x_exti.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  35:../system/src/gd32f10x/gd32f10x_exti.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_exti.c **** */
+  37:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  38:../system/src/gd32f10x/gd32f10x_exti.c **** #include "gd32f10x_exti.h"
+  39:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  40:../system/src/gd32f10x/gd32f10x_exti.c **** #define EXTI_REG_RESET_VALUE            ((uint32_t)0x00000000U)
+  41:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  42:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+  43:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      deinitialize the EXTI
+  44:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  none
+  45:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+  46:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+  47:../system/src/gd32f10x/gd32f10x_exti.c **** */
+  48:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_deinit(void)
+  49:../system/src/gd32f10x/gd32f10x_exti.c **** {
+  27              		.loc 1 49 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  50:../system/src/gd32f10x/gd32f10x_exti.c ****     /* reset the value of all the EXTI registers */
+  51:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_INTEN = EXTI_REG_RESET_VALUE;
+  32              		.loc 1 51 5 view .LVU1
+  33              		.loc 1 51 16 is_stmt 0 view .LVU2
+  34 0000 064B     		ldr	r3, .L2
+  35 0002 0022     		movs	r2, #0
+  36 0004 C3F80024 		str	r2, [r3, #1024]
+  52:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_EVEN  = EXTI_REG_RESET_VALUE;
+  37              		.loc 1 52 5 is_stmt 1 view .LVU3
+  38              		.loc 1 52 16 is_stmt 0 view .LVU4
+  39 0008 C3F80424 		str	r2, [r3, #1028]
+  53:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_RTEN  = EXTI_REG_RESET_VALUE;
+  40              		.loc 1 53 5 is_stmt 1 view .LVU5
+  41              		.loc 1 53 16 is_stmt 0 view .LVU6
+  42 000c C3F80824 		str	r2, [r3, #1032]
+  54:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_FTEN  = EXTI_REG_RESET_VALUE;
+  43              		.loc 1 54 5 is_stmt 1 view .LVU7
+  44              		.loc 1 54 16 is_stmt 0 view .LVU8
+  45 0010 C3F80C24 		str	r2, [r3, #1036]
+  55:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_SWIEV = EXTI_REG_RESET_VALUE;
+  46              		.loc 1 55 5 is_stmt 1 view .LVU9
+  47              		.loc 1 55 16 is_stmt 0 view .LVU10
+  48 0014 C3F81024 		str	r2, [r3, #1040]
+  56:../system/src/gd32f10x/gd32f10x_exti.c **** }
+  49              		.loc 1 56 1 view .LVU11
+  50 0018 7047     		bx	lr
+  51              	.L3:
+  52 001a 00BF     		.align	2
+  53              	.L2:
+  54 001c 00000140 		.word	1073807360
+  55              		.cfi_endproc
+  56              	.LFE56:
+  58              		.section	.text.exti_init,"ax",%progbits
+  59              		.align	1
+  60              		.global	exti_init
+  61              		.syntax unified
+  62              		.thumb
+  63              		.thumb_func
+  65              	exti_init:
+  66              	.LVL0:
+  67              	.LFB57:
+  57:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  58:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+  59:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      initialize the EXTI line x
+  60:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+  61:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+  62:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+  63:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  mode: interrupt or event mode, refer to exti_mode_enum
+  64:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+  65:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_INTERRUPT: interrupt mode
+  66:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_EVENT: event mode
+  67:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  trig_type: interrupt trigger type, refer to exti_trig_type_enum
+  68:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+  69:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_TRIG_RISING: rising edge trigger
+  70:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_TRIG_FALLING: falling trigger
+  71:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_TRIG_BOTH: rising and falling trigger
+  72:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_TRIG_NONE: without rising edge or falling edge trigger
+  73:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+  74:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+  75:../system/src/gd32f10x/gd32f10x_exti.c **** */
+  76:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_init(exti_line_enum linex, exti_mode_enum mode, exti_trig_type_enum trig_type)
+  77:../system/src/gd32f10x/gd32f10x_exti.c **** {
+  68              		.loc 1 77 1 is_stmt 1 view -0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  73              		.loc 1 77 1 is_stmt 0 view .LVU13
+  74 0000 10B4     		push	{r4}
+  75              		.cfi_def_cfa_offset 4
+  76              		.cfi_offset 4, -4
+  78:../system/src/gd32f10x/gd32f10x_exti.c ****     /* reset the EXTI line x */
+  79:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_INTEN &= ~(uint32_t)linex;
+  77              		.loc 1 79 5 is_stmt 1 view .LVU14
+  78 0002 2C4B     		ldr	r3, .L13
+  79 0004 D3F80044 		ldr	r4, [r3, #1024]
+  80              		.loc 1 79 19 is_stmt 0 view .LVU15
+  81 0008 6FEA000C 		mvn	ip, r0
+  82              		.loc 1 79 16 view .LVU16
+  83 000c 24EA0004 		bic	r4, r4, r0
+  84 0010 C3F80044 		str	r4, [r3, #1024]
+  80:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_EVEN &= ~(uint32_t)linex;
+  85              		.loc 1 80 5 is_stmt 1 view .LVU17
+  86 0014 D3F80444 		ldr	r4, [r3, #1028]
+  87              		.loc 1 80 15 is_stmt 0 view .LVU18
+  88 0018 24EA0004 		bic	r4, r4, r0
+  89 001c C3F80444 		str	r4, [r3, #1028]
+  81:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_RTEN &= ~(uint32_t)linex;
+  90              		.loc 1 81 5 is_stmt 1 view .LVU19
+  91 0020 D3F80844 		ldr	r4, [r3, #1032]
+  92              		.loc 1 81 15 is_stmt 0 view .LVU20
+  93 0024 24EA0004 		bic	r4, r4, r0
+  94 0028 C3F80844 		str	r4, [r3, #1032]
+  82:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_FTEN &= ~(uint32_t)linex;
+  95              		.loc 1 82 5 is_stmt 1 view .LVU21
+  96 002c D3F80C44 		ldr	r4, [r3, #1036]
+  97              		.loc 1 82 15 is_stmt 0 view .LVU22
+  98 0030 24EA0004 		bic	r4, r4, r0
+  99 0034 C3F80C44 		str	r4, [r3, #1036]
+  83:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  84:../system/src/gd32f10x/gd32f10x_exti.c ****     /* set the EXTI mode and enable the interrupts or events from EXTI line x */
+  85:../system/src/gd32f10x/gd32f10x_exti.c ****     switch(mode) {
+ 100              		.loc 1 85 5 is_stmt 1 view .LVU23
+ 101 0038 41B1     		cbz	r1, .L5
+ 102 003a 0129     		cmp	r1, #1
+ 103 003c 0DD0     		beq	.L6
+ 104              	.LVL1:
+ 105              	.L7:
+  86:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_INTERRUPT:
+  87:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_INTEN |= (uint32_t)linex;
+  88:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+  89:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_EVENT:
+  90:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_EVEN |= (uint32_t)linex;
+  91:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+  92:../system/src/gd32f10x/gd32f10x_exti.c ****     default:
+  93:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+  94:../system/src/gd32f10x/gd32f10x_exti.c ****     }
+  95:../system/src/gd32f10x/gd32f10x_exti.c **** 
+  96:../system/src/gd32f10x/gd32f10x_exti.c ****     /* set the EXTI trigger type */
+  97:../system/src/gd32f10x/gd32f10x_exti.c ****     switch(trig_type) {
+ 106              		.loc 1 97 5 view .LVU24
+ 107 003e 012A     		cmp	r2, #1
+ 108 0040 1FD0     		beq	.L8
+ 109 0042 022A     		cmp	r2, #2
+ 110 0044 2AD0     		beq	.L9
+ 111 0046 7AB1     		cbz	r2, .L12
+ 112              	.LVL2:
+ 113              	.L4:
+  98:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_RISING:
+  99:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_RTEN |= (uint32_t)linex;
+ 100:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN &= ~(uint32_t)linex;
+ 101:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 102:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_FALLING:
+ 103:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_RTEN &= ~(uint32_t)linex;
+ 104:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 105:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 106:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_BOTH:
+ 107:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_RTEN |= (uint32_t)linex;
+ 108:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 109:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 110:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_NONE:
+ 111:../system/src/gd32f10x/gd32f10x_exti.c ****     default:
+ 112:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 113:../system/src/gd32f10x/gd32f10x_exti.c ****     }
+ 114:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 114              		.loc 1 114 1 is_stmt 0 view .LVU25
+ 115 0048 10BC     		pop	{r4}
+ 116              		.cfi_remember_state
+ 117              		.cfi_restore 4
+ 118              		.cfi_def_cfa_offset 0
+ 119 004a 7047     		bx	lr
+ 120              	.LVL3:
+ 121              	.L5:
+ 122              		.cfi_restore_state
+  87:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 123              		.loc 1 87 9 is_stmt 1 view .LVU26
+ 124 004c 1949     		ldr	r1, .L13
+ 125              	.LVL4:
+  87:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 126              		.loc 1 87 9 is_stmt 0 view .LVU27
+ 127 004e D1F80034 		ldr	r3, [r1, #1024]
+  87:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 128              		.loc 1 87 20 view .LVU28
+ 129 0052 0343     		orrs	r3, r3, r0
+ 130 0054 C1F80034 		str	r3, [r1, #1024]
+  88:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_EVENT:
+ 131              		.loc 1 88 9 is_stmt 1 view .LVU29
+ 132 0058 F1E7     		b	.L7
+ 133              	.LVL5:
+ 134              	.L6:
+  90:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 135              		.loc 1 90 9 view .LVU30
+ 136 005a 1649     		ldr	r1, .L13
+ 137              	.LVL6:
+  90:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 138              		.loc 1 90 9 is_stmt 0 view .LVU31
+ 139 005c D1F80434 		ldr	r3, [r1, #1028]
+  90:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 140              		.loc 1 90 19 view .LVU32
+ 141 0060 0343     		orrs	r3, r3, r0
+ 142 0062 C1F80434 		str	r3, [r1, #1028]
+  91:../system/src/gd32f10x/gd32f10x_exti.c ****     default:
+ 143              		.loc 1 91 9 is_stmt 1 view .LVU33
+ 144 0066 EAE7     		b	.L7
+ 145              	.L12:
+  99:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN &= ~(uint32_t)linex;
+ 146              		.loc 1 99 9 view .LVU34
+ 147 0068 124B     		ldr	r3, .L13
+ 148 006a D3F80824 		ldr	r2, [r3, #1032]
+ 149              	.LVL7:
+  99:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN &= ~(uint32_t)linex;
+ 150              		.loc 1 99 19 is_stmt 0 view .LVU35
+ 151 006e 0243     		orrs	r2, r2, r0
+ 152 0070 C3F80824 		str	r2, [r3, #1032]
+ 100:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 153              		.loc 1 100 9 is_stmt 1 view .LVU36
+ 154 0074 D3F80C24 		ldr	r2, [r3, #1036]
+ 100:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 155              		.loc 1 100 19 is_stmt 0 view .LVU37
+ 156 0078 0CEA0202 		and	r2, ip, r2
+ 157 007c C3F80C24 		str	r2, [r3, #1036]
+ 101:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_FALLING:
+ 158              		.loc 1 101 9 is_stmt 1 view .LVU38
+ 159 0080 E2E7     		b	.L4
+ 160              	.LVL8:
+ 161              	.L8:
+ 103:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 162              		.loc 1 103 9 view .LVU39
+ 163 0082 0C4A     		ldr	r2, .L13
+ 164              	.LVL9:
+ 103:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 165              		.loc 1 103 9 is_stmt 0 view .LVU40
+ 166 0084 D2F80834 		ldr	r3, [r2, #1032]
+ 103:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 167              		.loc 1 103 19 view .LVU41
+ 168 0088 0CEA0303 		and	r3, ip, r3
+ 169 008c C2F80834 		str	r3, [r2, #1032]
+ 104:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 170              		.loc 1 104 9 is_stmt 1 view .LVU42
+ 171 0090 D2F80C34 		ldr	r3, [r2, #1036]
+ 104:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 172              		.loc 1 104 19 is_stmt 0 view .LVU43
+ 173 0094 0343     		orrs	r3, r3, r0
+ 174 0096 C2F80C34 		str	r3, [r2, #1036]
+ 105:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_BOTH:
+ 175              		.loc 1 105 9 is_stmt 1 view .LVU44
+ 176 009a D5E7     		b	.L4
+ 177              	.LVL10:
+ 178              	.L9:
+ 107:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 179              		.loc 1 107 9 view .LVU45
+ 180 009c 054B     		ldr	r3, .L13
+ 181 009e D3F80824 		ldr	r2, [r3, #1032]
+ 182              	.LVL11:
+ 107:../system/src/gd32f10x/gd32f10x_exti.c ****         EXTI_FTEN |= (uint32_t)linex;
+ 183              		.loc 1 107 19 is_stmt 0 view .LVU46
+ 184 00a2 0243     		orrs	r2, r2, r0
+ 185 00a4 C3F80824 		str	r2, [r3, #1032]
+ 108:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 186              		.loc 1 108 9 is_stmt 1 view .LVU47
+ 187 00a8 D3F80C24 		ldr	r2, [r3, #1036]
+ 108:../system/src/gd32f10x/gd32f10x_exti.c ****         break;
+ 188              		.loc 1 108 19 is_stmt 0 view .LVU48
+ 189 00ac 0243     		orrs	r2, r2, r0
+ 190 00ae C3F80C24 		str	r2, [r3, #1036]
+ 109:../system/src/gd32f10x/gd32f10x_exti.c ****     case EXTI_TRIG_NONE:
+ 191              		.loc 1 109 9 is_stmt 1 view .LVU49
+ 192              		.loc 1 114 1 is_stmt 0 view .LVU50
+ 193 00b2 C9E7     		b	.L4
+ 194              	.L14:
+ 195              		.align	2
+ 196              	.L13:
+ 197 00b4 00000140 		.word	1073807360
+ 198              		.cfi_endproc
+ 199              	.LFE57:
+ 201              		.section	.text.exti_interrupt_enable,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	exti_interrupt_enable
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 208              	exti_interrupt_enable:
+ 209              	.LVL12:
+ 210              	.LFB58:
+ 115:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 116:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 117:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      enable the interrupts from EXTI line x
+ 118:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 119:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 120:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 121:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 122:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 123:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 124:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_interrupt_enable(exti_line_enum linex)
+ 125:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 211              		.loc 1 125 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 126:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_INTEN |= (uint32_t)linex;
+ 216              		.loc 1 126 5 view .LVU52
+ 217 0000 034A     		ldr	r2, .L16
+ 218 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 219              		.loc 1 126 16 is_stmt 0 view .LVU53
+ 220 0006 0343     		orrs	r3, r3, r0
+ 221 0008 C2F80034 		str	r3, [r2, #1024]
+ 127:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 222              		.loc 1 127 1 view .LVU54
+ 223 000c 7047     		bx	lr
+ 224              	.L17:
+ 225 000e 00BF     		.align	2
+ 226              	.L16:
+ 227 0010 00000140 		.word	1073807360
+ 228              		.cfi_endproc
+ 229              	.LFE58:
+ 231              		.section	.text.exti_interrupt_disable,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	exti_interrupt_disable
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	exti_interrupt_disable:
+ 239              	.LVL13:
+ 240              	.LFB59:
+ 128:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 129:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 130:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      disable the interrupts from EXTI line x
+ 131:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 132:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 133:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 134:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 135:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 136:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 137:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_interrupt_disable(exti_line_enum linex)
+ 138:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 241              		.loc 1 138 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		@ link register save eliminated.
+ 139:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_INTEN &= ~(uint32_t)linex;
+ 246              		.loc 1 139 5 view .LVU56
+ 247 0000 034A     		ldr	r2, .L19
+ 248 0002 D2F80034 		ldr	r3, [r2, #1024]
+ 249              		.loc 1 139 16 is_stmt 0 view .LVU57
+ 250 0006 23EA0003 		bic	r3, r3, r0
+ 251 000a C2F80034 		str	r3, [r2, #1024]
+ 140:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 252              		.loc 1 140 1 view .LVU58
+ 253 000e 7047     		bx	lr
+ 254              	.L20:
+ 255              		.align	2
+ 256              	.L19:
+ 257 0010 00000140 		.word	1073807360
+ 258              		.cfi_endproc
+ 259              	.LFE59:
+ 261              		.section	.text.exti_event_enable,"ax",%progbits
+ 262              		.align	1
+ 263              		.global	exti_event_enable
+ 264              		.syntax unified
+ 265              		.thumb
+ 266              		.thumb_func
+ 268              	exti_event_enable:
+ 269              	.LVL14:
+ 270              	.LFB60:
+ 141:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 142:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 143:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      enable the events from EXTI line x
+ 144:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 145:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 146:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 147:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 148:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 149:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 150:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_event_enable(exti_line_enum linex)
+ 151:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 271              		.loc 1 151 1 is_stmt 1 view -0
+ 272              		.cfi_startproc
+ 273              		@ args = 0, pretend = 0, frame = 0
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275              		@ link register save eliminated.
+ 152:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_EVEN |= (uint32_t)linex;
+ 276              		.loc 1 152 5 view .LVU60
+ 277 0000 034A     		ldr	r2, .L22
+ 278 0002 D2F80434 		ldr	r3, [r2, #1028]
+ 279              		.loc 1 152 15 is_stmt 0 view .LVU61
+ 280 0006 0343     		orrs	r3, r3, r0
+ 281 0008 C2F80434 		str	r3, [r2, #1028]
+ 153:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 282              		.loc 1 153 1 view .LVU62
+ 283 000c 7047     		bx	lr
+ 284              	.L23:
+ 285 000e 00BF     		.align	2
+ 286              	.L22:
+ 287 0010 00000140 		.word	1073807360
+ 288              		.cfi_endproc
+ 289              	.LFE60:
+ 291              		.section	.text.exti_event_disable,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	exti_event_disable
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 298              	exti_event_disable:
+ 299              	.LVL15:
+ 300              	.LFB61:
+ 154:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 155:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 156:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      disable the events from EXTI line x
+ 157:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 158:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 159:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 160:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 161:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 162:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 163:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_event_disable(exti_line_enum linex)
+ 164:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 301              		.loc 1 164 1 is_stmt 1 view -0
+ 302              		.cfi_startproc
+ 303              		@ args = 0, pretend = 0, frame = 0
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305              		@ link register save eliminated.
+ 165:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_EVEN &= ~(uint32_t)linex;
+ 306              		.loc 1 165 5 view .LVU64
+ 307 0000 034A     		ldr	r2, .L25
+ 308 0002 D2F80434 		ldr	r3, [r2, #1028]
+ 309              		.loc 1 165 15 is_stmt 0 view .LVU65
+ 310 0006 23EA0003 		bic	r3, r3, r0
+ 311 000a C2F80434 		str	r3, [r2, #1028]
+ 166:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 312              		.loc 1 166 1 view .LVU66
+ 313 000e 7047     		bx	lr
+ 314              	.L26:
+ 315              		.align	2
+ 316              	.L25:
+ 317 0010 00000140 		.word	1073807360
+ 318              		.cfi_endproc
+ 319              	.LFE61:
+ 321              		.section	.text.exti_software_interrupt_enable,"ax",%progbits
+ 322              		.align	1
+ 323              		.global	exti_software_interrupt_enable
+ 324              		.syntax unified
+ 325              		.thumb
+ 326              		.thumb_func
+ 328              	exti_software_interrupt_enable:
+ 329              	.LVL16:
+ 330              	.LFB62:
+ 167:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 168:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 169:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      enable the software interrupt event from EXTI line x
+ 170:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 171:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 172:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 173:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 174:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 175:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 176:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_software_interrupt_enable(exti_line_enum linex)
+ 177:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 331              		.loc 1 177 1 is_stmt 1 view -0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335              		@ link register save eliminated.
+ 178:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_SWIEV |= (uint32_t)linex;
+ 336              		.loc 1 178 5 view .LVU68
+ 337 0000 034A     		ldr	r2, .L28
+ 338 0002 D2F81034 		ldr	r3, [r2, #1040]
+ 339              		.loc 1 178 16 is_stmt 0 view .LVU69
+ 340 0006 0343     		orrs	r3, r3, r0
+ 341 0008 C2F81034 		str	r3, [r2, #1040]
+ 179:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 342              		.loc 1 179 1 view .LVU70
+ 343 000c 7047     		bx	lr
+ 344              	.L29:
+ 345 000e 00BF     		.align	2
+ 346              	.L28:
+ 347 0010 00000140 		.word	1073807360
+ 348              		.cfi_endproc
+ 349              	.LFE62:
+ 351              		.section	.text.exti_software_interrupt_disable,"ax",%progbits
+ 352              		.align	1
+ 353              		.global	exti_software_interrupt_disable
+ 354              		.syntax unified
+ 355              		.thumb
+ 356              		.thumb_func
+ 358              	exti_software_interrupt_disable:
+ 359              	.LVL17:
+ 360              	.LFB63:
+ 180:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 181:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 182:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      disable the software interrupt event from EXTI line x
+ 183:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 184:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 185:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 186:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 187:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 188:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 189:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_software_interrupt_disable(exti_line_enum linex)
+ 190:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 361              		.loc 1 190 1 is_stmt 1 view -0
+ 362              		.cfi_startproc
+ 363              		@ args = 0, pretend = 0, frame = 0
+ 364              		@ frame_needed = 0, uses_anonymous_args = 0
+ 365              		@ link register save eliminated.
+ 191:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_SWIEV &= ~(uint32_t)linex;
+ 366              		.loc 1 191 5 view .LVU72
+ 367 0000 034A     		ldr	r2, .L31
+ 368 0002 D2F81034 		ldr	r3, [r2, #1040]
+ 369              		.loc 1 191 16 is_stmt 0 view .LVU73
+ 370 0006 23EA0003 		bic	r3, r3, r0
+ 371 000a C2F81034 		str	r3, [r2, #1040]
+ 192:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 372              		.loc 1 192 1 view .LVU74
+ 373 000e 7047     		bx	lr
+ 374              	.L32:
+ 375              		.align	2
+ 376              	.L31:
+ 377 0010 00000140 		.word	1073807360
+ 378              		.cfi_endproc
+ 379              	.LFE63:
+ 381              		.section	.text.exti_flag_get,"ax",%progbits
+ 382              		.align	1
+ 383              		.global	exti_flag_get
+ 384              		.syntax unified
+ 385              		.thumb
+ 386              		.thumb_func
+ 388              	exti_flag_get:
+ 389              	.LVL18:
+ 390              	.LFB64:
+ 193:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 194:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 195:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      get EXTI line x interrupt pending flag
+ 196:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 197:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 198:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 199:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 200:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     FlagStatus: status of flag (RESET or SET)
+ 201:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 202:../system/src/gd32f10x/gd32f10x_exti.c **** FlagStatus exti_flag_get(exti_line_enum linex)
+ 203:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 391              		.loc 1 203 1 is_stmt 1 view -0
+ 392              		.cfi_startproc
+ 393              		@ args = 0, pretend = 0, frame = 0
+ 394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 395              		@ link register save eliminated.
+ 204:../system/src/gd32f10x/gd32f10x_exti.c ****     if(RESET != (EXTI_PD & (uint32_t)linex)) {
+ 396              		.loc 1 204 5 view .LVU76
+ 397              		.loc 1 204 18 is_stmt 0 view .LVU77
+ 398 0000 044B     		ldr	r3, .L36
+ 399 0002 D3F81434 		ldr	r3, [r3, #1044]
+ 400              		.loc 1 204 7 view .LVU78
+ 401 0006 0342     		tst	r3, r0
+ 402 0008 01D0     		beq	.L35
+ 205:../system/src/gd32f10x/gd32f10x_exti.c ****         return SET;
+ 403              		.loc 1 205 16 view .LVU79
+ 404 000a 0120     		movs	r0, #1
+ 405              	.LVL19:
+ 406              		.loc 1 205 16 view .LVU80
+ 407 000c 7047     		bx	lr
+ 408              	.LVL20:
+ 409              	.L35:
+ 206:../system/src/gd32f10x/gd32f10x_exti.c ****     } else {
+ 207:../system/src/gd32f10x/gd32f10x_exti.c ****         return RESET;
+ 410              		.loc 1 207 16 view .LVU81
+ 411 000e 0020     		movs	r0, #0
+ 412              	.LVL21:
+ 208:../system/src/gd32f10x/gd32f10x_exti.c ****     }
+ 209:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 413              		.loc 1 209 1 view .LVU82
+ 414 0010 7047     		bx	lr
+ 415              	.L37:
+ 416 0012 00BF     		.align	2
+ 417              	.L36:
+ 418 0014 00000140 		.word	1073807360
+ 419              		.cfi_endproc
+ 420              	.LFE64:
+ 422              		.section	.text.exti_flag_clear,"ax",%progbits
+ 423              		.align	1
+ 424              		.global	exti_flag_clear
+ 425              		.syntax unified
+ 426              		.thumb
+ 427              		.thumb_func
+ 429              	exti_flag_clear:
+ 430              	.LVL22:
+ 431              	.LFB65:
+ 210:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 211:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 212:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      clear EXTI line x interrupt pending flag
+ 213:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 214:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 215:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 216:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 217:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 218:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 219:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_flag_clear(exti_line_enum linex)
+ 220:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 432              		.loc 1 220 1 is_stmt 1 view -0
+ 433              		.cfi_startproc
+ 434              		@ args = 0, pretend = 0, frame = 0
+ 435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 436              		@ link register save eliminated.
+ 221:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_PD = (uint32_t)linex;
+ 437              		.loc 1 221 5 view .LVU84
+ 438              		.loc 1 221 13 is_stmt 0 view .LVU85
+ 439 0000 014B     		ldr	r3, .L39
+ 440 0002 C3F81404 		str	r0, [r3, #1044]
+ 222:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 441              		.loc 1 222 1 view .LVU86
+ 442 0006 7047     		bx	lr
+ 443              	.L40:
+ 444              		.align	2
+ 445              	.L39:
+ 446 0008 00000140 		.word	1073807360
+ 447              		.cfi_endproc
+ 448              	.LFE65:
+ 450              		.section	.text.exti_interrupt_flag_get,"ax",%progbits
+ 451              		.align	1
+ 452              		.global	exti_interrupt_flag_get
+ 453              		.syntax unified
+ 454              		.thumb
+ 455              		.thumb_func
+ 457              	exti_interrupt_flag_get:
+ 458              	.LVL23:
+ 459              	.LFB66:
+ 223:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 224:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 225:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      get EXTI line x interrupt pending flag
+ 226:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 227:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 228:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 229:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 230:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     FlagStatus: status of flag (RESET or SET)
+ 231:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 232:../system/src/gd32f10x/gd32f10x_exti.c **** FlagStatus exti_interrupt_flag_get(exti_line_enum linex)
+ 233:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 460              		.loc 1 233 1 is_stmt 1 view -0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 464              		@ link register save eliminated.
+ 234:../system/src/gd32f10x/gd32f10x_exti.c ****     if(RESET != (EXTI_PD & (uint32_t)linex)) {
+ 465              		.loc 1 234 5 view .LVU88
+ 466              		.loc 1 234 18 is_stmt 0 view .LVU89
+ 467 0000 044B     		ldr	r3, .L44
+ 468 0002 D3F81434 		ldr	r3, [r3, #1044]
+ 469              		.loc 1 234 7 view .LVU90
+ 470 0006 0342     		tst	r3, r0
+ 471 0008 01D0     		beq	.L43
+ 235:../system/src/gd32f10x/gd32f10x_exti.c ****         return SET;
+ 472              		.loc 1 235 16 view .LVU91
+ 473 000a 0120     		movs	r0, #1
+ 474              	.LVL24:
+ 475              		.loc 1 235 16 view .LVU92
+ 476 000c 7047     		bx	lr
+ 477              	.LVL25:
+ 478              	.L43:
+ 236:../system/src/gd32f10x/gd32f10x_exti.c ****     } else {
+ 237:../system/src/gd32f10x/gd32f10x_exti.c ****         return RESET;
+ 479              		.loc 1 237 16 view .LVU93
+ 480 000e 0020     		movs	r0, #0
+ 481              	.LVL26:
+ 238:../system/src/gd32f10x/gd32f10x_exti.c ****     }
+ 239:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 482              		.loc 1 239 1 view .LVU94
+ 483 0010 7047     		bx	lr
+ 484              	.L45:
+ 485 0012 00BF     		.align	2
+ 486              	.L44:
+ 487 0014 00000140 		.word	1073807360
+ 488              		.cfi_endproc
+ 489              	.LFE66:
+ 491              		.section	.text.exti_interrupt_flag_clear,"ax",%progbits
+ 492              		.align	1
+ 493              		.global	exti_interrupt_flag_clear
+ 494              		.syntax unified
+ 495              		.thumb
+ 496              		.thumb_func
+ 498              	exti_interrupt_flag_clear:
+ 499              	.LVL27:
+ 500              	.LFB67:
+ 240:../system/src/gd32f10x/gd32f10x_exti.c **** 
+ 241:../system/src/gd32f10x/gd32f10x_exti.c **** /*!
+ 242:../system/src/gd32f10x/gd32f10x_exti.c ****     \brief      clear EXTI line x interrupt pending flag
+ 243:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[in]  linex: EXTI line number, refer to exti_line_enum
+ 244:../system/src/gd32f10x/gd32f10x_exti.c ****                 only one parameter can be selected which is shown as below:
+ 245:../system/src/gd32f10x/gd32f10x_exti.c ****       \arg        EXTI_x (x=0..19): EXTI line x
+ 246:../system/src/gd32f10x/gd32f10x_exti.c ****     \param[out] none
+ 247:../system/src/gd32f10x/gd32f10x_exti.c ****     \retval     none
+ 248:../system/src/gd32f10x/gd32f10x_exti.c **** */
+ 249:../system/src/gd32f10x/gd32f10x_exti.c **** void exti_interrupt_flag_clear(exti_line_enum linex)
+ 250:../system/src/gd32f10x/gd32f10x_exti.c **** {
+ 501              		.loc 1 250 1 is_stmt 1 view -0
+ 502              		.cfi_startproc
+ 503              		@ args = 0, pretend = 0, frame = 0
+ 504              		@ frame_needed = 0, uses_anonymous_args = 0
+ 505              		@ link register save eliminated.
+ 251:../system/src/gd32f10x/gd32f10x_exti.c ****     EXTI_PD = (uint32_t)linex;
+ 506              		.loc 1 251 5 view .LVU96
+ 507              		.loc 1 251 13 is_stmt 0 view .LVU97
+ 508 0000 014B     		ldr	r3, .L47
+ 509 0002 C3F81404 		str	r0, [r3, #1044]
+ 252:../system/src/gd32f10x/gd32f10x_exti.c **** }
+ 510              		.loc 1 252 1 view .LVU98
+ 511 0006 7047     		bx	lr
+ 512              	.L48:
+ 513              		.align	2
+ 514              	.L47:
+ 515 0008 00000140 		.word	1073807360
+ 516              		.cfi_endproc
+ 517              	.LFE67:
+ 519              		.text
+ 520              	.Letext0:
+ 521              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 522              		.file 3 "../system/inc/cmsis/gd32f10x.h"
+ 523              		.file 4 "../system/inc/gd32f10x/gd32f10x_exti.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_exti.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:19     .text.exti_deinit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:25     .text.exti_deinit:00000000 exti_deinit
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:54     .text.exti_deinit:0000001c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:59     .text.exti_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:65     .text.exti_init:00000000 exti_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:197    .text.exti_init:000000b4 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:202    .text.exti_interrupt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:208    .text.exti_interrupt_enable:00000000 exti_interrupt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:227    .text.exti_interrupt_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:232    .text.exti_interrupt_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:238    .text.exti_interrupt_disable:00000000 exti_interrupt_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:257    .text.exti_interrupt_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:262    .text.exti_event_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:268    .text.exti_event_enable:00000000 exti_event_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:287    .text.exti_event_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:292    .text.exti_event_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:298    .text.exti_event_disable:00000000 exti_event_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:317    .text.exti_event_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:322    .text.exti_software_interrupt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:328    .text.exti_software_interrupt_enable:00000000 exti_software_interrupt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:347    .text.exti_software_interrupt_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:352    .text.exti_software_interrupt_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:358    .text.exti_software_interrupt_disable:00000000 exti_software_interrupt_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:377    .text.exti_software_interrupt_disable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:382    .text.exti_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:388    .text.exti_flag_get:00000000 exti_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:418    .text.exti_flag_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:423    .text.exti_flag_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:429    .text.exti_flag_clear:00000000 exti_flag_clear
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:446    .text.exti_flag_clear:00000008 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:451    .text.exti_interrupt_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:457    .text.exti_interrupt_flag_get:00000000 exti_interrupt_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:487    .text.exti_interrupt_flag_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:492    .text.exti_interrupt_flag_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:498    .text.exti_interrupt_flag_clear:00000000 exti_interrupt_flag_clear
+C:\Users\Dmitriy\AppData\Local\Temp\ccRDhfM0.s:515    .text.exti_interrupt_flag_clear:00000008 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+                           .group:00000000 wm4.gd32f10x_exti.h.44.e250fd503325fcb4b3622a472cc81543
+
+NO UNDEFINED SYMBOLS

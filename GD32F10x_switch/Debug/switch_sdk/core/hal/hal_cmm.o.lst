@@ -1,0 +1,217 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"hal_cmm.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/hal/hal_cmm.c"
+  18              		.section	.rodata.hal_init.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 68616C5F 		.ascii	"hal_ctrl_init()\000"
+  21      6374726C 
+  21      5F696E69 
+  21      74282900 
+  22              		.align	2
+  23              	.LC1:
+  24 0010 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+  24      206F6620 
+  24      22257322 
+  24      20696E20 
+  24      25730D0A 
+  25              		.section	.text.hal_init,"ax",%progbits
+  26              		.align	1
+  27              		.global	hal_init
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	hal_init:
+  33              	.LFB3:
+   1:../switch_sdk/core/hal/hal_cmm.c **** /*******************************************************************************
+   2:../switch_sdk/core/hal/hal_cmm.c **** *                                                                              *
+   3:../switch_sdk/core/hal/hal_cmm.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../switch_sdk/core/hal/hal_cmm.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../switch_sdk/core/hal/hal_cmm.c **** *                                                                              *
+   6:../switch_sdk/core/hal/hal_cmm.c **** ********************************************************************************
+   7:../switch_sdk/core/hal/hal_cmm.c **** */
+   8:../switch_sdk/core/hal/hal_cmm.c **** #include "hal_mem.h"
+   9:../switch_sdk/core/hal/hal_cmm.c **** #include "hal_cmm.h"
+  10:../switch_sdk/core/hal/hal_cmm.c **** #include "hal_ctrl.h"
+  11:../switch_sdk/core/hal/hal_cmm.c **** 
+  12:../switch_sdk/core/hal/hal_cmm.c **** uint32_t hal_init(void)
+  13:../switch_sdk/core/hal/hal_cmm.c **** {
+  34              		.loc 1 13 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38 0000 10B5     		push	{r4, lr}
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 4, -8
+  41              		.cfi_offset 14, -4
+  42 0002 82B0     		sub	sp, sp, #8
+  43              		.cfi_def_cfa_offset 16
+  14:../switch_sdk/core/hal/hal_cmm.c ****     yt_ret_t ret = CMM_ERR_OK;
+  44              		.loc 1 14 5 view .LVU1
+  45              	.LVL0:
+  15:../switch_sdk/core/hal/hal_cmm.c **** 
+  16:../switch_sdk/core/hal/hal_cmm.c ****     hal_mem32_init();
+  46              		.loc 1 16 5 view .LVU2
+  47 0004 FFF7FEFF 		bl	hal_mem32_init
+  48              	.LVL1:
+  17:../switch_sdk/core/hal/hal_cmm.c ****     hal_table_reg_init();
+  49              		.loc 1 17 5 view .LVU3
+  50 0008 FFF7FEFF 		bl	hal_table_reg_init
+  51              	.LVL2:
+  18:../switch_sdk/core/hal/hal_cmm.c **** 
+  19:../switch_sdk/core/hal/hal_cmm.c ****     CMM_ERR_CHK(hal_ctrl_init(), ret);
+  52              		.loc 1 19 5 view .LVU4
+  53              		.loc 1 19 5 view .LVU5
+  54 000c FFF7FEFF 		bl	hal_ctrl_init
+  55              	.LVL3:
+  56              		.loc 1 19 5 is_stmt 0 view .LVU6
+  57 0010 0446     		mov	r4, r0
+  58 0012 10B9     		cbnz	r0, .L5
+  59              	.LVL4:
+  60              	.L1:
+  20:../switch_sdk/core/hal/hal_cmm.c **** 
+  21:../switch_sdk/core/hal/hal_cmm.c ****     return CMM_ERR_OK;
+  22:../switch_sdk/core/hal/hal_cmm.c **** }
+  61              		.loc 1 22 1 view .LVU7
+  62 0014 2046     		mov	r0, r4
+  63 0016 02B0     		add	sp, sp, #8
+  64              		.cfi_remember_state
+  65              		.cfi_def_cfa_offset 8
+  66              		@ sp needed
+  67 0018 10BD     		pop	{r4, pc}
+  68              	.LVL5:
+  69              	.L5:
+  70              		.cfi_restore_state
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  71              		.loc 1 19 5 is_stmt 1 discriminator 1 view .LVU8
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  72              		.loc 1 19 5 discriminator 1 view .LVU9
+  73 001a 0A4B     		ldr	r3, .L6
+  74 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  75 001e 012B     		cmp	r3, #1
+  76 0020 F8D9     		bls	.L1
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  77              		.loc 1 19 5 discriminator 3 view .LVU10
+  78              	.LBB2:
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  79              		.loc 1 19 5 discriminator 3 view .LVU11
+  80 0022 0146     		mov	r1, r0
+  81 0024 1428     		cmp	r0, #20
+  82 0026 28BF     		it	cs
+  83 0028 1421     		movcs	r1, #20
+  84 002a 074B     		ldr	r3, .L6+4
+  85 002c 0093     		str	r3, [sp]
+  86 002e 074B     		ldr	r3, .L6+8
+  87 0030 074A     		ldr	r2, .L6+12
+  88 0032 52F82120 		ldr	r2, [r2, r1, lsl #2]
+  89 0036 0749     		ldr	r1, .L6+16
+  90 0038 8968     		ldr	r1, [r1, #8]
+  91 003a 0748     		ldr	r0, .L6+20
+  92              	.LVL6:
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  93              		.loc 1 19 5 is_stmt 0 discriminator 3 view .LVU12
+  94 003c FFF7FEFF 		bl	osal_printf
+  95              	.LVL7:
+  96              	.LBE2:
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  97              		.loc 1 19 5 is_stmt 1 discriminator 3 view .LVU13
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  98              		.loc 1 19 5 discriminator 3 view .LVU14
+  19:../switch_sdk/core/hal/hal_cmm.c **** 
+  99              		.loc 1 19 5 discriminator 3 view .LVU15
+ 100 0040 E8E7     		b	.L1
+ 101              	.L7:
+ 102 0042 00BF     		.align	2
+ 103              	.L6:
+ 104 0044 00000000 		.word	yt_debug_level
+ 105 0048 00000000 		.word	__FUNCTION__.0
+ 106 004c 00000000 		.word	.LC0
+ 107 0050 00000000 		.word	_yt_errmsg
+ 108 0054 00000000 		.word	_yt_prompt_msg
+ 109 0058 10000000 		.word	.LC1
+ 110              		.cfi_endproc
+ 111              	.LFE3:
+ 113              		.section	.rodata.__FUNCTION__.0,"a"
+ 114              		.align	2
+ 117              	__FUNCTION__.0:
+ 118 0000 68616C5F 		.ascii	"hal_init\000"
+ 118      696E6974 
+ 118      00
+ 119              		.text
+ 120              	.Letext0:
+ 121              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 122              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+ 123              		.file 4 "../switch_sdk/core/hal/hal_ctrl.h"
+ 124              		.file 5 "../switch_sdk/core/hal/hal_mem.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 hal_cmm.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:19     .rodata.hal_init.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:26     .text.hal_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:32     .text.hal_init:00000000 hal_init
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:104    .text.hal_init:00000044 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:117    .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\cc9n28Qy.s:114    .rodata.__FUNCTION__.0:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_port.h.26.cd095c4f9e5cbf044bc6839a51827ee8
+                           .group:00000000 wm4.hal_ctrl.h.25.367b449f63494da8a1fabadd8a862957
+
+UNDEFINED SYMBOLS
+hal_mem32_init
+hal_table_reg_init
+hal_ctrl_init
+osal_printf
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg

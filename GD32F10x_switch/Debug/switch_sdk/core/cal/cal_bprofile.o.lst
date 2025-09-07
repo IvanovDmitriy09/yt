@@ -1,0 +1,1012 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"cal_bprofile.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/cal/cal_bprofile.c"
+  18              		.section	.text.profile_yt9215sc_default_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	profile_yt9215sc_default_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	profile_yt9215sc_default_init:
+  26              	.LVL0:
+  27              	.LFB3:
+  28              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\boardprofile/bprofile_YT9215SC
+   1:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /******************************************************************************
+   2:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *                                                                             *
+   3:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.              *
+   4:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Motorcomm Confidential and Proprietary.                                    *
+   5:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *                                                                             *
+   6:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *******************************************************************************
+   7:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  File Name     : bprofile_YT9215SC_default_demo.c
+   8:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Version       : Initial Draft
+   9:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Created       : 
+  10:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Last Modified :
+  11:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *  Description   : board profile for yt9215sc board,port(5+2sgfib)
+  12:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** *
+  13:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** ******************************************************************************/
+  14:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  15:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /**************************************************
+  16:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  *      Include header files                       *
+  17:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  **************************************************/
+  18:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** #include "cal_bprofile.h"
+  19:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** #include "yt_error.h"
+  20:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /**************************************************
+  21:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  *      Constants or macros Declaration            *
+  22:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  **************************************************/
+  23:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  24:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /**************************************************
+  25:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  *      Global variables                           *
+  26:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  **************************************************/
+  27:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  28:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /**************************************************
+  29:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  *      Functions Declaration                      *
+  30:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****  **************************************************/
+  31:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** yt_ret_t profile_yt9215sc_default_init(yt_hwProfile_info_t *hwprofile_info);
+  32:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  33:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** yt_swDescp_t yt9215sc_default_swDescp;
+  34:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  35:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const board_profile_identify_t YT9215sc2SGFibProfileIdentifier = {BOARD_ID_YT9215SC, "YT9215SC SGFI
+  36:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  37:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /* port descp */
+  38:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_portDescp_t YT9215sc2SGFibPortDescp[] =
+  39:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  40:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     /*macid	attribute		phy_index	phy_addr	serdes_index	ethtype			medium				smi */
+  41:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {0,		PORT_ATTR_ETH,	0,			0,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  42:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {1,		PORT_ATTR_ETH,	0,			1,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  43:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {2,		PORT_ATTR_ETH,	0,			2,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  44:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {3,		PORT_ATTR_ETH,	0,			3,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  45:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {4,		PORT_ATTR_ETH,	0,			4,			INVALID_ID,		ETH_TYPE_GE,	PORT_MEDI_COPPER,	YT_SMI_INT},
+  46:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {8,		PORT_ATTR_ETH,	INVALID_ID,	8,	        0,              ETH_TYPE_GE25,	PORT_MEDI_FIBER,	YT_S
+  47:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {9,		PORT_ATTR_ETH,	INVALID_ID,	9,	        0,              ETH_TYPE_GE25,	PORT_MEDI_FIBER,	YT_S
+  48:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** #ifdef INTER_MCU
+  49:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     /* internel cpu port */
+  50:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {10,    PORT_ATTR_INT_CPU,			    INVALID_ID,	INVALID_ID,	PORT_ATTR_ETH,	ETH_TYPE_GE,	PORT_MEDI_
+  51:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** #endif
+  52:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID,YT_SMI_NONE},
+  53:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  54:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  55:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /* serdes.descp */
+  56:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_serdesDescp_t YT9215scSdsDescp[] =
+  57:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  58:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	/*serdes_id mode*/
+  59:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	{0,              SERDES_MODE_2500BX},
+  60:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	{INVALID_ID,INVALID_ID},
+  61:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  62:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  63:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /* phy.descp */
+  64:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_phyDescp_t YT9215scPhyDescp[] =
+  65:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  66:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	/*chip_id chip_model				start_mac_id	phy_max*/
+  67:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	{0,		  YT_PHY_MODEL_INT861X,	0,				5},
+  68:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 	{INVALID_ID,INVALID_ID,INVALID_ID,INVALID_ID},
+  69:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  70:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  71:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /* LED description */
+  72:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_sled_remapInfo_t YT9215scRemapInfo[] = 
+  73:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  74:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {3, 0}, {2, 0}, {1, 0}, {0, 0},{6, 1}, {5, 1}, {4, 1}, 
+  75:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {3, 1}, {2, 1}, {1, 1}, {0, 1},{6, 2}, {5, 2}, {4, 2}, 
+  76:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {3, 2}, {2, 2}, {1, 2}, {0, 2}, {6, 0}, {5, 0}, {4, 0}
+  77:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  78:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  79:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** yt_sled_param_t YT9215scSLEDParam = {
+  80:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     LED_SERIAL_ACTIVE_MODE_LOW,
+  81:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     SLED_DATANUM_YT9215_21, 
+  82:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     0,
+  83:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     YT9215scRemapInfo
+  84:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  85:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  86:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_ledDescp_t YT9215scLEDDescp = {LED_MODE_SERIAL, &YT9215scSLEDParam};
+  87:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  88:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  89:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** /* hardware profile */
+  90:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** const yt_hwProfile_t yt9215sc_default_demo =
+  91:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  92:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     .pIdentifier = &YT9215sc2SGFibProfileIdentifier,
+  93:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     .profile_init = profile_yt9215sc_default_init,
+  94:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** };
+  95:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+  96:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** yt_ret_t profile_yt9215sc_default_init(yt_hwProfile_info_t *hwprofile_info)
+  97:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** {
+  29              		.loc 2 97 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  98:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     uint8_t	i;
+  34              		.loc 2 98 5 view .LVU1
+  99:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 100:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     hwprofile_info->pIdentifier = &YT9215sc2SGFibProfileIdentifier;
+  35              		.loc 2 100 5 view .LVU2
+  36              		.loc 2 100 33 is_stmt 0 view .LVU3
+  37 0000 234B     		ldr	r3, .L8
+  38 0002 0360     		str	r3, [r0]
+ 101:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 102:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     /* switch info */
+ 103:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     hwprofile_info->switch_count = 1;
+  39              		.loc 2 103 5 is_stmt 1 view .LVU4
+  40              		.loc 2 103 34 is_stmt 0 view .LVU5
+  41 0004 0123     		movs	r3, #1
+  42 0006 0372     		strb	r3, [r0, #8]
+ 104:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 105:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     yt9215sc_default_swDescp.chip_id = YT_SW_ID_9215;
+  43              		.loc 2 105 5 is_stmt 1 view .LVU6
+  44              		.loc 2 105 38 is_stmt 0 view .LVU7
+  45 0008 224A     		ldr	r2, .L8+4
+  46 000a 49F20203 		movw	r3, #36866
+  47 000e 1380     		strh	r3, [r2]	@ movhi
+ 106:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     yt9215sc_default_swDescp.chip_model = YT_SW_MODEL_9215;
+  48              		.loc 2 106 5 is_stmt 1 view .LVU8
+  49              		.loc 2 106 41 is_stmt 0 view .LVU9
+  50 0010 0023     		movs	r3, #0
+  51 0012 9370     		strb	r3, [r2, #2]
+ 107:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 108:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     i = 0;
+  52              		.loc 2 108 5 is_stmt 1 view .LVU10
+  53              	.LVL1:
+ 109:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215sc2SGFibPortDescp[i].mac_id != INVALID_ID)
+  54              		.loc 2 109 5 view .LVU11
+  55              		.loc 2 109 10 is_stmt 0 view .LVU12
+  56 0014 09E0     		b	.L2
+  57              	.LVL2:
+  58              	.L3:
+ 110:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 111:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         yt9215sc_default_swDescp.pPortDescp[i] = &YT9215sc2SGFibPortDescp[i];
+  59              		.loc 2 111 9 is_stmt 1 view .LVU13
+  60              		.loc 2 111 50 is_stmt 0 view .LVU14
+  61 0016 204A     		ldr	r2, .L8+8
+  62 0018 02EBC302 		add	r2, r2, r3, lsl #3
+  63              		.loc 2 111 48 view .LVU15
+  64 001c 03F1060C 		add	ip, r3, #6
+  65 0020 1C49     		ldr	r1, .L8+4
+  66 0022 41F82C20 		str	r2, [r1, ip, lsl #2]
+ 112:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         i++;
+  67              		.loc 2 112 9 is_stmt 1 view .LVU16
+  68              		.loc 2 112 10 is_stmt 0 view .LVU17
+  69 0026 0133     		adds	r3, r3, #1
+  70              	.LVL3:
+  71              		.loc 2 112 10 view .LVU18
+  72 0028 DBB2     		uxtb	r3, r3
+  73              	.LVL4:
+  74              	.L2:
+ 109:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215sc2SGFibPortDescp[i].mac_id != INVALID_ID)
+  75              		.loc 2 109 45 is_stmt 1 view .LVU19
+ 109:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215sc2SGFibPortDescp[i].mac_id != INVALID_ID)
+  76              		.loc 2 109 37 is_stmt 0 view .LVU20
+  77 002a 1B4A     		ldr	r2, .L8+8
+  78 002c 12F83320 		ldrb	r2, [r2, r3, lsl #3]	@ zero_extendqisi2
+ 109:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215sc2SGFibPortDescp[i].mac_id != INVALID_ID)
+  79              		.loc 2 109 45 view .LVU21
+  80 0030 FF2A     		cmp	r2, #255
+  81 0032 F0D1     		bne	.L3
+ 113:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     }
+ 114:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     yt9215sc_default_swDescp.port_num = i;
+  82              		.loc 2 114 5 is_stmt 1 view .LVU22
+  83              		.loc 2 114 39 is_stmt 0 view .LVU23
+  84 0034 174A     		ldr	r2, .L8+4
+  85 0036 1375     		strb	r3, [r2, #20]
+ 115:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 116:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     i = 0;
+  86              		.loc 2 116 5 is_stmt 1 view .LVU24
+  87              	.LVL5:
+ 117:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scSdsDescp[i].serdes_id!= INVALID_ID)
+  88              		.loc 2 117 5 view .LVU25
+ 116:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scSdsDescp[i].serdes_id!= INVALID_ID)
+  89              		.loc 2 116 7 is_stmt 0 view .LVU26
+  90 0038 0023     		movs	r3, #0
+  91              		.loc 2 117 10 view .LVU27
+  92 003a 09E0     		b	.L4
+  93              	.LVL6:
+  94              	.L5:
+ 118:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 119:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         yt9215sc_default_swDescp.pSerdesDescp[i] = &YT9215scSdsDescp[i];
+  95              		.loc 2 119 9 is_stmt 1 view .LVU28
+  96              		.loc 2 119 52 is_stmt 0 view .LVU29
+  97 003c 174A     		ldr	r2, .L8+12
+  98 003e 02EB4302 		add	r2, r2, r3, lsl #1
+  99              		.loc 2 119 50 view .LVU30
+ 100 0042 03F1220C 		add	ip, r3, #34
+ 101 0046 1349     		ldr	r1, .L8+4
+ 102 0048 41F82C20 		str	r2, [r1, ip, lsl #2]
+ 120:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         i++;
+ 103              		.loc 2 120 9 is_stmt 1 view .LVU31
+ 104              		.loc 2 120 10 is_stmt 0 view .LVU32
+ 105 004c 0133     		adds	r3, r3, #1
+ 106              	.LVL7:
+ 107              		.loc 2 120 10 view .LVU33
+ 108 004e DBB2     		uxtb	r3, r3
+ 109              	.LVL8:
+ 110              	.L4:
+ 117:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 111              		.loc 2 117 40 is_stmt 1 view .LVU34
+ 117:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 112              		.loc 2 117 30 is_stmt 0 view .LVU35
+ 113 0050 124A     		ldr	r2, .L8+12
+ 114 0052 12F81320 		ldrb	r2, [r2, r3, lsl #1]	@ zero_extendqisi2
+ 117:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 115              		.loc 2 117 40 view .LVU36
+ 116 0056 FF2A     		cmp	r2, #255
+ 117 0058 F0D1     		bne	.L5
+ 121:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     }
+ 122:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 123:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     i = 0;
+ 118              		.loc 2 123 7 view .LVU37
+ 119 005a 0023     		movs	r3, #0
+ 120              	.LVL9:
+ 121              		.loc 2 123 7 view .LVU38
+ 122 005c 09E0     		b	.L6
+ 123              	.LVL10:
+ 124              	.L7:
+ 124:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scPhyDescp[i].phy_index!= INVALID_ID)
+ 125:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     {
+ 126:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         yt9215sc_default_swDescp.pPhyDescp[i] = &YT9215scPhyDescp[i];
+ 125              		.loc 2 126 9 is_stmt 1 view .LVU39
+ 126              		.loc 2 126 49 is_stmt 0 view .LVU40
+ 127 005e 104A     		ldr	r2, .L8+16
+ 128 0060 02EB8302 		add	r2, r2, r3, lsl #2
+ 129              		.loc 2 126 47 view .LVU41
+ 130 0064 03F1260C 		add	ip, r3, #38
+ 131 0068 0A49     		ldr	r1, .L8+4
+ 132 006a 41F82C20 		str	r2, [r1, ip, lsl #2]
+ 127:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****         i++;
+ 133              		.loc 2 127 9 is_stmt 1 view .LVU42
+ 134              		.loc 2 127 10 is_stmt 0 view .LVU43
+ 135 006e 0133     		adds	r3, r3, #1
+ 136              	.LVL11:
+ 137              		.loc 2 127 10 view .LVU44
+ 138 0070 DBB2     		uxtb	r3, r3
+ 139              	.LVL12:
+ 140              	.L6:
+ 124:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scPhyDescp[i].phy_index!= INVALID_ID)
+ 141              		.loc 2 124 40 is_stmt 1 view .LVU45
+ 124:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scPhyDescp[i].phy_index!= INVALID_ID)
+ 142              		.loc 2 124 30 is_stmt 0 view .LVU46
+ 143 0072 0B4A     		ldr	r2, .L8+16
+ 144 0074 12F82320 		ldrb	r2, [r2, r3, lsl #2]	@ zero_extendqisi2
+ 124:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     while(YT9215scPhyDescp[i].phy_index!= INVALID_ID)
+ 145              		.loc 2 124 40 view .LVU47
+ 146 0078 FF2A     		cmp	r2, #255
+ 147 007a F0D1     		bne	.L7
+ 128:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     }
+ 129:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 130:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     YT9215scSLEDParam.remapInfoNum = sizeof(YT9215scRemapInfo)/sizeof(yt_sled_remapInfo_t);
+ 148              		.loc 2 130 5 is_stmt 1 view .LVU48
+ 149              		.loc 2 130 36 is_stmt 0 view .LVU49
+ 150 007c 094B     		ldr	r3, .L8+20
+ 151              	.LVL13:
+ 152              		.loc 2 130 36 view .LVU50
+ 153 007e 1522     		movs	r2, #21
+ 154 0080 9A70     		strb	r2, [r3, #2]
+ 131:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     yt9215sc_default_swDescp.pLEDDescp = &YT9215scLEDDescp;
+ 155              		.loc 2 131 5 is_stmt 1 view .LVU51
+ 156              		.loc 2 131 40 is_stmt 0 view .LVU52
+ 157 0082 044B     		ldr	r3, .L8+4
+ 158 0084 084A     		ldr	r2, .L8+24
+ 159 0086 C3F8A820 		str	r2, [r3, #168]
+ 132:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 133:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     hwprofile_info->pSwDescp[0] = &yt9215sc_default_swDescp;
+ 160              		.loc 2 133 5 is_stmt 1 view .LVU53
+ 161              		.loc 2 133 33 is_stmt 0 view .LVU54
+ 162 008a C360     		str	r3, [r0, #12]
+ 134:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** 
+ 135:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c ****     return CMM_ERR_OK;
+ 163              		.loc 2 135 5 is_stmt 1 view .LVU55
+ 136:C:\Users\Dmitriy\Desktop\GD32F10x\switch_sdk\common\boardprofile\bprofile_YT9215SC_default_demo.c **** }
+ 164              		.loc 2 136 1 is_stmt 0 view .LVU56
+ 165 008c 0020     		movs	r0, #0
+ 166              	.LVL14:
+ 167              		.loc 2 136 1 view .LVU57
+ 168 008e 7047     		bx	lr
+ 169              	.L9:
+ 170              		.align	2
+ 171              	.L8:
+ 172 0090 00000000 		.word	YT9215sc2SGFibProfileIdentifier
+ 173 0094 00000000 		.word	yt9215sc_default_swDescp
+ 174 0098 00000000 		.word	YT9215sc2SGFibPortDescp
+ 175 009c 00000000 		.word	YT9215scSdsDescp
+ 176 00a0 00000000 		.word	YT9215scPhyDescp
+ 177 00a4 00000000 		.word	YT9215scSLEDParam
+ 178 00a8 00000000 		.word	YT9215scLEDDescp
+ 179              		.cfi_endproc
+ 180              	.LFE3:
+ 182              		.section	.text.cal_board_profile_init,"ax",%progbits
+ 183              		.align	1
+ 184              		.global	cal_board_profile_init
+ 185              		.syntax unified
+ 186              		.thumb
+ 187              		.thumb_func
+ 189              	cal_board_profile_init:
+ 190              	.LFB4:
+   1:../switch_sdk/core/cal/cal_bprofile.c **** /*******************************************************************************
+   2:../switch_sdk/core/cal/cal_bprofile.c **** *                                                                              *
+   3:../switch_sdk/core/cal/cal_bprofile.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../switch_sdk/core/cal/cal_bprofile.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../switch_sdk/core/cal/cal_bprofile.c **** *                                                                              *
+   6:../switch_sdk/core/cal/cal_bprofile.c **** ********************************************************************************
+   7:../switch_sdk/core/cal/cal_bprofile.c **** */
+   8:../switch_sdk/core/cal/cal_bprofile.c **** #include "cal_bprofile.h"
+   9:../switch_sdk/core/cal/cal_bprofile.c **** #include "yt_error.h"
+  10:../switch_sdk/core/cal/cal_bprofile.c **** #include "cal_cmm.h"
+  11:../switch_sdk/core/cal/cal_bprofile.c **** 
+  12:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  13:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215_default_demo.c"
+  14:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  15:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215RB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  16:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215RB_default_demo.c"
+  17:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  18:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215RB_YT8531_DEMO) || defined(BOARD_AUTO_DETECT)
+  19:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215RB_YT8531_demo.c"
+  20:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  21:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215S_YT8531_FIB_DEMO) || defined(BOARD_AUTO_DETECT)
+  22:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215S_YT8531_Fib_demo.c"
+  23:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  24:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215S_FIB_DEMO) || defined(BOARD_AUTO_DETECT)
+  25:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215S_Fib_demo.c"
+  26:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  27:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215SC_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  28:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9215SC_default_demo.c"
+  29:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  30:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218MB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  31:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9218MB_default_demo.c"
+  32:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  33:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9214NB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  34:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9214NB_default_demo.c"
+  35:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  36:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9213NB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  37:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9213NB_default_demo.c"
+  38:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  39:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218MB_YT8531_DEMO) || defined(BOARD_AUTO_DETECT)
+  40:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9218MB_YT8531_demo.c"
+  41:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  42:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218N_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  43:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT9218N_default_demo.c"
+  44:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  45:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT921X_MULTI_SW_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  46:../switch_sdk/core/cal/cal_bprofile.c **** #include "bprofile_YT921X_multi_sw_default_demo.c"
+  47:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  48:../switch_sdk/core/cal/cal_bprofile.c **** /*
+  49:../switch_sdk/core/cal/cal_bprofile.c ****  * Data Type Definition
+  50:../switch_sdk/core/cal/cal_bprofile.c ****  */
+  51:../switch_sdk/core/cal/cal_bprofile.c **** 
+  52:../switch_sdk/core/cal/cal_bprofile.c **** yt_hwProfile_info_t	gBoardInfo;
+  53:../switch_sdk/core/cal/cal_bprofile.c **** const yt_swDescp_t	*gpSwitchUnit[YT_MAX_UNIT];
+  54:../switch_sdk/core/cal/cal_bprofile.c **** 
+  55:../switch_sdk/core/cal/cal_bprofile.c **** /* list of hardware profiles */
+  56:../switch_sdk/core/cal/cal_bprofile.c **** const yt_hwProfile_t *gSupport_hwProfile_list[] =
+  57:../switch_sdk/core/cal/cal_bprofile.c **** {
+  58:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  59:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215_default_demo,
+  60:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  61:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215RB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  62:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215rb_default_demo,
+  63:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  64:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215RB_YT8531_DEMO) || defined(BOARD_AUTO_DETECT)
+  65:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215rb_yt8531_demo,
+  66:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  67:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215S_YT8531_FIB_DEMO) || defined(BOARD_AUTO_DETECT)
+  68:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215s_yt8531_fib_demo,
+  69:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  70:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215S_FIB_DEMO) || defined(BOARD_AUTO_DETECT)
+  71:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215s_fib_demo,
+  72:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  73:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9215SC_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  74:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9215sc_default_demo,
+  75:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  76:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218MB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  77:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9218mb_default_demo,
+  78:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  79:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9214NB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  80:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9214nb_default_demo,
+  81:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  82:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9213NB_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  83:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9213nb_default_demo,
+  84:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  85:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218MB_YT8531_DEMO) || defined(BOARD_AUTO_DETECT)
+  86:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9218mb_yt8531_demo,
+  87:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  88:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT9218N_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  89:../switch_sdk/core/cal/cal_bprofile.c ****     &yt9218n_default_demo,
+  90:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  91:../switch_sdk/core/cal/cal_bprofile.c **** #if defined(BOARD_YT921X_MULTI_SW_DEFAULT_DEMO) || defined(BOARD_AUTO_DETECT)
+  92:../switch_sdk/core/cal/cal_bprofile.c ****     &yt921x_multi_sw_default_demo,
+  93:../switch_sdk/core/cal/cal_bprofile.c **** #endif
+  94:../switch_sdk/core/cal/cal_bprofile.c ****     NULL
+  95:../switch_sdk/core/cal/cal_bprofile.c **** };
+  96:../switch_sdk/core/cal/cal_bprofile.c **** 
+  97:../switch_sdk/core/cal/cal_bprofile.c **** /*
+  98:../switch_sdk/core/cal/cal_bprofile.c ****  * Function Declaration
+  99:../switch_sdk/core/cal/cal_bprofile.c ****  */
+ 100:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 101:../switch_sdk/core/cal/cal_bprofile.c **** /*****************************************************************************
+ 102:../switch_sdk/core/cal/cal_bprofile.c **** *   Prototype    : cal_board_profile_init
+ 103:../switch_sdk/core/cal/cal_bprofile.c **** *   Description  : init board profile info
+ 104:../switch_sdk/core/cal/cal_bprofile.c **** *   Input        : void
+ 105:../switch_sdk/core/cal/cal_bprofile.c **** *   Output       : None
+ 106:../switch_sdk/core/cal/cal_bprofile.c **** *   Return Value : uint32_t
+ 107:../switch_sdk/core/cal/cal_bprofile.c **** *
+ 108:../switch_sdk/core/cal/cal_bprofile.c **** *****************************************************************************/
+ 109:../switch_sdk/core/cal/cal_bprofile.c **** uint32_t cal_board_profile_init(void)
+ 110:../switch_sdk/core/cal/cal_bprofile.c **** {
+ 191              		.loc 1 110 1 is_stmt 1 view -0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111:../switch_sdk/core/cal/cal_bprofile.c ****     const yt_hwProfile_t     **pbProfile = gSupport_hwProfile_list;
+ 195              		.loc 1 111 5 view .LVU59
+ 196              	.LVL15:
+ 112:../switch_sdk/core/cal/cal_bprofile.c ****     uint8_t	i;
+ 197              		.loc 1 112 5 view .LVU60
+ 113:../switch_sdk/core/cal/cal_bprofile.c ****     uint8_t j = 0;
+ 198              		.loc 1 113 5 view .LVU61
+ 114:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 115:../switch_sdk/core/cal/cal_bprofile.c ****     while (*pbProfile != NULL)
+ 199              		.loc 1 115 5 view .LVU62
+ 200              		.loc 1 115 23 view .LVU63
+ 201              		.loc 1 115 12 is_stmt 0 view .LVU64
+ 202 0000 384B     		ldr	r3, .L27
+ 203 0002 1B68     		ldr	r3, [r3]
+ 204              		.loc 1 115 23 view .LVU65
+ 205 0004 002B     		cmp	r3, #0
+ 206 0006 6BD0     		beq	.L20
+ 110:../switch_sdk/core/cal/cal_bprofile.c ****     const yt_hwProfile_t     **pbProfile = gSupport_hwProfile_list;
+ 207              		.loc 1 110 1 view .LVU66
+ 208 0008 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 209              		.cfi_def_cfa_offset 24
+ 210              		.cfi_offset 4, -24
+ 211              		.cfi_offset 5, -20
+ 212              		.cfi_offset 6, -16
+ 213              		.cfi_offset 7, -12
+ 214              		.cfi_offset 8, -8
+ 215              		.cfi_offset 14, -4
+ 116:../switch_sdk/core/cal/cal_bprofile.c ****     {
+ 117:../switch_sdk/core/cal/cal_bprofile.c ****         /*if(cal_board_identifier_cmp(gUSERDEFINE, *pbProfile->pIdentifier))*/
+ 118:../switch_sdk/core/cal/cal_bprofile.c ****         {
+ 119:../switch_sdk/core/cal/cal_bprofile.c ****             if ((*pbProfile)->profile_init)
+ 216              		.loc 1 119 13 is_stmt 1 view .LVU67
+ 217              		.loc 1 119 29 is_stmt 0 view .LVU68
+ 218 000c 5B68     		ldr	r3, [r3, #4]
+ 219              		.loc 1 119 16 view .LVU69
+ 220 000e 0BB1     		cbz	r3, .L12
+ 120:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 121:../switch_sdk/core/cal/cal_bprofile.c ****                 (*pbProfile)->profile_init(&gBoardInfo);
+ 221              		.loc 1 121 17 is_stmt 1 view .LVU70
+ 222              		.loc 1 121 18 is_stmt 0 view .LVU71
+ 223 0010 3548     		ldr	r0, .L27+4
+ 224 0012 9847     		blx	r3
+ 225              	.LVL16:
+ 226              	.L12:
+ 122:../switch_sdk/core/cal/cal_bprofile.c ****             }
+ 123:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             for (i=0; i<gBoardInfo.switch_count; i++)
+ 125:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 126:../switch_sdk/core/cal/cal_bprofile.c ****                 gpSwitchUnit[i] = gBoardInfo.pSwDescp[i];
+ 127:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 for(j = 0; j < gBoardInfo.pSwDescp[i]->port_num; j++)
+ 227              		.loc 1 128 23 discriminator 1 view .LVU72
+ 228 0014 4FF0000C 		mov	ip, #0
+ 229 0018 4FE0     		b	.L13
+ 230              	.LVL17:
+ 231              	.L15:
+ 129:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 130:../switch_sdk/core/cal/cal_bprofile.c ****                     if(gBoardInfo.pSwDescp[i]->pPortDescp[j] &&
+ 131:../switch_sdk/core/cal/cal_bprofile.c ****                         gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id != INVALID_ID)
+ 132:../switch_sdk/core/cal/cal_bprofile.c ****                     {
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.portmask[i], j);
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 135:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 232              		.loc 1 135 25 is_stmt 1 discriminator 3 view .LVU73
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 233              		.loc 1 128 67 discriminator 3 view .LVU74
+ 234 001a 0133     		adds	r3, r3, #1
+ 235              	.LVL18:
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 236              		.loc 1 128 67 is_stmt 0 discriminator 3 view .LVU75
+ 237 001c DBB2     		uxtb	r3, r3
+ 238              	.LVL19:
+ 239              	.L14:
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 240              		.loc 1 128 30 is_stmt 1 discriminator 2 view .LVU76
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 241              		.loc 1 128 54 is_stmt 0 discriminator 2 view .LVU77
+ 242 001e 027D     		ldrb	r2, [r0, #20]	@ zero_extendqisi2
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 243              		.loc 1 128 30 discriminator 2 view .LVU78
+ 244 0020 9A42     		cmp	r2, r3
+ 245 0022 3BD9     		bls	.L25
+ 130:../switch_sdk/core/cal/cal_bprofile.c ****                         gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id != INVALID_ID)
+ 246              		.loc 1 130 21 is_stmt 1 view .LVU79
+ 130:../switch_sdk/core/cal/cal_bprofile.c ****                         gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id != INVALID_ID)
+ 247              		.loc 1 130 58 is_stmt 0 view .LVU80
+ 248 0024 1946     		mov	r1, r3
+ 249 0026 9A1D     		adds	r2, r3, #6
+ 250 0028 50F82220 		ldr	r2, [r0, r2, lsl #2]
+ 130:../switch_sdk/core/cal/cal_bprofile.c ****                         gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id != INVALID_ID)
+ 251              		.loc 1 130 23 view .LVU81
+ 252 002c 002A     		cmp	r2, #0
+ 253 002e F4D0     		beq	.L15
+ 131:../switch_sdk/core/cal/cal_bprofile.c ****                     {
+ 254              		.loc 1 131 62 discriminator 1 view .LVU82
+ 255 0030 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 130:../switch_sdk/core/cal/cal_bprofile.c ****                         gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id != INVALID_ID)
+ 256              		.loc 1 130 62 discriminator 1 view .LVU83
+ 257 0032 FF2A     		cmp	r2, #255
+ 258 0034 F1D0     		beq	.L15
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 259              		.loc 1 133 25 is_stmt 1 view .LVU84
+ 260              	.LBB2:
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 261              		.loc 1 133 25 view .LVU85
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 262              		.loc 1 133 25 view .LVU86
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 263              		.loc 1 133 25 view .LVU87
+ 264 0036 4FEA5318 		lsr	r8, r3, #5
+ 265              	.LVL20:
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 266              		.loc 1 133 25 view .LVU88
+ 267 003a 03F01F05 		and	r5, r3, #31
+ 268              	.LVL21:
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 269              		.loc 1 133 25 view .LVU89
+ 270 003e 1F2B     		cmp	r3, #31
+ 271 0040 0AD8     		bhi	.L16
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 272              		.loc 1 133 25 discriminator 1 view .LVU90
+ 273 0042 294F     		ldr	r7, .L27+4
+ 274 0044 0EEB0804 		add	r4, lr, r8
+ 275 0048 0634     		adds	r4, r4, #6
+ 276 004a 0126     		movs	r6, #1
+ 277 004c AE40     		lsls	r6, r6, r5
+ 278 004e 57F82420 		ldr	r2, [r7, r4, lsl #2]
+ 279 0052 1643     		orrs	r6, r6, r2
+ 280 0054 47F82460 		str	r6, [r7, r4, lsl #2]
+ 281              	.L16:
+ 282              	.LBE2:
+ 133:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.allportmask[i], j);
+ 283              		.loc 1 133 25 discriminator 3 view .LVU91
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 284              		.loc 1 134 25 discriminator 3 view .LVU92
+ 285              	.LBB3:
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 286              		.loc 1 134 25 discriminator 3 view .LVU93
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 287              		.loc 1 134 25 discriminator 3 view .LVU94
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 288              		.loc 1 134 25 discriminator 3 view .LVU95
+ 289              	.LVL22:
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 290              		.loc 1 134 25 discriminator 3 view .LVU96
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 291              		.loc 1 134 25 discriminator 3 view .LVU97
+ 292 0058 1F2B     		cmp	r3, #31
+ 293 005a 0BD8     		bhi	.L17
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 294              		.loc 1 134 25 discriminator 1 view .LVU98
+ 295 005c 224F     		ldr	r7, .L27+4
+ 296 005e 08EB0E02 		add	r2, r8, lr
+ 297 0062 0C32     		adds	r2, r2, #12
+ 298 0064 57F82240 		ldr	r4, [r7, r2, lsl #2]
+ 299 0068 0126     		movs	r6, #1
+ 300 006a 06FA05F5 		lsl	r5, r6, r5
+ 301              	.LVL23:
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 302              		.loc 1 134 25 is_stmt 0 discriminator 1 view .LVU99
+ 303 006e 2C43     		orrs	r4, r4, r5
+ 304 0070 47F82240 		str	r4, [r7, r2, lsl #2]
+ 305              	.L17:
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 306              		.loc 1 134 25 discriminator 1 view .LVU100
+ 307              	.LBE3:
+ 134:../switch_sdk/core/cal/cal_bprofile.c ****                         CMM_SET_MEMBER_PORT(gBoardInfo.macmask[i],
+ 308              		.loc 1 134 25 is_stmt 1 discriminator 3 view .LVU101
+ 309              		.loc 1 135 25 discriminator 3 view .LVU102
+ 310              	.LBB4:
+ 311              		.loc 1 135 25 discriminator 3 view .LVU103
+ 312              		.loc 1 135 25 discriminator 3 view .LVU104
+ 313              		.loc 1 135 25 discriminator 3 view .LVU105
+ 314 0074 0631     		adds	r1, r1, #6
+ 315              	.LVL24:
+ 316              		.loc 1 135 25 is_stmt 0 discriminator 3 view .LVU106
+ 317 0076 50F82120 		ldr	r2, [r0, r1, lsl #2]
+ 318 007a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 319 007c 5109     		lsrs	r1, r2, #5
+ 320              	.LVL25:
+ 321              		.loc 1 135 25 is_stmt 1 discriminator 3 view .LVU107
+ 322 007e 02F01F05 		and	r5, r2, #31
+ 323              	.LVL26:
+ 324              		.loc 1 135 25 discriminator 3 view .LVU108
+ 325 0082 1F2A     		cmp	r2, #31
+ 326 0084 C9D8     		bhi	.L15
+ 327              		.loc 1 135 25 discriminator 1 view .LVU109
+ 328 0086 7144     		add	r1, r1, lr
+ 329              	.LVL27:
+ 330              		.loc 1 135 25 is_stmt 0 discriminator 1 view .LVU110
+ 331 0088 0831     		adds	r1, r1, #8
+ 332 008a 174A     		ldr	r2, .L27+4
+ 333              	.LVL28:
+ 334              		.loc 1 135 25 discriminator 1 view .LVU111
+ 335 008c 02EB8102 		add	r2, r2, r1, lsl #2
+ 336 0090 5168     		ldr	r1, [r2, #4]
+ 337 0092 0124     		movs	r4, #1
+ 338 0094 AC40     		lsls	r4, r4, r5
+ 339 0096 2143     		orrs	r1, r1, r4
+ 340 0098 5160     		str	r1, [r2, #4]
+ 341              	.LVL29:
+ 342              		.loc 1 135 25 discriminator 1 view .LVU112
+ 343 009a BEE7     		b	.L15
+ 344              	.LVL30:
+ 345              	.L25:
+ 346              		.loc 1 135 25 discriminator 1 view .LVU113
+ 347              	.LBE4:
+ 136:../switch_sdk/core/cal/cal_bprofile.c ****                             gBoardInfo.pSwDescp[i]->pPortDescp[j]->mac_id);
+ 137:../switch_sdk/core/cal/cal_bprofile.c ****                     }
+ 138:../switch_sdk/core/cal/cal_bprofile.c ****                 }
+ 139:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 140:../switch_sdk/core/cal/cal_bprofile.c ****                 gBoardInfo.pSwDescp[i]->pChipCap = gpChipCapList[gBoardInfo.pSwDescp[i]->chip_model
+ 348              		.loc 1 140 17 is_stmt 1 discriminator 2 view .LVU114
+ 349              		.loc 1 140 88 is_stmt 0 discriminator 2 view .LVU115
+ 350 009c 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 351              	.LVL31:
+ 352              		.loc 1 140 65 discriminator 2 view .LVU116
+ 353 009e 134A     		ldr	r2, .L27+8
+ 354 00a0 52F82320 		ldr	r2, [r2, r3, lsl #2]
+ 355              		.loc 1 140 50 discriminator 2 view .LVU117
+ 356 00a4 C0F8AC20 		str	r2, [r0, #172]
+ 141:../switch_sdk/core/cal/cal_bprofile.c ****                 gBoardInfo.pSwDescp[i]->pChipIfInfo = gpChipIntfInfoList[gBoardInfo.pSwDescp[i]->ch
+ 357              		.loc 1 141 17 is_stmt 1 discriminator 2 view .LVU118
+ 358              		.loc 1 141 73 is_stmt 0 discriminator 2 view .LVU119
+ 359 00a8 114A     		ldr	r2, .L27+12
+ 360 00aa 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 361              		.loc 1 141 53 discriminator 2 view .LVU120
+ 362 00ae C0F8B030 		str	r3, [r0, #176]
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 363              		.loc 1 124 51 is_stmt 1 discriminator 2 view .LVU121
+ 364 00b2 0CF1010C 		add	ip, ip, #1
+ 365              	.LVL32:
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 366              		.loc 1 124 51 is_stmt 0 discriminator 2 view .LVU122
+ 367 00b6 5FFA8CFC 		uxtb	ip, ip
+ 368              	.LVL33:
+ 369              	.L13:
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 370              		.loc 1 124 24 is_stmt 1 discriminator 1 view .LVU123
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 371              		.loc 1 124 35 is_stmt 0 discriminator 1 view .LVU124
+ 372 00ba 0B4B     		ldr	r3, .L27+4
+ 373 00bc 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 124:../switch_sdk/core/cal/cal_bprofile.c ****             {
+ 374              		.loc 1 124 24 discriminator 1 view .LVU125
+ 375 00be 6345     		cmp	r3, ip
+ 376 00c0 0BD9     		bls	.L26
+ 126:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 377              		.loc 1 126 17 is_stmt 1 view .LVU126
+ 126:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 378              		.loc 1 126 54 is_stmt 0 view .LVU127
+ 379 00c2 E646     		mov	lr, ip
+ 380 00c4 0CF10202 		add	r2, ip, #2
+ 381 00c8 074B     		ldr	r3, .L27+4
+ 382 00ca 03EB8203 		add	r3, r3, r2, lsl #2
+ 383 00ce 5868     		ldr	r0, [r3, #4]
+ 126:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 384              		.loc 1 126 33 view .LVU128
+ 385 00d0 084B     		ldr	r3, .L27+16
+ 386 00d2 43F82C00 		str	r0, [r3, ip, lsl #2]
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 387              		.loc 1 128 17 is_stmt 1 view .LVU129
+ 388              	.LVL34:
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 389              		.loc 1 128 23 is_stmt 0 view .LVU130
+ 390 00d6 0023     		movs	r3, #0
+ 128:../switch_sdk/core/cal/cal_bprofile.c ****                 {
+ 391              		.loc 1 128 17 view .LVU131
+ 392 00d8 A1E7     		b	.L14
+ 393              	.LVL35:
+ 394              	.L26:
+ 142:../switch_sdk/core/cal/cal_bprofile.c ****             }
+ 143:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 144:../switch_sdk/core/cal/cal_bprofile.c ****             return CMM_ERR_OK;
+ 395              		.loc 1 144 20 view .LVU132
+ 396 00da 0020     		movs	r0, #0
+ 145:../switch_sdk/core/cal/cal_bprofile.c ****         }
+ 146:../switch_sdk/core/cal/cal_bprofile.c ****         pbProfile++;
+ 147:../switch_sdk/core/cal/cal_bprofile.c ****     }
+ 148:../switch_sdk/core/cal/cal_bprofile.c **** 
+ 149:../switch_sdk/core/cal/cal_bprofile.c ****     return CMM_ERR_FAIL;
+ 150:../switch_sdk/core/cal/cal_bprofile.c **** }
+ 397              		.loc 1 150 1 view .LVU133
+ 398 00dc BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 399              	.LVL36:
+ 400              	.L20:
+ 401              		.cfi_def_cfa_offset 0
+ 402              		.cfi_restore 4
+ 403              		.cfi_restore 5
+ 404              		.cfi_restore 6
+ 405              		.cfi_restore 7
+ 406              		.cfi_restore 8
+ 407              		.cfi_restore 14
+ 149:../switch_sdk/core/cal/cal_bprofile.c **** }
+ 408              		.loc 1 149 12 view .LVU134
+ 409 00e0 0120     		movs	r0, #1
+ 410              		.loc 1 150 1 view .LVU135
+ 411 00e2 7047     		bx	lr
+ 412              	.L28:
+ 413              		.align	2
+ 414              	.L27:
+ 415 00e4 00000000 		.word	gSupport_hwProfile_list
+ 416 00e8 00000000 		.word	gBoardInfo
+ 417 00ec 00000000 		.word	gpChipCapList
+ 418 00f0 00000000 		.word	gpChipIntfInfoList
+ 419 00f4 00000000 		.word	gpSwitchUnit
+ 420              		.cfi_endproc
+ 421              	.LFE4:
+ 423              		.global	gSupport_hwProfile_list
+ 424              		.section	.data.gSupport_hwProfile_list,"aw"
+ 425              		.align	2
+ 428              	gSupport_hwProfile_list:
+ 429 0000 00000000 		.word	yt9215sc_default_demo
+ 430 0004 00000000 		.word	0
+ 431              		.global	gpSwitchUnit
+ 432              		.section	.bss.gpSwitchUnit,"aw",%nobits
+ 433              		.align	2
+ 436              	gpSwitchUnit:
+ 437 0000 00000000 		.space	12
+ 437      00000000 
+ 437      00000000 
+ 438              		.global	gBoardInfo
+ 439              		.section	.bss.gBoardInfo,"aw",%nobits
+ 440              		.align	2
+ 443              	gBoardInfo:
+ 444 0000 00000000 		.space	60
+ 444      00000000 
+ 444      00000000 
+ 444      00000000 
+ 444      00000000 
+ 445              		.global	yt9215sc_default_demo
+ 446              		.section	.rodata.yt9215sc_default_demo,"a"
+ 447              		.align	2
+ 450              	yt9215sc_default_demo:
+ 451 0000 00000000 		.word	YT9215sc2SGFibProfileIdentifier
+ 452 0004 00000000 		.word	profile_yt9215sc_default_init
+ 453              		.global	YT9215scLEDDescp
+ 454              		.section	.rodata.YT9215scLEDDescp,"a"
+ 455              		.align	2
+ 458              	YT9215scLEDDescp:
+ 459 0000 02       		.byte	2
+ 460 0001 000000   		.space	3
+ 461 0004 00000000 		.word	YT9215scSLEDParam
+ 462              		.global	YT9215scSLEDParam
+ 463              		.section	.data.YT9215scSLEDParam,"aw"
+ 464              		.align	2
+ 467              	YT9215scSLEDParam:
+ 468 0000 01       		.byte	1
+ 469 0001 05       		.byte	5
+ 470 0002 00       		.byte	0
+ 471 0003 00       		.space	1
+ 472 0004 00000000 		.word	YT9215scRemapInfo
+ 473              		.global	YT9215scRemapInfo
+ 474              		.section	.rodata.YT9215scRemapInfo,"a"
+ 475              		.align	2
+ 478              	YT9215scRemapInfo:
+ 479 0000 03       		.byte	3
+ 480 0001 02       		.byte	2
+ 481 0002 01       		.byte	1
+ 482 0003 00       		.byte	0
+ 483 0004 46       		.byte	70
+ 484 0005 45       		.byte	69
+ 485 0006 44       		.byte	68
+ 486 0007 43       		.byte	67
+ 487 0008 42       		.byte	66
+ 488 0009 41       		.byte	65
+ 489 000a 40       		.byte	64
+ 490 000b 86       		.byte	134
+ 491 000c 85       		.byte	133
+ 492 000d 84       		.byte	132
+ 493 000e 83       		.byte	131
+ 494 000f 82       		.byte	130
+ 495 0010 81       		.byte	129
+ 496 0011 80       		.byte	128
+ 497 0012 06       		.byte	6
+ 498 0013 05       		.byte	5
+ 499 0014 04       		.byte	4
+ 500              		.global	YT9215scPhyDescp
+ 501              		.section	.rodata.YT9215scPhyDescp,"a"
+ 502              		.align	2
+ 505              	YT9215scPhyDescp:
+ 506 0000 00       		.byte	0
+ 507 0001 00       		.byte	0
+ 508 0002 00       		.byte	0
+ 509 0003 05       		.byte	5
+ 510 0004 FF       		.byte	-1
+ 511 0005 FF       		.byte	-1
+ 512 0006 FF       		.byte	-1
+ 513 0007 FF       		.byte	-1
+ 514              		.global	YT9215scSdsDescp
+ 515              		.section	.rodata.YT9215scSdsDescp,"a"
+ 516              		.align	2
+ 519              	YT9215scSdsDescp:
+ 520 0000 00       		.byte	0
+ 521 0001 05       		.byte	5
+ 522 0002 FF       		.byte	-1
+ 523 0003 FF       		.byte	-1
+ 524              		.global	YT9215sc2SGFibPortDescp
+ 525              		.section	.rodata.YT9215sc2SGFibPortDescp,"a"
+ 526              		.align	2
+ 529              	YT9215sc2SGFibPortDescp:
+ 530 0000 00       		.byte	0
+ 531 0001 01       		.byte	1
+ 532 0002 00       		.byte	0
+ 533 0003 00       		.byte	0
+ 534 0004 FF       		.byte	-1
+ 535 0005 02       		.byte	2
+ 536 0006 00       		.byte	0
+ 537 0007 00       		.byte	0
+ 538 0008 01       		.byte	1
+ 539 0009 01       		.byte	1
+ 540 000a 00       		.byte	0
+ 541 000b 01       		.byte	1
+ 542 000c FF       		.byte	-1
+ 543 000d 02       		.byte	2
+ 544 000e 00       		.byte	0
+ 545 000f 00       		.byte	0
+ 546 0010 02       		.byte	2
+ 547 0011 01       		.byte	1
+ 548 0012 00       		.byte	0
+ 549 0013 02       		.byte	2
+ 550 0014 FF       		.byte	-1
+ 551 0015 02       		.byte	2
+ 552 0016 00       		.byte	0
+ 553 0017 00       		.byte	0
+ 554 0018 03       		.byte	3
+ 555 0019 01       		.byte	1
+ 556 001a 00       		.byte	0
+ 557 001b 03       		.byte	3
+ 558 001c FF       		.byte	-1
+ 559 001d 02       		.byte	2
+ 560 001e 00       		.byte	0
+ 561 001f 00       		.byte	0
+ 562 0020 04       		.byte	4
+ 563 0021 01       		.byte	1
+ 564 0022 00       		.byte	0
+ 565 0023 04       		.byte	4
+ 566 0024 FF       		.byte	-1
+ 567 0025 02       		.byte	2
+ 568 0026 00       		.byte	0
+ 569 0027 00       		.byte	0
+ 570 0028 08       		.byte	8
+ 571 0029 01       		.byte	1
+ 572 002a FF       		.byte	-1
+ 573 002b 08       		.byte	8
+ 574 002c 00       		.byte	0
+ 575 002d 04       		.byte	4
+ 576 002e 01       		.byte	1
+ 577 002f 01       		.byte	1
+ 578 0030 09       		.byte	9
+ 579 0031 01       		.byte	1
+ 580 0032 FF       		.byte	-1
+ 581 0033 09       		.byte	9
+ 582 0034 00       		.byte	0
+ 583 0035 04       		.byte	4
+ 584 0036 01       		.byte	1
+ 585 0037 01       		.byte	1
+ 586 0038 FF       		.byte	-1
+ 587 0039 FF       		.byte	-1
+ 588 003a FF       		.byte	-1
+ 589 003b FF       		.byte	-1
+ 590 003c FF       		.byte	-1
+ 591 003d FF       		.byte	-1
+ 592 003e FF       		.byte	-1
+ 593 003f FF       		.byte	-1
+ 594              		.global	YT9215sc2SGFibProfileIdentifier
+ 595              		.section	.rodata.YT9215sc2SGFibProfileIdentifier,"a"
+ 596              		.align	2
+ 599              	YT9215sc2SGFibProfileIdentifier:
+ 600 0000 F7670100 		.word	92151
+ 601 0004 59543932 		.ascii	"YT9215SC SGFIB Demo\000"
+ 601      31355343 
+ 601      20534746 
+ 601      49422044 
+ 601      656D6F00 
+ 602 0018 00000000 		.space	12
+ 602      00000000 
+ 602      00000000 
+ 603              		.global	yt9215sc_default_swDescp
+ 604              		.section	.bss.yt9215sc_default_swDescp,"aw",%nobits
+ 605              		.align	2
+ 608              	yt9215sc_default_swDescp:
+ 609 0000 00000000 		.space	180
+ 609      00000000 
+ 609      00000000 
+ 609      00000000 
+ 609      00000000 
+ 610              		.text
+ 611              	.Letext0:
+ 612              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 613              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal\\chipdef/chipdef.h"
+ 614              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\drv\\phy/phy_chipdef.h"
+ 615              		.file 6 "../switch_sdk/core/cal/cal_bprofile.h"
+ 616              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 cal_bprofile.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:19     .text.profile_yt9215sc_default_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:25     .text.profile_yt9215sc_default_init:00000000 profile_yt9215sc_default_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:172    .text.profile_yt9215sc_default_init:00000090 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:599    .rodata.YT9215sc2SGFibProfileIdentifier:00000000 YT9215sc2SGFibProfileIdentifier
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:608    .bss.yt9215sc_default_swDescp:00000000 yt9215sc_default_swDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:529    .rodata.YT9215sc2SGFibPortDescp:00000000 YT9215sc2SGFibPortDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:519    .rodata.YT9215scSdsDescp:00000000 YT9215scSdsDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:505    .rodata.YT9215scPhyDescp:00000000 YT9215scPhyDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:467    .data.YT9215scSLEDParam:00000000 YT9215scSLEDParam
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:458    .rodata.YT9215scLEDDescp:00000000 YT9215scLEDDescp
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:183    .text.cal_board_profile_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:189    .text.cal_board_profile_init:00000000 cal_board_profile_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:415    .text.cal_board_profile_init:000000e4 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:428    .data.gSupport_hwProfile_list:00000000 gSupport_hwProfile_list
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:443    .bss.gBoardInfo:00000000 gBoardInfo
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:436    .bss.gpSwitchUnit:00000000 gpSwitchUnit
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:425    .data.gSupport_hwProfile_list:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:450    .rodata.yt9215sc_default_demo:00000000 yt9215sc_default_demo
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:433    .bss.gpSwitchUnit:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:440    .bss.gBoardInfo:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:447    .rodata.yt9215sc_default_demo:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:455    .rodata.YT9215scLEDDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:464    .data.YT9215scSLEDParam:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:478    .rodata.YT9215scRemapInfo:00000000 YT9215scRemapInfo
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:475    .rodata.YT9215scRemapInfo:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:502    .rodata.YT9215scPhyDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:516    .rodata.YT9215scSdsDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:526    .rodata.YT9215sc2SGFibPortDescp:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:596    .rodata.YT9215sc2SGFibProfileIdentifier:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccFFPjLD.s:605    .bss.yt9215sc_default_swDescp:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+
+UNDEFINED SYMBOLS
+gpChipCapList
+gpChipIntfInfoList

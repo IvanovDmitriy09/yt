@@ -1,0 +1,242 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sbrk.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/newlib/sbrk.c"
+  18              		.section	.text._sbrk,"ax",%progbits
+  19              		.align	1
+  20              		.global	_sbrk
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	_sbrk:
+  26              	.LVL0:
+  27              	.LFB0:
+   1:../system/src/newlib/sbrk.c **** /*
+   2:../system/src/newlib/sbrk.c ****  * This file is part of the µOS++ distribution.
+   3:../system/src/newlib/sbrk.c ****  *   (https://github.com/micro-os-plus)
+   4:../system/src/newlib/sbrk.c ****  * Copyright (c) 2014 Liviu Ionescu.
+   5:../system/src/newlib/sbrk.c ****  *
+   6:../system/src/newlib/sbrk.c ****  * Permission is hereby granted, free of charge, to any person
+   7:../system/src/newlib/sbrk.c ****  * obtaining a copy of this software and associated documentation
+   8:../system/src/newlib/sbrk.c ****  * files (the "Software"), to deal in the Software without
+   9:../system/src/newlib/sbrk.c ****  * restriction, including without limitation the rights to use,
+  10:../system/src/newlib/sbrk.c ****  * copy, modify, merge, publish, distribute, sublicense, and/or
+  11:../system/src/newlib/sbrk.c ****  * sell copies of the Software, and to permit persons to whom
+  12:../system/src/newlib/sbrk.c ****  * the Software is furnished to do so, subject to the following
+  13:../system/src/newlib/sbrk.c ****  * conditions:
+  14:../system/src/newlib/sbrk.c ****  *
+  15:../system/src/newlib/sbrk.c ****  * The above copyright notice and this permission notice shall be
+  16:../system/src/newlib/sbrk.c ****  * included in all copies or substantial portions of the Software.
+  17:../system/src/newlib/sbrk.c ****  *
+  18:../system/src/newlib/sbrk.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  19:../system/src/newlib/sbrk.c ****  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+  20:../system/src/newlib/sbrk.c ****  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  21:../system/src/newlib/sbrk.c ****  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  22:../system/src/newlib/sbrk.c ****  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  23:../system/src/newlib/sbrk.c ****  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  24:../system/src/newlib/sbrk.c ****  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  25:../system/src/newlib/sbrk.c ****  * OTHER DEALINGS IN THE SOFTWARE.
+  26:../system/src/newlib/sbrk.c ****  */
+  27:../system/src/newlib/sbrk.c **** 
+  28:../system/src/newlib/sbrk.c **** // ----------------------------------------------------------------------------
+  29:../system/src/newlib/sbrk.c **** 
+  30:../system/src/newlib/sbrk.c **** #include <sys/types.h>
+  31:../system/src/newlib/sbrk.c **** #include <errno.h>
+  32:../system/src/newlib/sbrk.c **** 
+  33:../system/src/newlib/sbrk.c **** // ----------------------------------------------------------------------------
+  34:../system/src/newlib/sbrk.c **** 
+  35:../system/src/newlib/sbrk.c **** caddr_t
+  36:../system/src/newlib/sbrk.c **** _sbrk(int incr);
+  37:../system/src/newlib/sbrk.c **** 
+  38:../system/src/newlib/sbrk.c **** // ----------------------------------------------------------------------------
+  39:../system/src/newlib/sbrk.c **** 
+  40:../system/src/newlib/sbrk.c **** // The definitions used here should be kept in sync with the
+  41:../system/src/newlib/sbrk.c **** // stack definitions in the linker script.
+  42:../system/src/newlib/sbrk.c **** 
+  43:../system/src/newlib/sbrk.c **** caddr_t
+  44:../system/src/newlib/sbrk.c **** _sbrk(int incr)
+  45:../system/src/newlib/sbrk.c **** {
+  28              		.loc 1 45 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 45 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  37 0002 0346     		mov	r3, r0
+  46:../system/src/newlib/sbrk.c ****   extern char _Heap_Begin; // Defined by the linker.
+  38              		.loc 1 46 3 is_stmt 1 view .LVU2
+  47:../system/src/newlib/sbrk.c ****   extern char _Heap_Limit; // Defined by the linker.
+  39              		.loc 1 47 3 view .LVU3
+  48:../system/src/newlib/sbrk.c **** 
+  49:../system/src/newlib/sbrk.c ****   static char* current_heap_end;
+  40              		.loc 1 49 3 view .LVU4
+  50:../system/src/newlib/sbrk.c ****   char* current_block_address;
+  41              		.loc 1 50 3 view .LVU5
+  51:../system/src/newlib/sbrk.c **** 
+  52:../system/src/newlib/sbrk.c ****   if (current_heap_end == 0)
+  42              		.loc 1 52 3 view .LVU6
+  43              		.loc 1 52 24 is_stmt 0 view .LVU7
+  44 0004 0C4A     		ldr	r2, .L8
+  45 0006 1268     		ldr	r2, [r2]
+  46              		.loc 1 52 6 view .LVU8
+  47 0008 5AB1     		cbz	r2, .L6
+  48              	.L2:
+  53:../system/src/newlib/sbrk.c ****     {
+  54:../system/src/newlib/sbrk.c ****       current_heap_end = &_Heap_Begin;
+  55:../system/src/newlib/sbrk.c ****     }
+  56:../system/src/newlib/sbrk.c **** 
+  57:../system/src/newlib/sbrk.c ****   current_block_address = current_heap_end;
+  49              		.loc 1 57 3 is_stmt 1 view .LVU9
+  50              		.loc 1 57 25 is_stmt 0 view .LVU10
+  51 000a 0B4A     		ldr	r2, .L8
+  52 000c 1068     		ldr	r0, [r2]
+  53              	.LVL1:
+  58:../system/src/newlib/sbrk.c **** 
+  59:../system/src/newlib/sbrk.c ****   // Need to align heap to word boundary, else will get
+  60:../system/src/newlib/sbrk.c ****   // hard faults on Cortex-M0. So we assume that heap starts on
+  61:../system/src/newlib/sbrk.c ****   // word boundary, hence make sure we always add a multiple of
+  62:../system/src/newlib/sbrk.c ****   // 4 to it.
+  63:../system/src/newlib/sbrk.c ****   incr = (incr + 3) & (~3); // align value to 4
+  54              		.loc 1 63 3 is_stmt 1 view .LVU11
+  55              		.loc 1 63 16 is_stmt 0 view .LVU12
+  56 000e 0333     		adds	r3, r3, #3
+  57              	.LVL2:
+  58              		.loc 1 63 8 view .LVU13
+  59 0010 23F00303 		bic	r3, r3, #3
+  60              	.LVL3:
+  64:../system/src/newlib/sbrk.c ****   if (current_heap_end + incr > &_Heap_Limit)
+  61              		.loc 1 64 3 is_stmt 1 view .LVU14
+  62              		.loc 1 64 24 is_stmt 0 view .LVU15
+  63 0014 0344     		add	r3, r3, r0
+  64              	.LVL4:
+  65              		.loc 1 64 6 view .LVU16
+  66 0016 094A     		ldr	r2, .L8+4
+  67 0018 9342     		cmp	r3, r2
+  68 001a 06D8     		bhi	.L7
+  65:../system/src/newlib/sbrk.c ****     {
+  66:../system/src/newlib/sbrk.c ****       // Some of the libstdc++-v3 tests rely upon detecting
+  67:../system/src/newlib/sbrk.c ****       // out of memory errors, so do not abort here.
+  68:../system/src/newlib/sbrk.c **** #if 0
+  69:../system/src/newlib/sbrk.c ****       extern void abort (void);
+  70:../system/src/newlib/sbrk.c **** 
+  71:../system/src/newlib/sbrk.c ****       _write (1, "_sbrk: Heap and stack collision\n", 32);
+  72:../system/src/newlib/sbrk.c **** 
+  73:../system/src/newlib/sbrk.c ****       abort ();
+  74:../system/src/newlib/sbrk.c **** #else
+  75:../system/src/newlib/sbrk.c ****       // Heap has overflowed
+  76:../system/src/newlib/sbrk.c ****       errno = ENOMEM;
+  77:../system/src/newlib/sbrk.c ****       return (caddr_t) - 1;
+  78:../system/src/newlib/sbrk.c **** #endif
+  79:../system/src/newlib/sbrk.c ****     }
+  80:../system/src/newlib/sbrk.c **** 
+  81:../system/src/newlib/sbrk.c ****   current_heap_end += incr;
+  69              		.loc 1 81 3 is_stmt 1 view .LVU17
+  70              		.loc 1 81 20 is_stmt 0 view .LVU18
+  71 001c 064A     		ldr	r2, .L8
+  72 001e 1360     		str	r3, [r2]
+  82:../system/src/newlib/sbrk.c **** 
+  83:../system/src/newlib/sbrk.c ****   return (caddr_t) current_block_address;
+  73              		.loc 1 83 3 is_stmt 1 view .LVU19
+  74              	.LVL5:
+  75              	.L1:
+  84:../system/src/newlib/sbrk.c **** }
+  76              		.loc 1 84 1 is_stmt 0 view .LVU20
+  77 0020 08BD     		pop	{r3, pc}
+  78              	.LVL6:
+  79              	.L6:
+  54:../system/src/newlib/sbrk.c ****     }
+  80              		.loc 1 54 7 is_stmt 1 view .LVU21
+  54:../system/src/newlib/sbrk.c ****     }
+  81              		.loc 1 54 24 is_stmt 0 view .LVU22
+  82 0022 054A     		ldr	r2, .L8
+  83 0024 0649     		ldr	r1, .L8+8
+  84 0026 1160     		str	r1, [r2]
+  85 0028 EFE7     		b	.L2
+  86              	.LVL7:
+  87              	.L7:
+  76:../system/src/newlib/sbrk.c ****       return (caddr_t) - 1;
+  88              		.loc 1 76 7 is_stmt 1 view .LVU23
+  89 002a FFF7FEFF 		bl	__errno
+  90              	.LVL8:
+  76:../system/src/newlib/sbrk.c ****       return (caddr_t) - 1;
+  91              		.loc 1 76 13 is_stmt 0 view .LVU24
+  92 002e 0C23     		movs	r3, #12
+  93 0030 0360     		str	r3, [r0]
+  77:../system/src/newlib/sbrk.c **** #endif
+  94              		.loc 1 77 7 is_stmt 1 view .LVU25
+  77:../system/src/newlib/sbrk.c **** #endif
+  95              		.loc 1 77 14 is_stmt 0 view .LVU26
+  96 0032 4FF0FF30 		mov	r0, #-1
+  97 0036 F3E7     		b	.L1
+  98              	.L9:
+  99              		.align	2
+ 100              	.L8:
+ 101 0038 00000000 		.word	current_heap_end.0
+ 102 003c 00000000 		.word	_Heap_Limit
+ 103 0040 00000000 		.word	_Heap_Begin
+ 104              		.cfi_endproc
+ 105              	.LFE0:
+ 107              		.section	.bss.current_heap_end.0,"aw",%nobits
+ 108              		.align	2
+ 111              	current_heap_end.0:
+ 112 0000 00000000 		.space	4
+ 113              		.text
+ 114              	.Letext0:
+ 115              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 116              		.file 3 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+DEFINED SYMBOLS
+                            *ABS*:00000000 sbrk.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccIXvSkt.s:19     .text._sbrk:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccIXvSkt.s:25     .text._sbrk:00000000 _sbrk
+C:\Users\Dmitriy\AppData\Local\Temp\ccIXvSkt.s:101    .text._sbrk:00000038 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccIXvSkt.s:111    .bss.current_heap_end.0:00000000 current_heap_end.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccIXvSkt.s:108    .bss.current_heap_end.0:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.39.3e0425629195acf083c9561151306b4d
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.types.h.40.8b6acba56cefbb11746718204edc8f5e
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.32.bec3221fa7a9bb0bdde696c9c57e47d2
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.8f92964f85316d866d3bb193a38b5ac3
+                           .group:00000000 wm4.types.h.51.e2a6e4379b4797ffcc4841f8498fd61b
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.errno.h.18.87873c1c5b242e8a4fdc43daa9aad824
+
+UNDEFINED SYMBOLS
+__errno
+_Heap_Limit
+_Heap_Begin

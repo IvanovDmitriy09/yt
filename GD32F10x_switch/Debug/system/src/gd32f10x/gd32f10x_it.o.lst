@@ -1,0 +1,406 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_it.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_it.c"
+  18              		.section	.text.NMI_Handler,"ax",%progbits
+  19              		.align	1
+  20              		.global	NMI_Handler
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	NMI_Handler:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_it.c ****  \file    gd32f10x_it.c
+   3:../system/src/gd32f10x/gd32f10x_it.c ****  \brief   interrupt service routines
+   4:../system/src/gd32f10x/gd32f10x_it.c **** 
+   5:../system/src/gd32f10x/gd32f10x_it.c ****  \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_it.c ****  \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_it.c ****  \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_it.c ****  \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  10:../system/src/gd32f10x/gd32f10x_it.c **** 
+  11:../system/src/gd32f10x/gd32f10x_it.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_it.c ****  Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_it.c **** 
+  14:../system/src/gd32f10x/gd32f10x_it.c ****  Redistribution and use in source and binary forms, with or without modification,
+  15:../system/src/gd32f10x/gd32f10x_it.c ****  are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_it.c **** 
+  17:../system/src/gd32f10x/gd32f10x_it.c ****  1. Redistributions of source code must retain the above copyright notice, this
+  18:../system/src/gd32f10x/gd32f10x_it.c ****  list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_it.c ****  2. Redistributions in binary form must reproduce the above copyright notice,
+  20:../system/src/gd32f10x/gd32f10x_it.c ****  this list of conditions and the following disclaimer in the documentation
+  21:../system/src/gd32f10x/gd32f10x_it.c ****  and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_it.c ****  3. Neither the name of the copyright holder nor the names of its contributors
+  23:../system/src/gd32f10x/gd32f10x_it.c ****  may be used to endorse or promote products derived from this software without
+  24:../system/src/gd32f10x/gd32f10x_it.c ****  specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_it.c **** 
+  26:../system/src/gd32f10x/gd32f10x_it.c ****  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:../system/src/gd32f10x/gd32f10x_it.c ****  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  28:../system/src/gd32f10x/gd32f10x_it.c ****  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  29:../system/src/gd32f10x/gd32f10x_it.c ****  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  30:../system/src/gd32f10x/gd32f10x_it.c ****  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  31:../system/src/gd32f10x/gd32f10x_it.c ****  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  32:../system/src/gd32f10x/gd32f10x_it.c ****  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  33:../system/src/gd32f10x/gd32f10x_it.c ****  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  34:../system/src/gd32f10x/gd32f10x_it.c ****  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  35:../system/src/gd32f10x/gd32f10x_it.c ****  OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  37:../system/src/gd32f10x/gd32f10x_it.c **** 
+  38:../system/src/gd32f10x/gd32f10x_it.c **** #include "gd32f10x_it.h"
+  39:../system/src/gd32f10x/gd32f10x_it.c **** 
+  40:../system/src/gd32f10x/gd32f10x_it.c **** 
+  41:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  42:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles NMI exception
+  43:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+  44:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+  45:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+  46:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  47:../system/src/gd32f10x/gd32f10x_it.c **** void NMI_Handler(void) {
+  27              		.loc 1 47 24 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  48:../system/src/gd32f10x/gd32f10x_it.c **** }
+  32              		.loc 1 48 1 view .LVU1
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE56:
+  37              		.section	.text.HardFault_Handler,"ax",%progbits
+  38              		.align	1
+  39              		.global	HardFault_Handler
+  40              		.syntax unified
+  41              		.thumb
+  42              		.thumb_func
+  44              	HardFault_Handler:
+  45              	.LFB57:
+  49:../system/src/gd32f10x/gd32f10x_it.c **** 
+  50:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  51:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles HardFault exception
+  52:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+  53:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+  54:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+  55:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  56:../system/src/gd32f10x/gd32f10x_it.c **** void HardFault_Handler(void) {
+  46              		.loc 1 56 30 view -0
+  47              		.cfi_startproc
+  48              		@ Volatile: function does not return.
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51              		@ link register save eliminated.
+  52              	.L3:
+  57:../system/src/gd32f10x/gd32f10x_it.c **** 	/* if Hard Fault exception occurs, go to infinite loop */
+  58:../system/src/gd32f10x/gd32f10x_it.c **** 	while (1) {
+  53              		.loc 1 58 2 discriminator 1 view .LVU3
+  59:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+  54              		.loc 1 59 2 discriminator 1 view .LVU4
+  58:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+  55              		.loc 1 58 8 discriminator 1 view .LVU5
+  56 0000 FEE7     		b	.L3
+  57              		.cfi_endproc
+  58              	.LFE57:
+  60              		.section	.text.MemManage_Handler,"ax",%progbits
+  61              		.align	1
+  62              		.global	MemManage_Handler
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	MemManage_Handler:
+  68              	.LFB58:
+  60:../system/src/gd32f10x/gd32f10x_it.c **** }
+  61:../system/src/gd32f10x/gd32f10x_it.c **** 
+  62:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  63:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles MemManage exception
+  64:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+  65:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+  66:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+  67:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  68:../system/src/gd32f10x/gd32f10x_it.c **** void MemManage_Handler(void) {
+  69              		.loc 1 68 30 view -0
+  70              		.cfi_startproc
+  71              		@ Volatile: function does not return.
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  75              	.L5:
+  69:../system/src/gd32f10x/gd32f10x_it.c **** 	/* if Memory Manage exception occurs, go to infinite loop */
+  70:../system/src/gd32f10x/gd32f10x_it.c **** 	while (1) {
+  76              		.loc 1 70 2 discriminator 1 view .LVU7
+  71:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+  77              		.loc 1 71 2 discriminator 1 view .LVU8
+  70:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+  78              		.loc 1 70 8 discriminator 1 view .LVU9
+  79 0000 FEE7     		b	.L5
+  80              		.cfi_endproc
+  81              	.LFE58:
+  83              		.section	.text.BusFault_Handler,"ax",%progbits
+  84              		.align	1
+  85              		.global	BusFault_Handler
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  90              	BusFault_Handler:
+  91              	.LFB59:
+  72:../system/src/gd32f10x/gd32f10x_it.c **** }
+  73:../system/src/gd32f10x/gd32f10x_it.c **** 
+  74:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  75:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles BusFault exception
+  76:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+  77:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+  78:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+  79:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  80:../system/src/gd32f10x/gd32f10x_it.c **** void BusFault_Handler(void) {
+  92              		.loc 1 80 29 view -0
+  93              		.cfi_startproc
+  94              		@ Volatile: function does not return.
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98              	.L7:
+  81:../system/src/gd32f10x/gd32f10x_it.c **** 	/* if Bus Fault exception occurs, go to infinite loop */
+  82:../system/src/gd32f10x/gd32f10x_it.c **** 	while (1) {
+  99              		.loc 1 82 2 discriminator 1 view .LVU11
+  83:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+ 100              		.loc 1 83 2 discriminator 1 view .LVU12
+  82:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+ 101              		.loc 1 82 8 discriminator 1 view .LVU13
+ 102 0000 FEE7     		b	.L7
+ 103              		.cfi_endproc
+ 104              	.LFE59:
+ 106              		.section	.text.UsageFault_Handler,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	UsageFault_Handler
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	UsageFault_Handler:
+ 114              	.LFB60:
+  84:../system/src/gd32f10x/gd32f10x_it.c **** }
+  85:../system/src/gd32f10x/gd32f10x_it.c **** 
+  86:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  87:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles UsageFault exception
+  88:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+  89:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+  90:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+  91:../system/src/gd32f10x/gd32f10x_it.c ****  */
+  92:../system/src/gd32f10x/gd32f10x_it.c **** void UsageFault_Handler(void) {
+ 115              		.loc 1 92 31 view -0
+ 116              		.cfi_startproc
+ 117              		@ Volatile: function does not return.
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+ 121              	.L9:
+  93:../system/src/gd32f10x/gd32f10x_it.c **** 	/* if Usage Fault exception occurs, go to infinite loop */
+  94:../system/src/gd32f10x/gd32f10x_it.c **** 	while (1) {
+ 122              		.loc 1 94 2 discriminator 1 view .LVU15
+  95:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+ 123              		.loc 1 95 2 discriminator 1 view .LVU16
+  94:../system/src/gd32f10x/gd32f10x_it.c **** 	}
+ 124              		.loc 1 94 8 discriminator 1 view .LVU17
+ 125 0000 FEE7     		b	.L9
+ 126              		.cfi_endproc
+ 127              	.LFE60:
+ 129              		.section	.text.SVC_Handler,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	SVC_Handler
+ 132              		.syntax unified
+ 133              		.thumb
+ 134              		.thumb_func
+ 136              	SVC_Handler:
+ 137              	.LFB61:
+  96:../system/src/gd32f10x/gd32f10x_it.c **** }
+  97:../system/src/gd32f10x/gd32f10x_it.c **** 
+  98:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+  99:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles SVC exception
+ 100:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+ 101:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+ 102:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+ 103:../system/src/gd32f10x/gd32f10x_it.c ****  */
+ 104:../system/src/gd32f10x/gd32f10x_it.c **** void SVC_Handler(void) {
+ 138              		.loc 1 104 24 view -0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		@ link register save eliminated.
+ 105:../system/src/gd32f10x/gd32f10x_it.c **** }
+ 143              		.loc 1 105 1 view .LVU19
+ 144 0000 7047     		bx	lr
+ 145              		.cfi_endproc
+ 146              	.LFE61:
+ 148              		.section	.text.DebugMon_Handler,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	DebugMon_Handler
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	DebugMon_Handler:
+ 156              	.LFB62:
+ 106:../system/src/gd32f10x/gd32f10x_it.c **** 
+ 107:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+ 108:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles DebugMon exception
+ 109:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+ 110:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+ 111:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+ 112:../system/src/gd32f10x/gd32f10x_it.c ****  */
+ 113:../system/src/gd32f10x/gd32f10x_it.c **** void DebugMon_Handler(void) {
+ 157              		.loc 1 113 29 view -0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 114:../system/src/gd32f10x/gd32f10x_it.c **** }
+ 162              		.loc 1 114 1 view .LVU21
+ 163 0000 7047     		bx	lr
+ 164              		.cfi_endproc
+ 165              	.LFE62:
+ 167              		.section	.text.PendSV_Handler,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	PendSV_Handler
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 174              	PendSV_Handler:
+ 175              	.LFB63:
+ 115:../system/src/gd32f10x/gd32f10x_it.c **** 
+ 116:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+ 117:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles PendSV exception
+ 118:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+ 119:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+ 120:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+ 121:../system/src/gd32f10x/gd32f10x_it.c ****  */
+ 122:../system/src/gd32f10x/gd32f10x_it.c **** void PendSV_Handler(void) {
+ 176              		.loc 1 122 27 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180              		@ link register save eliminated.
+ 123:../system/src/gd32f10x/gd32f10x_it.c **** }
+ 181              		.loc 1 123 1 view .LVU23
+ 182 0000 7047     		bx	lr
+ 183              		.cfi_endproc
+ 184              	.LFE63:
+ 186              		.section	.text.CAN0_RX1_IRQHandler,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	CAN0_RX1_IRQHandler
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	CAN0_RX1_IRQHandler:
+ 194              	.LFB64:
+ 124:../system/src/gd32f10x/gd32f10x_it.c **** 
+ 125:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+ 126:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles SysTick exception
+ 127:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+ 128:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+ 129:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+ 130:../system/src/gd32f10x/gd32f10x_it.c ****  */
+ 131:../system/src/gd32f10x/gd32f10x_it.c **** //void SysTick_Handler(void) {
+ 132:../system/src/gd32f10x/gd32f10x_it.c **** //
+ 133:../system/src/gd32f10x/gd32f10x_it.c **** //}
+ 134:../system/src/gd32f10x/gd32f10x_it.c **** /*!
+ 135:../system/src/gd32f10x/gd32f10x_it.c ****  \brief      this function handles CAN0 RX0 exception
+ 136:../system/src/gd32f10x/gd32f10x_it.c ****  \param[in]  none
+ 137:../system/src/gd32f10x/gd32f10x_it.c ****  \param[out] none
+ 138:../system/src/gd32f10x/gd32f10x_it.c ****  \retval     none
+ 139:../system/src/gd32f10x/gd32f10x_it.c ****  */
+ 140:../system/src/gd32f10x/gd32f10x_it.c **** void CAN0_RX1_IRQHandler(void) {
+ 195              		.loc 1 140 32 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		@ link register save eliminated.
+ 141:../system/src/gd32f10x/gd32f10x_it.c **** 	/* check the receive message */
+ 142:../system/src/gd32f10x/gd32f10x_it.c **** 
+ 143:../system/src/gd32f10x/gd32f10x_it.c **** }
+ 200              		.loc 1 143 1 view .LVU25
+ 201 0000 7047     		bx	lr
+ 202              		.cfi_endproc
+ 203              	.LFE64:
+ 205              		.text
+ 206              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_it.c
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:19     .text.NMI_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:25     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:38     .text.HardFault_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:44     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:61     .text.MemManage_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:67     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:84     .text.BusFault_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:90     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:107    .text.UsageFault_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:113    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:130    .text.SVC_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:136    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:149    .text.DebugMon_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:155    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:168    .text.PendSV_Handler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:174    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:187    .text.CAN0_RX1_IRQHandler:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cckiqLoF.s:193    .text.CAN0_RX1_IRQHandler:00000000 CAN0_RX1_IRQHandler
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+
+NO UNDEFINED SYMBOLS

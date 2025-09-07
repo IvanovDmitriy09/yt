@@ -1,0 +1,1464 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"fal_tiger_sys.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/fal/tiger/fal_tiger_sys.c"
+  18              		.section	.rodata.fal_tiger_sys_mac_get.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 25732573 		.ascii	"%s%s\015\012\000"
+  21      0D0A00
+  22 0007 00       		.align	2
+  23              	.LC1:
+  24 0008 68616C5F 		.ascii	"hal_table_reg_read(unit,7,0,sizeof(global_mac_addr0"
+  24      7461626C 
+  24      655F7265 
+  24      675F7265 
+  24      61642875 
+  25 003b 5F74292C 		.ascii	"_t),&global_mac_addr0)\000"
+  25      26676C6F 
+  25      62616C5F 
+  25      6D61635F 
+  25      61646472 
+  26 0052 0000     		.align	2
+  27              	.LC2:
+  28 0054 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+  28      206F6620 
+  28      22257322 
+  28      20696E20 
+  28      25730D0A 
+  29 0069 000000   		.align	2
+  30              	.LC3:
+  31 006c 68616C5F 		.ascii	"hal_table_reg_read(unit,8,0,sizeof(global_mac_addr1"
+  31      7461626C 
+  31      655F7265 
+  31      675F7265 
+  31      61642875 
+  32 009f 5F74292C 		.ascii	"_t),&global_mac_addr1)\000"
+  32      26676C6F 
+  32      62616C5F 
+  32      6D61635F 
+  32      61646472 
+  33              		.section	.text.fal_tiger_sys_mac_get,"ax",%progbits
+  34              		.align	1
+  35              		.global	fal_tiger_sys_mac_get
+  36              		.syntax unified
+  37              		.thumb
+  38              		.thumb_func
+  40              	fal_tiger_sys_mac_get:
+  41              	.LVL0:
+  42              	.LFB3:
+   1:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** /*
+   2:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****  * Include Files
+   3:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****  */
+   4:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "yt_error.h"
+   5:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "fal_tiger_sys.h"
+   6:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "hal_mem.h"
+   7:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "fal_tiger_struct.h"
+   8:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "fal_tiger_entry.h"
+   9:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "fal_tiger_mem.h"
+  10:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "fal_tiger_acl.h"
+  11:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #include "hal_ctrl.h"
+  12:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  13:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** /*
+  14:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****  * Function Declaration
+  15:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****  */
+  16:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  17:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** yt_ret_t fal_tiger_sys_mac_get(yt_unit_t unit, yt_mac_addr_t *psys_mac)
+  18:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** {
+  43              		.loc 1 18 1 view -0
+  44              		.cfi_startproc
+  45              		@ args = 0, pretend = 0, frame = 16
+  46              		@ frame_needed = 0, uses_anonymous_args = 0
+  47              		.loc 1 18 1 is_stmt 0 view .LVU1
+  48 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  49              		.cfi_def_cfa_offset 28
+  50              		.cfi_offset 4, -28
+  51              		.cfi_offset 5, -24
+  52              		.cfi_offset 6, -20
+  53              		.cfi_offset 7, -16
+  54              		.cfi_offset 8, -12
+  55              		.cfi_offset 9, -8
+  56              		.cfi_offset 14, -4
+  57 0004 87B0     		sub	sp, sp, #28
+  58              		.cfi_def_cfa_offset 56
+  19:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     global_mac_addr0_t global_mac_addr0;
+  59              		.loc 1 19 5 is_stmt 1 view .LVU2
+  20:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     global_mac_addr1_t global_mac_addr1;
+  60              		.loc 1 20 5 view .LVU3
+  21:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr0;
+  61              		.loc 1 21 5 view .LVU4
+  22:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr1;
+  62              		.loc 1 22 5 view .LVU5
+  23:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr2;
+  63              		.loc 1 23 5 view .LVU6
+  24:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr3;
+  64              		.loc 1 24 5 view .LVU7
+  25:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr4;
+  65              		.loc 1 25 5 view .LVU8
+  26:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32 macAddr5;
+  66              		.loc 1 26 5 view .LVU9
+  27:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     
+  28:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     cmm_err_t ret = CMM_ERR_OK;
+  67              		.loc 1 28 5 view .LVU10
+  68              	.LVL1:
+  29:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_PARAM_CHK(NULL == psys_mac, CMM_ERR_NULL_POINT);
+  69              		.loc 1 30 5 view .LVU11
+  70              		.loc 1 30 5 view .LVU12
+  71 0006 A1B1     		cbz	r1, .L10
+  72 0008 0546     		mov	r5, r0
+  73 000a 0E46     		mov	r6, r1
+  74              		.loc 1 30 5 discriminator 2 view .LVU13
+  31:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR0m, 0, sizeof(global_mac_addr0_t), &global_ma
+  75              		.loc 1 32 5 discriminator 2 view .LVU14
+  76              		.loc 1 32 5 discriminator 2 view .LVU15
+  77 000c 05AB     		add	r3, sp, #20
+  78 000e 0093     		str	r3, [sp]
+  79 0010 0423     		movs	r3, #4
+  80 0012 0022     		movs	r2, #0
+  81 0014 0721     		movs	r1, #7
+  82              	.LVL2:
+  83              		.loc 1 32 5 is_stmt 0 discriminator 2 view .LVU16
+  84 0016 FFF7FEFF 		bl	hal_table_reg_read
+  85              	.LVL3:
+  86              		.loc 1 32 5 discriminator 2 view .LVU17
+  87 001a 0446     		mov	r4, r0
+  88              	.LVL4:
+  89              		.loc 1 32 5 discriminator 2 view .LVU18
+  90 001c 10F0FF03 		ands	r3, r0, #255
+  91 0020 25D0     		beq	.L5
+  92              		.loc 1 32 5 is_stmt 1 discriminator 1 view .LVU19
+  93              		.loc 1 32 5 discriminator 1 view .LVU20
+  94 0022 3F4A     		ldr	r2, .L14
+  95 0024 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  96 0026 012A     		cmp	r2, #1
+  97 0028 11D8     		bhi	.L11
+  98              	.LVL5:
+  99              	.L6:
+ 100              		.loc 1 32 5 discriminator 5 view .LVU21
+ 101              		.loc 1 32 5 discriminator 5 view .LVU22
+ 102              		.loc 1 32 5 discriminator 5 view .LVU23
+ 103 002a E0B2     		uxtb	r0, r4
+ 104              	.LVL6:
+ 105              	.L1:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE0f, &global_mac_addr1, &macAddr0
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+  40:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  41:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[0] = macAddr0;
+  42:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[1] = macAddr1;
+  43:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[2] = macAddr2;
+  44:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[3] = macAddr3;
+  45:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[4] = macAddr4;
+  46:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[5] = macAddr5;
+  47:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     
+  48:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_OK;
+  49:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 106              		.loc 1 49 1 is_stmt 0 view .LVU24
+ 107 002c 07B0     		add	sp, sp, #28
+ 108              		.cfi_remember_state
+ 109              		.cfi_def_cfa_offset 28
+ 110              		@ sp needed
+ 111 002e BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 112              	.LVL7:
+ 113              	.L10:
+ 114              		.cfi_restore_state
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 115              		.loc 1 30 5 is_stmt 1 discriminator 1 view .LVU25
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 116              		.loc 1 30 5 discriminator 1 view .LVU26
+ 117 0032 3B4B     		ldr	r3, .L14
+ 118 0034 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 119 0036 012B     		cmp	r3, #1
+ 120 0038 01D8     		bhi	.L12
+ 121              	.LVL8:
+ 122              	.L3:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 123              		.loc 1 30 5 discriminator 5 view .LVU27
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 124              		.loc 1 30 5 discriminator 5 view .LVU28
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 125              		.loc 1 30 5 discriminator 5 view .LVU29
+ 126 003a 0220     		movs	r0, #2
+ 127 003c F6E7     		b	.L1
+ 128              	.LVL9:
+ 129              	.L12:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 130              		.loc 1 30 5 discriminator 3 view .LVU30
+ 131              	.LBB2:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 132              		.loc 1 30 5 discriminator 3 view .LVU31
+ 133 003e 394B     		ldr	r3, .L14+4
+ 134 0040 9A68     		ldr	r2, [r3, #8]
+ 135 0042 394B     		ldr	r3, .L14+8
+ 136 0044 9968     		ldr	r1, [r3, #8]
+ 137              	.LVL10:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 138              		.loc 1 30 5 is_stmt 0 discriminator 3 view .LVU32
+ 139 0046 3948     		ldr	r0, .L14+12
+ 140              	.LVL11:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 141              		.loc 1 30 5 discriminator 3 view .LVU33
+ 142 0048 FFF7FEFF 		bl	osal_printf
+ 143              	.LVL12:
+ 144 004c F5E7     		b	.L3
+ 145              	.LVL13:
+ 146              	.L11:
+  30:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 147              		.loc 1 30 5 discriminator 3 view .LVU34
+ 148              	.LBE2:
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 149              		.loc 1 32 5 is_stmt 1 discriminator 3 view .LVU35
+ 150              	.LBB3:
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 151              		.loc 1 32 5 discriminator 3 view .LVU36
+ 152 004e 142B     		cmp	r3, #20
+ 153 0050 28BF     		it	cs
+ 154 0052 1423     		movcs	r3, #20
+ 155 0054 1A46     		mov	r2, r3
+ 156 0056 364B     		ldr	r3, .L14+16
+ 157 0058 0093     		str	r3, [sp]
+ 158 005a 364B     		ldr	r3, .L14+20
+ 159 005c 3149     		ldr	r1, .L14+4
+ 160 005e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 161 0062 3149     		ldr	r1, .L14+8
+ 162 0064 8968     		ldr	r1, [r1, #8]
+ 163 0066 3448     		ldr	r0, .L14+24
+ 164              	.LVL14:
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 165              		.loc 1 32 5 is_stmt 0 discriminator 3 view .LVU37
+ 166 0068 FFF7FEFF 		bl	osal_printf
+ 167              	.LVL15:
+ 168 006c DDE7     		b	.L6
+ 169              	.LVL16:
+ 170              	.L5:
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 171              		.loc 1 32 5 discriminator 3 view .LVU38
+ 172              	.LBE3:
+  32:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 173              		.loc 1 32 5 is_stmt 1 discriminator 2 view .LVU39
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 174              		.loc 1 33 5 discriminator 2 view .LVU40
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 175              		.loc 1 33 5 discriminator 2 view .LVU41
+ 176 006e 04AB     		add	r3, sp, #16
+ 177 0070 0093     		str	r3, [sp]
+ 178 0072 0423     		movs	r3, #4
+ 179 0074 0022     		movs	r2, #0
+ 180 0076 0821     		movs	r1, #8
+ 181 0078 2846     		mov	r0, r5
+ 182              	.LVL17:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 183              		.loc 1 33 5 is_stmt 0 discriminator 2 view .LVU42
+ 184 007a FFF7FEFF 		bl	hal_table_reg_read
+ 185              	.LVL18:
+ 186 007e 0446     		mov	r4, r0
+ 187              	.LVL19:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 188              		.loc 1 33 5 discriminator 2 view .LVU43
+ 189 0080 10F0FF03 		ands	r3, r0, #255
+ 190 0084 15D0     		beq	.L7
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 191              		.loc 1 33 5 is_stmt 1 discriminator 1 view .LVU44
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 192              		.loc 1 33 5 discriminator 1 view .LVU45
+ 193 0086 264A     		ldr	r2, .L14
+ 194 0088 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 195 008a 012A     		cmp	r2, #1
+ 196 008c 01D8     		bhi	.L13
+ 197              	.LVL20:
+ 198              	.L8:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 199              		.loc 1 33 5 discriminator 5 view .LVU46
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 200              		.loc 1 33 5 discriminator 5 view .LVU47
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 201              		.loc 1 33 5 discriminator 5 view .LVU48
+ 202 008e E0B2     		uxtb	r0, r4
+ 203 0090 CCE7     		b	.L1
+ 204              	.LVL21:
+ 205              	.L13:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 206              		.loc 1 33 5 discriminator 3 view .LVU49
+ 207              	.LBB4:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 208              		.loc 1 33 5 discriminator 3 view .LVU50
+ 209 0092 142B     		cmp	r3, #20
+ 210 0094 28BF     		it	cs
+ 211 0096 1423     		movcs	r3, #20
+ 212 0098 1A46     		mov	r2, r3
+ 213 009a 254B     		ldr	r3, .L14+16
+ 214 009c 0093     		str	r3, [sp]
+ 215 009e 274B     		ldr	r3, .L14+28
+ 216 00a0 2049     		ldr	r1, .L14+4
+ 217 00a2 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 218 00a6 2049     		ldr	r1, .L14+8
+ 219 00a8 8968     		ldr	r1, [r1, #8]
+ 220 00aa 2348     		ldr	r0, .L14+24
+ 221              	.LVL22:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 222              		.loc 1 33 5 is_stmt 0 discriminator 3 view .LVU51
+ 223 00ac FFF7FEFF 		bl	osal_printf
+ 224              	.LVL23:
+ 225 00b0 EDE7     		b	.L8
+ 226              	.LVL24:
+ 227              	.L7:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 228              		.loc 1 33 5 discriminator 3 view .LVU52
+ 229              	.LBE4:
+  33:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_MAC_ADDR1m, 0, sizeof(global_mac_addr1_t), &global_ma
+ 230              		.loc 1 33 5 is_stmt 1 discriminator 2 view .LVU53
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 231              		.loc 1 34 5 discriminator 2 view .LVU54
+ 232              	.LBB5:
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 233              		.loc 1 34 5 discriminator 2 view .LVU55
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 234              		.loc 1 34 5 discriminator 2 view .LVU56
+ 235 00b2 03AB     		add	r3, sp, #12
+ 236 00b4 04AA     		add	r2, sp, #16
+ 237 00b6 0021     		movs	r1, #0
+ 238 00b8 0820     		movs	r0, #8
+ 239              	.LVL25:
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 240              		.loc 1 34 5 is_stmt 0 discriminator 2 view .LVU57
+ 241 00ba FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 242              	.LVL26:
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 243              		.loc 1 34 5 is_stmt 1 discriminator 2 view .LVU58
+ 244 00be DDF80C90 		ldr	r9, [sp, #12]
+ 245              	.LVL27:
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 246              		.loc 1 34 5 is_stmt 0 discriminator 2 view .LVU59
+ 247              	.LBE5:
+  34:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE1f, &global_mac_addr1, &macAddr1
+ 248              		.loc 1 34 5 is_stmt 1 discriminator 2 view .LVU60
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 249              		.loc 1 35 5 discriminator 2 view .LVU61
+ 250              	.LBB6:
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 251              		.loc 1 35 5 discriminator 2 view .LVU62
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 252              		.loc 1 35 5 discriminator 2 view .LVU63
+ 253 00c2 03AB     		add	r3, sp, #12
+ 254 00c4 04AA     		add	r2, sp, #16
+ 255 00c6 0121     		movs	r1, #1
+ 256 00c8 0820     		movs	r0, #8
+ 257 00ca FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 258              	.LVL28:
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 259              		.loc 1 35 5 discriminator 2 view .LVU64
+ 260 00ce DDF80C80 		ldr	r8, [sp, #12]
+ 261              	.LVL29:
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 262              		.loc 1 35 5 is_stmt 0 discriminator 2 view .LVU65
+ 263              	.LBE6:
+  35:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE2f, &global_mac_addr1, &macAddr2
+ 264              		.loc 1 35 5 is_stmt 1 discriminator 2 view .LVU66
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 265              		.loc 1 36 5 discriminator 2 view .LVU67
+ 266              	.LBB7:
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 267              		.loc 1 36 5 discriminator 2 view .LVU68
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 268              		.loc 1 36 5 discriminator 2 view .LVU69
+ 269 00d2 03AB     		add	r3, sp, #12
+ 270 00d4 04AA     		add	r2, sp, #16
+ 271 00d6 0221     		movs	r1, #2
+ 272 00d8 0820     		movs	r0, #8
+ 273 00da FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 274              	.LVL30:
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 275              		.loc 1 36 5 discriminator 2 view .LVU70
+ 276 00de 039F     		ldr	r7, [sp, #12]
+ 277              	.LVL31:
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 278              		.loc 1 36 5 is_stmt 0 discriminator 2 view .LVU71
+ 279              	.LBE7:
+  36:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR1m, GLOBAL_MAC_ADDR1_MAC_ADDR_BYTE3f, &global_mac_addr1, &macAddr3
+ 280              		.loc 1 36 5 is_stmt 1 discriminator 2 view .LVU72
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 281              		.loc 1 37 5 discriminator 2 view .LVU73
+ 282              	.LBB8:
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 283              		.loc 1 37 5 discriminator 2 view .LVU74
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 284              		.loc 1 37 5 discriminator 2 view .LVU75
+ 285 00e0 03AB     		add	r3, sp, #12
+ 286 00e2 04AA     		add	r2, sp, #16
+ 287 00e4 0321     		movs	r1, #3
+ 288 00e6 0820     		movs	r0, #8
+ 289 00e8 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 290              	.LVL32:
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 291              		.loc 1 37 5 discriminator 2 view .LVU76
+ 292 00ec 039D     		ldr	r5, [sp, #12]
+ 293              	.LVL33:
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 294              		.loc 1 37 5 is_stmt 0 discriminator 2 view .LVU77
+ 295              	.LBE8:
+  37:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE4f, &global_mac_addr0, &macAddr4
+ 296              		.loc 1 37 5 is_stmt 1 discriminator 2 view .LVU78
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 297              		.loc 1 38 5 discriminator 2 view .LVU79
+ 298              	.LBB9:
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 299              		.loc 1 38 5 discriminator 2 view .LVU80
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 300              		.loc 1 38 5 discriminator 2 view .LVU81
+ 301 00ee 03AB     		add	r3, sp, #12
+ 302 00f0 05AA     		add	r2, sp, #20
+ 303 00f2 0021     		movs	r1, #0
+ 304 00f4 0720     		movs	r0, #7
+ 305 00f6 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 306              	.LVL34:
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 307              		.loc 1 38 5 discriminator 2 view .LVU82
+ 308 00fa 039C     		ldr	r4, [sp, #12]
+ 309              	.LVL35:
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 310              		.loc 1 38 5 is_stmt 0 discriminator 2 view .LVU83
+ 311              	.LBE9:
+  38:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_GET(GLOBAL_MAC_ADDR0m, GLOBAL_MAC_ADDR0_MAC_ADDR_BYTE5f, &global_mac_addr0, &macAddr5
+ 312              		.loc 1 38 5 is_stmt 1 discriminator 2 view .LVU84
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 313              		.loc 1 39 5 discriminator 2 view .LVU85
+ 314              	.LBB10:
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 315              		.loc 1 39 5 discriminator 2 view .LVU86
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 316              		.loc 1 39 5 discriminator 2 view .LVU87
+ 317 00fc 03AB     		add	r3, sp, #12
+ 318 00fe 05AA     		add	r2, sp, #20
+ 319 0100 0121     		movs	r1, #1
+ 320 0102 0720     		movs	r0, #7
+ 321 0104 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 322              	.LVL36:
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 323              		.loc 1 39 5 discriminator 2 view .LVU88
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 324              		.loc 1 39 5 is_stmt 0 discriminator 2 view .LVU89
+ 325              	.LBE10:
+  39:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 326              		.loc 1 39 5 is_stmt 1 discriminator 2 view .LVU90
+  41:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[1] = macAddr1;
+ 327              		.loc 1 41 5 discriminator 2 view .LVU91
+  41:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[1] = macAddr1;
+ 328              		.loc 1 41 23 is_stmt 0 discriminator 2 view .LVU92
+ 329 0108 86F80090 		strb	r9, [r6]
+ 330              	.LVL37:
+  42:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[2] = macAddr2;
+ 331              		.loc 1 42 5 is_stmt 1 discriminator 2 view .LVU93
+  42:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[2] = macAddr2;
+ 332              		.loc 1 42 23 is_stmt 0 discriminator 2 view .LVU94
+ 333 010c 86F80180 		strb	r8, [r6, #1]
+  43:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[3] = macAddr3;
+ 334              		.loc 1 43 5 is_stmt 1 discriminator 2 view .LVU95
+  43:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[3] = macAddr3;
+ 335              		.loc 1 43 23 is_stmt 0 discriminator 2 view .LVU96
+ 336 0110 B770     		strb	r7, [r6, #2]
+  44:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[4] = macAddr4;
+ 337              		.loc 1 44 5 is_stmt 1 discriminator 2 view .LVU97
+  44:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[4] = macAddr4;
+ 338              		.loc 1 44 23 is_stmt 0 discriminator 2 view .LVU98
+ 339 0112 F570     		strb	r5, [r6, #3]
+  45:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[5] = macAddr5;
+ 340              		.loc 1 45 5 is_stmt 1 discriminator 2 view .LVU99
+  45:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     psys_mac->addr[5] = macAddr5;
+ 341              		.loc 1 45 23 is_stmt 0 discriminator 2 view .LVU100
+ 342 0114 3471     		strb	r4, [r6, #4]
+  46:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     
+ 343              		.loc 1 46 5 is_stmt 1 discriminator 2 view .LVU101
+  46:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     
+ 344              		.loc 1 46 23 is_stmt 0 discriminator 2 view .LVU102
+ 345 0116 039B     		ldr	r3, [sp, #12]
+ 346 0118 7371     		strb	r3, [r6, #5]
+  48:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 347              		.loc 1 48 5 is_stmt 1 discriminator 2 view .LVU103
+  48:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 348              		.loc 1 48 12 is_stmt 0 discriminator 2 view .LVU104
+ 349 011a 0020     		movs	r0, #0
+ 350 011c 86E7     		b	.L1
+ 351              	.L15:
+ 352 011e 00BF     		.align	2
+ 353              	.L14:
+ 354 0120 00000000 		.word	yt_debug_level
+ 355 0124 00000000 		.word	_yt_errmsg
+ 356 0128 00000000 		.word	_yt_prompt_msg
+ 357 012c 00000000 		.word	.LC0
+ 358 0130 00000000 		.word	__FUNCTION__.2
+ 359 0134 08000000 		.word	.LC1
+ 360 0138 54000000 		.word	.LC2
+ 361 013c 6C000000 		.word	.LC3
+ 362              		.cfi_endproc
+ 363              	.LFE3:
+ 365              		.section	.rodata.fal_tiger_sys_chip_reset.str1.4,"aMS",%progbits,1
+ 366              		.align	2
+ 367              	.LC4:
+ 368 0000 68616C5F 		.ascii	"hal_table_reg_read(unit,0,0,sizeof(global_ctrl0_t),"
+ 368      7461626C 
+ 368      655F7265 
+ 368      675F7265 
+ 368      61642875 
+ 369 0033 26676C6F 		.ascii	"&global_entry)\000"
+ 369      62616C5F 
+ 369      656E7472 
+ 369      792900
+ 370 0042 0000     		.align	2
+ 371              	.LC5:
+ 372 0044 68616C5F 		.ascii	"hal_table_reg_write(unit,0,0,sizeof(global_ctrl0_t)"
+ 372      7461626C 
+ 372      655F7265 
+ 372      675F7772 
+ 372      69746528 
+ 373 0077 2C26676C 		.ascii	",&global_entry)\000"
+ 373      6F62616C 
+ 373      5F656E74 
+ 373      72792900 
+ 374              		.section	.text.fal_tiger_sys_chip_reset,"ax",%progbits
+ 375              		.align	1
+ 376              		.global	fal_tiger_sys_chip_reset
+ 377              		.syntax unified
+ 378              		.thumb
+ 379              		.thumb_func
+ 381              	fal_tiger_sys_chip_reset:
+ 382              	.LVL38:
+ 383              	.LFB4:
+  50:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  51:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** yt_ret_t fal_tiger_sys_chip_reset(yt_unit_t unit)
+  52:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** {
+ 384              		.loc 1 52 1 is_stmt 1 view -0
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 8
+ 387              		@ frame_needed = 0, uses_anonymous_args = 0
+ 388              		.loc 1 52 1 is_stmt 0 view .LVU106
+ 389 0000 30B5     		push	{r4, r5, lr}
+ 390              		.cfi_def_cfa_offset 12
+ 391              		.cfi_offset 4, -12
+ 392              		.cfi_offset 5, -8
+ 393              		.cfi_offset 14, -4
+ 394 0002 85B0     		sub	sp, sp, #20
+ 395              		.cfi_def_cfa_offset 32
+ 396 0004 0546     		mov	r5, r0
+  53:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     global_ctrl0_t global_entry;
+ 397              		.loc 1 53 5 is_stmt 1 view .LVU107
+  54:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 398              		.loc 1 54 5 view .LVU108
+ 399              	.LVL39:
+  55:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, GLOBAL_CTRL0m, 0, sizeof(global_ctrl0_t), &global_entry), re
+ 400              		.loc 1 56 5 view .LVU109
+ 401              		.loc 1 56 5 view .LVU110
+ 402 0006 03AB     		add	r3, sp, #12
+ 403 0008 0093     		str	r3, [sp]
+ 404 000a 0423     		movs	r3, #4
+ 405 000c 0022     		movs	r2, #0
+ 406 000e 1146     		mov	r1, r2
+ 407 0010 FFF7FEFF 		bl	hal_table_reg_read
+ 408              	.LVL40:
+ 409              		.loc 1 56 5 is_stmt 0 view .LVU111
+ 410 0014 10F0FF03 		ands	r3, r0, #255
+ 411 0018 17D0     		beq	.L17
+ 412 001a 0446     		mov	r4, r0
+ 413              		.loc 1 56 5 is_stmt 1 discriminator 1 view .LVU112
+ 414              		.loc 1 56 5 discriminator 1 view .LVU113
+ 415 001c 204A     		ldr	r2, .L26
+ 416 001e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 417 0020 012A     		cmp	r2, #1
+ 418 0022 02D8     		bhi	.L23
+ 419              	.LVL41:
+ 420              	.L18:
+ 421              		.loc 1 56 5 discriminator 5 view .LVU114
+ 422              		.loc 1 56 5 discriminator 5 view .LVU115
+ 423              		.loc 1 56 5 discriminator 5 view .LVU116
+ 424 0024 E0B2     		uxtb	r0, r4
+ 425              	.LVL42:
+ 426              	.L16:
+  57:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, GLOBAL_CTRL0m, 0, sizeof(global_ctrl0_t), &global_entry), r
+  59:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  60:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_OK;
+  61:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 427              		.loc 1 61 1 is_stmt 0 view .LVU117
+ 428 0026 05B0     		add	sp, sp, #20
+ 429              		.cfi_remember_state
+ 430              		.cfi_def_cfa_offset 12
+ 431              		@ sp needed
+ 432 0028 30BD     		pop	{r4, r5, pc}
+ 433              	.LVL43:
+ 434              	.L23:
+ 435              		.cfi_restore_state
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 436              		.loc 1 56 5 is_stmt 1 discriminator 3 view .LVU118
+ 437              	.LBB11:
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 438              		.loc 1 56 5 discriminator 3 view .LVU119
+ 439 002a 142B     		cmp	r3, #20
+ 440 002c 28BF     		it	cs
+ 441 002e 1423     		movcs	r3, #20
+ 442 0030 1A46     		mov	r2, r3
+ 443 0032 1C4B     		ldr	r3, .L26+4
+ 444 0034 0093     		str	r3, [sp]
+ 445 0036 1C4B     		ldr	r3, .L26+8
+ 446 0038 1C49     		ldr	r1, .L26+12
+ 447 003a 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 448 003e 1C49     		ldr	r1, .L26+16
+ 449 0040 8968     		ldr	r1, [r1, #8]
+ 450 0042 1C48     		ldr	r0, .L26+20
+ 451              	.LVL44:
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 452              		.loc 1 56 5 is_stmt 0 discriminator 3 view .LVU120
+ 453 0044 FFF7FEFF 		bl	osal_printf
+ 454              	.LVL45:
+ 455 0048 ECE7     		b	.L18
+ 456              	.LVL46:
+ 457              	.L17:
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 458              		.loc 1 56 5 discriminator 3 view .LVU121
+ 459              	.LBE11:
+  56:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 460              		.loc 1 56 5 is_stmt 1 discriminator 2 view .LVU122
+  57:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 461              		.loc 1 57 5 discriminator 2 view .LVU123
+ 462 004a 03AC     		add	r4, sp, #12
+ 463 004c 0123     		movs	r3, #1
+ 464 004e 2246     		mov	r2, r4
+ 465 0050 0021     		movs	r1, #0
+ 466 0052 0846     		mov	r0, r1
+ 467              	.LVL47:
+  57:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     HAL_FIELD_SET(GLOBAL_CTRL0m, GLOBAL_CTRL0_CHIP_SW_RSTf, &global_entry, YT_ENABLE);
+ 468              		.loc 1 57 5 is_stmt 0 discriminator 2 view .LVU124
+ 469 0054 FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 470              	.LVL48:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 471              		.loc 1 58 5 is_stmt 1 discriminator 2 view .LVU125
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 472              		.loc 1 58 5 discriminator 2 view .LVU126
+ 473 0058 0094     		str	r4, [sp]
+ 474 005a 0423     		movs	r3, #4
+ 475 005c 0022     		movs	r2, #0
+ 476 005e 1146     		mov	r1, r2
+ 477 0060 2846     		mov	r0, r5
+ 478 0062 FFF7FEFF 		bl	hal_table_reg_write
+ 479              	.LVL49:
+ 480 0066 0446     		mov	r4, r0
+ 481              	.LVL50:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 482              		.loc 1 58 5 is_stmt 0 discriminator 2 view .LVU127
+ 483 0068 10F0FF03 		ands	r3, r0, #255
+ 484 006c 01D1     		bne	.L24
+  60:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 485              		.loc 1 60 12 view .LVU128
+ 486 006e 0020     		movs	r0, #0
+ 487              	.LVL51:
+  60:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 488              		.loc 1 60 12 view .LVU129
+ 489 0070 D9E7     		b	.L16
+ 490              	.LVL52:
+ 491              	.L24:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 492              		.loc 1 58 5 is_stmt 1 discriminator 1 view .LVU130
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 493              		.loc 1 58 5 discriminator 1 view .LVU131
+ 494 0072 0B4A     		ldr	r2, .L26
+ 495 0074 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 496 0076 012A     		cmp	r2, #1
+ 497 0078 01D8     		bhi	.L25
+ 498              	.LVL53:
+ 499              	.L20:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 500              		.loc 1 58 5 discriminator 5 view .LVU132
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 501              		.loc 1 58 5 discriminator 5 view .LVU133
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 502              		.loc 1 58 5 discriminator 5 view .LVU134
+ 503 007a E0B2     		uxtb	r0, r4
+ 504 007c D3E7     		b	.L16
+ 505              	.LVL54:
+ 506              	.L25:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 507              		.loc 1 58 5 discriminator 3 view .LVU135
+ 508              	.LBB12:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 509              		.loc 1 58 5 discriminator 3 view .LVU136
+ 510 007e 142B     		cmp	r3, #20
+ 511 0080 28BF     		it	cs
+ 512 0082 1423     		movcs	r3, #20
+ 513 0084 1A46     		mov	r2, r3
+ 514 0086 074B     		ldr	r3, .L26+4
+ 515 0088 0093     		str	r3, [sp]
+ 516 008a 0B4B     		ldr	r3, .L26+24
+ 517 008c 0749     		ldr	r1, .L26+12
+ 518 008e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 519 0092 0749     		ldr	r1, .L26+16
+ 520 0094 8968     		ldr	r1, [r1, #8]
+ 521 0096 0748     		ldr	r0, .L26+20
+ 522              	.LVL55:
+  58:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 523              		.loc 1 58 5 is_stmt 0 discriminator 3 view .LVU137
+ 524 0098 FFF7FEFF 		bl	osal_printf
+ 525              	.LVL56:
+ 526 009c EDE7     		b	.L20
+ 527              	.L27:
+ 528 009e 00BF     		.align	2
+ 529              	.L26:
+ 530 00a0 00000000 		.word	yt_debug_level
+ 531 00a4 00000000 		.word	__FUNCTION__.1
+ 532 00a8 00000000 		.word	.LC4
+ 533 00ac 00000000 		.word	_yt_errmsg
+ 534 00b0 00000000 		.word	_yt_prompt_msg
+ 535 00b4 54000000 		.word	.LC2
+ 536 00b8 44000000 		.word	.LC5
+ 537              	.LBE12:
+ 538              		.cfi_endproc
+ 539              	.LFE4:
+ 541              		.section	.text.fal_tiger_sys_database_reset,"ax",%progbits
+ 542              		.align	1
+ 543              		.global	fal_tiger_sys_database_reset
+ 544              		.syntax unified
+ 545              		.thumb
+ 546              		.thumb_func
+ 548              	fal_tiger_sys_database_reset:
+ 549              	.LVL57:
+ 550              	.LFB5:
+  62:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  63:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** yt_ret_t fal_tiger_sys_database_reset(yt_unit_t unit)
+  64:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** {
+ 551              		.loc 1 64 1 is_stmt 1 view -0
+ 552              		.cfi_startproc
+ 553              		@ args = 0, pretend = 0, frame = 0
+ 554              		@ frame_needed = 0, uses_anonymous_args = 0
+ 555              		.loc 1 64 1 is_stmt 0 view .LVU139
+ 556 0000 38B5     		push	{r3, r4, r5, lr}
+ 557              		.cfi_def_cfa_offset 16
+ 558              		.cfi_offset 3, -16
+ 559              		.cfi_offset 4, -12
+ 560              		.cfi_offset 5, -8
+ 561              		.cfi_offset 14, -4
+ 562 0002 0546     		mov	r5, r0
+  65:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     yt_port_t port;
+ 563              		.loc 1 65 5 is_stmt 1 view .LVU140
+  66:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  67:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     for(port = 0; port < CAL_PORT_NUM_ON_UNIT(unit); port++)
+ 564              		.loc 1 67 5 view .LVU141
+ 565              	.LVL58:
+ 566              		.loc 1 67 14 is_stmt 0 view .LVU142
+ 567 0004 0024     		movs	r4, #0
+ 568              		.loc 1 67 5 view .LVU143
+ 569 0006 05E0     		b	.L29
+ 570              	.LVL59:
+ 571              	.L30:
+  68:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+  69:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         CMM_PLIST_UPDATE(unit, port, TRUE);
+ 572              		.loc 1 69 9 is_stmt 1 discriminator 3 view .LVU144
+ 573 0008 0122     		movs	r2, #1
+ 574 000a 2146     		mov	r1, r4
+ 575 000c 2846     		mov	r0, r5
+ 576 000e FFF7FEFF 		bl	cal_ytportmask_update
+ 577              	.LVL60:
+  67:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+ 578              		.loc 1 67 58 discriminator 3 view .LVU145
+ 579 0012 0134     		adds	r4, r4, #1
+ 580              	.LVL61:
+ 581              	.L29:
+  67:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+ 582              		.loc 1 67 24 discriminator 1 view .LVU146
+  67:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+ 583              		.loc 1 67 26 is_stmt 0 discriminator 1 view .LVU147
+ 584 0014 034B     		ldr	r3, .L32
+ 585 0016 53F82530 		ldr	r3, [r3, r5, lsl #2]
+ 586 001a 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
+  67:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+ 587              		.loc 1 67 24 discriminator 1 view .LVU148
+ 588 001c A342     		cmp	r3, r4
+ 589 001e F3D8     		bhi	.L30
+  70:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     }
+  71:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  72:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #ifdef ACL_INCLUDED
+  73:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     fal_tiger_acl_reset(unit);
+  74:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** #endif
+  75:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  76:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_OK;
+ 590              		.loc 1 76 5 is_stmt 1 view .LVU149
+  77:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }
+ 591              		.loc 1 77 1 is_stmt 0 view .LVU150
+ 592 0020 0020     		movs	r0, #0
+ 593 0022 38BD     		pop	{r3, r4, r5, pc}
+ 594              	.LVL62:
+ 595              	.L33:
+ 596              		.loc 1 77 1 view .LVU151
+ 597              		.align	2
+ 598              	.L32:
+ 599 0024 00000000 		.word	gpSwitchUnit
+ 600              		.cfi_endproc
+ 601              	.LFE5:
+ 603              		.section	.rodata.fal_tiger_sys_chipInfo_get.str1.4,"aMS",%progbits,1
+ 604              		.align	2
+ 605              	.LC6:
+ 606 0000 68616C5F 		.ascii	"hal_mem32_read(unit, (0x80008), &regChip)\000"
+ 606      6D656D33 
+ 606      325F7265 
+ 606      61642875 
+ 606      6E69742C 
+ 607 002a 0000     		.align	2
+ 608              	.LC7:
+ 609 002c 68616C5F 		.ascii	"hal_mem32_read(unit, (0x80388), &regMode)\000"
+ 609      6D656D33 
+ 609      325F7265 
+ 609      61642875 
+ 609      6E69742C 
+ 610              		.section	.text.fal_tiger_sys_chipInfo_get,"ax",%progbits
+ 611              		.align	1
+ 612              		.global	fal_tiger_sys_chipInfo_get
+ 613              		.syntax unified
+ 614              		.thumb
+ 615              		.thumb_func
+ 617              	fal_tiger_sys_chipInfo_get:
+ 618              	.LVL63:
+ 619              	.LFB6:
+  78:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  79:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** yt_ret_t fal_tiger_sys_chipInfo_get(yt_unit_t unit, yt_switch_chip_t *pChip)
+  80:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** {
+ 620              		.loc 1 80 1 is_stmt 1 view -0
+ 621              		.cfi_startproc
+ 622              		@ args = 0, pretend = 0, frame = 16
+ 623              		@ frame_needed = 0, uses_anonymous_args = 0
+ 624              		.loc 1 80 1 is_stmt 0 view .LVU153
+ 625 0000 70B5     		push	{r4, r5, r6, lr}
+ 626              		.cfi_def_cfa_offset 16
+ 627              		.cfi_offset 4, -16
+ 628              		.cfi_offset 5, -12
+ 629              		.cfi_offset 6, -8
+ 630              		.cfi_offset 14, -4
+ 631 0002 86B0     		sub	sp, sp, #24
+ 632              		.cfi_def_cfa_offset 40
+ 633 0004 0546     		mov	r5, r0
+ 634 0006 0E46     		mov	r6, r1
+  81:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 635              		.loc 1 81 5 is_stmt 1 view .LVU154
+ 636              	.LVL64:
+  82:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32_t regChip;
+ 637              		.loc 1 82 5 view .LVU155
+  83:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint32_t regMode;
+ 638              		.loc 1 83 5 view .LVU156
+  84:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     uint8_t eData;
+ 639              		.loc 1 84 5 view .LVU157
+  85:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 640              		.loc 1 86 5 view .LVU158
+ 641              		.loc 1 86 5 view .LVU159
+ 642 0008 05AA     		add	r2, sp, #20
+ 643 000a 4FF00811 		mov	r1, #524296
+ 644              	.LVL65:
+ 645              		.loc 1 86 5 is_stmt 0 view .LVU160
+ 646 000e FFF7FEFF 		bl	hal_mem32_read
+ 647              	.LVL66:
+ 648              		.loc 1 86 5 view .LVU161
+ 649 0012 10F0FF03 		ands	r3, r0, #255
+ 650 0016 17D0     		beq	.L35
+ 651 0018 0446     		mov	r4, r0
+ 652              		.loc 1 86 5 is_stmt 1 discriminator 1 view .LVU162
+ 653              		.loc 1 86 5 discriminator 1 view .LVU163
+ 654 001a 4E4A     		ldr	r2, .L66
+ 655 001c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 656 001e 012A     		cmp	r2, #1
+ 657 0020 02D8     		bhi	.L58
+ 658              	.LVL67:
+ 659              	.L36:
+ 660              		.loc 1 86 5 discriminator 5 view .LVU164
+ 661              		.loc 1 86 5 discriminator 5 view .LVU165
+ 662              		.loc 1 86 5 discriminator 5 view .LVU166
+ 663 0022 E0B2     		uxtb	r0, r4
+ 664              	.LVL68:
+ 665              	.L34:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+  88:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+  89:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     if (0x9002 == (regChip>>16&0x0ffff))
+  90:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+  91:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+  92:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         {
+  93:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             case 1:
+  94:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215SC;
+  95:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+  96:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             case 2:
+  97:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215S;
+  98:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+  99:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             case 3:
+ 100:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215RB;
+ 101:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 102:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****            default:
+ 103:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 104:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 105:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         }
+ 106:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 107:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         HALSWDRV_FUNC(unit)->switch_edata_read(unit, CHIP_CHIP_EXTMODE_REG, &eData);
+ 108:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         if (*pChip == SWCHIP_YT9215S &&
+ 109:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             ((eData&0xF) == 1 || ((eData>>4)&0xF) == 1))
+ 110:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         {
+ 111:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             *pChip = SWCHIP_YT9215SL;
+ 112:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         }
+ 113:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         else if (*pChip == SWCHIP_YT9215RB)
+ 114:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         {
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 116:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             {
+ 117:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9214NB;
+ 118:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             }
+ 119:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             else if ((eData&0xF) == 3 || ((eData>>4)&0xF) == 3)
+ 120:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             {
+ 121:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9213NB;
+ 122:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             }
+ 123:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         }
+ 124:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 125:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 126:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     }
+ 127:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     else if (0x9001 == (regChip>>16&0x0ffff))
+ 128:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     {
+ 129:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 130:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         {
+ 131:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             case 0:
+ 132:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218N;
+ 133:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 134:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             case 1:
+ 135:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218M;
+ 136:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 137:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****            default:
+ 138:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 139:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 140:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         }
+ 141:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 142:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 143:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     }
+ 144:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 145:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     *pChip = 0;
+ 146:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** 
+ 147:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_FAIL;
+ 148:../switch_sdk/core/fal/tiger/fal_tiger_sys.c **** }...
+ 666              		.loc 1 148 1 is_stmt 0 view .LVU167
+ 667 0024 06B0     		add	sp, sp, #24
+ 668              		.cfi_remember_state
+ 669              		.cfi_def_cfa_offset 16
+ 670              		@ sp needed
+ 671 0026 70BD     		pop	{r4, r5, r6, pc}
+ 672              	.LVL69:
+ 673              	.L58:
+ 674              		.cfi_restore_state
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 675              		.loc 1 86 5 is_stmt 1 discriminator 3 view .LVU168
+ 676              	.LBB13:
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 677              		.loc 1 86 5 discriminator 3 view .LVU169
+ 678 0028 142B     		cmp	r3, #20
+ 679 002a 28BF     		it	cs
+ 680 002c 1423     		movcs	r3, #20
+ 681 002e 1A46     		mov	r2, r3
+ 682 0030 494B     		ldr	r3, .L66+4
+ 683 0032 0093     		str	r3, [sp]
+ 684 0034 494B     		ldr	r3, .L66+8
+ 685 0036 4A49     		ldr	r1, .L66+12
+ 686 0038 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 687 003c 4949     		ldr	r1, .L66+16
+ 688 003e 8968     		ldr	r1, [r1, #8]
+ 689 0040 4948     		ldr	r0, .L66+20
+ 690              	.LVL70:
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 691              		.loc 1 86 5 is_stmt 0 discriminator 3 view .LVU170
+ 692 0042 FFF7FEFF 		bl	osal_printf
+ 693              	.LVL71:
+ 694 0046 ECE7     		b	.L36
+ 695              	.LVL72:
+ 696              	.L35:
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 697              		.loc 1 86 5 discriminator 3 view .LVU171
+ 698              	.LBE13:
+  86:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_ID_REG, &regChip), ret);
+ 699              		.loc 1 86 5 is_stmt 1 discriminator 2 view .LVU172
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 700              		.loc 1 87 5 discriminator 2 view .LVU173
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 701              		.loc 1 87 5 discriminator 2 view .LVU174
+ 702 0048 04AA     		add	r2, sp, #16
+ 703 004a 4849     		ldr	r1, .L66+24
+ 704 004c 2846     		mov	r0, r5
+ 705              	.LVL73:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 706              		.loc 1 87 5 is_stmt 0 discriminator 2 view .LVU175
+ 707 004e FFF7FEFF 		bl	hal_mem32_read
+ 708              	.LVL74:
+ 709 0052 0446     		mov	r4, r0
+ 710              	.LVL75:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 711              		.loc 1 87 5 discriminator 2 view .LVU176
+ 712 0054 10F0FF03 		ands	r3, r0, #255
+ 713 0058 0DD1     		bne	.L59
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 714              		.loc 1 87 5 is_stmt 1 discriminator 2 view .LVU177
+  89:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     if (0x9002 == (regChip>>16&0x0ffff))
+ 715              		.loc 1 89 5 discriminator 2 view .LVU178
+  89:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     if (0x9002 == (regChip>>16&0x0ffff))
+ 716              		.loc 1 89 31 is_stmt 0 discriminator 2 view .LVU179
+ 717 005a BDF81630 		ldrh	r3, [sp, #22]
+  89:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     if (0x9002 == (regChip>>16&0x0ffff))
+ 718              		.loc 1 89 8 discriminator 2 view .LVU180
+ 719 005e 49F20202 		movw	r2, #36866
+ 720 0062 9342     		cmp	r3, r2
+ 721 0064 1DD0     		beq	.L60
+ 127:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     else if (0x9001 == (regChip>>16&0x0ffff))
+ 722              		.loc 1 127 10 is_stmt 1 view .LVU181
+ 127:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     else if (0x9001 == (regChip>>16&0x0ffff))
+ 723              		.loc 1 127 13 is_stmt 0 view .LVU182
+ 724 0066 49F20102 		movw	r2, #36865
+ 725 006a 9342     		cmp	r3, r2
+ 726 006c 61D0     		beq	.L61
+ 145:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     *pChip = 0;
+ 727              		.loc 1 145 5 is_stmt 1 view .LVU183
+ 145:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     *pChip = 0;
+ 728              		.loc 1 145 12 is_stmt 0 view .LVU184
+ 729 006e 0023     		movs	r3, #0
+ 730 0070 3360     		str	r3, [r6]
+ 147:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_FAIL;
+ 731              		.loc 1 147 5 is_stmt 1 view .LVU185
+ 147:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_FAIL;
+ 732              		.loc 1 147 12 is_stmt 0 view .LVU186
+ 733 0072 0120     		movs	r0, #1
+ 734              	.LVL76:
+ 147:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     return CMM_ERR_FAIL;
+ 735              		.loc 1 147 12 view .LVU187
+ 736 0074 D6E7     		b	.L34
+ 737              	.LVL77:
+ 738              	.L59:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 739              		.loc 1 87 5 is_stmt 1 discriminator 1 view .LVU188
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 740              		.loc 1 87 5 discriminator 1 view .LVU189
+ 741 0076 374A     		ldr	r2, .L66
+ 742 0078 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 743 007a 012A     		cmp	r2, #1
+ 744 007c 01D8     		bhi	.L62
+ 745              	.LVL78:
+ 746              	.L39:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 747              		.loc 1 87 5 discriminator 5 view .LVU190
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 748              		.loc 1 87 5 discriminator 5 view .LVU191
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 749              		.loc 1 87 5 discriminator 5 view .LVU192
+ 750 007e E0B2     		uxtb	r0, r4
+ 751 0080 D0E7     		b	.L34
+ 752              	.LVL79:
+ 753              	.L62:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 754              		.loc 1 87 5 discriminator 3 view .LVU193
+ 755              	.LBB14:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 756              		.loc 1 87 5 discriminator 3 view .LVU194
+ 757 0082 142B     		cmp	r3, #20
+ 758 0084 28BF     		it	cs
+ 759 0086 1423     		movcs	r3, #20
+ 760 0088 1A46     		mov	r2, r3
+ 761 008a 334B     		ldr	r3, .L66+4
+ 762 008c 0093     		str	r3, [sp]
+ 763 008e 384B     		ldr	r3, .L66+28
+ 764 0090 3349     		ldr	r1, .L66+12
+ 765 0092 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 766 0096 3349     		ldr	r1, .L66+16
+ 767 0098 8968     		ldr	r1, [r1, #8]
+ 768 009a 3348     		ldr	r0, .L66+20
+ 769              	.LVL80:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 770              		.loc 1 87 5 is_stmt 0 discriminator 3 view .LVU195
+ 771 009c FFF7FEFF 		bl	osal_printf
+ 772              	.LVL81:
+ 773 00a0 EDE7     		b	.L39
+ 774              	.LVL82:
+ 775              	.L60:
+  87:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, CHIP_CHIP_MODE_REG, &regMode), ret);
+ 776              		.loc 1 87 5 discriminator 3 view .LVU196
+ 777              	.LBE14:
+  91:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 778              		.loc 1 91 9 is_stmt 1 view .LVU197
+  91:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 779              		.loc 1 91 23 is_stmt 0 view .LVU198
+ 780 00a2 049B     		ldr	r3, [sp, #16]
+ 781 00a4 03F00303 		and	r3, r3, #3
+  91:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 782              		.loc 1 91 9 view .LVU199
+ 783 00a8 022B     		cmp	r3, #2
+ 784 00aa 1DD0     		beq	.L41
+ 785 00ac 032B     		cmp	r3, #3
+ 786 00ae 1ED0     		beq	.L42
+ 787 00b0 012B     		cmp	r3, #1
+ 788 00b2 02D0     		beq	.L63
+ 103:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 789              		.loc 1 103 17 is_stmt 1 view .LVU200
+ 103:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 790              		.loc 1 103 24 is_stmt 0 view .LVU201
+ 791 00b4 0023     		movs	r3, #0
+ 792 00b6 3360     		str	r3, [r6]
+ 104:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 793              		.loc 1 104 17 is_stmt 1 view .LVU202
+ 794 00b8 01E0     		b	.L44
+ 795              	.L63:
+  94:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215SC;
+ 796              		.loc 1 94 17 view .LVU203
+  94:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215SC;
+ 797              		.loc 1 94 24 is_stmt 0 view .LVU204
+ 798 00ba 2E4B     		ldr	r3, .L66+32
+ 799 00bc 3360     		str	r3, [r6]
+  95:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 800              		.loc 1 95 17 is_stmt 1 view .LVU205
+ 801              	.L44:
+ 107:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         HALSWDRV_FUNC(unit)->switch_edata_read(unit, CHIP_CHIP_EXTMODE_REG, &eData);
+ 802              		.loc 1 107 9 view .LVU206
+ 803 00be 7423     		movs	r3, #116
+ 804 00c0 05FB03F3 		mul	r3, r5, r3
+ 805 00c4 2C4A     		ldr	r2, .L66+36
+ 806 00c6 D358     		ldr	r3, [r2, r3]
+ 807 00c8 5B68     		ldr	r3, [r3, #4]
+ 107:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         HALSWDRV_FUNC(unit)->switch_edata_read(unit, CHIP_CHIP_EXTMODE_REG, &eData);
+ 808              		.loc 1 107 28 is_stmt 0 view .LVU207
+ 809 00ca 1B6A     		ldr	r3, [r3, #32]
+ 107:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         HALSWDRV_FUNC(unit)->switch_edata_read(unit, CHIP_CHIP_EXTMODE_REG, &eData);
+ 810              		.loc 1 107 9 view .LVU208
+ 811 00cc 0DF10F02 		add	r2, sp, #15
+ 812 00d0 FB21     		movs	r1, #251
+ 813 00d2 2846     		mov	r0, r5
+ 814              	.LVL83:
+ 107:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         HALSWDRV_FUNC(unit)->switch_edata_read(unit, CHIP_CHIP_EXTMODE_REG, &eData);
+ 815              		.loc 1 107 9 view .LVU209
+ 816 00d4 9847     		blx	r3
+ 817              	.LVL84:
+ 108:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         if (*pChip == SWCHIP_YT9215S &&
+ 818              		.loc 1 108 9 is_stmt 1 view .LVU210
+ 108:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         if (*pChip == SWCHIP_YT9215S &&
+ 819              		.loc 1 108 13 is_stmt 0 view .LVU211
+ 820 00d6 3368     		ldr	r3, [r6]
+ 108:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         if (*pChip == SWCHIP_YT9215S &&
+ 821              		.loc 1 108 12 view .LVU212
+ 822 00d8 284A     		ldr	r2, .L66+40
+ 823 00da 9342     		cmp	r3, r2
+ 824 00dc 0AD0     		beq	.L64
+ 825              	.L45:
+ 113:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         else if (*pChip == SWCHIP_YT9215RB)
+ 826              		.loc 1 113 14 is_stmt 1 view .LVU213
+ 113:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         else if (*pChip == SWCHIP_YT9215RB)
+ 827              		.loc 1 113 17 is_stmt 0 view .LVU214
+ 828 00de 284A     		ldr	r2, .L66+44
+ 829 00e0 9342     		cmp	r3, r2
+ 830 00e2 13D0     		beq	.L65
+ 831              	.L47:
+ 125:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 832              		.loc 1 125 9 is_stmt 1 view .LVU215
+ 125:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 833              		.loc 1 125 16 is_stmt 0 view .LVU216
+ 834 00e4 0020     		movs	r0, #0
+ 835 00e6 9DE7     		b	.L34
+ 836              	.LVL85:
+ 837              	.L41:
+  97:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215S;
+ 838              		.loc 1 97 17 is_stmt 1 view .LVU217
+  97:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215S;
+ 839              		.loc 1 97 24 is_stmt 0 view .LVU218
+ 840 00e8 244B     		ldr	r3, .L66+40
+ 841 00ea 3360     		str	r3, [r6]
+  98:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 842              		.loc 1 98 17 is_stmt 1 view .LVU219
+ 843 00ec E7E7     		b	.L44
+ 844              	.L42:
+ 100:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215RB;
+ 845              		.loc 1 100 17 view .LVU220
+ 100:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9215RB;
+ 846              		.loc 1 100 24 is_stmt 0 view .LVU221
+ 847 00ee 244B     		ldr	r3, .L66+44
+ 848 00f0 3360     		str	r3, [r6]
+ 101:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 849              		.loc 1 101 17 is_stmt 1 view .LVU222
+ 850 00f2 E4E7     		b	.L44
+ 851              	.LVL86:
+ 852              	.L64:
+ 109:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             ((eData&0xF) == 1 || ((eData>>4)&0xF) == 1))
+ 853              		.loc 1 109 20 is_stmt 0 discriminator 1 view .LVU223
+ 854 00f4 9DF80F20 		ldrb	r2, [sp, #15]	@ zero_extendqisi2
+ 108:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         if (*pChip == SWCHIP_YT9215S &&
+ 855              		.loc 1 108 38 discriminator 1 view .LVU224
+ 856 00f8 02F00F01 		and	r1, r2, #15
+ 857 00fc 0129     		cmp	r1, #1
+ 858 00fe 02D0     		beq	.L46
+ 109:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             ((eData&0xF) == 1 || ((eData>>4)&0xF) == 1))
+ 859              		.loc 1 109 45 view .LVU225
+ 860 0100 1209     		lsrs	r2, r2, #4
+ 109:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             ((eData&0xF) == 1 || ((eData>>4)&0xF) == 1))
+ 861              		.loc 1 109 31 view .LVU226
+ 862 0102 012A     		cmp	r2, #1
+ 863 0104 EBD1     		bne	.L45
+ 864              	.L46:
+ 111:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             *pChip = SWCHIP_YT9215SL;
+ 865              		.loc 1 111 13 is_stmt 1 view .LVU227
+ 111:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             *pChip = SWCHIP_YT9215SL;
+ 866              		.loc 1 111 20 is_stmt 0 view .LVU228
+ 867 0106 1F4B     		ldr	r3, .L66+48
+ 868 0108 3360     		str	r3, [r6]
+ 869 010a EBE7     		b	.L47
+ 870              	.L65:
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 871              		.loc 1 115 13 is_stmt 1 view .LVU229
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 872              		.loc 1 115 23 is_stmt 0 view .LVU230
+ 873 010c 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 874 0110 03F00F02 		and	r2, r3, #15
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 875              		.loc 1 115 16 view .LVU231
+ 876 0114 022A     		cmp	r2, #2
+ 877 0116 09D0     		beq	.L48
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 878              		.loc 1 115 48 discriminator 1 view .LVU232
+ 879 0118 1B09     		lsrs	r3, r3, #4
+ 115:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             if ((eData&0xF) == 2 || ((eData>>4)&0xF) == 2)
+ 880              		.loc 1 115 34 discriminator 1 view .LVU233
+ 881 011a 022B     		cmp	r3, #2
+ 882 011c 06D0     		beq	.L48
+ 119:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             else if ((eData&0xF) == 3 || ((eData>>4)&0xF) == 3)
+ 883              		.loc 1 119 18 is_stmt 1 view .LVU234
+ 119:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             else if ((eData&0xF) == 3 || ((eData>>4)&0xF) == 3)
+ 884              		.loc 1 119 21 is_stmt 0 view .LVU235
+ 885 011e 032A     		cmp	r2, #3
+ 886 0120 01D0     		beq	.L50
+ 119:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****             else if ((eData&0xF) == 3 || ((eData>>4)&0xF) == 3)
+ 887              		.loc 1 119 39 discriminator 1 view .LVU236
+ 888 0122 032B     		cmp	r3, #3
+ 889 0124 DED1     		bne	.L47
+ 890              	.L50:
+ 121:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9213NB;
+ 891              		.loc 1 121 17 is_stmt 1 view .LVU237
+ 121:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9213NB;
+ 892              		.loc 1 121 24 is_stmt 0 view .LVU238
+ 893 0126 184B     		ldr	r3, .L66+52
+ 894 0128 3360     		str	r3, [r6]
+ 895 012a DBE7     		b	.L47
+ 896              	.L48:
+ 117:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9214NB;
+ 897              		.loc 1 117 17 is_stmt 1 view .LVU239
+ 117:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9214NB;
+ 898              		.loc 1 117 24 is_stmt 0 view .LVU240
+ 899 012c 174B     		ldr	r3, .L66+56
+ 900 012e 3360     		str	r3, [r6]
+ 901 0130 D8E7     		b	.L47
+ 902              	.LVL87:
+ 903              	.L61:
+ 129:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 904              		.loc 1 129 9 is_stmt 1 view .LVU241
+ 129:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 905              		.loc 1 129 23 is_stmt 0 view .LVU242
+ 906 0132 049B     		ldr	r3, [sp, #16]
+ 129:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         switch(regMode&0x3)
+ 907              		.loc 1 129 9 view .LVU243
+ 908 0134 13F00303 		ands	r3, r3, #3
+ 909 0138 04D0     		beq	.L52
+ 910 013a 012B     		cmp	r3, #1
+ 911 013c 06D0     		beq	.L53
+ 138:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 912              		.loc 1 138 17 is_stmt 1 view .LVU244
+ 138:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = 0;
+ 913              		.loc 1 138 24 is_stmt 0 view .LVU245
+ 914 013e 0023     		movs	r3, #0
+ 915 0140 3360     		str	r3, [r6]
+ 139:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 916              		.loc 1 139 17 is_stmt 1 view .LVU246
+ 917 0142 01E0     		b	.L55
+ 918              	.L52:
+ 132:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218N;
+ 919              		.loc 1 132 17 view .LVU247
+ 132:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218N;
+ 920              		.loc 1 132 24 is_stmt 0 view .LVU248
+ 921 0144 124B     		ldr	r3, .L66+60
+ 922 0146 3360     		str	r3, [r6]
+ 133:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 923              		.loc 1 133 17 is_stmt 1 view .LVU249
+ 924              	.L55:
+ 142:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 925              		.loc 1 142 9 view .LVU250
+ 142:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 926              		.loc 1 142 16 is_stmt 0 view .LVU251
+ 927 0148 0020     		movs	r0, #0
+ 928              	.LVL88:
+ 142:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****         return CMM_ERR_OK;
+ 929              		.loc 1 142 16 view .LVU252
+ 930 014a 6BE7     		b	.L34
+ 931              	.LVL89:
+ 932              	.L53:
+ 135:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218M;
+ 933              		.loc 1 135 17 is_stmt 1 view .LVU253
+ 135:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 *pChip = SWCHIP_YT9218M;
+ 934              		.loc 1 135 24 is_stmt 0 view .LVU254
+ 935 014c 114B     		ldr	r3, .L66+64
+ 936 014e 3360     		str	r3, [r6]
+ 136:../switch_sdk/core/fal/tiger/fal_tiger_sys.c ****                 break;
+ 937              		.loc 1 136 17 is_stmt 1 view .LVU255
+ 938 0150 FAE7     		b	.L55
+ 939              	.L67:
+ 940 0152 00BF     		.align	2
+ 941              	.L66:
+ 942 0154 00000000 		.word	yt_debug_level
+ 943 0158 00000000 		.word	__FUNCTION__.0
+ 944 015c 00000000 		.word	.LC6
+ 945 0160 00000000 		.word	_yt_errmsg
+ 946 0164 00000000 		.word	_yt_prompt_msg
+ 947 0168 54000000 		.word	.LC2
+ 948 016c 88030800 		.word	525192
+ 949 0170 2C000000 		.word	.LC7
+ 950 0174 F7670100 		.word	92151
+ 951 0178 00000000 		.word	gHalCtrl
+ 952 017c F8670100 		.word	92152
+ 953 0180 F9670100 		.word	92153
+ 954 0184 FA670100 		.word	92154
+ 955 0188 E2670100 		.word	92130
+ 956 018c EC670100 		.word	92140
+ 957 0190 14680100 		.word	92180
+ 958 0194 15680100 		.word	92181
+ 959              		.cfi_endproc
+ 960              	.LFE6:
+ 962              		.section	.rodata.__FUNCTION__.0,"a"
+ 963              		.align	2
+ 966              	__FUNCTION__.0:
+ 967 0000 66616C5F 		.ascii	"fal_tiger_sys_chipInfo_get\000"
+ 967      74696765 
+ 967      725F7379 
+ 967      735F6368 
+ 967      6970496E 
+ 968              		.section	.rodata.__FUNCTION__.1,"a"
+ 969              		.align	2
+ 972              	__FUNCTION__.1:
+ 973 0000 66616C5F 		.ascii	"fal_tiger_sys_chip_reset\000"
+ 973      74696765 
+ 973      725F7379 
+ 973      735F6368 
+ 973      69705F72 
+ 974              		.section	.rodata.__FUNCTION__.2,"a"
+ 975              		.align	2
+ 978              	__FUNCTION__.2:
+ 979 0000 66616C5F 		.ascii	"fal_tiger_sys_mac_get\000"
+ 979      74696765 
+ 979      725F7379 
+ 979      735F6D61 
+ 979      635F6765 
+ 980              		.text
+ 981              	.Letext0:
+ 982              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 983              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+ 984              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal\\chipdef/chipdef.h"
+ 985              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\drv\\phy/phy_chipdef.h"
+ 986              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\cal/cal_bprofile.h"
+ 987              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_sys.h"
+ 988              		.file 8 "../switch_sdk/core/fal/tiger/fal_tiger_entry.h"
+ 989              		.file 9 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_port.h"
+ 990              		.file 10 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_debug.h"
+ 991              		.file 11 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\drv\\mac/sw_drv.h"
+ 992              		.file 12 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\drv\\phy/phy_drv.h"
+ 993              		.file 13 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\hal/hal_ctrl.h"
+ 994              		.file 14 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\hal/hal_mem.h"
+ 995              		.file 15 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\cal/cal_cmm.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 fal_tiger_sys.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:19     .rodata.fal_tiger_sys_mac_get.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:34     .text.fal_tiger_sys_mac_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:40     .text.fal_tiger_sys_mac_get:00000000 fal_tiger_sys_mac_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:354    .text.fal_tiger_sys_mac_get:00000120 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:978    .rodata.__FUNCTION__.2:00000000 __FUNCTION__.2
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:366    .rodata.fal_tiger_sys_chip_reset.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:375    .text.fal_tiger_sys_chip_reset:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:381    .text.fal_tiger_sys_chip_reset:00000000 fal_tiger_sys_chip_reset
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:530    .text.fal_tiger_sys_chip_reset:000000a0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:972    .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:542    .text.fal_tiger_sys_database_reset:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:548    .text.fal_tiger_sys_database_reset:00000000 fal_tiger_sys_database_reset
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:599    .text.fal_tiger_sys_database_reset:00000024 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:604    .rodata.fal_tiger_sys_chipInfo_get.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:611    .text.fal_tiger_sys_chipInfo_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:617    .text.fal_tiger_sys_chipInfo_get:00000000 fal_tiger_sys_chipInfo_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:942    .text.fal_tiger_sys_chipInfo_get:00000154 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:966    .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:963    .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:969    .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccRZcdp8.s:975    .rodata.__FUNCTION__.2:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.fal_tiger_struct.h.6.65f60ff609860805c56cf9902d7678f2
+                           .group:00000000 wm4.fal_tiger_entry.h.5.7362ab6fe03ebf954c0b1cff89cdb238
+                           .group:00000000 wm4.yt_vlan.h.17.4dbe63e648ff65010c51c5f8a737ac2d
+                           .group:00000000 wm4.yt_acl.h.25.ad9531373d966dccc96222e31e0234b5
+                           .group:00000000 wm4.yt_nic.h.17.4e5ceed38d9cfbd9b5db2d4b069b6961
+                           .group:00000000 wm4.yt_loopdetect.h.17.4739c2e436a8e779d4d8c89037b81aea
+                           .group:00000000 wm4.yt_multicast.h.17.9c1d51b153e5e1785468d9c0ad6414a4
+                           .group:00000000 wm4.yt_port.h.17.f9740394ebf086646c9c567db1605abb
+                           .group:00000000 wm4.yt_stat.h.17.f87caec2ee71e59f920ea3778bda3fad
+                           .group:00000000 wm4.fal_cmm.h.21.0757d6cd7cf74ae5e563523dc3aee2b2
+                           .group:00000000 wm4.fal_tiger_acl.h.58.01b4be82247e9160c0accbcf7219dcb8
+                           .group:00000000 wm4.hal_ctrl.h.25.367b449f63494da8a1fabadd8a862957
+
+UNDEFINED SYMBOLS
+hal_table_reg_read
+osal_printf
+hal_tbl_reg_field_get
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+hal_tbl_reg_field_set
+hal_table_reg_write
+cal_ytportmask_update
+gpSwitchUnit
+hal_mem32_read
+gHalCtrl

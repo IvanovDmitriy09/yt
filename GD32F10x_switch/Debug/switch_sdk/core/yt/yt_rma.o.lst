@@ -1,0 +1,1663 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"yt_rma.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/yt/yt_rma.c"
+  18              		.section	.rodata.yt_rma_action_set.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 25732573 		.ascii	"%s%s\015\012\000"
+  21      0D0A00
+  22              		.section	.text.yt_rma_action_set,"ax",%progbits
+  23              		.align	1
+  24              		.global	yt_rma_action_set
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  29              	yt_rma_action_set:
+  30              	.LVL0:
+  31              	.LFB3:
+   1:../switch_sdk/core/yt/yt_rma.c **** /*******************************************************************************
+   2:../switch_sdk/core/yt/yt_rma.c **** *                                                                              *
+   3:../switch_sdk/core/yt/yt_rma.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../switch_sdk/core/yt/yt_rma.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../switch_sdk/core/yt/yt_rma.c **** *                                                                              *
+   6:../switch_sdk/core/yt/yt_rma.c **** ********************************************************************************
+   7:../switch_sdk/core/yt/yt_rma.c **** */
+   8:../switch_sdk/core/yt/yt_rma.c **** /**
+   9:../switch_sdk/core/yt/yt_rma.c **** ********************************************************************************
+  10:../switch_sdk/core/yt/yt_rma.c **** * @file yt_rma.c
+  11:../switch_sdk/core/yt/yt_rma.c **** *
+  12:../switch_sdk/core/yt/yt_rma.c **** * @brief x
+  13:../switch_sdk/core/yt/yt_rma.c **** *
+  14:../switch_sdk/core/yt/yt_rma.c **** ********************************************************************************
+  15:../switch_sdk/core/yt/yt_rma.c **** */
+  16:../switch_sdk/core/yt/yt_rma.c **** #include "yt_rma.h"
+  17:../switch_sdk/core/yt/yt_rma.c **** #include "fal_dispatch.h"
+  18:../switch_sdk/core/yt/yt_rma.c **** 
+  19:../switch_sdk/core/yt/yt_rma.c **** 
+  20:../switch_sdk/core/yt/yt_rma.c **** /**
+  21:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_action_set
+  22:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+  23:../switch_sdk/core/yt/yt_rma.c ****  *
+  24:../switch_sdk/core/yt/yt_rma.c ****  * @brief         set action of specific reserved multicast address
+  25:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+  26:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+  27:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     action              -rma packet action,refer to yt_rma_action_t
+  28:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+  29:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+  30:../switch_sdk/core/yt/yt_rma.c ****  */
+  31:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t  yt_rma_action_set(yt_unit_t unit, yt_rma_da_t  da, yt_rma_action_t action)
+  32:../switch_sdk/core/yt/yt_rma.c **** {
+  32              		.loc 1 32 1 view -0
+  33              		.cfi_startproc
+  34              		@ args = 0, pretend = 0, frame = 0
+  35              		@ frame_needed = 0, uses_anonymous_args = 0
+  36              		.loc 1 32 1 is_stmt 0 view .LVU1
+  37 0000 08B5     		push	{r3, lr}
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 3, -8
+  40              		.cfi_offset 14, -4
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+  41              		.loc 1 33 5 is_stmt 1 view .LVU2
+  42              		.loc 1 33 5 view .LVU3
+  43 0002 58B9     		cbnz	r0, .L10
+  44 0004 8446     		mov	ip, r0
+  45              		.loc 1 33 5 discriminator 2 view .LVU4
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  46              		.loc 1 34 5 discriminator 2 view .LVU5
+  47              		.loc 1 34 5 discriminator 2 view .LVU6
+  48 0006 1A4B     		ldr	r3, .L16
+  49 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+  50 000c A3B1     		cbz	r3, .L11
+  51              		.loc 1 34 5 discriminator 2 view .LVU7
+  35:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+  52              		.loc 1 35 5 discriminator 2 view .LVU8
+  53              		.loc 1 35 5 discriminator 2 view .LVU9
+  54 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  55              	.LVL1:
+  56              		.loc 1 35 5 is_stmt 0 discriminator 2 view .LVU10
+  57 0010 00B3     		cbz	r0, .L12
+  58              		.loc 1 35 5 is_stmt 1 discriminator 2 view .LVU11
+  36:../switch_sdk/core/yt/yt_rma.c **** 
+  37:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_action_set(unit, da, action);
+  59              		.loc 1 37 5 discriminator 2 view .LVU12
+  60              		.loc 1 37 29 is_stmt 0 discriminator 2 view .LVU13
+  61 0012 D3F81835 		ldr	r3, [r3, #1304]
+  62              		.loc 1 37 12 discriminator 2 view .LVU14
+  63 0016 6046     		mov	r0, ip
+  64 0018 9847     		blx	r3
+  65              	.LVL2:
+  66              	.L1:
+  38:../switch_sdk/core/yt/yt_rma.c **** }
+  67              		.loc 1 38 1 view .LVU15
+  68 001a 08BD     		pop	{r3, pc}
+  69              	.LVL3:
+  70              	.L10:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  71              		.loc 1 33 5 is_stmt 1 discriminator 1 view .LVU16
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  72              		.loc 1 33 5 discriminator 1 view .LVU17
+  73 001c 154B     		ldr	r3, .L16+4
+  74 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  75 0020 012B     		cmp	r3, #1
+  76 0022 01D8     		bhi	.L13
+  77              	.LVL4:
+  78              	.L3:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  79              		.loc 1 33 5 discriminator 5 view .LVU18
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  80              		.loc 1 33 5 discriminator 5 view .LVU19
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  81              		.loc 1 33 5 discriminator 5 view .LVU20
+  82 0024 0520     		movs	r0, #5
+  83 0026 F8E7     		b	.L1
+  84              	.LVL5:
+  85              	.L13:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  86              		.loc 1 33 5 discriminator 3 view .LVU21
+  87              	.LBB2:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  88              		.loc 1 33 5 discriminator 3 view .LVU22
+  89 0028 134B     		ldr	r3, .L16+8
+  90 002a 5A69     		ldr	r2, [r3, #20]
+  91              	.LVL6:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  92              		.loc 1 33 5 is_stmt 0 discriminator 3 view .LVU23
+  93 002c 134B     		ldr	r3, .L16+12
+  94 002e 9968     		ldr	r1, [r3, #8]
+  95              	.LVL7:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  96              		.loc 1 33 5 discriminator 3 view .LVU24
+  97 0030 1348     		ldr	r0, .L16+16
+  98              	.LVL8:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+  99              		.loc 1 33 5 discriminator 3 view .LVU25
+ 100 0032 FFF7FEFF 		bl	osal_printf
+ 101              	.LVL9:
+ 102 0036 F5E7     		b	.L3
+ 103              	.LVL10:
+ 104              	.L11:
+  33:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 105              		.loc 1 33 5 discriminator 3 view .LVU26
+ 106              	.LBE2:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 107              		.loc 1 34 5 is_stmt 1 discriminator 1 view .LVU27
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 108              		.loc 1 34 5 discriminator 1 view .LVU28
+ 109 0038 0E4B     		ldr	r3, .L16+4
+ 110 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 111 003c 012B     		cmp	r3, #1
+ 112 003e 01D8     		bhi	.L14
+ 113              	.LVL11:
+ 114              	.L6:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 115              		.loc 1 34 5 discriminator 5 view .LVU29
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 116              		.loc 1 34 5 discriminator 5 view .LVU30
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 117              		.loc 1 34 5 discriminator 5 view .LVU31
+ 118 0040 0420     		movs	r0, #4
+ 119 0042 EAE7     		b	.L1
+ 120              	.LVL12:
+ 121              	.L14:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 122              		.loc 1 34 5 discriminator 3 view .LVU32
+ 123              	.LBB3:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 124              		.loc 1 34 5 discriminator 3 view .LVU33
+ 125 0044 0C4B     		ldr	r3, .L16+8
+ 126 0046 1A69     		ldr	r2, [r3, #16]
+ 127              	.LVL13:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 128              		.loc 1 34 5 is_stmt 0 discriminator 3 view .LVU34
+ 129 0048 0C4B     		ldr	r3, .L16+12
+ 130 004a 9968     		ldr	r1, [r3, #8]
+ 131              	.LVL14:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 132              		.loc 1 34 5 discriminator 3 view .LVU35
+ 133 004c 0C48     		ldr	r0, .L16+16
+ 134              	.LVL15:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 135              		.loc 1 34 5 discriminator 3 view .LVU36
+ 136 004e FFF7FEFF 		bl	osal_printf
+ 137              	.LVL16:
+ 138 0052 F5E7     		b	.L6
+ 139              	.LVL17:
+ 140              	.L12:
+  34:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 141              		.loc 1 34 5 discriminator 3 view .LVU37
+ 142              	.LBE3:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 143              		.loc 1 35 5 is_stmt 1 discriminator 1 view .LVU38
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 144              		.loc 1 35 5 discriminator 1 view .LVU39
+ 145 0054 074B     		ldr	r3, .L16+4
+ 146 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 147 0058 012B     		cmp	r3, #1
+ 148 005a 01D8     		bhi	.L15
+ 149              	.LVL18:
+ 150              	.L8:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 151              		.loc 1 35 5 discriminator 5 view .LVU40
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 152              		.loc 1 35 5 discriminator 5 view .LVU41
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 153              		.loc 1 35 5 discriminator 5 view .LVU42
+ 154 005c 0420     		movs	r0, #4
+ 155 005e DCE7     		b	.L1
+ 156              	.LVL19:
+ 157              	.L15:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 158              		.loc 1 35 5 discriminator 3 view .LVU43
+ 159              	.LBB4:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 160              		.loc 1 35 5 discriminator 3 view .LVU44
+ 161 0060 054B     		ldr	r3, .L16+8
+ 162 0062 1A69     		ldr	r2, [r3, #16]
+ 163              	.LVL20:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 164              		.loc 1 35 5 is_stmt 0 discriminator 3 view .LVU45
+ 165 0064 054B     		ldr	r3, .L16+12
+ 166 0066 9968     		ldr	r1, [r3, #8]
+ 167              	.LVL21:
+  35:../switch_sdk/core/yt/yt_rma.c **** 
+ 168              		.loc 1 35 5 discriminator 3 view .LVU46
+ 169 0068 0548     		ldr	r0, .L16+16
+ 170 006a FFF7FEFF 		bl	osal_printf
+ 171              	.LVL22:
+ 172 006e F5E7     		b	.L8
+ 173              	.L17:
+ 174              		.align	2
+ 175              	.L16:
+ 176 0070 00000000 		.word	gpfal_dispatch
+ 177 0074 00000000 		.word	yt_debug_level
+ 178 0078 00000000 		.word	_yt_errmsg
+ 179 007c 00000000 		.word	_yt_prompt_msg
+ 180 0080 00000000 		.word	.LC0
+ 181              	.LBE4:
+ 182              		.cfi_endproc
+ 183              	.LFE3:
+ 185              		.section	.text.yt_rma_action_get,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	yt_rma_action_get
+ 188              		.syntax unified
+ 189              		.thumb
+ 190              		.thumb_func
+ 192              	yt_rma_action_get:
+ 193              	.LVL23:
+ 194              	.LFB4:
+  39:../switch_sdk/core/yt/yt_rma.c **** 
+  40:../switch_sdk/core/yt/yt_rma.c **** /**
+  41:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_action_get
+  42:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+  43:../switch_sdk/core/yt/yt_rma.c ****  *
+  44:../switch_sdk/core/yt/yt_rma.c ****  * @brief         get action of specific reserved multicast address
+  45:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+  46:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+  47:../switch_sdk/core/yt/yt_rma.c ****  * @param[out]    pAction             -rma packet action,refer to yt_rma_action_
+  48:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+  49:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+  50:../switch_sdk/core/yt/yt_rma.c ****  */
+  51:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t  yt_rma_action_get(yt_unit_t unit, yt_rma_da_t  da, yt_rma_action_t *pAction)
+  52:../switch_sdk/core/yt/yt_rma.c **** {
+ 195              		.loc 1 52 1 is_stmt 1 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		.loc 1 52 1 is_stmt 0 view .LVU48
+ 200 0000 08B5     		push	{r3, lr}
+ 201              		.cfi_def_cfa_offset 8
+ 202              		.cfi_offset 3, -8
+ 203              		.cfi_offset 14, -4
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+ 204              		.loc 1 53 5 is_stmt 1 view .LVU49
+ 205              		.loc 1 53 5 view .LVU50
+ 206 0002 68B9     		cbnz	r0, .L29
+ 207 0004 8446     		mov	ip, r0
+ 208              		.loc 1 53 5 discriminator 2 view .LVU51
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 209              		.loc 1 54 5 discriminator 2 view .LVU52
+ 210              		.loc 1 54 5 discriminator 2 view .LVU53
+ 211 0006 224B     		ldr	r3, .L37
+ 212 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 213 000c B3B1     		cbz	r3, .L30
+ 214              		.loc 1 54 5 discriminator 2 view .LVU54
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 215              		.loc 1 55 5 discriminator 2 view .LVU55
+ 216              		.loc 1 55 5 discriminator 2 view .LVU56
+ 217 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 218              	.LVL24:
+ 219              		.loc 1 55 5 is_stmt 0 discriminator 2 view .LVU57
+ 220 0010 10B3     		cbz	r0, .L31
+ 221              		.loc 1 55 5 is_stmt 1 discriminator 2 view .LVU58
+  56:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 222              		.loc 1 56 5 discriminator 2 view .LVU59
+ 223              		.loc 1 56 5 discriminator 2 view .LVU60
+ 224 0012 002A     		cmp	r2, #0
+ 225 0014 2ED0     		beq	.L32
+ 226              		.loc 1 56 5 discriminator 2 view .LVU61
+  57:../switch_sdk/core/yt/yt_rma.c **** 
+  58:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_action_get(unit, da, pAction);
+ 227              		.loc 1 58 5 discriminator 2 view .LVU62
+ 228              		.loc 1 58 29 is_stmt 0 discriminator 2 view .LVU63
+ 229 0016 D3F81C35 		ldr	r3, [r3, #1308]
+ 230              		.loc 1 58 12 discriminator 2 view .LVU64
+ 231 001a 6046     		mov	r0, ip
+ 232 001c 9847     		blx	r3
+ 233              	.LVL25:
+ 234              	.L18:
+  59:../switch_sdk/core/yt/yt_rma.c **** }
+ 235              		.loc 1 59 1 view .LVU65
+ 236 001e 08BD     		pop	{r3, pc}
+ 237              	.LVL26:
+ 238              	.L29:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 239              		.loc 1 53 5 is_stmt 1 discriminator 1 view .LVU66
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 240              		.loc 1 53 5 discriminator 1 view .LVU67
+ 241 0020 1C4B     		ldr	r3, .L37+4
+ 242 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 243 0024 012B     		cmp	r3, #1
+ 244 0026 01D8     		bhi	.L33
+ 245              	.LVL27:
+ 246              	.L20:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 247              		.loc 1 53 5 discriminator 5 view .LVU68
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 248              		.loc 1 53 5 discriminator 5 view .LVU69
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 249              		.loc 1 53 5 discriminator 5 view .LVU70
+ 250 0028 0520     		movs	r0, #5
+ 251 002a F8E7     		b	.L18
+ 252              	.LVL28:
+ 253              	.L33:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 254              		.loc 1 53 5 discriminator 3 view .LVU71
+ 255              	.LBB5:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 256              		.loc 1 53 5 discriminator 3 view .LVU72
+ 257 002c 1A4B     		ldr	r3, .L37+8
+ 258 002e 5A69     		ldr	r2, [r3, #20]
+ 259              	.LVL29:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 260              		.loc 1 53 5 is_stmt 0 discriminator 3 view .LVU73
+ 261 0030 1A4B     		ldr	r3, .L37+12
+ 262 0032 9968     		ldr	r1, [r3, #8]
+ 263              	.LVL30:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 264              		.loc 1 53 5 discriminator 3 view .LVU74
+ 265 0034 1A48     		ldr	r0, .L37+16
+ 266              	.LVL31:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 267              		.loc 1 53 5 discriminator 3 view .LVU75
+ 268 0036 FFF7FEFF 		bl	osal_printf
+ 269              	.LVL32:
+ 270 003a F5E7     		b	.L20
+ 271              	.LVL33:
+ 272              	.L30:
+  53:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 273              		.loc 1 53 5 discriminator 3 view .LVU76
+ 274              	.LBE5:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 275              		.loc 1 54 5 is_stmt 1 discriminator 1 view .LVU77
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 276              		.loc 1 54 5 discriminator 1 view .LVU78
+ 277 003c 154B     		ldr	r3, .L37+4
+ 278 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 279 0040 012B     		cmp	r3, #1
+ 280 0042 01D8     		bhi	.L34
+ 281              	.LVL34:
+ 282              	.L23:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 283              		.loc 1 54 5 discriminator 5 view .LVU79
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 284              		.loc 1 54 5 discriminator 5 view .LVU80
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 285              		.loc 1 54 5 discriminator 5 view .LVU81
+ 286 0044 0420     		movs	r0, #4
+ 287 0046 EAE7     		b	.L18
+ 288              	.LVL35:
+ 289              	.L34:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 290              		.loc 1 54 5 discriminator 3 view .LVU82
+ 291              	.LBB6:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 292              		.loc 1 54 5 discriminator 3 view .LVU83
+ 293 0048 134B     		ldr	r3, .L37+8
+ 294 004a 1A69     		ldr	r2, [r3, #16]
+ 295              	.LVL36:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 296              		.loc 1 54 5 is_stmt 0 discriminator 3 view .LVU84
+ 297 004c 134B     		ldr	r3, .L37+12
+ 298 004e 9968     		ldr	r1, [r3, #8]
+ 299              	.LVL37:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 300              		.loc 1 54 5 discriminator 3 view .LVU85
+ 301 0050 1348     		ldr	r0, .L37+16
+ 302              	.LVL38:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 303              		.loc 1 54 5 discriminator 3 view .LVU86
+ 304 0052 FFF7FEFF 		bl	osal_printf
+ 305              	.LVL39:
+ 306 0056 F5E7     		b	.L23
+ 307              	.LVL40:
+ 308              	.L31:
+  54:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 309              		.loc 1 54 5 discriminator 3 view .LVU87
+ 310              	.LBE6:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 311              		.loc 1 55 5 is_stmt 1 discriminator 1 view .LVU88
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 312              		.loc 1 55 5 discriminator 1 view .LVU89
+ 313 0058 0E4B     		ldr	r3, .L37+4
+ 314 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 315 005c 012B     		cmp	r3, #1
+ 316 005e 01D8     		bhi	.L35
+ 317              	.LVL41:
+ 318              	.L25:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 319              		.loc 1 55 5 discriminator 5 view .LVU90
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 320              		.loc 1 55 5 discriminator 5 view .LVU91
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 321              		.loc 1 55 5 discriminator 5 view .LVU92
+ 322 0060 0420     		movs	r0, #4
+ 323 0062 DCE7     		b	.L18
+ 324              	.LVL42:
+ 325              	.L35:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 326              		.loc 1 55 5 discriminator 3 view .LVU93
+ 327              	.LBB7:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 328              		.loc 1 55 5 discriminator 3 view .LVU94
+ 329 0064 0C4B     		ldr	r3, .L37+8
+ 330 0066 1A69     		ldr	r2, [r3, #16]
+ 331              	.LVL43:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 332              		.loc 1 55 5 is_stmt 0 discriminator 3 view .LVU95
+ 333 0068 0C4B     		ldr	r3, .L37+12
+ 334 006a 9968     		ldr	r1, [r3, #8]
+ 335              	.LVL44:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 336              		.loc 1 55 5 discriminator 3 view .LVU96
+ 337 006c 0C48     		ldr	r0, .L37+16
+ 338 006e FFF7FEFF 		bl	osal_printf
+ 339              	.LVL45:
+ 340 0072 F5E7     		b	.L25
+ 341              	.LVL46:
+ 342              	.L32:
+  55:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pAction), CMM_ERR_NULL_POINT);
+ 343              		.loc 1 55 5 discriminator 3 view .LVU97
+ 344              	.LBE7:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 345              		.loc 1 56 5 is_stmt 1 discriminator 1 view .LVU98
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 346              		.loc 1 56 5 discriminator 1 view .LVU99
+ 347 0074 074B     		ldr	r3, .L37+4
+ 348 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 349 0078 012B     		cmp	r3, #1
+ 350 007a 01D8     		bhi	.L36
+ 351              	.LVL47:
+ 352              	.L27:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 353              		.loc 1 56 5 discriminator 5 view .LVU100
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 354              		.loc 1 56 5 discriminator 5 view .LVU101
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 355              		.loc 1 56 5 discriminator 5 view .LVU102
+ 356 007c 0220     		movs	r0, #2
+ 357 007e CEE7     		b	.L18
+ 358              	.LVL48:
+ 359              	.L36:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 360              		.loc 1 56 5 discriminator 3 view .LVU103
+ 361              	.LBB8:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 362              		.loc 1 56 5 discriminator 3 view .LVU104
+ 363 0080 054B     		ldr	r3, .L37+8
+ 364 0082 9A68     		ldr	r2, [r3, #8]
+ 365              	.LVL49:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 366              		.loc 1 56 5 is_stmt 0 discriminator 3 view .LVU105
+ 367 0084 054B     		ldr	r3, .L37+12
+ 368 0086 9968     		ldr	r1, [r3, #8]
+ 369              	.LVL50:
+  56:../switch_sdk/core/yt/yt_rma.c **** 
+ 370              		.loc 1 56 5 discriminator 3 view .LVU106
+ 371 0088 0548     		ldr	r0, .L37+16
+ 372 008a FFF7FEFF 		bl	osal_printf
+ 373              	.LVL51:
+ 374 008e F5E7     		b	.L27
+ 375              	.L38:
+ 376              		.align	2
+ 377              	.L37:
+ 378 0090 00000000 		.word	gpfal_dispatch
+ 379 0094 00000000 		.word	yt_debug_level
+ 380 0098 00000000 		.word	_yt_errmsg
+ 381 009c 00000000 		.word	_yt_prompt_msg
+ 382 00a0 00000000 		.word	.LC0
+ 383              	.LBE8:
+ 384              		.cfi_endproc
+ 385              	.LFE4:
+ 387              		.section	.text.yt_rma_bypass_port_isolation_set,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	yt_rma_bypass_port_isolation_set
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 394              	yt_rma_bypass_port_isolation_set:
+ 395              	.LVL52:
+ 396              	.LFB5:
+  60:../switch_sdk/core/yt/yt_rma.c **** 
+  61:../switch_sdk/core/yt/yt_rma.c **** /**
+  62:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_bypass_port_isolation_set
+  63:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+  64:../switch_sdk/core/yt/yt_rma.c ****  *
+  65:../switch_sdk/core/yt/yt_rma.c ****  * @brief         set rma passthrough port isolation or not
+  66:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+  67:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+  68:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     enable                  -enable or disable
+  69:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+  70:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+  71:../switch_sdk/core/yt/yt_rma.c ****  */
+  72:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t yt_rma_bypass_port_isolation_set(yt_unit_t unit, yt_rma_da_t  da, yt_enable_t enable)
+  73:../switch_sdk/core/yt/yt_rma.c **** {
+ 397              		.loc 1 73 1 is_stmt 1 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401              		.loc 1 73 1 is_stmt 0 view .LVU108
+ 402 0000 08B5     		push	{r3, lr}
+ 403              		.cfi_def_cfa_offset 8
+ 404              		.cfi_offset 3, -8
+ 405              		.cfi_offset 14, -4
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+ 406              		.loc 1 74 5 is_stmt 1 view .LVU109
+ 407              		.loc 1 74 5 view .LVU110
+ 408 0002 68B9     		cbnz	r0, .L50
+ 409 0004 8446     		mov	ip, r0
+ 410              		.loc 1 74 5 discriminator 2 view .LVU111
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 411              		.loc 1 75 5 discriminator 2 view .LVU112
+ 412              		.loc 1 75 5 discriminator 2 view .LVU113
+ 413 0006 224B     		ldr	r3, .L58
+ 414 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 415 000c B3B1     		cbz	r3, .L51
+ 416              		.loc 1 75 5 discriminator 2 view .LVU114
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 417              		.loc 1 76 5 discriminator 2 view .LVU115
+ 418              		.loc 1 76 5 discriminator 2 view .LVU116
+ 419 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 420              	.LVL53:
+ 421              		.loc 1 76 5 is_stmt 0 discriminator 2 view .LVU117
+ 422 0010 10B3     		cbz	r0, .L52
+ 423              		.loc 1 76 5 is_stmt 1 discriminator 2 view .LVU118
+  77:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 424              		.loc 1 77 5 discriminator 2 view .LVU119
+ 425              		.loc 1 77 5 discriminator 2 view .LVU120
+ 426 0012 012A     		cmp	r2, #1
+ 427 0014 2ED8     		bhi	.L53
+ 428              		.loc 1 77 5 discriminator 2 view .LVU121
+  78:../switch_sdk/core/yt/yt_rma.c **** 
+  79:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_bypass_port_isolation_set(unit, da, enable);
+ 429              		.loc 1 79 5 discriminator 2 view .LVU122
+ 430              		.loc 1 79 29 is_stmt 0 discriminator 2 view .LVU123
+ 431 0016 D3F82035 		ldr	r3, [r3, #1312]
+ 432              		.loc 1 79 12 discriminator 2 view .LVU124
+ 433 001a 6046     		mov	r0, ip
+ 434 001c 9847     		blx	r3
+ 435              	.LVL54:
+ 436              	.L39:
+  80:../switch_sdk/core/yt/yt_rma.c **** }
+ 437              		.loc 1 80 1 view .LVU125
+ 438 001e 08BD     		pop	{r3, pc}
+ 439              	.LVL55:
+ 440              	.L50:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 441              		.loc 1 74 5 is_stmt 1 discriminator 1 view .LVU126
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 442              		.loc 1 74 5 discriminator 1 view .LVU127
+ 443 0020 1C4B     		ldr	r3, .L58+4
+ 444 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 445 0024 012B     		cmp	r3, #1
+ 446 0026 01D8     		bhi	.L54
+ 447              	.LVL56:
+ 448              	.L41:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 449              		.loc 1 74 5 discriminator 5 view .LVU128
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 450              		.loc 1 74 5 discriminator 5 view .LVU129
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 451              		.loc 1 74 5 discriminator 5 view .LVU130
+ 452 0028 0520     		movs	r0, #5
+ 453 002a F8E7     		b	.L39
+ 454              	.LVL57:
+ 455              	.L54:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 456              		.loc 1 74 5 discriminator 3 view .LVU131
+ 457              	.LBB9:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 458              		.loc 1 74 5 discriminator 3 view .LVU132
+ 459 002c 1A4B     		ldr	r3, .L58+8
+ 460 002e 5A69     		ldr	r2, [r3, #20]
+ 461              	.LVL58:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 462              		.loc 1 74 5 is_stmt 0 discriminator 3 view .LVU133
+ 463 0030 1A4B     		ldr	r3, .L58+12
+ 464 0032 9968     		ldr	r1, [r3, #8]
+ 465              	.LVL59:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 466              		.loc 1 74 5 discriminator 3 view .LVU134
+ 467 0034 1A48     		ldr	r0, .L58+16
+ 468              	.LVL60:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 469              		.loc 1 74 5 discriminator 3 view .LVU135
+ 470 0036 FFF7FEFF 		bl	osal_printf
+ 471              	.LVL61:
+ 472 003a F5E7     		b	.L41
+ 473              	.LVL62:
+ 474              	.L51:
+  74:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 475              		.loc 1 74 5 discriminator 3 view .LVU136
+ 476              	.LBE9:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 477              		.loc 1 75 5 is_stmt 1 discriminator 1 view .LVU137
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 478              		.loc 1 75 5 discriminator 1 view .LVU138
+ 479 003c 154B     		ldr	r3, .L58+4
+ 480 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 481 0040 012B     		cmp	r3, #1
+ 482 0042 01D8     		bhi	.L55
+ 483              	.LVL63:
+ 484              	.L44:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 485              		.loc 1 75 5 discriminator 5 view .LVU139
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 486              		.loc 1 75 5 discriminator 5 view .LVU140
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 487              		.loc 1 75 5 discriminator 5 view .LVU141
+ 488 0044 0420     		movs	r0, #4
+ 489 0046 EAE7     		b	.L39
+ 490              	.LVL64:
+ 491              	.L55:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 492              		.loc 1 75 5 discriminator 3 view .LVU142
+ 493              	.LBB10:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 494              		.loc 1 75 5 discriminator 3 view .LVU143
+ 495 0048 134B     		ldr	r3, .L58+8
+ 496 004a 1A69     		ldr	r2, [r3, #16]
+ 497              	.LVL65:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 498              		.loc 1 75 5 is_stmt 0 discriminator 3 view .LVU144
+ 499 004c 134B     		ldr	r3, .L58+12
+ 500 004e 9968     		ldr	r1, [r3, #8]
+ 501              	.LVL66:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 502              		.loc 1 75 5 discriminator 3 view .LVU145
+ 503 0050 1348     		ldr	r0, .L58+16
+ 504              	.LVL67:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 505              		.loc 1 75 5 discriminator 3 view .LVU146
+ 506 0052 FFF7FEFF 		bl	osal_printf
+ 507              	.LVL68:
+ 508 0056 F5E7     		b	.L44
+ 509              	.LVL69:
+ 510              	.L52:
+  75:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 511              		.loc 1 75 5 discriminator 3 view .LVU147
+ 512              	.LBE10:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 513              		.loc 1 76 5 is_stmt 1 discriminator 1 view .LVU148
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 514              		.loc 1 76 5 discriminator 1 view .LVU149
+ 515 0058 0E4B     		ldr	r3, .L58+4
+ 516 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 517 005c 012B     		cmp	r3, #1
+ 518 005e 01D8     		bhi	.L56
+ 519              	.LVL70:
+ 520              	.L46:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 521              		.loc 1 76 5 discriminator 5 view .LVU150
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 522              		.loc 1 76 5 discriminator 5 view .LVU151
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 523              		.loc 1 76 5 discriminator 5 view .LVU152
+ 524 0060 0420     		movs	r0, #4
+ 525 0062 DCE7     		b	.L39
+ 526              	.LVL71:
+ 527              	.L56:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 528              		.loc 1 76 5 discriminator 3 view .LVU153
+ 529              	.LBB11:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 530              		.loc 1 76 5 discriminator 3 view .LVU154
+ 531 0064 0C4B     		ldr	r3, .L58+8
+ 532 0066 1A69     		ldr	r2, [r3, #16]
+ 533              	.LVL72:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 534              		.loc 1 76 5 is_stmt 0 discriminator 3 view .LVU155
+ 535 0068 0C4B     		ldr	r3, .L58+12
+ 536 006a 9968     		ldr	r1, [r3, #8]
+ 537              	.LVL73:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 538              		.loc 1 76 5 discriminator 3 view .LVU156
+ 539 006c 0C48     		ldr	r0, .L58+16
+ 540 006e FFF7FEFF 		bl	osal_printf
+ 541              	.LVL74:
+ 542 0072 F5E7     		b	.L46
+ 543              	.LVL75:
+ 544              	.L53:
+  76:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 545              		.loc 1 76 5 discriminator 3 view .LVU157
+ 546              	.LBE11:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 547              		.loc 1 77 5 is_stmt 1 discriminator 1 view .LVU158
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 548              		.loc 1 77 5 discriminator 1 view .LVU159
+ 549 0074 074B     		ldr	r3, .L58+4
+ 550 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 551 0078 012B     		cmp	r3, #1
+ 552 007a 01D8     		bhi	.L57
+ 553              	.LVL76:
+ 554              	.L48:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 555              		.loc 1 77 5 discriminator 5 view .LVU160
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 556              		.loc 1 77 5 discriminator 5 view .LVU161
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 557              		.loc 1 77 5 discriminator 5 view .LVU162
+ 558 007c 0520     		movs	r0, #5
+ 559 007e CEE7     		b	.L39
+ 560              	.LVL77:
+ 561              	.L57:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 562              		.loc 1 77 5 discriminator 3 view .LVU163
+ 563              	.LBB12:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 564              		.loc 1 77 5 discriminator 3 view .LVU164
+ 565 0080 054B     		ldr	r3, .L58+8
+ 566 0082 5A69     		ldr	r2, [r3, #20]
+ 567              	.LVL78:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 568              		.loc 1 77 5 is_stmt 0 discriminator 3 view .LVU165
+ 569 0084 054B     		ldr	r3, .L58+12
+ 570 0086 9968     		ldr	r1, [r3, #8]
+ 571              	.LVL79:
+  77:../switch_sdk/core/yt/yt_rma.c **** 
+ 572              		.loc 1 77 5 discriminator 3 view .LVU166
+ 573 0088 0548     		ldr	r0, .L58+16
+ 574 008a FFF7FEFF 		bl	osal_printf
+ 575              	.LVL80:
+ 576 008e F5E7     		b	.L48
+ 577              	.L59:
+ 578              		.align	2
+ 579              	.L58:
+ 580 0090 00000000 		.word	gpfal_dispatch
+ 581 0094 00000000 		.word	yt_debug_level
+ 582 0098 00000000 		.word	_yt_errmsg
+ 583 009c 00000000 		.word	_yt_prompt_msg
+ 584 00a0 00000000 		.word	.LC0
+ 585              	.LBE12:
+ 586              		.cfi_endproc
+ 587              	.LFE5:
+ 589              		.section	.text.yt_rma_bypass_port_isolation_get,"ax",%progbits
+ 590              		.align	1
+ 591              		.global	yt_rma_bypass_port_isolation_get
+ 592              		.syntax unified
+ 593              		.thumb
+ 594              		.thumb_func
+ 596              	yt_rma_bypass_port_isolation_get:
+ 597              	.LVL81:
+ 598              	.LFB6:
+  81:../switch_sdk/core/yt/yt_rma.c **** 
+  82:../switch_sdk/core/yt/yt_rma.c **** /**
+  83:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_bypass_port_isolation_get
+  84:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+  85:../switch_sdk/core/yt/yt_rma.c ****  *
+  86:../switch_sdk/core/yt/yt_rma.c ****  * @brief         get the setting of rma passthrough port isolation
+  87:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+  88:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+  89:../switch_sdk/core/yt/yt_rma.c ****  * @param[out]    pEnable                 -enable or disable
+  90:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+  91:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+  92:../switch_sdk/core/yt/yt_rma.c ****  */
+  93:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t yt_rma_bypass_port_isolation_get(yt_unit_t unit, yt_rma_da_t  da, yt_enable_t *pEnable)
+  94:../switch_sdk/core/yt/yt_rma.c **** {
+ 599              		.loc 1 94 1 is_stmt 1 view -0
+ 600              		.cfi_startproc
+ 601              		@ args = 0, pretend = 0, frame = 0
+ 602              		@ frame_needed = 0, uses_anonymous_args = 0
+ 603              		.loc 1 94 1 is_stmt 0 view .LVU168
+ 604 0000 08B5     		push	{r3, lr}
+ 605              		.cfi_def_cfa_offset 8
+ 606              		.cfi_offset 3, -8
+ 607              		.cfi_offset 14, -4
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+ 608              		.loc 1 95 5 is_stmt 1 view .LVU169
+ 609              		.loc 1 95 5 view .LVU170
+ 610 0002 68B9     		cbnz	r0, .L71
+ 611 0004 8446     		mov	ip, r0
+ 612              		.loc 1 95 5 discriminator 2 view .LVU171
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 613              		.loc 1 96 5 discriminator 2 view .LVU172
+ 614              		.loc 1 96 5 discriminator 2 view .LVU173
+ 615 0006 224B     		ldr	r3, .L79
+ 616 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 617 000c B3B1     		cbz	r3, .L72
+ 618              		.loc 1 96 5 discriminator 2 view .LVU174
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 619              		.loc 1 97 5 discriminator 2 view .LVU175
+ 620              		.loc 1 97 5 discriminator 2 view .LVU176
+ 621 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 622              	.LVL82:
+ 623              		.loc 1 97 5 is_stmt 0 discriminator 2 view .LVU177
+ 624 0010 10B3     		cbz	r0, .L73
+ 625              		.loc 1 97 5 is_stmt 1 discriminator 2 view .LVU178
+  98:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 626              		.loc 1 98 5 discriminator 2 view .LVU179
+ 627              		.loc 1 98 5 discriminator 2 view .LVU180
+ 628 0012 002A     		cmp	r2, #0
+ 629 0014 2ED0     		beq	.L74
+ 630              		.loc 1 98 5 discriminator 2 view .LVU181
+  99:../switch_sdk/core/yt/yt_rma.c **** 
+ 100:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_bypass_port_isolation_get(unit, da, pEnable);
+ 631              		.loc 1 100 5 discriminator 2 view .LVU182
+ 632              		.loc 1 100 29 is_stmt 0 discriminator 2 view .LVU183
+ 633 0016 D3F82435 		ldr	r3, [r3, #1316]
+ 634              		.loc 1 100 12 discriminator 2 view .LVU184
+ 635 001a 6046     		mov	r0, ip
+ 636 001c 9847     		blx	r3
+ 637              	.LVL83:
+ 638              	.L60:
+ 101:../switch_sdk/core/yt/yt_rma.c **** }
+ 639              		.loc 1 101 1 view .LVU185
+ 640 001e 08BD     		pop	{r3, pc}
+ 641              	.LVL84:
+ 642              	.L71:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 643              		.loc 1 95 5 is_stmt 1 discriminator 1 view .LVU186
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 644              		.loc 1 95 5 discriminator 1 view .LVU187
+ 645 0020 1C4B     		ldr	r3, .L79+4
+ 646 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 647 0024 012B     		cmp	r3, #1
+ 648 0026 01D8     		bhi	.L75
+ 649              	.LVL85:
+ 650              	.L62:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 651              		.loc 1 95 5 discriminator 5 view .LVU188
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 652              		.loc 1 95 5 discriminator 5 view .LVU189
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 653              		.loc 1 95 5 discriminator 5 view .LVU190
+ 654 0028 0520     		movs	r0, #5
+ 655 002a F8E7     		b	.L60
+ 656              	.LVL86:
+ 657              	.L75:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 658              		.loc 1 95 5 discriminator 3 view .LVU191
+ 659              	.LBB13:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 660              		.loc 1 95 5 discriminator 3 view .LVU192
+ 661 002c 1A4B     		ldr	r3, .L79+8
+ 662 002e 5A69     		ldr	r2, [r3, #20]
+ 663              	.LVL87:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 664              		.loc 1 95 5 is_stmt 0 discriminator 3 view .LVU193
+ 665 0030 1A4B     		ldr	r3, .L79+12
+ 666 0032 9968     		ldr	r1, [r3, #8]
+ 667              	.LVL88:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 668              		.loc 1 95 5 discriminator 3 view .LVU194
+ 669 0034 1A48     		ldr	r0, .L79+16
+ 670              	.LVL89:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 671              		.loc 1 95 5 discriminator 3 view .LVU195
+ 672 0036 FFF7FEFF 		bl	osal_printf
+ 673              	.LVL90:
+ 674 003a F5E7     		b	.L62
+ 675              	.LVL91:
+ 676              	.L72:
+  95:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 677              		.loc 1 95 5 discriminator 3 view .LVU196
+ 678              	.LBE13:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 679              		.loc 1 96 5 is_stmt 1 discriminator 1 view .LVU197
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 680              		.loc 1 96 5 discriminator 1 view .LVU198
+ 681 003c 154B     		ldr	r3, .L79+4
+ 682 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 683 0040 012B     		cmp	r3, #1
+ 684 0042 01D8     		bhi	.L76
+ 685              	.LVL92:
+ 686              	.L65:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 687              		.loc 1 96 5 discriminator 5 view .LVU199
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 688              		.loc 1 96 5 discriminator 5 view .LVU200
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 689              		.loc 1 96 5 discriminator 5 view .LVU201
+ 690 0044 0420     		movs	r0, #4
+ 691 0046 EAE7     		b	.L60
+ 692              	.LVL93:
+ 693              	.L76:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 694              		.loc 1 96 5 discriminator 3 view .LVU202
+ 695              	.LBB14:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 696              		.loc 1 96 5 discriminator 3 view .LVU203
+ 697 0048 134B     		ldr	r3, .L79+8
+ 698 004a 1A69     		ldr	r2, [r3, #16]
+ 699              	.LVL94:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 700              		.loc 1 96 5 is_stmt 0 discriminator 3 view .LVU204
+ 701 004c 134B     		ldr	r3, .L79+12
+ 702 004e 9968     		ldr	r1, [r3, #8]
+ 703              	.LVL95:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 704              		.loc 1 96 5 discriminator 3 view .LVU205
+ 705 0050 1348     		ldr	r0, .L79+16
+ 706              	.LVL96:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 707              		.loc 1 96 5 discriminator 3 view .LVU206
+ 708 0052 FFF7FEFF 		bl	osal_printf
+ 709              	.LVL97:
+ 710 0056 F5E7     		b	.L65
+ 711              	.LVL98:
+ 712              	.L73:
+  96:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 713              		.loc 1 96 5 discriminator 3 view .LVU207
+ 714              	.LBE14:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 715              		.loc 1 97 5 is_stmt 1 discriminator 1 view .LVU208
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 716              		.loc 1 97 5 discriminator 1 view .LVU209
+ 717 0058 0E4B     		ldr	r3, .L79+4
+ 718 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 719 005c 012B     		cmp	r3, #1
+ 720 005e 01D8     		bhi	.L77
+ 721              	.LVL99:
+ 722              	.L67:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 723              		.loc 1 97 5 discriminator 5 view .LVU210
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 724              		.loc 1 97 5 discriminator 5 view .LVU211
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 725              		.loc 1 97 5 discriminator 5 view .LVU212
+ 726 0060 0420     		movs	r0, #4
+ 727 0062 DCE7     		b	.L60
+ 728              	.LVL100:
+ 729              	.L77:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 730              		.loc 1 97 5 discriminator 3 view .LVU213
+ 731              	.LBB15:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 732              		.loc 1 97 5 discriminator 3 view .LVU214
+ 733 0064 0C4B     		ldr	r3, .L79+8
+ 734 0066 1A69     		ldr	r2, [r3, #16]
+ 735              	.LVL101:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 736              		.loc 1 97 5 is_stmt 0 discriminator 3 view .LVU215
+ 737 0068 0C4B     		ldr	r3, .L79+12
+ 738 006a 9968     		ldr	r1, [r3, #8]
+ 739              	.LVL102:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 740              		.loc 1 97 5 discriminator 3 view .LVU216
+ 741 006c 0C48     		ldr	r0, .L79+16
+ 742 006e FFF7FEFF 		bl	osal_printf
+ 743              	.LVL103:
+ 744 0072 F5E7     		b	.L67
+ 745              	.LVL104:
+ 746              	.L74:
+  97:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 747              		.loc 1 97 5 discriminator 3 view .LVU217
+ 748              	.LBE15:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 749              		.loc 1 98 5 is_stmt 1 discriminator 1 view .LVU218
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 750              		.loc 1 98 5 discriminator 1 view .LVU219
+ 751 0074 074B     		ldr	r3, .L79+4
+ 752 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 753 0078 012B     		cmp	r3, #1
+ 754 007a 01D8     		bhi	.L78
+ 755              	.LVL105:
+ 756              	.L69:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 757              		.loc 1 98 5 discriminator 5 view .LVU220
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 758              		.loc 1 98 5 discriminator 5 view .LVU221
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 759              		.loc 1 98 5 discriminator 5 view .LVU222
+ 760 007c 0220     		movs	r0, #2
+ 761 007e CEE7     		b	.L60
+ 762              	.LVL106:
+ 763              	.L78:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 764              		.loc 1 98 5 discriminator 3 view .LVU223
+ 765              	.LBB16:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 766              		.loc 1 98 5 discriminator 3 view .LVU224
+ 767 0080 054B     		ldr	r3, .L79+8
+ 768 0082 9A68     		ldr	r2, [r3, #8]
+ 769              	.LVL107:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 770              		.loc 1 98 5 is_stmt 0 discriminator 3 view .LVU225
+ 771 0084 054B     		ldr	r3, .L79+12
+ 772 0086 9968     		ldr	r1, [r3, #8]
+ 773              	.LVL108:
+  98:../switch_sdk/core/yt/yt_rma.c **** 
+ 774              		.loc 1 98 5 discriminator 3 view .LVU226
+ 775 0088 0548     		ldr	r0, .L79+16
+ 776 008a FFF7FEFF 		bl	osal_printf
+ 777              	.LVL109:
+ 778 008e F5E7     		b	.L69
+ 779              	.L80:
+ 780              		.align	2
+ 781              	.L79:
+ 782 0090 00000000 		.word	gpfal_dispatch
+ 783 0094 00000000 		.word	yt_debug_level
+ 784 0098 00000000 		.word	_yt_errmsg
+ 785 009c 00000000 		.word	_yt_prompt_msg
+ 786 00a0 00000000 		.word	.LC0
+ 787              	.LBE16:
+ 788              		.cfi_endproc
+ 789              	.LFE6:
+ 791              		.section	.text.yt_rma_bypass_vlan_filter_set,"ax",%progbits
+ 792              		.align	1
+ 793              		.global	yt_rma_bypass_vlan_filter_set
+ 794              		.syntax unified
+ 795              		.thumb
+ 796              		.thumb_func
+ 798              	yt_rma_bypass_vlan_filter_set:
+ 799              	.LVL110:
+ 800              	.LFB7:
+ 102:../switch_sdk/core/yt/yt_rma.c **** 
+ 103:../switch_sdk/core/yt/yt_rma.c **** /**
+ 104:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_bypass_vlan_filter_set
+ 105:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+ 106:../switch_sdk/core/yt/yt_rma.c ****  *
+ 107:../switch_sdk/core/yt/yt_rma.c ****  * @brief         set rma passthrough vlan igress filter or not
+ 108:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+ 109:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+ 110:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     enable                  -enable or disable
+ 111:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+ 112:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+ 113:../switch_sdk/core/yt/yt_rma.c ****  */
+ 114:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t  yt_rma_bypass_vlan_filter_set(yt_unit_t unit, yt_rma_da_t da, yt_enable_t enable)
+ 115:../switch_sdk/core/yt/yt_rma.c **** {
+ 801              		.loc 1 115 1 is_stmt 1 view -0
+ 802              		.cfi_startproc
+ 803              		@ args = 0, pretend = 0, frame = 0
+ 804              		@ frame_needed = 0, uses_anonymous_args = 0
+ 805              		.loc 1 115 1 is_stmt 0 view .LVU228
+ 806 0000 08B5     		push	{r3, lr}
+ 807              		.cfi_def_cfa_offset 8
+ 808              		.cfi_offset 3, -8
+ 809              		.cfi_offset 14, -4
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+ 810              		.loc 1 116 5 is_stmt 1 view .LVU229
+ 811              		.loc 1 116 5 view .LVU230
+ 812 0002 68B9     		cbnz	r0, .L92
+ 813 0004 8446     		mov	ip, r0
+ 814              		.loc 1 116 5 discriminator 2 view .LVU231
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 815              		.loc 1 117 5 discriminator 2 view .LVU232
+ 816              		.loc 1 117 5 discriminator 2 view .LVU233
+ 817 0006 224B     		ldr	r3, .L100
+ 818 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 819 000c B3B1     		cbz	r3, .L93
+ 820              		.loc 1 117 5 discriminator 2 view .LVU234
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 821              		.loc 1 118 5 discriminator 2 view .LVU235
+ 822              		.loc 1 118 5 discriminator 2 view .LVU236
+ 823 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 824              	.LVL111:
+ 825              		.loc 1 118 5 is_stmt 0 discriminator 2 view .LVU237
+ 826 0010 10B3     		cbz	r0, .L94
+ 827              		.loc 1 118 5 is_stmt 1 discriminator 2 view .LVU238
+ 119:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 828              		.loc 1 119 5 discriminator 2 view .LVU239
+ 829              		.loc 1 119 5 discriminator 2 view .LVU240
+ 830 0012 012A     		cmp	r2, #1
+ 831 0014 2ED8     		bhi	.L95
+ 832              		.loc 1 119 5 discriminator 2 view .LVU241
+ 120:../switch_sdk/core/yt/yt_rma.c **** 
+ 121:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_bypass_vlan_filter_set(unit, da, enable);
+ 833              		.loc 1 121 5 discriminator 2 view .LVU242
+ 834              		.loc 1 121 29 is_stmt 0 discriminator 2 view .LVU243
+ 835 0016 D3F82835 		ldr	r3, [r3, #1320]
+ 836              		.loc 1 121 12 discriminator 2 view .LVU244
+ 837 001a 6046     		mov	r0, ip
+ 838 001c 9847     		blx	r3
+ 839              	.LVL112:
+ 840              	.L81:
+ 122:../switch_sdk/core/yt/yt_rma.c **** }
+ 841              		.loc 1 122 1 view .LVU245
+ 842 001e 08BD     		pop	{r3, pc}
+ 843              	.LVL113:
+ 844              	.L92:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 845              		.loc 1 116 5 is_stmt 1 discriminator 1 view .LVU246
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 846              		.loc 1 116 5 discriminator 1 view .LVU247
+ 847 0020 1C4B     		ldr	r3, .L100+4
+ 848 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 849 0024 012B     		cmp	r3, #1
+ 850 0026 01D8     		bhi	.L96
+ 851              	.LVL114:
+ 852              	.L83:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 853              		.loc 1 116 5 discriminator 5 view .LVU248
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 854              		.loc 1 116 5 discriminator 5 view .LVU249
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 855              		.loc 1 116 5 discriminator 5 view .LVU250
+ 856 0028 0520     		movs	r0, #5
+ 857 002a F8E7     		b	.L81
+ 858              	.LVL115:
+ 859              	.L96:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 860              		.loc 1 116 5 discriminator 3 view .LVU251
+ 861              	.LBB17:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 862              		.loc 1 116 5 discriminator 3 view .LVU252
+ 863 002c 1A4B     		ldr	r3, .L100+8
+ 864 002e 5A69     		ldr	r2, [r3, #20]
+ 865              	.LVL116:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 866              		.loc 1 116 5 is_stmt 0 discriminator 3 view .LVU253
+ 867 0030 1A4B     		ldr	r3, .L100+12
+ 868 0032 9968     		ldr	r1, [r3, #8]
+ 869              	.LVL117:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 870              		.loc 1 116 5 discriminator 3 view .LVU254
+ 871 0034 1A48     		ldr	r0, .L100+16
+ 872              	.LVL118:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 873              		.loc 1 116 5 discriminator 3 view .LVU255
+ 874 0036 FFF7FEFF 		bl	osal_printf
+ 875              	.LVL119:
+ 876 003a F5E7     		b	.L83
+ 877              	.LVL120:
+ 878              	.L93:
+ 116:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 879              		.loc 1 116 5 discriminator 3 view .LVU256
+ 880              	.LBE17:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 881              		.loc 1 117 5 is_stmt 1 discriminator 1 view .LVU257
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 882              		.loc 1 117 5 discriminator 1 view .LVU258
+ 883 003c 154B     		ldr	r3, .L100+4
+ 884 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 885 0040 012B     		cmp	r3, #1
+ 886 0042 01D8     		bhi	.L97
+ 887              	.LVL121:
+ 888              	.L86:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 889              		.loc 1 117 5 discriminator 5 view .LVU259
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 890              		.loc 1 117 5 discriminator 5 view .LVU260
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 891              		.loc 1 117 5 discriminator 5 view .LVU261
+ 892 0044 0420     		movs	r0, #4
+ 893 0046 EAE7     		b	.L81
+ 894              	.LVL122:
+ 895              	.L97:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 896              		.loc 1 117 5 discriminator 3 view .LVU262
+ 897              	.LBB18:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 898              		.loc 1 117 5 discriminator 3 view .LVU263
+ 899 0048 134B     		ldr	r3, .L100+8
+ 900 004a 1A69     		ldr	r2, [r3, #16]
+ 901              	.LVL123:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 902              		.loc 1 117 5 is_stmt 0 discriminator 3 view .LVU264
+ 903 004c 134B     		ldr	r3, .L100+12
+ 904 004e 9968     		ldr	r1, [r3, #8]
+ 905              	.LVL124:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 906              		.loc 1 117 5 discriminator 3 view .LVU265
+ 907 0050 1348     		ldr	r0, .L100+16
+ 908              	.LVL125:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 909              		.loc 1 117 5 discriminator 3 view .LVU266
+ 910 0052 FFF7FEFF 		bl	osal_printf
+ 911              	.LVL126:
+ 912 0056 F5E7     		b	.L86
+ 913              	.LVL127:
+ 914              	.L94:
+ 117:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 915              		.loc 1 117 5 discriminator 3 view .LVU267
+ 916              	.LBE18:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 917              		.loc 1 118 5 is_stmt 1 discriminator 1 view .LVU268
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 918              		.loc 1 118 5 discriminator 1 view .LVU269
+ 919 0058 0E4B     		ldr	r3, .L100+4
+ 920 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 921 005c 012B     		cmp	r3, #1
+ 922 005e 01D8     		bhi	.L98
+ 923              	.LVL128:
+ 924              	.L88:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 925              		.loc 1 118 5 discriminator 5 view .LVU270
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 926              		.loc 1 118 5 discriminator 5 view .LVU271
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 927              		.loc 1 118 5 discriminator 5 view .LVU272
+ 928 0060 0420     		movs	r0, #4
+ 929 0062 DCE7     		b	.L81
+ 930              	.LVL129:
+ 931              	.L98:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 932              		.loc 1 118 5 discriminator 3 view .LVU273
+ 933              	.LBB19:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 934              		.loc 1 118 5 discriminator 3 view .LVU274
+ 935 0064 0C4B     		ldr	r3, .L100+8
+ 936 0066 1A69     		ldr	r2, [r3, #16]
+ 937              	.LVL130:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 938              		.loc 1 118 5 is_stmt 0 discriminator 3 view .LVU275
+ 939 0068 0C4B     		ldr	r3, .L100+12
+ 940 006a 9968     		ldr	r1, [r3, #8]
+ 941              	.LVL131:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 942              		.loc 1 118 5 discriminator 3 view .LVU276
+ 943 006c 0C48     		ldr	r0, .L100+16
+ 944 006e FFF7FEFF 		bl	osal_printf
+ 945              	.LVL132:
+ 946 0072 F5E7     		b	.L88
+ 947              	.LVL133:
+ 948              	.L95:
+ 118:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_ENABLE < enable || YT_DISABLE > enable), CMM_ERR_INPUT);
+ 949              		.loc 1 118 5 discriminator 3 view .LVU277
+ 950              	.LBE19:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 951              		.loc 1 119 5 is_stmt 1 discriminator 1 view .LVU278
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 952              		.loc 1 119 5 discriminator 1 view .LVU279
+ 953 0074 074B     		ldr	r3, .L100+4
+ 954 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 955 0078 012B     		cmp	r3, #1
+ 956 007a 01D8     		bhi	.L99
+ 957              	.LVL134:
+ 958              	.L90:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 959              		.loc 1 119 5 discriminator 5 view .LVU280
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 960              		.loc 1 119 5 discriminator 5 view .LVU281
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 961              		.loc 1 119 5 discriminator 5 view .LVU282
+ 962 007c 0520     		movs	r0, #5
+ 963 007e CEE7     		b	.L81
+ 964              	.LVL135:
+ 965              	.L99:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 966              		.loc 1 119 5 discriminator 3 view .LVU283
+ 967              	.LBB20:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 968              		.loc 1 119 5 discriminator 3 view .LVU284
+ 969 0080 054B     		ldr	r3, .L100+8
+ 970 0082 5A69     		ldr	r2, [r3, #20]
+ 971              	.LVL136:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 972              		.loc 1 119 5 is_stmt 0 discriminator 3 view .LVU285
+ 973 0084 054B     		ldr	r3, .L100+12
+ 974 0086 9968     		ldr	r1, [r3, #8]
+ 975              	.LVL137:
+ 119:../switch_sdk/core/yt/yt_rma.c **** 
+ 976              		.loc 1 119 5 discriminator 3 view .LVU286
+ 977 0088 0548     		ldr	r0, .L100+16
+ 978 008a FFF7FEFF 		bl	osal_printf
+ 979              	.LVL138:
+ 980 008e F5E7     		b	.L90
+ 981              	.L101:
+ 982              		.align	2
+ 983              	.L100:
+ 984 0090 00000000 		.word	gpfal_dispatch
+ 985 0094 00000000 		.word	yt_debug_level
+ 986 0098 00000000 		.word	_yt_errmsg
+ 987 009c 00000000 		.word	_yt_prompt_msg
+ 988 00a0 00000000 		.word	.LC0
+ 989              	.LBE20:
+ 990              		.cfi_endproc
+ 991              	.LFE7:
+ 993              		.section	.text.yt_rma_bypass_vlan_filter_get,"ax",%progbits
+ 994              		.align	1
+ 995              		.global	yt_rma_bypass_vlan_filter_get
+ 996              		.syntax unified
+ 997              		.thumb
+ 998              		.thumb_func
+ 1000              	yt_rma_bypass_vlan_filter_get:
+ 1001              	.LVL139:
+ 1002              	.LFB8:
+ 123:../switch_sdk/core/yt/yt_rma.c **** 
+ 124:../switch_sdk/core/yt/yt_rma.c **** /**
+ 125:../switch_sdk/core/yt/yt_rma.c ****  * @internal      yt_rma_bypass_vlan_filter_get
+ 126:../switch_sdk/core/yt/yt_rma.c ****  * @endinternal
+ 127:../switch_sdk/core/yt/yt_rma.c ****  *
+ 128:../switch_sdk/core/yt/yt_rma.c ****  * @brief         get the setting of rma passthrough vlan igress filter
+ 129:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     unit                -unit id
+ 130:../switch_sdk/core/yt/yt_rma.c ****  * @param[in]     da               -the last byte of rma mac address,refer to yt_rma_action_t
+ 131:../switch_sdk/core/yt/yt_rma.c ****  * @param[out]    pEnable                 -enable or disable
+ 132:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_OK          -on success
+ 133:../switch_sdk/core/yt/yt_rma.c ****  * @retval        CMM_ERR_FAIL        -on fail
+ 134:../switch_sdk/core/yt/yt_rma.c ****  */
+ 135:../switch_sdk/core/yt/yt_rma.c **** yt_ret_t  yt_rma_bypass_vlan_filter_get(yt_unit_t unit, yt_rma_da_t da, yt_enable_t *pEnable)
+ 136:../switch_sdk/core/yt/yt_rma.c **** {
+ 1003              		.loc 1 136 1 is_stmt 1 view -0
+ 1004              		.cfi_startproc
+ 1005              		@ args = 0, pretend = 0, frame = 0
+ 1006              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1007              		.loc 1 136 1 is_stmt 0 view .LVU288
+ 1008 0000 08B5     		push	{r3, lr}
+ 1009              		.cfi_def_cfa_offset 8
+ 1010              		.cfi_offset 3, -8
+ 1011              		.cfi_offset 14, -4
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((YT_UNIT_NUM <= unit), CMM_ERR_INPUT);
+ 1012              		.loc 1 137 5 is_stmt 1 view .LVU289
+ 1013              		.loc 1 137 5 view .LVU290
+ 1014 0002 68B9     		cbnz	r0, .L113
+ 1015 0004 8446     		mov	ip, r0
+ 1016              		.loc 1 137 5 discriminator 2 view .LVU291
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1017              		.loc 1 138 5 discriminator 2 view .LVU292
+ 1018              		.loc 1 138 5 discriminator 2 view .LVU293
+ 1019 0006 224B     		ldr	r3, .L121
+ 1020 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 1021 000c B3B1     		cbz	r3, .L114
+ 1022              		.loc 1 138 5 discriminator 2 view .LVU294
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1023              		.loc 1 139 5 discriminator 2 view .LVU295
+ 1024              		.loc 1 139 5 discriminator 2 view .LVU296
+ 1025 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1026              	.LVL140:
+ 1027              		.loc 1 139 5 is_stmt 0 discriminator 2 view .LVU297
+ 1028 0010 10B3     		cbz	r0, .L115
+ 1029              		.loc 1 139 5 is_stmt 1 discriminator 2 view .LVU298
+ 140:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1030              		.loc 1 140 5 discriminator 2 view .LVU299
+ 1031              		.loc 1 140 5 discriminator 2 view .LVU300
+ 1032 0012 002A     		cmp	r2, #0
+ 1033 0014 2ED0     		beq	.L116
+ 1034              		.loc 1 140 5 discriminator 2 view .LVU301
+ 141:../switch_sdk/core/yt/yt_rma.c **** 
+ 142:../switch_sdk/core/yt/yt_rma.c ****     return YT_DISPATCH(unit)->rma_bypass_vlan_filter_get(unit, da, pEnable);
+ 1035              		.loc 1 142 5 discriminator 2 view .LVU302
+ 1036              		.loc 1 142 29 is_stmt 0 discriminator 2 view .LVU303
+ 1037 0016 D3F82C35 		ldr	r3, [r3, #1324]
+ 1038              		.loc 1 142 12 discriminator 2 view .LVU304
+ 1039 001a 6046     		mov	r0, ip
+ 1040 001c 9847     		blx	r3
+ 1041              	.LVL141:
+ 1042              	.L102:
+ 143:../switch_sdk/core/yt/yt_rma.c **** }
+ 1043              		.loc 1 143 1 view .LVU305
+ 1044 001e 08BD     		pop	{r3, pc}
+ 1045              	.LVL142:
+ 1046              	.L113:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1047              		.loc 1 137 5 is_stmt 1 discriminator 1 view .LVU306
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1048              		.loc 1 137 5 discriminator 1 view .LVU307
+ 1049 0020 1C4B     		ldr	r3, .L121+4
+ 1050 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1051 0024 012B     		cmp	r3, #1
+ 1052 0026 01D8     		bhi	.L117
+ 1053              	.LVL143:
+ 1054              	.L104:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1055              		.loc 1 137 5 discriminator 5 view .LVU308
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1056              		.loc 1 137 5 discriminator 5 view .LVU309
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1057              		.loc 1 137 5 discriminator 5 view .LVU310
+ 1058 0028 0520     		movs	r0, #5
+ 1059 002a F8E7     		b	.L102
+ 1060              	.LVL144:
+ 1061              	.L117:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1062              		.loc 1 137 5 discriminator 3 view .LVU311
+ 1063              	.LBB21:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1064              		.loc 1 137 5 discriminator 3 view .LVU312
+ 1065 002c 1A4B     		ldr	r3, .L121+8
+ 1066 002e 5A69     		ldr	r2, [r3, #20]
+ 1067              	.LVL145:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1068              		.loc 1 137 5 is_stmt 0 discriminator 3 view .LVU313
+ 1069 0030 1A4B     		ldr	r3, .L121+12
+ 1070 0032 9968     		ldr	r1, [r3, #8]
+ 1071              	.LVL146:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1072              		.loc 1 137 5 discriminator 3 view .LVU314
+ 1073 0034 1A48     		ldr	r0, .L121+16
+ 1074              	.LVL147:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1075              		.loc 1 137 5 discriminator 3 view .LVU315
+ 1076 0036 FFF7FEFF 		bl	osal_printf
+ 1077              	.LVL148:
+ 1078 003a F5E7     		b	.L104
+ 1079              	.LVL149:
+ 1080              	.L114:
+ 137:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK(NULL == YT_DISPATCH(unit), CMM_ERR_NOT_INIT);
+ 1081              		.loc 1 137 5 discriminator 3 view .LVU316
+ 1082              	.LBE21:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1083              		.loc 1 138 5 is_stmt 1 discriminator 1 view .LVU317
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1084              		.loc 1 138 5 discriminator 1 view .LVU318
+ 1085 003c 154B     		ldr	r3, .L121+4
+ 1086 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1087 0040 012B     		cmp	r3, #1
+ 1088 0042 01D8     		bhi	.L118
+ 1089              	.LVL150:
+ 1090              	.L107:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1091              		.loc 1 138 5 discriminator 5 view .LVU319
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1092              		.loc 1 138 5 discriminator 5 view .LVU320
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1093              		.loc 1 138 5 discriminator 5 view .LVU321
+ 1094 0044 0420     		movs	r0, #4
+ 1095 0046 EAE7     		b	.L102
+ 1096              	.LVL151:
+ 1097              	.L118:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1098              		.loc 1 138 5 discriminator 3 view .LVU322
+ 1099              	.LBB22:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1100              		.loc 1 138 5 discriminator 3 view .LVU323
+ 1101 0048 134B     		ldr	r3, .L121+8
+ 1102 004a 1A69     		ldr	r2, [r3, #16]
+ 1103              	.LVL152:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1104              		.loc 1 138 5 is_stmt 0 discriminator 3 view .LVU324
+ 1105 004c 134B     		ldr	r3, .L121+12
+ 1106 004e 9968     		ldr	r1, [r3, #8]
+ 1107              	.LVL153:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1108              		.loc 1 138 5 discriminator 3 view .LVU325
+ 1109 0050 1348     		ldr	r0, .L121+16
+ 1110              	.LVL154:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1111              		.loc 1 138 5 discriminator 3 view .LVU326
+ 1112 0052 FFF7FEFF 		bl	osal_printf
+ 1113              	.LVL155:
+ 1114 0056 F5E7     		b	.L107
+ 1115              	.LVL156:
+ 1116              	.L115:
+ 138:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((!(YT_DISPATCH(unit)->is_inited)), CMM_ERR_NOT_INIT);
+ 1117              		.loc 1 138 5 discriminator 3 view .LVU327
+ 1118              	.LBE22:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1119              		.loc 1 139 5 is_stmt 1 discriminator 1 view .LVU328
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1120              		.loc 1 139 5 discriminator 1 view .LVU329
+ 1121 0058 0E4B     		ldr	r3, .L121+4
+ 1122 005a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1123 005c 012B     		cmp	r3, #1
+ 1124 005e 01D8     		bhi	.L119
+ 1125              	.LVL157:
+ 1126              	.L109:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1127              		.loc 1 139 5 discriminator 5 view .LVU330
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1128              		.loc 1 139 5 discriminator 5 view .LVU331
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1129              		.loc 1 139 5 discriminator 5 view .LVU332
+ 1130 0060 0420     		movs	r0, #4
+ 1131 0062 DCE7     		b	.L102
+ 1132              	.LVL158:
+ 1133              	.L119:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1134              		.loc 1 139 5 discriminator 3 view .LVU333
+ 1135              	.LBB23:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1136              		.loc 1 139 5 discriminator 3 view .LVU334
+ 1137 0064 0C4B     		ldr	r3, .L121+8
+ 1138 0066 1A69     		ldr	r2, [r3, #16]
+ 1139              	.LVL159:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1140              		.loc 1 139 5 is_stmt 0 discriminator 3 view .LVU335
+ 1141 0068 0C4B     		ldr	r3, .L121+12
+ 1142 006a 9968     		ldr	r1, [r3, #8]
+ 1143              	.LVL160:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1144              		.loc 1 139 5 discriminator 3 view .LVU336
+ 1145 006c 0C48     		ldr	r0, .L121+16
+ 1146 006e FFF7FEFF 		bl	osal_printf
+ 1147              	.LVL161:
+ 1148 0072 F5E7     		b	.L109
+ 1149              	.LVL162:
+ 1150              	.L116:
+ 139:../switch_sdk/core/yt/yt_rma.c ****     CMM_PARAM_CHK((NULL == pEnable), CMM_ERR_NULL_POINT);
+ 1151              		.loc 1 139 5 discriminator 3 view .LVU337
+ 1152              	.LBE23:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1153              		.loc 1 140 5 is_stmt 1 discriminator 1 view .LVU338
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1154              		.loc 1 140 5 discriminator 1 view .LVU339
+ 1155 0074 074B     		ldr	r3, .L121+4
+ 1156 0076 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1157 0078 012B     		cmp	r3, #1
+ 1158 007a 01D8     		bhi	.L120
+ 1159              	.LVL163:
+ 1160              	.L111:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1161              		.loc 1 140 5 discriminator 5 view .LVU340
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1162              		.loc 1 140 5 discriminator 5 view .LVU341
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1163              		.loc 1 140 5 discriminator 5 view .LVU342
+ 1164 007c 0220     		movs	r0, #2
+ 1165 007e CEE7     		b	.L102
+ 1166              	.LVL164:
+ 1167              	.L120:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1168              		.loc 1 140 5 discriminator 3 view .LVU343
+ 1169              	.LBB24:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1170              		.loc 1 140 5 discriminator 3 view .LVU344
+ 1171 0080 054B     		ldr	r3, .L121+8
+ 1172 0082 9A68     		ldr	r2, [r3, #8]
+ 1173              	.LVL165:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1174              		.loc 1 140 5 is_stmt 0 discriminator 3 view .LVU345
+ 1175 0084 054B     		ldr	r3, .L121+12
+ 1176 0086 9968     		ldr	r1, [r3, #8]
+ 1177              	.LVL166:
+ 140:../switch_sdk/core/yt/yt_rma.c **** 
+ 1178              		.loc 1 140 5 discriminator 3 view .LVU346
+ 1179 0088 0548     		ldr	r0, .L121+16
+ 1180 008a FFF7FEFF 		bl	osal_printf
+ 1181              	.LVL167:
+ 1182 008e F5E7     		b	.L111
+ 1183              	.L122:
+ 1184              		.align	2
+ 1185              	.L121:
+ 1186 0090 00000000 		.word	gpfal_dispatch
+ 1187 0094 00000000 		.word	yt_debug_level
+ 1188 0098 00000000 		.word	_yt_errmsg
+ 1189 009c 00000000 		.word	_yt_prompt_msg
+ 1190 00a0 00000000 		.word	.LC0
+ 1191              	.LBE24:
+ 1192              		.cfi_endproc
+ 1193              	.LFE8:
+ 1195              		.text
+ 1196              	.Letext0:
+ 1197              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 1198              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+ 1199              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\cal/cal_bprofile.h"
+ 1200              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_cmm.h"
+ 1201              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_rma.h"
+ 1202              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_vlan.h"
+ 1203              		.file 8 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_vlan_translate.h"
+ 1204              		.file 9 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_acl.h"
+ 1205              		.file 10 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_qos.h"
+ 1206              		.file 11 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_rate.h"
+ 1207              		.file 12 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_dos.h"
+ 1208              		.file 13 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_nic.h"
+ 1209              		.file 14 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_stp.h"
+ 1210              		.file 15 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_l2.h"
+ 1211              		.file 16 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_loopdetect.h"
+ 1212              		.file 17 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_multicast.h"
+ 1213              		.file 18 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_oam.h"
+ 1214              		.file 19 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_storm_ctrl.h"
+ 1215              		.file 20 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_port.h"
+ 1216              		.file 21 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_dot1x.h"
+ 1217              		.file 22 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_ctrlpkt.h"
+ 1218              		.file 23 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_stat.h"
+ 1219              		.file 24 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_interrupt.h"
+ 1220              		.file 25 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_led.h"
+ 1221              		.file 26 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_sys.h"
+ 1222              		.file 27 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\include/yt_debug.h"
+ 1223              		.file 28 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal/fal_dispatch.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 yt_rma.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:19     .rodata.yt_rma_action_set.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:23     .text.yt_rma_action_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:29     .text.yt_rma_action_set:00000000 yt_rma_action_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:176    .text.yt_rma_action_set:00000070 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:186    .text.yt_rma_action_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:192    .text.yt_rma_action_get:00000000 yt_rma_action_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:378    .text.yt_rma_action_get:00000090 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:388    .text.yt_rma_bypass_port_isolation_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:394    .text.yt_rma_bypass_port_isolation_set:00000000 yt_rma_bypass_port_isolation_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:580    .text.yt_rma_bypass_port_isolation_set:00000090 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:590    .text.yt_rma_bypass_port_isolation_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:596    .text.yt_rma_bypass_port_isolation_get:00000000 yt_rma_bypass_port_isolation_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:782    .text.yt_rma_bypass_port_isolation_get:00000090 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:792    .text.yt_rma_bypass_vlan_filter_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:798    .text.yt_rma_bypass_vlan_filter_set:00000000 yt_rma_bypass_vlan_filter_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:984    .text.yt_rma_bypass_vlan_filter_set:00000090 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:994    .text.yt_rma_bypass_vlan_filter_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:1000   .text.yt_rma_bypass_vlan_filter_get:00000000 yt_rma_bypass_vlan_filter_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc207SPd.s:1186   .text.yt_rma_bypass_vlan_filter_get:00000090 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_vlan.h.17.4dbe63e648ff65010c51c5f8a737ac2d
+                           .group:00000000 wm4.yt_acl.h.25.ad9531373d966dccc96222e31e0234b5
+                           .group:00000000 wm4.yt_nic.h.17.4e5ceed38d9cfbd9b5db2d4b069b6961
+                           .group:00000000 wm4.yt_loopdetect.h.17.4739c2e436a8e779d4d8c89037b81aea
+                           .group:00000000 wm4.yt_multicast.h.17.9c1d51b153e5e1785468d9c0ad6414a4
+                           .group:00000000 wm4.yt_port.h.17.f9740394ebf086646c9c567db1605abb
+                           .group:00000000 wm4.yt_stat.h.17.f87caec2ee71e59f920ea3778bda3fad
+
+UNDEFINED SYMBOLS
+osal_printf
+gpfal_dispatch
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg

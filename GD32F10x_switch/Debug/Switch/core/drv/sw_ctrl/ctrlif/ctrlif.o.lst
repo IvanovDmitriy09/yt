@@ -1,0 +1,1101 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ctrlif.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c"
+  18              		.section	.text.calc_parity,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	calc_parity:
+  25              	.LVL0:
+  26              	.LFB3:
+   1:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** /*******************************************************************************
+   2:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** *                                                                              *
+   3:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** *                                                                              *
+   6:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** ********************************************************************************
+   7:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** */
+   8:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "yt_error.h"
+   9:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "yt_types.h"
+  10:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "yt_lock.h"
+  11:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "cal_cmm.h"
+  12:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "ctrlif.h"
+  13:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "spi.h"
+  14:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "smi.h"
+  15:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** #include "i2c.h"
+  16:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  17:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** static bool calc_parity(uint32_t data)
+  18:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** {
+  27              		.loc 1 18 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 18 1 is_stmt 0 view .LVU1
+  33 0000 0246     		mov	r2, r0
+  19:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     bool parity = 0;
+  34              		.loc 1 19 5 is_stmt 1 view .LVU2
+  35              	.LVL1:
+  20:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t len = sizeof(data) * 8;
+  36              		.loc 1 20 5 view .LVU3
+  21:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t i;
+  37              		.loc 1 21 5 view .LVU4
+  22:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  23:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     for (i = 0; i < len; i++)
+  38              		.loc 1 23 5 view .LVU5
+  39              		.loc 1 23 12 is_stmt 0 view .LVU6
+  40 0002 0023     		movs	r3, #0
+  19:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t len = sizeof(data) * 8;
+  41              		.loc 1 19 10 view .LVU7
+  42 0004 1846     		mov	r0, r3
+  43              	.LVL2:
+  44              		.loc 1 23 5 view .LVU8
+  45 0006 01E0     		b	.L2
+  46              	.LVL3:
+  47              	.L3:
+  24:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  25:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         if (data & 0x1)
+  26:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  27:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             parity = !parity;
+  28:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  29:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         data >>= 1;
+  48              		.loc 1 29 9 is_stmt 1 discriminator 2 view .LVU9
+  49              		.loc 1 29 14 is_stmt 0 discriminator 2 view .LVU10
+  50 0008 5208     		lsrs	r2, r2, #1
+  51              	.LVL4:
+  23:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  52              		.loc 1 23 27 is_stmt 1 discriminator 2 view .LVU11
+  53 000a 0133     		adds	r3, r3, #1
+  54              	.LVL5:
+  55              	.L2:
+  23:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  56              		.loc 1 23 19 discriminator 1 view .LVU12
+  57 000c 1F2B     		cmp	r3, #31
+  58 000e 05D8     		bhi	.L5
+  25:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  59              		.loc 1 25 9 view .LVU13
+  25:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  60              		.loc 1 25 12 is_stmt 0 view .LVU14
+  61 0010 12F0010F 		tst	r2, #1
+  62 0014 F8D0     		beq	.L3
+  27:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  63              		.loc 1 27 13 is_stmt 1 view .LVU15
+  64 0016 80F00100 		eor	r0, r0, #1
+  65              	.LVL6:
+  27:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  66              		.loc 1 27 13 is_stmt 0 view .LVU16
+  67 001a F5E7     		b	.L3
+  68              	.L5:
+  30:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+  31:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  32:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     return parity;
+  69              		.loc 1 32 5 is_stmt 1 view .LVU17
+  33:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** }
+  70              		.loc 1 33 1 is_stmt 0 view .LVU18
+  71 001c 7047     		bx	lr
+  72              		.cfi_endproc
+  73              	.LFE3:
+  75              		.section	.rodata.word_to_bytes.str1.4,"aMS",%progbits,1
+  76              		.align	2
+  77              	.LC0:
+  78 0000 25732573 		.ascii	"%s%s\015\012\000"
+  78      0D0A00
+  79              		.section	.text.word_to_bytes,"ax",%progbits
+  80              		.align	1
+  81              		.global	word_to_bytes
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  86              	word_to_bytes:
+  87              	.LVL7:
+  88              	.LFB4:
+  34:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  35:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** int32_t word_to_bytes(uint32_t data, uint8_t *pOut, uint8_t outLen, bool isAddr, bool bigEndian)
+  36:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** {
+  89              		.loc 1 36 1 is_stmt 1 view -0
+  90              		.cfi_startproc
+  91              		@ args = 4, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		.loc 1 36 1 is_stmt 0 view .LVU20
+  94 0000 38B5     		push	{r3, r4, r5, lr}
+  95              		.cfi_def_cfa_offset 16
+  96              		.cfi_offset 3, -16
+  97              		.cfi_offset 4, -12
+  98              		.cfi_offset 5, -8
+  99              		.cfi_offset 14, -4
+ 100 0002 9DF81050 		ldrb	r5, [sp, #16]	@ zero_extendqisi2
+  37:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t i;
+ 101              		.loc 1 37 5 is_stmt 1 view .LVU21
+  38:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     bool parity;
+ 102              		.loc 1 38 5 view .LVU22
+  39:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK((!pOut || outLen < sizeof(data)), CMM_ERR_INPUT);
+ 103              		.loc 1 40 5 view .LVU23
+ 104              		.loc 1 40 5 view .LVU24
+ 105 0006 21B1     		cbz	r1, .L7
+ 106 0008 0C46     		mov	r4, r1
+ 107              		.loc 1 40 5 is_stmt 0 discriminator 2 view .LVU25
+ 108 000a 032A     		cmp	r2, #3
+ 109 000c 01D9     		bls	.L7
+  41:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  42:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     for (i = 0; i < UINT32_BYTES_NUM; i++)
+ 110              		.loc 1 42 12 view .LVU26
+ 111 000e 0022     		movs	r2, #0
+ 112              	.LVL8:
+ 113              		.loc 1 42 12 view .LVU27
+ 114 0010 12E0     		b	.L8
+ 115              	.LVL9:
+ 116              	.L7:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 117              		.loc 1 40 5 is_stmt 1 discriminator 3 view .LVU28
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 118              		.loc 1 40 5 discriminator 3 view .LVU29
+ 119 0012 1A4B     		ldr	r3, .L20
+ 120              	.LVL10:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 121              		.loc 1 40 5 is_stmt 0 discriminator 3 view .LVU30
+ 122 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 123 0016 012B     		cmp	r3, #1
+ 124 0018 01D8     		bhi	.L18
+ 125              	.LVL11:
+ 126              	.L9:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 127              		.loc 1 40 5 is_stmt 1 discriminator 7 view .LVU31
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 128              		.loc 1 40 5 discriminator 7 view .LVU32
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 129              		.loc 1 40 5 discriminator 7 view .LVU33
+ 130 001a 0520     		movs	r0, #5
+ 131 001c 2CE0     		b	.L6
+ 132              	.LVL12:
+ 133              	.L18:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 134              		.loc 1 40 5 discriminator 5 view .LVU34
+ 135              	.LBB2:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 136              		.loc 1 40 5 discriminator 5 view .LVU35
+ 137 001e 184B     		ldr	r3, .L20+4
+ 138 0020 5A69     		ldr	r2, [r3, #20]
+ 139              	.LVL13:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 140              		.loc 1 40 5 is_stmt 0 discriminator 5 view .LVU36
+ 141 0022 184B     		ldr	r3, .L20+8
+ 142 0024 9968     		ldr	r1, [r3, #8]
+ 143              	.LVL14:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 144              		.loc 1 40 5 discriminator 5 view .LVU37
+ 145 0026 1848     		ldr	r0, .L20+12
+ 146              	.LVL15:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 147              		.loc 1 40 5 discriminator 5 view .LVU38
+ 148 0028 FFF7FEFF 		bl	osal_printf
+ 149              	.LVL16:
+ 150 002c F5E7     		b	.L9
+ 151              	.LVL17:
+ 152              	.L11:
+  40:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 153              		.loc 1 40 5 discriminator 5 view .LVU39
+ 154              	.LBE2:
+  43:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  44:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         if (bigEndian)
+  45:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             pOut[i] = (data >> ((UINT32_BYTES_NUM - i - 1) * 8)) & 0xff;
+  47:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  48:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         else
+  49:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  50:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             pOut[i] = (data >> (i * 8)) & 0xff;
+ 155              		.loc 1 50 13 is_stmt 1 view .LVU40
+ 156              		.loc 1 50 35 is_stmt 0 view .LVU41
+ 157 002e D100     		lsls	r1, r2, #3
+ 158              		.loc 1 50 29 view .LVU42
+ 159 0030 20FA01F1 		lsr	r1, r0, r1
+ 160              		.loc 1 50 21 view .LVU43
+ 161 0034 A154     		strb	r1, [r4, r2]
+ 162              	.L12:
+  42:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+ 163              		.loc 1 42 40 is_stmt 1 discriminator 2 view .LVU44
+ 164 0036 0132     		adds	r2, r2, #1
+ 165              	.LVL18:
+ 166              	.L8:
+  42:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+ 167              		.loc 1 42 19 discriminator 1 view .LVU45
+ 168 0038 032A     		cmp	r2, #3
+ 169 003a 08D8     		bhi	.L19
+  44:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+ 170              		.loc 1 44 9 view .LVU46
+  44:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+ 171              		.loc 1 44 12 is_stmt 0 view .LVU47
+ 172 003c 002D     		cmp	r5, #0
+ 173 003e F6D0     		beq	.L11
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 174              		.loc 1 46 13 is_stmt 1 view .LVU48
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 175              		.loc 1 46 55 is_stmt 0 view .LVU49
+ 176 0040 C2F10301 		rsb	r1, r2, #3
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 177              		.loc 1 46 60 view .LVU50
+ 178 0044 C900     		lsls	r1, r1, #3
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 179              		.loc 1 46 29 view .LVU51
+ 180 0046 20FA01F1 		lsr	r1, r0, r1
+  46:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 181              		.loc 1 46 21 view .LVU52
+ 182 004a A154     		strb	r1, [r4, r2]
+ 183 004c F3E7     		b	.L12
+ 184              	.L19:
+  51:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  52:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+  53:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  54:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     if (isAddr)
+ 185              		.loc 1 54 5 is_stmt 1 view .LVU53
+ 186              		.loc 1 54 8 is_stmt 0 view .LVU54
+ 187 004e 93B1     		cbz	r3, .L16
+  55:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  56:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         parity = calc_parity(data & 0xfffffffc);
+ 188              		.loc 1 56 9 is_stmt 1 view .LVU55
+ 189              		.loc 1 56 18 is_stmt 0 view .LVU56
+ 190 0050 20F00300 		bic	r0, r0, #3
+ 191              	.LVL19:
+ 192              		.loc 1 56 18 view .LVU57
+ 193 0054 FFF7FEFF 		bl	calc_parity
+ 194              	.LVL20:
+  57:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         if (bigEndian)
+ 195              		.loc 1 57 9 is_stmt 1 view .LVU58
+ 196              		.loc 1 57 12 is_stmt 0 view .LVU59
+ 197 0058 35B1     		cbz	r5, .L14
+  58:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  59:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             pOut[UINT32_BYTES_NUM - 1] = (pOut[UINT32_BYTES_NUM - 1] & 0xfc) + parity;
+ 198              		.loc 1 59 13 is_stmt 1 view .LVU60
+ 199              		.loc 1 59 47 is_stmt 0 view .LVU61
+ 200 005a E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+ 201              		.loc 1 59 70 view .LVU62
+ 202 005c 03F0FC03 		and	r3, r3, #252
+ 203              		.loc 1 59 78 view .LVU63
+ 204 0060 1844     		add	r0, r0, r3
+ 205              	.LVL21:
+ 206              		.loc 1 59 40 view .LVU64
+ 207 0062 E070     		strb	r0, [r4, #3]
+  60:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  61:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         else
+  62:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             pOut[0] = (pOut[0] & 0xfc) + parity;
+  64:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  65:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+  66:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  67:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     return CMM_ERR_OK;
+ 208              		.loc 1 67 12 view .LVU65
+ 209 0064 0020     		movs	r0, #0
+ 210 0066 07E0     		b	.L6
+ 211              	.LVL22:
+ 212              	.L14:
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 213              		.loc 1 63 13 is_stmt 1 view .LVU66
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 214              		.loc 1 63 28 is_stmt 0 view .LVU67
+ 215 0068 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 216              		.loc 1 63 32 view .LVU68
+ 217 006a 03F0FC03 		and	r3, r3, #252
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 218              		.loc 1 63 40 view .LVU69
+ 219 006e 1844     		add	r0, r0, r3
+ 220              	.LVL23:
+  63:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 221              		.loc 1 63 21 view .LVU70
+ 222 0070 2070     		strb	r0, [r4]
+ 223              		.loc 1 67 12 view .LVU71
+ 224 0072 0020     		movs	r0, #0
+ 225 0074 00E0     		b	.L6
+ 226              	.LVL24:
+ 227              	.L16:
+ 228              		.loc 1 67 12 view .LVU72
+ 229 0076 0020     		movs	r0, #0
+ 230              	.LVL25:
+ 231              	.L6:
+  68:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** }
+ 232              		.loc 1 68 1 view .LVU73
+ 233 0078 38BD     		pop	{r3, r4, r5, pc}
+ 234              	.LVL26:
+ 235              	.L21:
+ 236              		.loc 1 68 1 view .LVU74
+ 237 007a 00BF     		.align	2
+ 238              	.L20:
+ 239 007c 00000000 		.word	yt_debug_level
+ 240 0080 00000000 		.word	_yt_errmsg
+ 241 0084 00000000 		.word	_yt_prompt_msg
+ 242 0088 00000000 		.word	.LC0
+ 243              		.cfi_endproc
+ 244              	.LFE4:
+ 246              		.section	.text.bytes_to_word,"ax",%progbits
+ 247              		.align	1
+ 248              		.global	bytes_to_word
+ 249              		.syntax unified
+ 250              		.thumb
+ 251              		.thumb_func
+ 253              	bytes_to_word:
+ 254              	.LVL27:
+ 255              	.LFB5:
+  69:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  70:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** int32_t bytes_to_word(uint8_t *pData, uint32_t len, uint32_t *regValue, bool bigEndian)
+  71:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** {
+ 256              		.loc 1 71 1 is_stmt 1 view -0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		.loc 1 71 1 is_stmt 0 view .LVU76
+ 261 0000 38B5     		push	{r3, r4, r5, lr}
+ 262              		.cfi_def_cfa_offset 16
+ 263              		.cfi_offset 3, -16
+ 264              		.cfi_offset 4, -12
+ 265              		.cfi_offset 5, -8
+ 266              		.cfi_offset 14, -4
+  72:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t i;
+ 267              		.loc 1 72 5 is_stmt 1 view .LVU77
+  73:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK((!pData || !regValue || len > sizeof(*regValue)), CMM_ERR_INPUT);
+ 268              		.loc 1 74 5 view .LVU78
+ 269              		.loc 1 74 5 view .LVU79
+ 270 0002 30B1     		cbz	r0, .L23
+ 271 0004 8646     		mov	lr, r0
+ 272              		.loc 1 74 5 is_stmt 0 discriminator 2 view .LVU80
+ 273 0006 22B1     		cbz	r2, .L23
+ 274              		.loc 1 74 5 discriminator 4 view .LVU81
+ 275 0008 0429     		cmp	r1, #4
+ 276 000a 02D8     		bhi	.L23
+ 277              		.loc 1 74 5 is_stmt 1 discriminator 6 view .LVU82
+  75:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  76:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     *regValue = 0;
+ 278              		.loc 1 76 5 discriminator 6 view .LVU83
+ 279              		.loc 1 76 15 is_stmt 0 discriminator 6 view .LVU84
+ 280 000c 0020     		movs	r0, #0
+ 281              	.LVL28:
+ 282              		.loc 1 76 15 discriminator 6 view .LVU85
+ 283 000e 1060     		str	r0, [r2]
+  77:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     for (i = 0; i < len; i++)
+ 284              		.loc 1 77 5 is_stmt 1 discriminator 6 view .LVU86
+ 285              	.LVL29:
+ 286              		.loc 1 77 5 is_stmt 0 discriminator 6 view .LVU87
+ 287 0010 15E0     		b	.L27
+ 288              	.LVL30:
+ 289              	.L23:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 290              		.loc 1 74 5 is_stmt 1 discriminator 5 view .LVU88
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 291              		.loc 1 74 5 discriminator 5 view .LVU89
+ 292 0012 154B     		ldr	r3, .L34
+ 293              	.LVL31:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 294              		.loc 1 74 5 is_stmt 0 discriminator 5 view .LVU90
+ 295 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 296 0016 012B     		cmp	r3, #1
+ 297 0018 01D8     		bhi	.L32
+ 298              	.LVL32:
+ 299              	.L25:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 300              		.loc 1 74 5 is_stmt 1 discriminator 9 view .LVU91
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 301              		.loc 1 74 5 discriminator 9 view .LVU92
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 302              		.loc 1 74 5 discriminator 9 view .LVU93
+ 303 001a 0520     		movs	r0, #5
+ 304 001c 23E0     		b	.L22
+ 305              	.LVL33:
+ 306              	.L32:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 307              		.loc 1 74 5 discriminator 7 view .LVU94
+ 308              	.LBB3:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 309              		.loc 1 74 5 discriminator 7 view .LVU95
+ 310 001e 134B     		ldr	r3, .L34+4
+ 311 0020 5A69     		ldr	r2, [r3, #20]
+ 312              	.LVL34:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 313              		.loc 1 74 5 is_stmt 0 discriminator 7 view .LVU96
+ 314 0022 134B     		ldr	r3, .L34+8
+ 315 0024 9968     		ldr	r1, [r3, #8]
+ 316              	.LVL35:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 317              		.loc 1 74 5 discriminator 7 view .LVU97
+ 318 0026 1348     		ldr	r0, .L34+12
+ 319              	.LVL36:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 320              		.loc 1 74 5 discriminator 7 view .LVU98
+ 321 0028 FFF7FEFF 		bl	osal_printf
+ 322              	.LVL37:
+ 323 002c F5E7     		b	.L25
+ 324              	.LVL38:
+ 325              	.L28:
+  74:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 326              		.loc 1 74 5 discriminator 7 view .LVU99
+ 327              	.LBE3:
+  78:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+  79:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         if (bigEndian)
+  80:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             *regValue |= pData[i] << ((len - i - 1) * 8);
+  82:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  83:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         else
+  84:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+  85:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             *regValue |= pData[i] << (i * 8);
+ 328              		.loc 1 85 13 is_stmt 1 view .LVU100
+ 329              		.loc 1 85 31 is_stmt 0 view .LVU101
+ 330 002e 1EF80040 		ldrb	r4, [lr, r0]	@ zero_extendqisi2
+ 331              		.loc 1 85 41 view .LVU102
+ 332 0032 C500     		lsls	r5, r0, #3
+ 333              		.loc 1 85 35 view .LVU103
+ 334 0034 AC40     		lsls	r4, r4, r5
+ 335              		.loc 1 85 23 view .LVU104
+ 336 0036 1568     		ldr	r5, [r2]
+ 337 0038 2C43     		orrs	r4, r4, r5
+ 338 003a 1460     		str	r4, [r2]
+ 339              	.L29:
+  77:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+ 340              		.loc 1 77 27 is_stmt 1 discriminator 2 view .LVU105
+ 341 003c 0130     		adds	r0, r0, #1
+ 342              	.LVL39:
+ 343              	.L27:
+  77:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+ 344              		.loc 1 77 19 discriminator 1 view .LVU106
+ 345 003e 8842     		cmp	r0, r1
+ 346 0040 10D2     		bcs	.L33
+  79:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+ 347              		.loc 1 79 9 view .LVU107
+  79:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         {
+ 348              		.loc 1 79 12 is_stmt 0 view .LVU108
+ 349 0042 002B     		cmp	r3, #0
+ 350 0044 F3D0     		beq	.L28
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 351              		.loc 1 81 13 is_stmt 1 view .LVU109
+ 352 0046 1468     		ldr	r4, [r2]
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 353              		.loc 1 81 31 is_stmt 0 view .LVU110
+ 354 0048 1EF80050 		ldrb	r5, [lr, r0]	@ zero_extendqisi2
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 355              		.loc 1 81 44 view .LVU111
+ 356 004c A1EB000C 		sub	ip, r1, r0
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 357              		.loc 1 81 48 view .LVU112
+ 358 0050 0CF1FF3C 		add	ip, ip, #-1
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 359              		.loc 1 81 53 view .LVU113
+ 360 0054 4FEACC0C 		lsl	ip, ip, #3
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 361              		.loc 1 81 35 view .LVU114
+ 362 0058 05FA0CFC 		lsl	ip, r5, ip
+  81:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+ 363              		.loc 1 81 23 view .LVU115
+ 364 005c 44EA0C04 		orr	r4, r4, ip
+ 365 0060 1460     		str	r4, [r2]
+ 366 0062 EBE7     		b	.L29
+ 367              	.L33:
+  86:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         }
+  87:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+  88:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  89:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     return CMM_ERR_OK;
+ 368              		.loc 1 89 12 view .LVU116
+ 369 0064 0020     		movs	r0, #0
+ 370              	.LVL40:
+ 371              	.L22:
+  90:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** }
+ 372              		.loc 1 90 1 view .LVU117
+ 373 0066 38BD     		pop	{r3, r4, r5, pc}
+ 374              	.L35:
+ 375              		.align	2
+ 376              	.L34:
+ 377 0068 00000000 		.word	yt_debug_level
+ 378 006c 00000000 		.word	_yt_errmsg
+ 379 0070 00000000 		.word	_yt_prompt_msg
+ 380 0074 00000000 		.word	.LC0
+ 381              		.cfi_endproc
+ 382              	.LFE5:
+ 384              		.section	.text.ctrlif_reg_write,"ax",%progbits
+ 385              		.align	1
+ 386              		.global	ctrlif_reg_write
+ 387              		.syntax unified
+ 388              		.thumb
+ 389              		.thumb_func
+ 391              	ctrlif_reg_write:
+ 392              	.LVL41:
+ 393              	.LFB6:
+  91:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+  92:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** uint32_t ctrlif_reg_write(uint8_t unit, uint32_t regAddr, uint32_t regValue)
+  93:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** {
+ 394              		.loc 1 93 1 is_stmt 1 view -0
+ 395              		.cfi_startproc
+ 396              		@ args = 0, pretend = 0, frame = 0
+ 397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 398              		.loc 1 93 1 is_stmt 0 view .LVU119
+ 399 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 400              		.cfi_def_cfa_offset 24
+ 401              		.cfi_offset 3, -24
+ 402              		.cfi_offset 4, -20
+ 403              		.cfi_offset 5, -16
+ 404              		.cfi_offset 6, -12
+ 405              		.cfi_offset 7, -8
+ 406              		.cfi_offset 14, -4
+  94:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t ret = CMM_ERR_OK;
+ 407              		.loc 1 94 5 is_stmt 1 view .LVU120
+ 408              	.LVL42:
+  95:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     yt_swAccMethod_t method;
+ 409              		.loc 1 95 5 view .LVU121
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&UNITINFO(unit), CMM_ERR_NOT_INIT);
+ 410              		.loc 1 96 5 view .LVU122
+ 411              		.loc 1 96 5 view .LVU123
+ 412 0002 264B     		ldr	r3, .L52
+ 413 0004 13F92030 		ldrsb	r3, [r3, r0, lsl #2]
+ 414 0008 B3B1     		cbz	r3, .L47
+ 415 000a 0446     		mov	r4, r0
+ 416 000c 0F46     		mov	r7, r1
+ 417 000e 1646     		mov	r6, r2
+ 418              		.loc 1 96 5 discriminator 2 view .LVU124
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 419              		.loc 1 97 5 discriminator 2 view .LVU125
+ 420              		.loc 1 97 5 discriminator 2 view .LVU126
+ 421 0010 224B     		ldr	r3, .L52
+ 422 0012 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 423 0016 93F90450 		ldrsb	r5, [r3, #4]
+ 424 001a DDB1     		cbz	r5, .L48
+ 425              		.loc 1 97 5 discriminator 2 view .LVU127
+  98:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 426              		.loc 1 98 5 discriminator 2 view .LVU128
+ 427 001c EDB2     		uxtb	r5, r5
+ 428              	.LVL43:
+  99:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 100:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     ACCESS_LOCK();
+ 429              		.loc 1 100 5 discriminator 2 view .LVU129
+ 430 001e FFF7FEFF 		bl	ACCESS_LOCK
+ 431              	.LVL44:
+ 101:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     switch(method)
+ 432              		.loc 1 101 5 discriminator 2 view .LVU130
+ 433 0022 022D     		cmp	r5, #2
+ 434 0024 2BD0     		beq	.L42
+ 435              		.loc 1 101 5 is_stmt 0 view .LVU131
+ 436 0026 032D     		cmp	r5, #3
+ 437 0028 30D0     		beq	.L43
+ 438 002a 012D     		cmp	r5, #1
+ 439 002c 20D0     		beq	.L49
+ 440 002e 0324     		movs	r4, #3
+ 441              	.LVL45:
+ 442              	.L44:
+ 102:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {        
+ 103:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_SPI:
+ 104:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = spi_switch_write(unit, regAddr, regValue);
+ 105:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 106:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 107:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_I2C:
+ 108:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = i2c_switch_write(unit, regAddr, regValue);
+ 109:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 110:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 111:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_SMI:
+ 112:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = smi_switch_write(unit, regAddr, regValue);
+ 113:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 114:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 115:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         default:
+ 116:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = CMM_ERR_NOT_SUPPORT;
+ 117:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 118:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+ 119:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     ACCESS_UNLOCK();
+ 443              		.loc 1 119 5 is_stmt 1 view .LVU132
+ 444 0030 FFF7FEFF 		bl	ACCESS_UNLOCK
+ 445              	.LVL46:
+ 120:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     
+ 121:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     return ret;
+ 446              		.loc 1 121 5 view .LVU133
+ 447              	.L36:
+ 122:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** }
+ 448              		.loc 1 122 1 is_stmt 0 view .LVU134
+ 449 0034 2046     		mov	r0, r4
+ 450 0036 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 451              	.LVL47:
+ 452              	.L47:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 453              		.loc 1 96 5 is_stmt 1 discriminator 1 view .LVU135
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 454              		.loc 1 96 5 discriminator 1 view .LVU136
+ 455 0038 194B     		ldr	r3, .L52+4
+ 456 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 457 003c 012B     		cmp	r3, #1
+ 458 003e 01D8     		bhi	.L50
+ 459              	.LVL48:
+ 460              	.L38:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 461              		.loc 1 96 5 discriminator 5 view .LVU137
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 462              		.loc 1 96 5 discriminator 5 view .LVU138
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 463              		.loc 1 96 5 discriminator 5 view .LVU139
+ 464 0040 0424     		movs	r4, #4
+ 465 0042 F7E7     		b	.L36
+ 466              	.LVL49:
+ 467              	.L50:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 468              		.loc 1 96 5 discriminator 3 view .LVU140
+ 469              	.LBB4:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 470              		.loc 1 96 5 discriminator 3 view .LVU141
+ 471 0044 174B     		ldr	r3, .L52+8
+ 472 0046 1A69     		ldr	r2, [r3, #16]
+ 473              	.LVL50:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 474              		.loc 1 96 5 is_stmt 0 discriminator 3 view .LVU142
+ 475 0048 174B     		ldr	r3, .L52+12
+ 476 004a 9968     		ldr	r1, [r3, #8]
+ 477              	.LVL51:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 478              		.loc 1 96 5 discriminator 3 view .LVU143
+ 479 004c 1748     		ldr	r0, .L52+16
+ 480              	.LVL52:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 481              		.loc 1 96 5 discriminator 3 view .LVU144
+ 482 004e FFF7FEFF 		bl	osal_printf
+ 483              	.LVL53:
+ 484 0052 F5E7     		b	.L38
+ 485              	.LVL54:
+ 486              	.L48:
+  96:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 487              		.loc 1 96 5 discriminator 3 view .LVU145
+ 488              	.LBE4:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 489              		.loc 1 97 5 is_stmt 1 discriminator 1 view .LVU146
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 490              		.loc 1 97 5 discriminator 1 view .LVU147
+ 491 0054 124B     		ldr	r3, .L52+4
+ 492 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 493 0058 012B     		cmp	r3, #1
+ 494 005a 01D8     		bhi	.L51
+ 495              	.LVL55:
+ 496              	.L41:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 497              		.loc 1 97 5 discriminator 5 view .LVU148
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 498              		.loc 1 97 5 discriminator 5 view .LVU149
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 499              		.loc 1 97 5 discriminator 5 view .LVU150
+ 500 005c 0424     		movs	r4, #4
+ 501 005e E9E7     		b	.L36
+ 502              	.LVL56:
+ 503              	.L51:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 504              		.loc 1 97 5 discriminator 3 view .LVU151
+ 505              	.LBB5:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 506              		.loc 1 97 5 discriminator 3 view .LVU152
+ 507 0060 104B     		ldr	r3, .L52+8
+ 508 0062 1A69     		ldr	r2, [r3, #16]
+ 509              	.LVL57:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 510              		.loc 1 97 5 is_stmt 0 discriminator 3 view .LVU153
+ 511 0064 104B     		ldr	r3, .L52+12
+ 512 0066 9968     		ldr	r1, [r3, #8]
+ 513              	.LVL58:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 514              		.loc 1 97 5 discriminator 3 view .LVU154
+ 515 0068 1048     		ldr	r0, .L52+16
+ 516              	.LVL59:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 517              		.loc 1 97 5 discriminator 3 view .LVU155
+ 518 006a FFF7FEFF 		bl	osal_printf
+ 519              	.LVL60:
+ 520 006e F5E7     		b	.L41
+ 521              	.LVL61:
+ 522              	.L49:
+  97:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 523              		.loc 1 97 5 discriminator 3 view .LVU156
+ 524              	.LBE5:
+ 104:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 525              		.loc 1 104 13 is_stmt 1 view .LVU157
+ 104:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 526              		.loc 1 104 19 is_stmt 0 view .LVU158
+ 527 0070 3246     		mov	r2, r6
+ 528 0072 3946     		mov	r1, r7
+ 529 0074 2046     		mov	r0, r4
+ 530 0076 FFF7FEFF 		bl	spi_switch_write
+ 531              	.LVL62:
+ 532 007a 0446     		mov	r4, r0
+ 533              	.LVL63:
+ 105:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 534              		.loc 1 105 13 is_stmt 1 view .LVU159
+ 535 007c D8E7     		b	.L44
+ 536              	.LVL64:
+ 537              	.L42:
+ 108:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 538              		.loc 1 108 13 view .LVU160
+ 108:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 539              		.loc 1 108 19 is_stmt 0 view .LVU161
+ 540 007e 3246     		mov	r2, r6
+ 541 0080 3946     		mov	r1, r7
+ 542 0082 2046     		mov	r0, r4
+ 543 0084 FFF7FEFF 		bl	i2c_switch_write
+ 544              	.LVL65:
+ 545 0088 0446     		mov	r4, r0
+ 546              	.LVL66:
+ 109:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 547              		.loc 1 109 13 is_stmt 1 view .LVU162
+ 548 008a D1E7     		b	.L44
+ 549              	.LVL67:
+ 550              	.L43:
+ 112:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 551              		.loc 1 112 13 view .LVU163
+ 112:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 552              		.loc 1 112 19 is_stmt 0 view .LVU164
+ 553 008c 3246     		mov	r2, r6
+ 554 008e 3946     		mov	r1, r7
+ 555 0090 2046     		mov	r0, r4
+ 556 0092 FFF7FEFF 		bl	smi_switch_write
+ 557              	.LVL68:
+ 558 0096 0446     		mov	r4, r0
+ 559              	.LVL69:
+ 113:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 560              		.loc 1 113 13 is_stmt 1 view .LVU165
+ 561 0098 CAE7     		b	.L44
+ 562              	.L53:
+ 563 009a 00BF     		.align	2
+ 564              	.L52:
+ 565 009c 00000000 		.word	gpSwitchUnit
+ 566 00a0 00000000 		.word	yt_debug_level
+ 567 00a4 00000000 		.word	_yt_errmsg
+ 568 00a8 00000000 		.word	_yt_prompt_msg
+ 569 00ac 00000000 		.word	.LC0
+ 570              		.cfi_endproc
+ 571              	.LFE6:
+ 573              		.section	.text.ctrlif_reg_read,"ax",%progbits
+ 574              		.align	1
+ 575              		.global	ctrlif_reg_read
+ 576              		.syntax unified
+ 577              		.thumb
+ 578              		.thumb_func
+ 580              	ctrlif_reg_read:
+ 581              	.LVL70:
+ 582              	.LFB7:
+ 123:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 124:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** uint32_t ctrlif_reg_read(uint8_t unit, uint32_t regAddr, uint32_t *pRegVale)
+ 125:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** {
+ 583              		.loc 1 125 1 view -0
+ 584              		.cfi_startproc
+ 585              		@ args = 0, pretend = 0, frame = 0
+ 586              		@ frame_needed = 0, uses_anonymous_args = 0
+ 587              		.loc 1 125 1 is_stmt 0 view .LVU167
+ 588 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 589              		.cfi_def_cfa_offset 24
+ 590              		.cfi_offset 3, -24
+ 591              		.cfi_offset 4, -20
+ 592              		.cfi_offset 5, -16
+ 593              		.cfi_offset 6, -12
+ 594              		.cfi_offset 7, -8
+ 595              		.cfi_offset 14, -4
+ 126:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     uint32_t ret = CMM_ERR_OK;
+ 596              		.loc 1 126 5 is_stmt 1 view .LVU168
+ 597              	.LVL71:
+ 127:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     yt_swAccMethod_t method;
+ 598              		.loc 1 127 5 view .LVU169
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&UNITINFO(unit), CMM_ERR_NOT_INIT);
+ 599              		.loc 1 128 5 view .LVU170
+ 600              		.loc 1 128 5 view .LVU171
+ 601 0002 264B     		ldr	r3, .L69
+ 602 0004 13F92030 		ldrsb	r3, [r3, r0, lsl #2]
+ 603 0008 B3B1     		cbz	r3, .L65
+ 604 000a 0446     		mov	r4, r0
+ 605 000c 0F46     		mov	r7, r1
+ 606 000e 1646     		mov	r6, r2
+ 607              		.loc 1 128 5 discriminator 2 view .LVU172
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 608              		.loc 1 129 5 discriminator 2 view .LVU173
+ 609              		.loc 1 129 5 discriminator 2 view .LVU174
+ 610 0010 224B     		ldr	r3, .L69
+ 611 0012 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 612 0016 93F90450 		ldrsb	r5, [r3, #4]
+ 613 001a DDB1     		cbz	r5, .L66
+ 614              		.loc 1 129 5 discriminator 2 view .LVU175
+ 130:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 615              		.loc 1 130 5 discriminator 2 view .LVU176
+ 616 001c EDB2     		uxtb	r5, r5
+ 617              	.LVL72:
+ 131:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** 
+ 132:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     ACCESS_LOCK();
+ 618              		.loc 1 132 5 discriminator 2 view .LVU177
+ 619 001e FFF7FEFF 		bl	ACCESS_LOCK
+ 620              	.LVL73:
+ 133:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     switch(method)
+ 621              		.loc 1 133 5 discriminator 2 view .LVU178
+ 622 0022 022D     		cmp	r5, #2
+ 623 0024 32D0     		beq	.L60
+ 624              		.loc 1 133 5 is_stmt 0 view .LVU179
+ 625 0026 032D     		cmp	r5, #3
+ 626 0028 22D0     		beq	.L61
+ 627 002a 012D     		cmp	r5, #1
+ 628 002c 27D0     		beq	.L62
+ 629 002e 0424     		movs	r4, #4
+ 630              	.LVL74:
+ 631              	.L63:
+ 134:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     {
+ 135:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_SMI:
+ 136:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = smi_switch_read(unit, regAddr, pRegVale);
+ 137:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 138:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             
+ 139:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_SPI:
+ 140:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = spi_switch_read(unit, regAddr, pRegVale);
+ 141:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 142:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 143:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         case SWCHIP_ACC_I2C:
+ 144:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = i2c_switch_read(unit, regAddr, pRegVale);
+ 145:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 146:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             
+ 147:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         default:
+ 148:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             ret = CMM_ERR_NOT_INIT;
+ 149:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 150:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     }
+ 151:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     ACCESS_UNLOCK();
+ 632              		.loc 1 151 5 is_stmt 1 view .LVU180
+ 633 0030 FFF7FEFF 		bl	ACCESS_UNLOCK
+ 634              	.LVL75:
+ 152:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     
+ 153:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     return ret;
+ 635              		.loc 1 153 5 view .LVU181
+ 636              	.L54:
+ 154:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c **** }
+ 637              		.loc 1 154 1 is_stmt 0 view .LVU182
+ 638 0034 2046     		mov	r0, r4
+ 639 0036 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 640              	.LVL76:
+ 641              	.L65:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 642              		.loc 1 128 5 is_stmt 1 discriminator 1 view .LVU183
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 643              		.loc 1 128 5 discriminator 1 view .LVU184
+ 644 0038 194B     		ldr	r3, .L69+4
+ 645 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 646 003c 012B     		cmp	r3, #1
+ 647 003e 01D8     		bhi	.L67
+ 648              	.LVL77:
+ 649              	.L56:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 650              		.loc 1 128 5 discriminator 5 view .LVU185
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 651              		.loc 1 128 5 discriminator 5 view .LVU186
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 652              		.loc 1 128 5 discriminator 5 view .LVU187
+ 653 0040 0424     		movs	r4, #4
+ 654 0042 F7E7     		b	.L54
+ 655              	.LVL78:
+ 656              	.L67:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 657              		.loc 1 128 5 discriminator 3 view .LVU188
+ 658              	.LBB6:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 659              		.loc 1 128 5 discriminator 3 view .LVU189
+ 660 0044 174B     		ldr	r3, .L69+8
+ 661 0046 1A69     		ldr	r2, [r3, #16]
+ 662              	.LVL79:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 663              		.loc 1 128 5 is_stmt 0 discriminator 3 view .LVU190
+ 664 0048 174B     		ldr	r3, .L69+12
+ 665 004a 9968     		ldr	r1, [r3, #8]
+ 666              	.LVL80:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 667              		.loc 1 128 5 discriminator 3 view .LVU191
+ 668 004c 1748     		ldr	r0, .L69+16
+ 669              	.LVL81:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 670              		.loc 1 128 5 discriminator 3 view .LVU192
+ 671 004e FFF7FEFF 		bl	osal_printf
+ 672              	.LVL82:
+ 673 0052 F5E7     		b	.L56
+ 674              	.LVL83:
+ 675              	.L66:
+ 128:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     CMM_PARAM_CHK(!*(char*)&SWITCH_ACCESOR_ON_UNIT(unit), CMM_ERR_NOT_INIT);
+ 676              		.loc 1 128 5 discriminator 3 view .LVU193
+ 677              	.LBE6:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 678              		.loc 1 129 5 is_stmt 1 discriminator 1 view .LVU194
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 679              		.loc 1 129 5 discriminator 1 view .LVU195
+ 680 0054 124B     		ldr	r3, .L69+4
+ 681 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 682 0058 012B     		cmp	r3, #1
+ 683 005a 01D8     		bhi	.L68
+ 684              	.LVL84:
+ 685              	.L59:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 686              		.loc 1 129 5 discriminator 5 view .LVU196
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 687              		.loc 1 129 5 discriminator 5 view .LVU197
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 688              		.loc 1 129 5 discriminator 5 view .LVU198
+ 689 005c 0424     		movs	r4, #4
+ 690 005e E9E7     		b	.L54
+ 691              	.LVL85:
+ 692              	.L68:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 693              		.loc 1 129 5 discriminator 3 view .LVU199
+ 694              	.LBB7:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 695              		.loc 1 129 5 discriminator 3 view .LVU200
+ 696 0060 104B     		ldr	r3, .L69+8
+ 697 0062 1A69     		ldr	r2, [r3, #16]
+ 698              	.LVL86:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 699              		.loc 1 129 5 is_stmt 0 discriminator 3 view .LVU201
+ 700 0064 104B     		ldr	r3, .L69+12
+ 701 0066 9968     		ldr	r1, [r3, #8]
+ 702              	.LVL87:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 703              		.loc 1 129 5 discriminator 3 view .LVU202
+ 704 0068 1048     		ldr	r0, .L69+16
+ 705              	.LVL88:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 706              		.loc 1 129 5 discriminator 3 view .LVU203
+ 707 006a FFF7FEFF 		bl	osal_printf
+ 708              	.LVL89:
+ 709 006e F5E7     		b	.L59
+ 710              	.LVL90:
+ 711              	.L61:
+ 129:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****     method = SWITCH_ACCESS_METHOD_ON_UNIT(unit);
+ 712              		.loc 1 129 5 discriminator 3 view .LVU204
+ 713              	.LBE7:
+ 136:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 714              		.loc 1 136 13 is_stmt 1 view .LVU205
+ 136:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 715              		.loc 1 136 19 is_stmt 0 view .LVU206
+ 716 0070 3246     		mov	r2, r6
+ 717 0072 3946     		mov	r1, r7
+ 718 0074 2046     		mov	r0, r4
+ 719 0076 FFF7FEFF 		bl	smi_switch_read
+ 720              	.LVL91:
+ 721 007a 0446     		mov	r4, r0
+ 722              	.LVL92:
+ 137:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             
+ 723              		.loc 1 137 13 is_stmt 1 view .LVU207
+ 724 007c D8E7     		b	.L63
+ 725              	.LVL93:
+ 726              	.L62:
+ 140:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 727              		.loc 1 140 13 view .LVU208
+ 140:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 728              		.loc 1 140 19 is_stmt 0 view .LVU209
+ 729 007e 3246     		mov	r2, r6
+ 730 0080 3946     		mov	r1, r7
+ 731 0082 2046     		mov	r0, r4
+ 732 0084 FFF7FEFF 		bl	spi_switch_read
+ 733              	.LVL94:
+ 734 0088 0446     		mov	r4, r0
+ 735              	.LVL95:
+ 141:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****         
+ 736              		.loc 1 141 13 is_stmt 1 view .LVU210
+ 737 008a D1E7     		b	.L63
+ 738              	.LVL96:
+ 739              	.L60:
+ 144:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 740              		.loc 1 144 13 view .LVU211
+ 144:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             break;
+ 741              		.loc 1 144 19 is_stmt 0 view .LVU212
+ 742 008c 3246     		mov	r2, r6
+ 743 008e 3946     		mov	r1, r7
+ 744 0090 2046     		mov	r0, r4
+ 745 0092 FFF7FEFF 		bl	i2c_switch_read
+ 746              	.LVL97:
+ 747 0096 0446     		mov	r4, r0
+ 748              	.LVL98:
+ 145:../Switch/core/drv/sw_ctrl/ctrlif/ctrlif.c ****             
+ 749              		.loc 1 145 13 is_stmt 1 view .LVU213
+ 750 0098 CAE7     		b	.L63
+ 751              	.L70:
+ 752 009a 00BF     		.align	2
+ 753              	.L69:
+ 754 009c 00000000 		.word	gpSwitchUnit
+ 755 00a0 00000000 		.word	yt_debug_level
+ 756 00a4 00000000 		.word	_yt_errmsg
+ 757 00a8 00000000 		.word	_yt_prompt_msg
+ 758 00ac 00000000 		.word	.LC0
+ 759              		.cfi_endproc
+ 760              	.LFE7:
+ 762              		.text
+ 763              	.Letext0:
+ 764              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 765              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 766              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 767              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\cal/cal_bprofile.h"
+ 768              		.file 6 "../Switch/core/drv/sw_ctrl/ctrlif/i2c.h"
+ 769              		.file 7 "../Switch/core/drv/sw_ctrl/ctrlif/spi.h"
+ 770              		.file 8 "../Switch/core/drv/sw_ctrl/ctrlif/smi.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ctrlif.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:19     .text.calc_parity:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:24     .text.calc_parity:00000000 calc_parity
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:76     .rodata.word_to_bytes.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:80     .text.word_to_bytes:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:86     .text.word_to_bytes:00000000 word_to_bytes
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:239    .text.word_to_bytes:0000007c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:247    .text.bytes_to_word:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:253    .text.bytes_to_word:00000000 bytes_to_word
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:377    .text.bytes_to_word:00000068 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:385    .text.ctrlif_reg_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:391    .text.ctrlif_reg_write:00000000 ctrlif_reg_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:565    .text.ctrlif_reg_write:0000009c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:574    .text.ctrlif_reg_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:580    .text.ctrlif_reg_read:00000000 ctrlif_reg_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccvKy8hk.s:754    .text.ctrlif_reg_read:0000009c $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.eec47faa946e01877de19a2f99ee7710
+                           .group:00000000 wm4.ctrlif.h.10.c42920dca83090354a36836e9fd1d269
+
+UNDEFINED SYMBOLS
+osal_printf
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+ACCESS_LOCK
+ACCESS_UNLOCK
+spi_switch_write
+i2c_switch_write
+smi_switch_write
+gpSwitchUnit
+smi_switch_read
+spi_switch_read
+i2c_switch_read

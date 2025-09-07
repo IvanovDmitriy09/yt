@@ -1,0 +1,711 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"cal_cmm.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/cal/cal_cmm.c"
+  18              		.section	.rodata.cal_ytportmask_isvalid.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 25732573 		.ascii	"%s%s\015\012\000"
+  21      0D0A00
+  22              		.section	.text.cal_ytportmask_isvalid,"ax",%progbits
+  23              		.align	1
+  24              		.global	cal_ytportmask_isvalid
+  25              		.syntax unified
+  26              		.thumb
+  27              		.thumb_func
+  29              	cal_ytportmask_isvalid:
+  30              	.LVL0:
+  31              	.LFB3:
+   1:../Switch/core/cal/cal_cmm.c **** #include "yt_error.h"
+   2:../Switch/core/cal/cal_cmm.c **** #include "cal_mgm.h"
+   3:../Switch/core/cal/cal_cmm.c **** #include "cal_cmm.h"
+   4:../Switch/core/cal/cal_cmm.c **** 
+   5:../Switch/core/cal/cal_cmm.c **** uint32_t cal_ytportmask_isvalid(yt_unit_t unit, yt_port_mask_t port_mask, yt_bool_t incCpuPort)
+   6:../Switch/core/cal/cal_cmm.c **** {
+  32              		.loc 1 6 1 view -0
+  33              		.cfi_startproc
+  34              		@ args = 0, pretend = 0, frame = 8
+  35              		@ frame_needed = 0, uses_anonymous_args = 0
+  36              		.loc 1 6 1 is_stmt 0 view .LVU1
+  37 0000 30B5     		push	{r4, r5, lr}
+  38              		.cfi_def_cfa_offset 12
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  42 0002 83B0     		sub	sp, sp, #12
+  43              		.cfi_def_cfa_offset 24
+  44 0004 0191     		str	r1, [sp, #4]
+   7:../Switch/core/cal/cal_cmm.c ****     uint8_t i = 0;
+  45              		.loc 1 7 5 is_stmt 1 view .LVU2
+  46              	.LVL1:
+   8:../Switch/core/cal/cal_cmm.c **** 
+   9:../Switch/core/cal/cal_cmm.c ****     CMM_PARAM_CHK(!gcal_inited, CMM_ERR_FAIL);
+  47              		.loc 1 9 5 view .LVU3
+  48              		.loc 1 9 5 view .LVU4
+  49 0006 1B4B     		ldr	r3, .L15
+  50 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  51 000a 23B1     		cbz	r3, .L12
+  10:../Switch/core/cal/cal_cmm.c **** 
+  11:../Switch/core/cal/cal_cmm.c ****     for(i = 0; i < YT_PORTS_WORD_NUM; i++)
+  52              		.loc 1 11 11 is_stmt 0 view .LVU5
+  53 000c 0023     		movs	r3, #0
+  54              	.LVL2:
+  55              	.L2:
+  56              		.loc 1 11 18 is_stmt 1 discriminator 1 view .LVU6
+  57 000e 83B1     		cbz	r3, .L7
+  12:../Switch/core/cal/cal_cmm.c ****     {
+  13:../Switch/core/cal/cal_cmm.c ****         if (TRUE == incCpuPort)
+  14:../Switch/core/cal/cal_cmm.c ****         {
+  15:../Switch/core/cal/cal_cmm.c ****             if(port_mask.portbits[i] & (~gBoardInfo.allportmask[unit].portbits[i]))
+  16:../Switch/core/cal/cal_cmm.c ****             {
+  17:../Switch/core/cal/cal_cmm.c ****                 return CMM_ERR_FAIL;
+  18:../Switch/core/cal/cal_cmm.c ****             }
+  19:../Switch/core/cal/cal_cmm.c ****         }
+  20:../Switch/core/cal/cal_cmm.c ****         else
+  21:../Switch/core/cal/cal_cmm.c ****         {
+  22:../Switch/core/cal/cal_cmm.c ****             if(port_mask.portbits[i] & (~gBoardInfo.portmask[unit].portbits[i]))
+  23:../Switch/core/cal/cal_cmm.c ****             {
+  24:../Switch/core/cal/cal_cmm.c ****                 return CMM_ERR_FAIL;
+  25:../Switch/core/cal/cal_cmm.c ****             }
+  26:../Switch/core/cal/cal_cmm.c ****         }
+  27:../Switch/core/cal/cal_cmm.c ****     }
+  28:../Switch/core/cal/cal_cmm.c **** 
+  29:../Switch/core/cal/cal_cmm.c ****     return CMM_ERR_OK;
+  58              		.loc 1 29 12 is_stmt 0 view .LVU7
+  59 0010 0020     		movs	r0, #0
+  60              	.LVL3:
+  61              	.L1:
+  30:../Switch/core/cal/cal_cmm.c **** }
+  62              		.loc 1 30 1 view .LVU8
+  63 0012 03B0     		add	sp, sp, #12
+  64              		.cfi_remember_state
+  65              		.cfi_def_cfa_offset 12
+  66              		@ sp needed
+  67 0014 30BD     		pop	{r4, r5, pc}
+  68              	.LVL4:
+  69              	.L12:
+  70              		.cfi_restore_state
+   9:../Switch/core/cal/cal_cmm.c **** 
+  71              		.loc 1 9 5 is_stmt 1 discriminator 1 view .LVU9
+   9:../Switch/core/cal/cal_cmm.c **** 
+  72              		.loc 1 9 5 discriminator 1 view .LVU10
+  73 0016 184B     		ldr	r3, .L15+4
+  74 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  75 001a 012B     		cmp	r3, #1
+  76 001c 01D8     		bhi	.L13
+  77              	.LVL5:
+  78              	.L3:
+   9:../Switch/core/cal/cal_cmm.c **** 
+  79              		.loc 1 9 5 discriminator 5 view .LVU11
+   9:../Switch/core/cal/cal_cmm.c **** 
+  80              		.loc 1 9 5 discriminator 5 view .LVU12
+   9:../Switch/core/cal/cal_cmm.c **** 
+  81              		.loc 1 9 5 discriminator 5 view .LVU13
+  82 001e 0120     		movs	r0, #1
+  83 0020 F7E7     		b	.L1
+  84              	.LVL6:
+  85              	.L13:
+   9:../Switch/core/cal/cal_cmm.c **** 
+  86              		.loc 1 9 5 discriminator 3 view .LVU14
+  87              	.LBB2:
+   9:../Switch/core/cal/cal_cmm.c **** 
+  88              		.loc 1 9 5 discriminator 3 view .LVU15
+  89 0022 164B     		ldr	r3, .L15+8
+  90 0024 5A68     		ldr	r2, [r3, #4]
+  91              	.LVL7:
+   9:../Switch/core/cal/cal_cmm.c **** 
+  92              		.loc 1 9 5 is_stmt 0 discriminator 3 view .LVU16
+  93 0026 164B     		ldr	r3, .L15+12
+  94 0028 9968     		ldr	r1, [r3, #8]
+  95 002a 1648     		ldr	r0, .L15+16
+  96              	.LVL8:
+   9:../Switch/core/cal/cal_cmm.c **** 
+  97              		.loc 1 9 5 discriminator 3 view .LVU17
+  98 002c FFF7FEFF 		bl	osal_printf
+  99              	.LVL9:
+ 100 0030 F5E7     		b	.L3
+ 101              	.LVL10:
+ 102              	.L7:
+   9:../Switch/core/cal/cal_cmm.c **** 
+ 103              		.loc 1 9 5 discriminator 3 view .LVU18
+ 104              	.LBE2:
+  13:../Switch/core/cal/cal_cmm.c ****         {
+ 105              		.loc 1 13 9 is_stmt 1 view .LVU19
+  13:../Switch/core/cal/cal_cmm.c ****         {
+ 106              		.loc 1 13 12 is_stmt 0 view .LVU20
+ 107 0032 72B1     		cbz	r2, .L5
+  15:../Switch/core/cal/cal_cmm.c ****             {
+ 108              		.loc 1 15 13 is_stmt 1 view .LVU21
+  15:../Switch/core/cal/cal_cmm.c ****             {
+ 109              		.loc 1 15 34 is_stmt 0 view .LVU22
+ 110 0034 02A9     		add	r1, sp, #8
+ 111 0036 01EB8301 		add	r1, r1, r3, lsl #2
+ 112 003a 51F8044C 		ldr	r4, [r1, #-4]
+  15:../Switch/core/cal/cal_cmm.c ****             {
+ 113              		.loc 1 15 79 view .LVU23
+ 114 003e 1918     		adds	r1, r3, r0
+ 115 0040 0C31     		adds	r1, r1, #12
+ 116 0042 114D     		ldr	r5, .L15+20
+ 117 0044 55F82110 		ldr	r1, [r5, r1, lsl #2]
+  15:../Switch/core/cal/cal_cmm.c ****             {
+ 118              		.loc 1 15 15 view .LVU24
+ 119 0048 8C43     		bics	r4, r4, r1
+ 120 004a 10D1     		bne	.L14
+ 121              	.L6:
+  11:../Switch/core/cal/cal_cmm.c ****     {
+ 122              		.loc 1 11 40 is_stmt 1 discriminator 2 view .LVU25
+ 123 004c 0133     		adds	r3, r3, #1
+ 124              	.LVL11:
+  11:../Switch/core/cal/cal_cmm.c ****     {
+ 125              		.loc 1 11 40 is_stmt 0 discriminator 2 view .LVU26
+ 126 004e DBB2     		uxtb	r3, r3
+ 127              	.LVL12:
+  11:../Switch/core/cal/cal_cmm.c ****     {
+ 128              		.loc 1 11 40 discriminator 2 view .LVU27
+ 129 0050 DDE7     		b	.L2
+ 130              	.L5:
+  22:../Switch/core/cal/cal_cmm.c ****             {
+ 131              		.loc 1 22 13 is_stmt 1 view .LVU28
+  22:../Switch/core/cal/cal_cmm.c ****             {
+ 132              		.loc 1 22 34 is_stmt 0 view .LVU29
+ 133 0052 02A9     		add	r1, sp, #8
+ 134 0054 01EB8301 		add	r1, r1, r3, lsl #2
+ 135 0058 51F8044C 		ldr	r4, [r1, #-4]
+  22:../Switch/core/cal/cal_cmm.c ****             {
+ 136              		.loc 1 22 76 view .LVU30
+ 137 005c 1918     		adds	r1, r3, r0
+ 138 005e 0631     		adds	r1, r1, #6
+ 139 0060 094D     		ldr	r5, .L15+20
+ 140 0062 55F82110 		ldr	r1, [r5, r1, lsl #2]
+  22:../Switch/core/cal/cal_cmm.c ****             {
+ 141              		.loc 1 22 15 view .LVU31
+ 142 0066 8C43     		bics	r4, r4, r1
+ 143 0068 F0D0     		beq	.L6
+  24:../Switch/core/cal/cal_cmm.c ****             }
+ 144              		.loc 1 24 24 view .LVU32
+ 145 006a 0120     		movs	r0, #1
+ 146              	.LVL13:
+  24:../Switch/core/cal/cal_cmm.c ****             }
+ 147              		.loc 1 24 24 view .LVU33
+ 148 006c D1E7     		b	.L1
+ 149              	.LVL14:
+ 150              	.L14:
+  17:../Switch/core/cal/cal_cmm.c ****             }
+ 151              		.loc 1 17 24 view .LVU34
+ 152 006e 0120     		movs	r0, #1
+ 153              	.LVL15:
+  17:../Switch/core/cal/cal_cmm.c ****             }
+ 154              		.loc 1 17 24 view .LVU35
+ 155 0070 CFE7     		b	.L1
+ 156              	.L16:
+ 157 0072 00BF     		.align	2
+ 158              	.L15:
+ 159 0074 00000000 		.word	gcal_inited
+ 160 0078 00000000 		.word	yt_debug_level
+ 161 007c 00000000 		.word	_yt_errmsg
+ 162 0080 00000000 		.word	_yt_prompt_msg
+ 163 0084 00000000 		.word	.LC0
+ 164 0088 00000000 		.word	gBoardInfo
+ 165              		.cfi_endproc
+ 166              	.LFE3:
+ 168              		.section	.text.cal_ytportmask_update,"ax",%progbits
+ 169              		.align	1
+ 170              		.global	cal_ytportmask_update
+ 171              		.syntax unified
+ 172              		.thumb
+ 173              		.thumb_func
+ 175              	cal_ytportmask_update:
+ 176              	.LVL16:
+ 177              	.LFB4:
+  31:../Switch/core/cal/cal_cmm.c **** 
+  32:../Switch/core/cal/cal_cmm.c **** /* add or remove port to yt port mask, for cpu port set */
+  33:../Switch/core/cal/cal_cmm.c **** uint32_t cal_ytportmask_update(yt_unit_t unit, yt_port_t port, yt_bool_t flag)
+  34:../Switch/core/cal/cal_cmm.c **** {
+ 178              		.loc 1 34 1 is_stmt 1 view -0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		@ link register save eliminated.
+ 183              		.loc 1 34 1 is_stmt 0 view .LVU37
+ 184 0000 10B4     		push	{r4}
+ 185              		.cfi_def_cfa_offset 4
+ 186              		.cfi_offset 4, -4
+  35:../Switch/core/cal/cal_cmm.c ****     if(TRUE == flag)
+ 187              		.loc 1 35 5 is_stmt 1 view .LVU38
+ 188              		.loc 1 35 7 is_stmt 0 view .LVU39
+ 189 0002 A2B1     		cbz	r2, .L18
+  36:../Switch/core/cal/cal_cmm.c ****     {
+  37:../Switch/core/cal/cal_cmm.c ****         CMM_SET_MEMBER_PORT(gBoardInfo.portmask[unit], port);
+ 190              		.loc 1 37 9 is_stmt 1 view .LVU40
+ 191              	.LBB3:
+ 192              		.loc 1 37 9 view .LVU41
+ 193              		.loc 1 37 9 view .LVU42
+ 194              		.loc 1 37 9 view .LVU43
+ 195 0004 4B09     		lsrs	r3, r1, #5
+ 196 0006 C1F34712 		ubfx	r2, r1, #5, #8
+ 197              	.LVL17:
+ 198              		.loc 1 37 9 view .LVU44
+ 199 000a 01F01F01 		and	r1, r1, #31
+ 200              	.LVL18:
+ 201              		.loc 1 37 9 view .LVU45
+ 202 000e 5AB9     		cbnz	r2, .L19
+ 203              		.loc 1 37 9 discriminator 1 view .LVU46
+ 204 0010 DBB2     		uxtb	r3, r3
+ 205 0012 114C     		ldr	r4, .L21
+ 206 0014 0344     		add	r3, r3, r0
+ 207 0016 0633     		adds	r3, r3, #6
+ 208 0018 54F82320 		ldr	r2, [r4, r3, lsl #2]
+ 209              	.LVL19:
+ 210              		.loc 1 37 9 is_stmt 0 discriminator 1 view .LVU47
+ 211 001c 0120     		movs	r0, #1
+ 212              	.LVL20:
+ 213              		.loc 1 37 9 discriminator 1 view .LVU48
+ 214 001e 00FA01F1 		lsl	r1, r0, r1
+ 215              	.LVL21:
+ 216              		.loc 1 37 9 discriminator 1 view .LVU49
+ 217 0022 0A43     		orrs	r2, r2, r1
+ 218 0024 44F82320 		str	r2, [r4, r3, lsl #2]
+ 219              	.LVL22:
+ 220              	.L19:
+ 221              		.loc 1 37 9 discriminator 1 view .LVU50
+ 222              	.LBE3:
+  38:../Switch/core/cal/cal_cmm.c ****     }
+  39:../Switch/core/cal/cal_cmm.c ****     else
+  40:../Switch/core/cal/cal_cmm.c ****     {
+  41:../Switch/core/cal/cal_cmm.c ****         CMM_RESET_MEMBER_PORT(gBoardInfo.portmask[unit], port);
+ 223              		.loc 1 41 9 is_stmt 1 discriminator 3 view .LVU51
+  42:../Switch/core/cal/cal_cmm.c ****     }
+  43:../Switch/core/cal/cal_cmm.c ****     
+  44:../Switch/core/cal/cal_cmm.c ****     return CMM_ERR_OK;
+ 224              		.loc 1 44 5 discriminator 3 view .LVU52
+  45:../Switch/core/cal/cal_cmm.c **** }
+ 225              		.loc 1 45 1 is_stmt 0 discriminator 3 view .LVU53
+ 226 0028 0020     		movs	r0, #0
+ 227 002a 10BC     		pop	{r4}
+ 228              		.cfi_remember_state
+ 229              		.cfi_restore 4
+ 230              		.cfi_def_cfa_offset 0
+ 231 002c 7047     		bx	lr
+ 232              	.LVL23:
+ 233              	.L18:
+ 234              		.cfi_restore_state
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 235              		.loc 1 41 9 is_stmt 1 view .LVU54
+ 236              	.LBB4:
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 237              		.loc 1 41 9 view .LVU55
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 238              		.loc 1 41 9 view .LVU56
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 239              		.loc 1 41 9 view .LVU57
+ 240 002e 4B09     		lsrs	r3, r1, #5
+ 241 0030 C1F34712 		ubfx	r2, r1, #5, #8
+ 242              	.LVL24:
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 243              		.loc 1 41 9 view .LVU58
+ 244 0034 01F01F01 		and	r1, r1, #31
+ 245              	.LVL25:
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 246              		.loc 1 41 9 view .LVU59
+ 247 0038 002A     		cmp	r2, #0
+ 248 003a F5D1     		bne	.L19
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 249              		.loc 1 41 9 discriminator 1 view .LVU60
+ 250 003c DBB2     		uxtb	r3, r3
+ 251 003e 064C     		ldr	r4, .L21
+ 252 0040 1844     		add	r0, r0, r3
+ 253              	.LVL26:
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 254              		.loc 1 41 9 is_stmt 0 discriminator 1 view .LVU61
+ 255 0042 0630     		adds	r0, r0, #6
+ 256 0044 54F82030 		ldr	r3, [r4, r0, lsl #2]
+ 257 0048 0122     		movs	r2, #1
+ 258              	.LVL27:
+  41:../Switch/core/cal/cal_cmm.c ****     }
+ 259              		.loc 1 41 9 discriminator 1 view .LVU62
+ 260 004a 8A40     		lsls	r2, r2, r1
+ 261 004c 23EA0203 		bic	r3, r3, r2
+ 262 0050 44F82030 		str	r3, [r4, r0, lsl #2]
+ 263 0054 E8E7     		b	.L19
+ 264              	.L22:
+ 265 0056 00BF     		.align	2
+ 266              	.L21:
+ 267 0058 00000000 		.word	gBoardInfo
+ 268              	.LBE4:
+ 269              		.cfi_endproc
+ 270              	.LFE4:
+ 272              		.section	.text.cal_phy_model_get,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	cal_phy_model_get
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 279              	cal_phy_model_get:
+ 280              	.LVL28:
+ 281              	.LFB5:
+  46:../Switch/core/cal/cal_cmm.c **** 
+  47:../Switch/core/cal/cal_cmm.c **** yt_phy_chip_model_t cal_phy_model_get(yt_unit_t unit, yt_port_t port)
+  48:../Switch/core/cal/cal_cmm.c **** {
+ 282              		.loc 1 48 1 is_stmt 1 view -0
+ 283              		.cfi_startproc
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 286              		@ link register save eliminated.
+  49:../Switch/core/cal/cal_cmm.c ****     uint8_t phy_index;
+ 287              		.loc 1 49 5 view .LVU64
+  50:../Switch/core/cal/cal_cmm.c **** 
+  51:../Switch/core/cal/cal_cmm.c ****     if(!CMM_PORT_VALID(unit, port))
+ 288              		.loc 1 51 5 view .LVU65
+ 289              		.loc 1 51 9 is_stmt 0 view .LVU66
+ 290 0000 0B4B     		ldr	r3, .L27
+ 291 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 292              		.loc 1 51 7 view .LVU67
+ 293 0004 83B1     		cbz	r3, .L25
+ 294              		.loc 1 51 9 discriminator 1 view .LVU68
+ 295 0006 0B4B     		ldr	r3, .L27+4
+ 296 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 297 000c 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 298              		.loc 1 51 8 discriminator 1 view .LVU69
+ 299 000e 8A42     		cmp	r2, r1
+ 300 0010 0CD9     		bls	.L26
+  52:../Switch/core/cal/cal_cmm.c ****     {
+  53:../Switch/core/cal/cal_cmm.c ****         return INVALID_ID;
+  54:../Switch/core/cal/cal_cmm.c ****     }
+  55:../Switch/core/cal/cal_cmm.c **** 
+  56:../Switch/core/cal/cal_cmm.c ****     phy_index = UNITINFO(unit)->pPortDescp[port]->phy_index;
+ 301              		.loc 1 56 5 is_stmt 1 view .LVU70
+ 302              		.loc 1 56 43 is_stmt 0 view .LVU71
+ 303 0012 0631     		adds	r1, r1, #6
+ 304              	.LVL29:
+ 305              		.loc 1 56 43 view .LVU72
+ 306 0014 53F82120 		ldr	r2, [r3, r1, lsl #2]
+ 307              		.loc 1 56 15 view .LVU73
+ 308 0018 9078     		ldrb	r0, [r2, #2]	@ zero_extendqisi2
+ 309              	.LVL30:
+  57:../Switch/core/cal/cal_cmm.c ****     if(phy_index != INVALID_ID)
+ 310              		.loc 1 57 5 is_stmt 1 view .LVU74
+ 311              		.loc 1 57 7 is_stmt 0 view .LVU75
+ 312 001a FF28     		cmp	r0, #255
+ 313 001c 07D0     		beq	.L24
+  58:../Switch/core/cal/cal_cmm.c ****     {
+  59:../Switch/core/cal/cal_cmm.c ****         return UNITINFO(unit)->pPhyDescp[phy_index]->chip_model;
+ 314              		.loc 1 59 9 is_stmt 1 view .LVU76
+ 315              		.loc 1 59 41 is_stmt 0 view .LVU77
+ 316 001e 2630     		adds	r0, r0, #38
+ 317              	.LVL31:
+ 318              		.loc 1 59 41 view .LVU78
+ 319 0020 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 320              		.loc 1 59 52 view .LVU79
+ 321 0024 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 322              	.LVL32:
+ 323              		.loc 1 59 52 view .LVU80
+ 324 0026 7047     		bx	lr
+ 325              	.LVL33:
+ 326              	.L25:
+  53:../Switch/core/cal/cal_cmm.c ****     }
+ 327              		.loc 1 53 16 view .LVU81
+ 328 0028 FF20     		movs	r0, #255
+ 329              	.LVL34:
+  53:../Switch/core/cal/cal_cmm.c ****     }
+ 330              		.loc 1 53 16 view .LVU82
+ 331 002a 7047     		bx	lr
+ 332              	.LVL35:
+ 333              	.L26:
+  53:../Switch/core/cal/cal_cmm.c ****     }
+ 334              		.loc 1 53 16 view .LVU83
+ 335 002c FF20     		movs	r0, #255
+ 336              	.LVL36:
+ 337              	.L24:
+  60:../Switch/core/cal/cal_cmm.c ****     }
+  61:../Switch/core/cal/cal_cmm.c **** 
+  62:../Switch/core/cal/cal_cmm.c ****     return INVALID_ID;
+  63:../Switch/core/cal/cal_cmm.c **** }
+ 338              		.loc 1 63 1 view .LVU84
+ 339 002e 7047     		bx	lr
+ 340              	.L28:
+ 341              		.align	2
+ 342              	.L27:
+ 343 0030 00000000 		.word	gcal_inited
+ 344 0034 00000000 		.word	gpSwitchUnit
+ 345              		.cfi_endproc
+ 346              	.LFE5:
+ 348              		.section	.text.cal_serdes_mode_get,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	cal_serdes_mode_get
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	cal_serdes_mode_get:
+ 356              	.LVL37:
+ 357              	.LFB6:
+  64:../Switch/core/cal/cal_cmm.c **** 
+  65:../Switch/core/cal/cal_cmm.c **** yt_serdes_mode_t cal_serdes_mode_get(yt_unit_t unit, yt_port_t port)
+  66:../Switch/core/cal/cal_cmm.c **** {
+ 358              		.loc 1 66 1 is_stmt 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+  67:../Switch/core/cal/cal_cmm.c ****     uint8_t sds_id;
+ 363              		.loc 1 67 5 view .LVU86
+  68:../Switch/core/cal/cal_cmm.c **** 
+  69:../Switch/core/cal/cal_cmm.c ****     if(!CMM_PORT_VALID(unit, port))
+ 364              		.loc 1 69 5 view .LVU87
+ 365              		.loc 1 69 9 is_stmt 0 view .LVU88
+ 366 0000 0B4B     		ldr	r3, .L33
+ 367 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 368              		.loc 1 69 7 view .LVU89
+ 369 0004 83B1     		cbz	r3, .L31
+ 370              		.loc 1 69 9 discriminator 1 view .LVU90
+ 371 0006 0B4B     		ldr	r3, .L33+4
+ 372 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 373 000c 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 374              		.loc 1 69 8 discriminator 1 view .LVU91
+ 375 000e 8A42     		cmp	r2, r1
+ 376 0010 0CD9     		bls	.L32
+  70:../Switch/core/cal/cal_cmm.c ****     {
+  71:../Switch/core/cal/cal_cmm.c ****         return INVALID_ID;
+  72:../Switch/core/cal/cal_cmm.c ****     }
+  73:../Switch/core/cal/cal_cmm.c **** 
+  74:../Switch/core/cal/cal_cmm.c ****     sds_id = UNITINFO(unit)->pPortDescp[port]->serdes_index;
+ 377              		.loc 1 74 5 is_stmt 1 view .LVU92
+ 378              		.loc 1 74 40 is_stmt 0 view .LVU93
+ 379 0012 0631     		adds	r1, r1, #6
+ 380              	.LVL38:
+ 381              		.loc 1 74 40 view .LVU94
+ 382 0014 53F82120 		ldr	r2, [r3, r1, lsl #2]
+ 383              		.loc 1 74 12 view .LVU95
+ 384 0018 1079     		ldrb	r0, [r2, #4]	@ zero_extendqisi2
+ 385              	.LVL39:
+  75:../Switch/core/cal/cal_cmm.c ****     if(sds_id != INVALID_ID)
+ 386              		.loc 1 75 5 is_stmt 1 view .LVU96
+ 387              		.loc 1 75 7 is_stmt 0 view .LVU97
+ 388 001a FF28     		cmp	r0, #255
+ 389 001c 07D0     		beq	.L30
+  76:../Switch/core/cal/cal_cmm.c ****     {
+  77:../Switch/core/cal/cal_cmm.c ****         return UNITINFO(unit)->pSerdesDescp[sds_id]->mode;
+ 390              		.loc 1 77 9 is_stmt 1 view .LVU98
+ 391              		.loc 1 77 44 is_stmt 0 view .LVU99
+ 392 001e 2230     		adds	r0, r0, #34
+ 393              	.LVL40:
+ 394              		.loc 1 77 44 view .LVU100
+ 395 0020 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 396              		.loc 1 77 52 view .LVU101
+ 397 0024 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 398              	.LVL41:
+ 399              		.loc 1 77 52 view .LVU102
+ 400 0026 7047     		bx	lr
+ 401              	.LVL42:
+ 402              	.L31:
+  71:../Switch/core/cal/cal_cmm.c ****     }
+ 403              		.loc 1 71 16 view .LVU103
+ 404 0028 FF20     		movs	r0, #255
+ 405              	.LVL43:
+  71:../Switch/core/cal/cal_cmm.c ****     }
+ 406              		.loc 1 71 16 view .LVU104
+ 407 002a 7047     		bx	lr
+ 408              	.LVL44:
+ 409              	.L32:
+  71:../Switch/core/cal/cal_cmm.c ****     }
+ 410              		.loc 1 71 16 view .LVU105
+ 411 002c FF20     		movs	r0, #255
+ 412              	.LVL45:
+ 413              	.L30:
+  78:../Switch/core/cal/cal_cmm.c ****     }
+  79:../Switch/core/cal/cal_cmm.c **** 
+  80:../Switch/core/cal/cal_cmm.c ****     return INVALID_ID;
+  81:../Switch/core/cal/cal_cmm.c **** }
+ 414              		.loc 1 81 1 view .LVU106
+ 415 002e 7047     		bx	lr
+ 416              	.L34:
+ 417              		.align	2
+ 418              	.L33:
+ 419 0030 00000000 		.word	gcal_inited
+ 420 0034 00000000 		.word	gpSwitchUnit
+ 421              		.cfi_endproc
+ 422              	.LFE6:
+ 424              		.section	.text.cal_is_combo_port,"ax",%progbits
+ 425              		.align	1
+ 426              		.global	cal_is_combo_port
+ 427              		.syntax unified
+ 428              		.thumb
+ 429              		.thumb_func
+ 431              	cal_is_combo_port:
+ 432              	.LVL46:
+ 433              	.LFB7:
+  82:../Switch/core/cal/cal_cmm.c **** 
+  83:../Switch/core/cal/cal_cmm.c **** yt_bool_t cal_is_combo_port(yt_unit_t unit, yt_port_t port)
+  84:../Switch/core/cal/cal_cmm.c **** {
+ 434              		.loc 1 84 1 is_stmt 1 view -0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438              		@ link register save eliminated.
+  85:../Switch/core/cal/cal_cmm.c ****     yt_port_medium_t media;
+ 439              		.loc 1 85 5 view .LVU108
+  86:../Switch/core/cal/cal_cmm.c **** 
+  87:../Switch/core/cal/cal_cmm.c ****     if(!CMM_PORT_VALID(unit, port))
+ 440              		.loc 1 87 5 view .LVU109
+ 441              		.loc 1 87 9 is_stmt 0 view .LVU110
+ 442 0000 0C4B     		ldr	r3, .L40
+ 443 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 444              		.loc 1 87 7 view .LVU111
+ 445 0004 7BB1     		cbz	r3, .L37
+ 446              		.loc 1 87 9 discriminator 1 view .LVU112
+ 447 0006 0C4B     		ldr	r3, .L40+4
+ 448 0008 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 449 000c 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 450              		.loc 1 87 8 discriminator 1 view .LVU113
+ 451 000e 8A42     		cmp	r2, r1
+ 452 0010 0BD9     		bls	.L38
+  88:../Switch/core/cal/cal_cmm.c ****     {
+  89:../Switch/core/cal/cal_cmm.c ****         return INVALID_ID;
+  90:../Switch/core/cal/cal_cmm.c ****     }
+  91:../Switch/core/cal/cal_cmm.c **** 
+  92:../Switch/core/cal/cal_cmm.c ****     media = UNITINFO(unit)->pPortDescp[port]->medium;
+ 453              		.loc 1 92 5 is_stmt 1 view .LVU114
+ 454              		.loc 1 92 39 is_stmt 0 view .LVU115
+ 455 0012 0631     		adds	r1, r1, #6
+ 456              	.LVL47:
+ 457              		.loc 1 92 39 view .LVU116
+ 458 0014 53F82130 		ldr	r3, [r3, r1, lsl #2]
+ 459              		.loc 1 92 11 view .LVU117
+ 460 0018 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 461              	.LVL48:
+  93:../Switch/core/cal/cal_cmm.c **** 
+  94:../Switch/core/cal/cal_cmm.c ****     if(PORT_MEDI_COMBO_FIBER == media ||
+ 462              		.loc 1 94 5 is_stmt 1 view .LVU118
+ 463              		.loc 1 94 39 is_stmt 0 view .LVU119
+ 464 001a 023B     		subs	r3, r3, #2
+ 465 001c DBB2     		uxtb	r3, r3
+ 466              		.loc 1 94 7 view .LVU120
+ 467 001e 012B     		cmp	r3, #1
+ 468 0020 05D9     		bls	.L39
+  95:../Switch/core/cal/cal_cmm.c ****         PORT_MEDI_COMBO_COPPER == media)
+  96:../Switch/core/cal/cal_cmm.c ****     {
+  97:../Switch/core/cal/cal_cmm.c ****         return TRUE;
+  98:../Switch/core/cal/cal_cmm.c ****     }
+  99:../Switch/core/cal/cal_cmm.c **** 
+ 100:../Switch/core/cal/cal_cmm.c ****     return FALSE;
+ 469              		.loc 1 100 12 view .LVU121
+ 470 0022 0020     		movs	r0, #0
+ 471              	.LVL49:
+ 472              		.loc 1 100 12 view .LVU122
+ 473 0024 7047     		bx	lr
+ 474              	.LVL50:
+ 475              	.L37:
+  89:../Switch/core/cal/cal_cmm.c ****     }
+ 476              		.loc 1 89 16 view .LVU123
+ 477 0026 0120     		movs	r0, #1
+ 478              	.LVL51:
+  89:../Switch/core/cal/cal_cmm.c ****     }
+ 479              		.loc 1 89 16 view .LVU124
+ 480 0028 7047     		bx	lr
+ 481              	.LVL52:
+ 482              	.L38:
+  89:../Switch/core/cal/cal_cmm.c ****     }
+ 483              		.loc 1 89 16 view .LVU125
+ 484 002a 0120     		movs	r0, #1
+ 485              	.LVL53:
+  89:../Switch/core/cal/cal_cmm.c ****     }
+ 486              		.loc 1 89 16 view .LVU126
+ 487 002c 7047     		bx	lr
+ 488              	.LVL54:
+ 489              	.L39:
+  97:../Switch/core/cal/cal_cmm.c ****     }
+ 490              		.loc 1 97 16 view .LVU127
+ 491 002e 0120     		movs	r0, #1
+ 492              	.LVL55:
+ 101:../Switch/core/cal/cal_cmm.c **** }
+ 493              		.loc 1 101 1 view .LVU128
+ 494 0030 7047     		bx	lr
+ 495              	.L41:
+ 496 0032 00BF     		.align	2
+ 497              	.L40:
+ 498 0034 00000000 		.word	gcal_inited
+ 499 0038 00000000 		.word	gpSwitchUnit
+ 500              		.cfi_endproc
+ 501              	.LFE7:
+ 503              		.text
+ 504              	.Letext0:
+ 505              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 506              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 507              		.file 4 "../Switch/core/cal/cal_mgm.h"
+ 508              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 509              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\drv\\phy/phy_chipdef.h"
+ 510              		.file 7 "../Switch/core/cal/cal_bprofile.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 cal_cmm.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:19     .rodata.cal_ytportmask_isvalid.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:23     .text.cal_ytportmask_isvalid:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:29     .text.cal_ytportmask_isvalid:00000000 cal_ytportmask_isvalid
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:159    .text.cal_ytportmask_isvalid:00000074 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:169    .text.cal_ytportmask_update:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:175    .text.cal_ytportmask_update:00000000 cal_ytportmask_update
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:267    .text.cal_ytportmask_update:00000058 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:273    .text.cal_phy_model_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:279    .text.cal_phy_model_get:00000000 cal_phy_model_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:343    .text.cal_phy_model_get:00000030 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:349    .text.cal_serdes_mode_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:355    .text.cal_serdes_mode_get:00000000 cal_serdes_mode_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:419    .text.cal_serdes_mode_get:00000030 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:425    .text.cal_is_combo_port:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:431    .text.cal_is_combo_port:00000000 cal_is_combo_port
+C:\Users\Dmitriy\AppData\Local\Temp\cc1nd5kF.s:498    .text.cal_is_combo_port:00000034 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.eec47faa946e01877de19a2f99ee7710
+
+UNDEFINED SYMBOLS
+osal_printf
+gcal_inited
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+gBoardInfo
+gpSwitchUnit

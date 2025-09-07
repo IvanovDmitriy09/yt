@@ -1,0 +1,232 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"fal_init.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../switch_sdk/core/fal/fal_init.c"
+  18              		.section	.text.fal_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	fal_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	fal_init:
+  26              	.LFB3:
+   1:../switch_sdk/core/fal/fal_init.c **** /*******************************************************************************
+   2:../switch_sdk/core/fal/fal_init.c **** *                                                                              *
+   3:../switch_sdk/core/fal/fal_init.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../switch_sdk/core/fal/fal_init.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../switch_sdk/core/fal/fal_init.c **** *                                                                              *
+   6:../switch_sdk/core/fal/fal_init.c **** ********************************************************************************
+   7:../switch_sdk/core/fal/fal_init.c **** */
+   8:../switch_sdk/core/fal/fal_init.c **** #include "yt_error.h"
+   9:../switch_sdk/core/fal/fal_init.c **** #include "yt_types.h"
+  10:../switch_sdk/core/fal/fal_init.c **** #include "yt_cmm.h"
+  11:../switch_sdk/core/fal/fal_init.c **** #include "fal_init.h"
+  12:../switch_sdk/core/fal/fal_init.c **** 
+  13:../switch_sdk/core/fal/fal_init.c **** #ifdef SWITCH_SERIES_TIGER
+  14:../switch_sdk/core/fal/fal_init.c **** #include "fal_tiger_init.h"
+  15:../switch_sdk/core/fal/fal_init.c **** #endif
+  16:../switch_sdk/core/fal/fal_init.c **** 
+  17:../switch_sdk/core/fal/fal_init.c **** yt_fal_init_info_t gFal_init_info[] =
+  18:../switch_sdk/core/fal/fal_init.c **** {
+  19:../switch_sdk/core/fal/fal_init.c **** #ifdef SWITCH_SERIES_TIGER
+  20:../switch_sdk/core/fal/fal_init.c ****     {YT_SW_ID_9215, fal_tiger_init},
+  21:../switch_sdk/core/fal/fal_init.c ****     {YT_SW_ID_9218, fal_tiger_9218_init},
+  22:../switch_sdk/core/fal/fal_init.c **** #endif
+  23:../switch_sdk/core/fal/fal_init.c **** };
+  24:../switch_sdk/core/fal/fal_init.c **** 
+  25:../switch_sdk/core/fal/fal_init.c **** yt_ret_t fal_init(void)
+  26:../switch_sdk/core/fal/fal_init.c **** {
+  27              		.loc 1 26 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 38B5     		push	{r3, r4, r5, lr}
+  32              		.cfi_def_cfa_offset 16
+  33              		.cfi_offset 3, -16
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+  27:../switch_sdk/core/fal/fal_init.c ****     yt_unit_t unit;
+  37              		.loc 1 27 5 view .LVU1
+  28:../switch_sdk/core/fal/fal_init.c ****     uint8_t num = sizeof(gFal_init_info) /sizeof(yt_fal_init_info_t);
+  38              		.loc 1 28 5 view .LVU2
+  39              	.LVL0:
+  29:../switch_sdk/core/fal/fal_init.c ****     uint8_t i;
+  40              		.loc 1 29 5 view .LVU3
+  30:../switch_sdk/core/fal/fal_init.c **** 
+  31:../switch_sdk/core/fal/fal_init.c ****     for(unit = 0; unit < YT_UNIT_NUM; unit++)
+  41              		.loc 1 31 5 view .LVU4
+  42              		.loc 1 31 14 is_stmt 0 view .LVU5
+  43 0002 0025     		movs	r5, #0
+  44              	.LVL1:
+  45              	.L2:
+  46              		.loc 1 31 24 is_stmt 1 discriminator 1 view .LVU6
+  47 0004 ADB1     		cbz	r5, .L6
+  32:../switch_sdk/core/fal/fal_init.c ****     {
+  33:../switch_sdk/core/fal/fal_init.c ****         for(i = 0; num > i; i++)
+  34:../switch_sdk/core/fal/fal_init.c ****         {
+  35:../switch_sdk/core/fal/fal_init.c ****             if(gFal_init_info[i].chip_id == UNITINFO(unit)->chip_id)
+  36:../switch_sdk/core/fal/fal_init.c ****             {
+  37:../switch_sdk/core/fal/fal_init.c ****                 gFal_init_info[i].chipFalInitFunc(unit);
+  38:../switch_sdk/core/fal/fal_init.c ****             }
+  39:../switch_sdk/core/fal/fal_init.c ****         }
+  40:../switch_sdk/core/fal/fal_init.c ****     }
+  41:../switch_sdk/core/fal/fal_init.c **** 
+  42:../switch_sdk/core/fal/fal_init.c ****     return CMM_ERR_OK;
+  48              		.loc 1 42 5 view .LVU7
+  43:../switch_sdk/core/fal/fal_init.c **** }
+  49              		.loc 1 43 1 is_stmt 0 view .LVU8
+  50 0006 0020     		movs	r0, #0
+  51 0008 38BD     		pop	{r3, r4, r5, pc}
+  52              	.LVL2:
+  53              	.L3:
+  33:../switch_sdk/core/fal/fal_init.c ****         {
+  54              		.loc 1 33 30 is_stmt 1 discriminator 2 view .LVU9
+  55 000a 0134     		adds	r4, r4, #1
+  56              	.LVL3:
+  33:../switch_sdk/core/fal/fal_init.c ****         {
+  57              		.loc 1 33 30 is_stmt 0 discriminator 2 view .LVU10
+  58 000c E4B2     		uxtb	r4, r4
+  59              	.LVL4:
+  60              	.L5:
+  33:../switch_sdk/core/fal/fal_init.c ****         {
+  61              		.loc 1 33 24 is_stmt 1 discriminator 1 view .LVU11
+  62 000e 012C     		cmp	r4, #1
+  63 0010 11D8     		bhi	.L8
+  35:../switch_sdk/core/fal/fal_init.c ****             {
+  64              		.loc 1 35 13 view .LVU12
+  35:../switch_sdk/core/fal/fal_init.c ****             {
+  65              		.loc 1 35 33 is_stmt 0 view .LVU13
+  66 0012 0A4B     		ldr	r3, .L9
+  67 0014 33F83420 		ldrh	r2, [r3, r4, lsl #3]
+  35:../switch_sdk/core/fal/fal_init.c ****             {
+  68              		.loc 1 35 45 view .LVU14
+  69 0018 094B     		ldr	r3, .L9+4
+  70 001a 53F82530 		ldr	r3, [r3, r5, lsl #2]
+  35:../switch_sdk/core/fal/fal_init.c ****             {
+  71              		.loc 1 35 59 view .LVU15
+  72 001e 1B88     		ldrh	r3, [r3]
+  35:../switch_sdk/core/fal/fal_init.c ****             {
+  73              		.loc 1 35 15 view .LVU16
+  74 0020 9A42     		cmp	r2, r3
+  75 0022 F2D1     		bne	.L3
+  37:../switch_sdk/core/fal/fal_init.c ****             }
+  76              		.loc 1 37 17 is_stmt 1 view .LVU17
+  37:../switch_sdk/core/fal/fal_init.c ****             }
+  77              		.loc 1 37 34 is_stmt 0 view .LVU18
+  78 0024 054B     		ldr	r3, .L9
+  79 0026 03EBC403 		add	r3, r3, r4, lsl #3
+  80 002a 5B68     		ldr	r3, [r3, #4]
+  37:../switch_sdk/core/fal/fal_init.c ****             }
+  81              		.loc 1 37 17 view .LVU19
+  82 002c 2846     		mov	r0, r5
+  83 002e 9847     		blx	r3
+  84              	.LVL5:
+  85 0030 EBE7     		b	.L3
+  86              	.LVL6:
+  87              	.L6:
+  33:../switch_sdk/core/fal/fal_init.c ****         {
+  88              		.loc 1 33 15 view .LVU20
+  89 0032 2C46     		mov	r4, r5
+  90 0034 EBE7     		b	.L5
+  91              	.LVL7:
+  92              	.L8:
+  31:../switch_sdk/core/fal/fal_init.c ****     {
+  93              		.loc 1 31 43 is_stmt 1 discriminator 2 view .LVU21
+  94 0036 0135     		adds	r5, r5, #1
+  95              	.LVL8:
+  31:../switch_sdk/core/fal/fal_init.c ****     {
+  96              		.loc 1 31 43 is_stmt 0 discriminator 2 view .LVU22
+  97 0038 EDB2     		uxtb	r5, r5
+  98              	.LVL9:
+  31:../switch_sdk/core/fal/fal_init.c ****     {
+  99              		.loc 1 31 43 discriminator 2 view .LVU23
+ 100 003a E3E7     		b	.L2
+ 101              	.L10:
+ 102              		.align	2
+ 103              	.L9:
+ 104 003c 00000000 		.word	gFal_init_info
+ 105 0040 00000000 		.word	gpSwitchUnit
+ 106              		.cfi_endproc
+ 107              	.LFE3:
+ 109              		.global	gFal_init_info
+ 110              		.section	.data.gFal_init_info,"aw"
+ 111              		.align	2
+ 114              	gFal_init_info:
+ 115 0000 0290     		.short	-28670
+ 116 0002 0000     		.space	2
+ 117 0004 00000000 		.word	fal_tiger_init
+ 118 0008 0190     		.short	-28671
+ 119 000a 0000     		.space	2
+ 120 000c 00000000 		.word	fal_tiger_9218_init
+ 121              		.text
+ 122              	.Letext0:
+ 123              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_types.h"
+ 124              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\common\\include/yt_error.h"
+ 125              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal\\chipdef/chipdef.h"
+ 126              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\cal/cal_bprofile.h"
+ 127              		.file 6 "../switch_sdk/core/fal/fal_init.h"
+ 128              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\switch_sdk\\core\\fal\\tiger/fal_tiger_init.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 fal_init.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc4HU806.s:19     .text.fal_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc4HU806.s:25     .text.fal_init:00000000 fal_init
+C:\Users\Dmitriy\AppData\Local\Temp\cc4HU806.s:104    .text.fal_init:0000003c $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc4HU806.s:114    .data.gFal_init_info:00000000 gFal_init_info
+C:\Users\Dmitriy\AppData\Local\Temp\cc4HU806.s:111    .data.gFal_init_info:00000000 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.ec67e8f6d308980d310512269a06d32b
+                           .group:00000000 wm4.yt_error.h.38.7d21fcd141776eb0b18825b154fad62e
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.d022146a9e55e93d62d578a666b2c2f5
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_port.h.26.cd095c4f9e5cbf044bc6839a51827ee8
+
+UNDEFINED SYMBOLS
+gpSwitchUnit
+fal_tiger_init
+fal_tiger_9218_init

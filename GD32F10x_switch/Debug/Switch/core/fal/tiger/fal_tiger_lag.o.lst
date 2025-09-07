@@ -1,0 +1,1590 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"fal_tiger_lag.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/fal/tiger/fal_tiger_lag.c"
+  18              		.section	.rodata.fal_tiger_lag_hash_sel_set.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 68616C5F 		.ascii	"hal_table_reg_read(unit,27,0,sizeof(link_agg_hash_c"
+  21      7461626C 
+  21      655F7265 
+  21      675F7265 
+  21      61642875 
+  22 0033 74726C5F 		.ascii	"trl_t),&entry)\000"
+  22      74292C26 
+  22      656E7472 
+  22      792900
+  23 0042 0000     		.align	2
+  24              	.LC1:
+  25 0044 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+  25      206F6620 
+  25      22257322 
+  25      20696E20 
+  25      25730D0A 
+  26 0059 000000   		.align	2
+  27              	.LC2:
+  28 005c 68616C5F 		.ascii	"hal_table_reg_write(unit,27,0,sizeof(link_agg_hash_"
+  28      7461626C 
+  28      655F7265 
+  28      675F7772 
+  28      69746528 
+  29 008f 6374726C 		.ascii	"ctrl_t),&entry)\000"
+  29      5F74292C 
+  29      26656E74 
+  29      72792900 
+  30              		.section	.text.fal_tiger_lag_hash_sel_set,"ax",%progbits
+  31              		.align	1
+  32              		.global	fal_tiger_lag_hash_sel_set
+  33              		.syntax unified
+  34              		.thumb
+  35              		.thumb_func
+  37              	fal_tiger_lag_hash_sel_set:
+  38              	.LVL0:
+  39              	.LFB3:
+   1:../Switch/core/fal/tiger/fal_tiger_lag.c **** /*
+   2:../Switch/core/fal/tiger/fal_tiger_lag.c ****  * Include Files
+   3:../Switch/core/fal/tiger/fal_tiger_lag.c ****  */
+   4:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "yt_error.h"
+   5:../Switch/core/fal/tiger/fal_tiger_lag.c **** //#include "osal_mem.h"
+   6:../Switch/core/fal/tiger/fal_tiger_lag.c **** //#include "osal_print.h"
+   7:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "yt_lag.h"
+   8:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "fal_tiger_lag.h"
+   9:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "hal_mem.h"
+  10:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "fal_tiger_entry.h"
+  11:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "fal_tiger_struct.h"
+  12:../Switch/core/fal/tiger/fal_tiger_lag.c **** #include "fal_tiger_mem.h"
+  13:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  14:../Switch/core/fal/tiger/fal_tiger_lag.c **** /*
+  15:../Switch/core/fal/tiger/fal_tiger_lag.c ****  * Symbol Definition
+  16:../Switch/core/fal/tiger/fal_tiger_lag.c ****  */
+  17:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  18:../Switch/core/fal/tiger/fal_tiger_lag.c **** /*
+  19:../Switch/core/fal/tiger/fal_tiger_lag.c ****  * Macro Declaration
+  20:../Switch/core/fal/tiger/fal_tiger_lag.c ****  */
+  21:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  22:../Switch/core/fal/tiger/fal_tiger_lag.c **** /*
+  23:../Switch/core/fal/tiger/fal_tiger_lag.c ****  * Data Declaration
+  24:../Switch/core/fal/tiger/fal_tiger_lag.c ****  */
+  25:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  26:../Switch/core/fal/tiger/fal_tiger_lag.c **** /*
+  27:../Switch/core/fal/tiger/fal_tiger_lag.c ****  * Function Declaration
+  28:../Switch/core/fal/tiger/fal_tiger_lag.c ****  */
+  29:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  30:../Switch/core/fal/tiger/fal_tiger_lag.c **** yt_ret_t fal_tiger_lag_hash_sel_set(yt_unit_t unit, uint8_t hash_mask)
+  31:../Switch/core/fal/tiger/fal_tiger_lag.c **** {
+  40              		.loc 1 31 1 view -0
+  41              		.cfi_startproc
+  42              		@ args = 0, pretend = 0, frame = 8
+  43              		@ frame_needed = 0, uses_anonymous_args = 0
+  44              		.loc 1 31 1 is_stmt 0 view .LVU1
+  45 0000 70B5     		push	{r4, r5, r6, lr}
+  46              		.cfi_def_cfa_offset 16
+  47              		.cfi_offset 4, -16
+  48              		.cfi_offset 5, -12
+  49              		.cfi_offset 6, -8
+  50              		.cfi_offset 14, -4
+  51 0002 84B0     		sub	sp, sp, #16
+  52              		.cfi_def_cfa_offset 32
+  53 0004 0546     		mov	r5, r0
+  54 0006 0E46     		mov	r6, r1
+  32:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_hash_ctrl_t  entry;
+  55              		.loc 1 32 5 is_stmt 1 view .LVU2
+  33:../Switch/core/fal/tiger/fal_tiger_lag.c ****     cmm_err_t ret = CMM_ERR_OK;
+  56              		.loc 1 33 5 view .LVU3
+  57              	.LVL1:
+  34:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, LINK_AGG_HASH_CTRLm, 0, sizeof(link_agg_hash_ctrl_t), &entry
+  58              		.loc 1 35 5 view .LVU4
+  59              		.loc 1 35 5 view .LVU5
+  60 0008 03AB     		add	r3, sp, #12
+  61 000a 0093     		str	r3, [sp]
+  62 000c 0423     		movs	r3, #4
+  63 000e 0022     		movs	r2, #0
+  64 0010 1B21     		movs	r1, #27
+  65              	.LVL2:
+  66              		.loc 1 35 5 is_stmt 0 view .LVU6
+  67 0012 FFF7FEFF 		bl	hal_table_reg_read
+  68              	.LVL3:
+  69              		.loc 1 35 5 view .LVU7
+  70 0016 10F0FF03 		ands	r3, r0, #255
+  71 001a 17D0     		beq	.L2
+  72 001c 0446     		mov	r4, r0
+  73              		.loc 1 35 5 is_stmt 1 discriminator 1 view .LVU8
+  74              		.loc 1 35 5 discriminator 1 view .LVU9
+  75 001e 204A     		ldr	r2, .L11
+  76 0020 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  77 0022 012A     		cmp	r2, #1
+  78 0024 02D8     		bhi	.L8
+  79              	.LVL4:
+  80              	.L3:
+  81              		.loc 1 35 5 discriminator 5 view .LVU10
+  82              		.loc 1 35 5 discriminator 5 view .LVU11
+  83              		.loc 1 35 5 discriminator 5 view .LVU12
+  84 0026 E0B2     		uxtb	r0, r4
+  85              	.LVL5:
+  86              	.L1:
+  36:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, LINK_AGG_HASH_CTRLm, 0, sizeof(link_agg_hash_ctrl_t), &entr
+  38:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+  39:../Switch/core/fal/tiger/fal_tiger_lag.c ****     return CMM_ERR_OK;
+  40:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+  87              		.loc 1 40 1 is_stmt 0 view .LVU13
+  88 0028 04B0     		add	sp, sp, #16
+  89              		.cfi_remember_state
+  90              		.cfi_def_cfa_offset 16
+  91              		@ sp needed
+  92 002a 70BD     		pop	{r4, r5, r6, pc}
+  93              	.LVL6:
+  94              	.L8:
+  95              		.cfi_restore_state
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+  96              		.loc 1 35 5 is_stmt 1 discriminator 3 view .LVU14
+  97              	.LBB2:
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+  98              		.loc 1 35 5 discriminator 3 view .LVU15
+  99 002c 142B     		cmp	r3, #20
+ 100 002e 28BF     		it	cs
+ 101 0030 1423     		movcs	r3, #20
+ 102 0032 1A46     		mov	r2, r3
+ 103 0034 1B4B     		ldr	r3, .L11+4
+ 104 0036 0093     		str	r3, [sp]
+ 105 0038 1B4B     		ldr	r3, .L11+8
+ 106 003a 1C49     		ldr	r1, .L11+12
+ 107 003c 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 108 0040 1B49     		ldr	r1, .L11+16
+ 109 0042 8968     		ldr	r1, [r1, #8]
+ 110 0044 1B48     		ldr	r0, .L11+20
+ 111              	.LVL7:
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+ 112              		.loc 1 35 5 is_stmt 0 discriminator 3 view .LVU16
+ 113 0046 FFF7FEFF 		bl	osal_printf
+ 114              	.LVL8:
+ 115 004a ECE7     		b	.L3
+ 116              	.LVL9:
+ 117              	.L2:
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+ 118              		.loc 1 35 5 discriminator 3 view .LVU17
+ 119              	.LBE2:
+  35:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+ 120              		.loc 1 35 5 is_stmt 1 discriminator 2 view .LVU18
+  36:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+ 121              		.loc 1 36 5 discriminator 2 view .LVU19
+ 122 004c 03AC     		add	r4, sp, #12
+ 123 004e 3346     		mov	r3, r6
+ 124 0050 2246     		mov	r2, r4
+ 125 0052 0021     		movs	r1, #0
+ 126 0054 1B20     		movs	r0, #27
+ 127              	.LVL10:
+  36:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET (LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, hash_mask);
+ 128              		.loc 1 36 5 is_stmt 0 discriminator 2 view .LVU20
+ 129 0056 FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 130              	.LVL11:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 131              		.loc 1 37 5 is_stmt 1 discriminator 2 view .LVU21
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 132              		.loc 1 37 5 discriminator 2 view .LVU22
+ 133 005a 0094     		str	r4, [sp]
+ 134 005c 0423     		movs	r3, #4
+ 135 005e 0022     		movs	r2, #0
+ 136 0060 1B21     		movs	r1, #27
+ 137 0062 2846     		mov	r0, r5
+ 138 0064 FFF7FEFF 		bl	hal_table_reg_write
+ 139              	.LVL12:
+ 140 0068 0446     		mov	r4, r0
+ 141              	.LVL13:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 142              		.loc 1 37 5 is_stmt 0 discriminator 2 view .LVU23
+ 143 006a 10F0FF03 		ands	r3, r0, #255
+ 144 006e 01D1     		bne	.L9
+  39:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 145              		.loc 1 39 12 view .LVU24
+ 146 0070 0020     		movs	r0, #0
+ 147              	.LVL14:
+  39:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 148              		.loc 1 39 12 view .LVU25
+ 149 0072 D9E7     		b	.L1
+ 150              	.LVL15:
+ 151              	.L9:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 152              		.loc 1 37 5 is_stmt 1 discriminator 1 view .LVU26
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 153              		.loc 1 37 5 discriminator 1 view .LVU27
+ 154 0074 0A4A     		ldr	r2, .L11
+ 155 0076 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 156 0078 012A     		cmp	r2, #1
+ 157 007a 01D8     		bhi	.L10
+ 158              	.LVL16:
+ 159              	.L5:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 160              		.loc 1 37 5 discriminator 5 view .LVU28
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 161              		.loc 1 37 5 discriminator 5 view .LVU29
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 162              		.loc 1 37 5 discriminator 5 view .LVU30
+ 163 007c E0B2     		uxtb	r0, r4
+ 164 007e D3E7     		b	.L1
+ 165              	.LVL17:
+ 166              	.L10:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 167              		.loc 1 37 5 discriminator 3 view .LVU31
+ 168              	.LBB3:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 169              		.loc 1 37 5 discriminator 3 view .LVU32
+ 170 0080 142B     		cmp	r3, #20
+ 171 0082 28BF     		it	cs
+ 172 0084 1423     		movcs	r3, #20
+ 173 0086 1A46     		mov	r2, r3
+ 174 0088 064B     		ldr	r3, .L11+4
+ 175 008a 0093     		str	r3, [sp]
+ 176 008c 0A4B     		ldr	r3, .L11+24
+ 177 008e 0749     		ldr	r1, .L11+12
+ 178 0090 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 179 0094 0649     		ldr	r1, .L11+16
+ 180 0096 8968     		ldr	r1, [r1, #8]
+ 181 0098 0648     		ldr	r0, .L11+20
+ 182              	.LVL18:
+  37:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 183              		.loc 1 37 5 is_stmt 0 discriminator 3 view .LVU33
+ 184 009a FFF7FEFF 		bl	osal_printf
+ 185              	.LVL19:
+ 186 009e EDE7     		b	.L5
+ 187              	.L12:
+ 188              		.align	2
+ 189              	.L11:
+ 190 00a0 00000000 		.word	yt_debug_level
+ 191 00a4 00000000 		.word	__FUNCTION__.3
+ 192 00a8 00000000 		.word	.LC0
+ 193 00ac 00000000 		.word	_yt_errmsg
+ 194 00b0 00000000 		.word	_yt_prompt_msg
+ 195 00b4 44000000 		.word	.LC1
+ 196 00b8 5C000000 		.word	.LC2
+ 197              	.LBE3:
+ 198              		.cfi_endproc
+ 199              	.LFE3:
+ 201              		.section	.text.fal_tiger_lag_hash_sel_get,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	fal_tiger_lag_hash_sel_get
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 208              	fal_tiger_lag_hash_sel_get:
+ 209              	.LVL20:
+ 210              	.LFB4:
+  41:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  42:../Switch/core/fal/tiger/fal_tiger_lag.c **** yt_ret_t fal_tiger_lag_hash_sel_get(yt_unit_t unit, uint8_t *p_hash_mask)
+  43:../Switch/core/fal/tiger/fal_tiger_lag.c **** {
+ 211              		.loc 1 43 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 8
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		.loc 1 43 1 is_stmt 0 view .LVU35
+ 216 0000 30B5     		push	{r4, r5, lr}
+ 217              		.cfi_def_cfa_offset 12
+ 218              		.cfi_offset 4, -12
+ 219              		.cfi_offset 5, -8
+ 220              		.cfi_offset 14, -4
+ 221 0002 85B0     		sub	sp, sp, #20
+ 222              		.cfi_def_cfa_offset 32
+ 223 0004 0D46     		mov	r5, r1
+  44:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_hash_ctrl_t  entry;
+ 224              		.loc 1 44 5 is_stmt 1 view .LVU36
+  45:../Switch/core/fal/tiger/fal_tiger_lag.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 225              		.loc 1 45 5 view .LVU37
+ 226              	.LVL21:
+  46:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, LINK_AGG_HASH_CTRLm, 0, sizeof(link_agg_hash_ctrl_t), &entry
+ 227              		.loc 1 47 5 view .LVU38
+ 228              		.loc 1 47 5 view .LVU39
+ 229 0006 03AB     		add	r3, sp, #12
+ 230 0008 0093     		str	r3, [sp]
+ 231 000a 0423     		movs	r3, #4
+ 232 000c 0022     		movs	r2, #0
+ 233 000e 1B21     		movs	r1, #27
+ 234              	.LVL22:
+ 235              		.loc 1 47 5 is_stmt 0 view .LVU40
+ 236 0010 FFF7FEFF 		bl	hal_table_reg_read
+ 237              	.LVL23:
+ 238              		.loc 1 47 5 view .LVU41
+ 239 0014 10F0FF03 		ands	r3, r0, #255
+ 240 0018 17D0     		beq	.L14
+ 241 001a 0446     		mov	r4, r0
+ 242              		.loc 1 47 5 is_stmt 1 discriminator 1 view .LVU42
+ 243              		.loc 1 47 5 discriminator 1 view .LVU43
+ 244 001c 104A     		ldr	r2, .L19
+ 245 001e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 246 0020 012A     		cmp	r2, #1
+ 247 0022 02D8     		bhi	.L18
+ 248              	.LVL24:
+ 249              	.L15:
+ 250              		.loc 1 47 5 discriminator 5 view .LVU44
+ 251              		.loc 1 47 5 discriminator 5 view .LVU45
+ 252              		.loc 1 47 5 discriminator 5 view .LVU46
+ 253 0024 E0B2     		uxtb	r0, r4
+ 254              	.L13:
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+  49:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+  50:../Switch/core/fal/tiger/fal_tiger_lag.c ****     return CMM_ERR_OK;
+  51:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 255              		.loc 1 51 1 is_stmt 0 view .LVU47
+ 256 0026 05B0     		add	sp, sp, #20
+ 257              		.cfi_remember_state
+ 258              		.cfi_def_cfa_offset 12
+ 259              		@ sp needed
+ 260 0028 30BD     		pop	{r4, r5, pc}
+ 261              	.LVL25:
+ 262              	.L18:
+ 263              		.cfi_restore_state
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 264              		.loc 1 47 5 is_stmt 1 discriminator 3 view .LVU48
+ 265              	.LBB4:
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 266              		.loc 1 47 5 discriminator 3 view .LVU49
+ 267 002a 142B     		cmp	r3, #20
+ 268 002c 28BF     		it	cs
+ 269 002e 1423     		movcs	r3, #20
+ 270 0030 1A46     		mov	r2, r3
+ 271 0032 0C4B     		ldr	r3, .L19+4
+ 272 0034 0093     		str	r3, [sp]
+ 273 0036 0C4B     		ldr	r3, .L19+8
+ 274 0038 0C49     		ldr	r1, .L19+12
+ 275 003a 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 276 003e 0C49     		ldr	r1, .L19+16
+ 277 0040 8968     		ldr	r1, [r1, #8]
+ 278 0042 0C48     		ldr	r0, .L19+20
+ 279              	.LVL26:
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 280              		.loc 1 47 5 is_stmt 0 discriminator 3 view .LVU50
+ 281 0044 FFF7FEFF 		bl	osal_printf
+ 282              	.LVL27:
+ 283 0048 ECE7     		b	.L15
+ 284              	.LVL28:
+ 285              	.L14:
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 286              		.loc 1 47 5 discriminator 3 view .LVU51
+ 287              	.LBE4:
+  47:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 288              		.loc 1 47 5 is_stmt 1 discriminator 2 view .LVU52
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 289              		.loc 1 48 5 discriminator 2 view .LVU53
+ 290              	.LBB5:
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 291              		.loc 1 48 5 discriminator 2 view .LVU54
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 292              		.loc 1 48 5 discriminator 2 view .LVU55
+ 293 004a 02AB     		add	r3, sp, #8
+ 294 004c 03AA     		add	r2, sp, #12
+ 295 004e 0021     		movs	r1, #0
+ 296 0050 1B20     		movs	r0, #27
+ 297              	.LVL29:
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 298              		.loc 1 48 5 is_stmt 0 discriminator 2 view .LVU56
+ 299 0052 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 300              	.LVL30:
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 301              		.loc 1 48 5 is_stmt 1 discriminator 2 view .LVU57
+ 302 0056 029B     		ldr	r3, [sp, #8]
+ 303 0058 2B70     		strb	r3, [r5]
+ 304              	.LBE5:
+  48:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_HASH_CTRLm, LINK_AGG_HASH_CTRL_HASH_FIELD_SELf, &entry, p_hash_mask);
+ 305              		.loc 1 48 5 discriminator 2 view .LVU58
+  50:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 306              		.loc 1 50 5 discriminator 2 view .LVU59
+  50:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 307              		.loc 1 50 12 is_stmt 0 discriminator 2 view .LVU60
+ 308 005a 0020     		movs	r0, #0
+ 309 005c E3E7     		b	.L13
+ 310              	.L20:
+ 311 005e 00BF     		.align	2
+ 312              	.L19:
+ 313 0060 00000000 		.word	yt_debug_level
+ 314 0064 00000000 		.word	__FUNCTION__.2
+ 315 0068 00000000 		.word	.LC0
+ 316 006c 00000000 		.word	_yt_errmsg
+ 317 0070 00000000 		.word	_yt_prompt_msg
+ 318 0074 44000000 		.word	.LC1
+ 319              		.cfi_endproc
+ 320              	.LFE4:
+ 322              		.section	.rodata.fal_tiger_lag_group_port_get.str1.4,"aMS",%progbits,1
+ 323              		.align	2
+ 324              	.LC3:
+ 325 0000 25732573 		.ascii	"%s%s\015\012\000"
+ 325      0D0A00
+ 326 0007 00       		.align	2
+ 327              	.LC4:
+ 328 0008 68616C5F 		.ascii	"hal_table_reg_read(unit,161,groupId,sizeof(link_agg"
+ 328      7461626C 
+ 328      655F7265 
+ 328      675F7265 
+ 328      61642875 
+ 329 003b 5F67726F 		.ascii	"_groupn_t),&group_entry)\000"
+ 329      75706E5F 
+ 329      74292C26 
+ 329      67726F75 
+ 329      705F656E 
+ 330              		.section	.text.fal_tiger_lag_group_port_get,"ax",%progbits
+ 331              		.align	1
+ 332              		.global	fal_tiger_lag_group_port_get
+ 333              		.syntax unified
+ 334              		.thumb
+ 335              		.thumb_func
+ 337              	fal_tiger_lag_group_port_get:
+ 338              	.LVL31:
+ 339              	.LFB6:
+  52:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  53:../Switch/core/fal/tiger/fal_tiger_lag.c **** yt_ret_t fal_tiger_lag_group_port_set(yt_unit_t unit, uint8_t groupId, yt_port_mask_t member_portma
+  54:../Switch/core/fal/tiger/fal_tiger_lag.c **** {
+  55:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_groupn_t group_entry;
+  56:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_membern_t member_entry[LAG_MEM_NUM_PERGRP];
+  57:../Switch/core/fal/tiger/fal_tiger_lag.c ****     cmm_err_t ret = CMM_ERR_OK;
+  58:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t index = 0;
+  59:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t macid = 0;
+  60:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint32_t  mask;
+  61:../Switch/core/fal/tiger/fal_tiger_lag.c ****     yt_port_mask_t macmask;
+  62:../Switch/core/fal/tiger/fal_tiger_lag.c ****     yt_port_mask_t temp_member_portmask;
+  63:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t idx_offset = 0;
+  64:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_PARAM_CHK((FAL_MAX_LAG_NUM - 1 < groupId), CMM_ERR_INPUT);
+  66:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  67:../Switch/core/fal/tiger/fal_tiger_lag.c ****     /*check if port mask conflic with another lag*/
+  68:../Switch/core/fal/tiger/fal_tiger_lag.c ****     fal_tiger_lag_group_port_get(unit, (groupId == 1 ? 0 : 1), &temp_member_portmask);
+  69:../Switch/core/fal/tiger/fal_tiger_lag.c ****     if(member_portmask.portbits[0] & temp_member_portmask.portbits[0])
+  70:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+  71:../Switch/core/fal/tiger/fal_tiger_lag.c ****         return CMM_ERR_SAMEENTRY_EXIST;
+  72:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+  73:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  74:../Switch/core/fal/tiger/fal_tiger_lag.c ****     osal_memset(member_entry, 0, sizeof(member_entry));
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CAL_YTPLIST_TO_MLIST(unit, member_portmask, macmask);
+  76:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+  77:../Switch/core/fal/tiger/fal_tiger_lag.c ****     mask = macmask.portbits[0];
+  78:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  79:../Switch/core/fal/tiger/fal_tiger_lag.c ****     while(mask)
+  80:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+  81:../Switch/core/fal/tiger/fal_tiger_lag.c ****         if((mask & 0x1) != 0)
+  82:../Switch/core/fal/tiger/fal_tiger_lag.c ****         {
+  83:../Switch/core/fal/tiger/fal_tiger_lag.c ****             if(index >= LAG_MEM_NUM_PERGRP)
+  84:../Switch/core/fal/tiger/fal_tiger_lag.c ****             {
+  85:../Switch/core/fal/tiger/fal_tiger_lag.c ****                 return CMM_ERR_TABLE_FULL;
+  86:../Switch/core/fal/tiger/fal_tiger_lag.c ****             }
+  87:../Switch/core/fal/tiger/fal_tiger_lag.c ****             HAL_FIELD_SET(LINK_AGG_MEMBERNm, LINK_AGG_MEMBERN_PORTf, &member_entry[index], macid);
+  88:../Switch/core/fal/tiger/fal_tiger_lag.c ****             index++;
+  89:../Switch/core/fal/tiger/fal_tiger_lag.c ****         }
+  90:../Switch/core/fal/tiger/fal_tiger_lag.c ****         macid++;
+  91:../Switch/core/fal/tiger/fal_tiger_lag.c ****         mask >>= 1;
+  92:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+  93:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  94:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_MEMBER_NUMf, &group_entry, index);
+  95:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+  96:../Switch/core/fal/tiger/fal_tiger_lag.c ****     idx_offset = (groupId == 1) ? LAG_MEM_NUM_PERGRP : 0;
+  97:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     for(index=0; index<LAG_MEM_NUM_PERGRP; index++)
+  99:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****         CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, LINK_AGG_MEMBERNm, index+idx_offset, sizeof(link_agg_me
+ 101:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 102:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 103:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_SET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits[0]);
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, LINK_AGG_GROUPNm, groupId, sizeof(link_agg_groupn_t), &grou
+ 105:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 106:../Switch/core/fal/tiger/fal_tiger_lag.c ****     return CMM_ERR_OK;
+ 107:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 108:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 109:../Switch/core/fal/tiger/fal_tiger_lag.c **** yt_ret_t fal_tiger_lag_group_port_get(yt_unit_t unit, uint8_t groupId, yt_port_mask_t *p_member_por
+ 110:../Switch/core/fal/tiger/fal_tiger_lag.c **** {
+ 340              		.loc 1 110 1 is_stmt 1 view -0
+ 341              		.cfi_startproc
+ 342              		@ args = 0, pretend = 0, frame = 8
+ 343              		@ frame_needed = 0, uses_anonymous_args = 0
+ 344              		.loc 1 110 1 is_stmt 0 view .LVU62
+ 345 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 346              		.cfi_def_cfa_offset 20
+ 347              		.cfi_offset 4, -20
+ 348              		.cfi_offset 5, -16
+ 349              		.cfi_offset 6, -12
+ 350              		.cfi_offset 7, -8
+ 351              		.cfi_offset 14, -4
+ 352 0002 85B0     		sub	sp, sp, #20
+ 353              		.cfi_def_cfa_offset 40
+ 111:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_groupn_t group_entry;
+ 354              		.loc 1 111 5 is_stmt 1 view .LVU63
+ 112:../Switch/core/fal/tiger/fal_tiger_lag.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 355              		.loc 1 112 5 view .LVU64
+ 356              	.LVL32:
+ 113:../Switch/core/fal/tiger/fal_tiger_lag.c ****     yt_port_mask_t macmask;
+ 357              		.loc 1 113 5 view .LVU65
+ 114:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_PARAM_CHK((FAL_MAX_LAG_NUM - 1 < groupId), CMM_ERR_INPUT);
+ 358              		.loc 1 115 5 view .LVU66
+ 359              		.loc 1 115 5 view .LVU67
+ 360 0004 0129     		cmp	r1, #1
+ 361 0006 12D8     		bhi	.L33
+ 362 0008 0546     		mov	r5, r0
+ 363 000a 1646     		mov	r6, r2
+ 364              		.loc 1 115 5 discriminator 2 view .LVU68
+ 116:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, LINK_AGG_GROUPNm, groupId, sizeof(link_agg_groupn_t), &group
+ 365              		.loc 1 117 5 discriminator 2 view .LVU69
+ 366              		.loc 1 117 5 discriminator 2 view .LVU70
+ 367 000c 03AB     		add	r3, sp, #12
+ 368 000e 0093     		str	r3, [sp]
+ 369 0010 0423     		movs	r3, #4
+ 370 0012 0A46     		mov	r2, r1
+ 371              	.LVL33:
+ 372              		.loc 1 117 5 is_stmt 0 discriminator 2 view .LVU71
+ 373 0014 A121     		movs	r1, #161
+ 374              	.LVL34:
+ 375              		.loc 1 117 5 discriminator 2 view .LVU72
+ 376 0016 FFF7FEFF 		bl	hal_table_reg_read
+ 377              	.LVL35:
+ 378              		.loc 1 117 5 discriminator 2 view .LVU73
+ 379 001a 0746     		mov	r7, r0
+ 380              	.LVL36:
+ 381              		.loc 1 117 5 discriminator 2 view .LVU74
+ 382 001c 10F0FF04 		ands	r4, r0, #255
+ 383 0020 23D0     		beq	.L25
+ 384              		.loc 1 117 5 is_stmt 1 discriminator 1 view .LVU75
+ 385              		.loc 1 117 5 discriminator 1 view .LVU76
+ 386 0022 2B4B     		ldr	r3, .L37
+ 387 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 388 0026 012B     		cmp	r3, #1
+ 389 0028 10D8     		bhi	.L34
+ 390              	.LVL37:
+ 391              	.L26:
+ 392              		.loc 1 117 5 discriminator 5 view .LVU77
+ 393              		.loc 1 117 5 discriminator 5 view .LVU78
+ 394              		.loc 1 117 5 discriminator 5 view .LVU79
+ 395 002a F8B2     		uxtb	r0, r7
+ 396 002c 04E0     		b	.L21
+ 397              	.LVL38:
+ 398              	.L33:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 399              		.loc 1 115 5 discriminator 1 view .LVU80
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 400              		.loc 1 115 5 discriminator 1 view .LVU81
+ 401 002e 284B     		ldr	r3, .L37
+ 402 0030 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 403 0032 012B     		cmp	r3, #1
+ 404 0034 02D8     		bhi	.L35
+ 405              	.LVL39:
+ 406              	.L23:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 407              		.loc 1 115 5 discriminator 5 view .LVU82
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 408              		.loc 1 115 5 discriminator 5 view .LVU83
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 409              		.loc 1 115 5 discriminator 5 view .LVU84
+ 410 0036 0520     		movs	r0, #5
+ 411              	.LVL40:
+ 412              	.L21:
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_member_portmask));
+ 120:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 121:../Switch/core/fal/tiger/fal_tiger_lag.c ****     return CMM_ERR_OK;
+ 122:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 413              		.loc 1 122 1 is_stmt 0 view .LVU85
+ 414 0038 05B0     		add	sp, sp, #20
+ 415              		.cfi_remember_state
+ 416              		.cfi_def_cfa_offset 20
+ 417              		@ sp needed
+ 418 003a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 419              	.LVL41:
+ 420              	.L35:
+ 421              		.cfi_restore_state
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 422              		.loc 1 115 5 is_stmt 1 discriminator 3 view .LVU86
+ 423              	.LBB6:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 424              		.loc 1 115 5 discriminator 3 view .LVU87
+ 425 003c 254B     		ldr	r3, .L37+4
+ 426 003e 5A69     		ldr	r2, [r3, #20]
+ 427              	.LVL42:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 428              		.loc 1 115 5 is_stmt 0 discriminator 3 view .LVU88
+ 429 0040 254B     		ldr	r3, .L37+8
+ 430 0042 9968     		ldr	r1, [r3, #8]
+ 431              	.LVL43:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 432              		.loc 1 115 5 discriminator 3 view .LVU89
+ 433 0044 2548     		ldr	r0, .L37+12
+ 434              	.LVL44:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 435              		.loc 1 115 5 discriminator 3 view .LVU90
+ 436 0046 FFF7FEFF 		bl	osal_printf
+ 437              	.LVL45:
+ 438 004a F4E7     		b	.L23
+ 439              	.LVL46:
+ 440              	.L34:
+ 115:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 441              		.loc 1 115 5 discriminator 3 view .LVU91
+ 442              	.LBE6:
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 443              		.loc 1 117 5 is_stmt 1 discriminator 3 view .LVU92
+ 444              	.LBB7:
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 445              		.loc 1 117 5 discriminator 3 view .LVU93
+ 446 004c 142C     		cmp	r4, #20
+ 447 004e 28BF     		it	cs
+ 448 0050 1424     		movcs	r4, #20
+ 449 0052 234B     		ldr	r3, .L37+16
+ 450 0054 0093     		str	r3, [sp]
+ 451 0056 234B     		ldr	r3, .L37+20
+ 452 0058 1E4A     		ldr	r2, .L37+4
+ 453 005a 52F82420 		ldr	r2, [r2, r4, lsl #2]
+ 454 005e 1E49     		ldr	r1, .L37+8
+ 455 0060 8968     		ldr	r1, [r1, #8]
+ 456 0062 2148     		ldr	r0, .L37+24
+ 457              	.LVL47:
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 458              		.loc 1 117 5 is_stmt 0 discriminator 3 view .LVU94
+ 459 0064 FFF7FEFF 		bl	osal_printf
+ 460              	.LVL48:
+ 461 0068 DFE7     		b	.L26
+ 462              	.LVL49:
+ 463              	.L25:
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 464              		.loc 1 117 5 discriminator 3 view .LVU95
+ 465              	.LBE7:
+ 117:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 466              		.loc 1 117 5 is_stmt 1 discriminator 2 view .LVU96
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 467              		.loc 1 118 5 discriminator 2 view .LVU97
+ 468              	.LBB8:
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 469              		.loc 1 118 5 discriminator 2 view .LVU98
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 470              		.loc 1 118 5 discriminator 2 view .LVU99
+ 471 006a 02AB     		add	r3, sp, #8
+ 472 006c 03AA     		add	r2, sp, #12
+ 473 006e 0021     		movs	r1, #0
+ 474 0070 A120     		movs	r0, #161
+ 475              	.LVL50:
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 476              		.loc 1 118 5 is_stmt 0 discriminator 2 view .LVU100
+ 477 0072 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 478              	.LVL51:
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 479              		.loc 1 118 5 is_stmt 1 discriminator 2 view .LVU101
+ 480 0076 0298     		ldr	r0, [sp, #8]
+ 481              	.LBE8:
+ 118:../Switch/core/fal/tiger/fal_tiger_lag.c ****     HAL_FIELD_GET(LINK_AGG_GROUPNm, LINK_AGG_GROUPN_PORT_MASKf, &group_entry, macmask.portbits);
+ 482              		.loc 1 118 5 discriminator 2 view .LVU102
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 483              		.loc 1 119 5 discriminator 2 view .LVU103
+ 484              	.LBB9:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 485              		.loc 1 119 5 discriminator 2 view .LVU104
+ 486              	.LVL52:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 487              		.loc 1 119 5 discriminator 2 view .LVU105
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 488              		.loc 1 119 5 discriminator 2 view .LVU106
+ 489              	.LBB10:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 490              		.loc 1 119 5 discriminator 2 view .LVU107
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 491              		.loc 1 119 5 discriminator 2 view .LVU108
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 492              		.loc 1 119 5 is_stmt 0 discriminator 2 view .LVU109
+ 493 0078 2346     		mov	r3, r4
+ 494              	.LVL53:
+ 495              	.L27:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 496              		.loc 1 119 5 is_stmt 1 discriminator 1 view .LVU110
+ 497 007a 3BB9     		cbnz	r3, .L29
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 498              		.loc 1 119 5 discriminator 3 view .LVU111
+ 499 007c 0022     		movs	r2, #0
+ 500 007e 46F82320 		str	r2, [r6, r3, lsl #2]
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 501              		.loc 1 119 5 discriminator 3 view .LVU112
+ 502 0082 0133     		adds	r3, r3, #1
+ 503              	.LVL54:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 504              		.loc 1 119 5 is_stmt 0 discriminator 3 view .LVU113
+ 505 0084 DBB2     		uxtb	r3, r3
+ 506              	.LVL55:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 507              		.loc 1 119 5 discriminator 3 view .LVU114
+ 508 0086 F8E7     		b	.L27
+ 509              	.LVL56:
+ 510              	.L30:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 511              		.loc 1 119 5 discriminator 3 view .LVU115
+ 512              	.LBE10:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 513              		.loc 1 119 5 is_stmt 1 discriminator 16 view .LVU116
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 514              		.loc 1 119 5 discriminator 16 view .LVU117
+ 515 0088 0134     		adds	r4, r4, #1
+ 516              	.LVL57:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 517              		.loc 1 119 5 is_stmt 0 discriminator 16 view .LVU118
+ 518 008a E4B2     		uxtb	r4, r4
+ 519              	.LVL58:
+ 520              	.L29:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 521              		.loc 1 119 5 is_stmt 1 discriminator 17 view .LVU119
+ 522 008c 174B     		ldr	r3, .L37+28
+ 523 008e 53F82530 		ldr	r3, [r3, r5, lsl #2]
+ 524 0092 197D     		ldrb	r1, [r3, #20]	@ zero_extendqisi2
+ 525 0094 A142     		cmp	r1, r4
+ 526 0096 18D9     		bls	.L36
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 527              		.loc 1 119 5 discriminator 18 view .LVU120
+ 528              	.LBB11:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 529              		.loc 1 119 5 discriminator 18 view .LVU121
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 530              		.loc 1 119 5 discriminator 18 view .LVU122
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 531              		.loc 1 119 5 discriminator 18 view .LVU123
+ 532 0098 A21D     		adds	r2, r4, #6
+ 533 009a 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 534 009e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 535              	.LVL59:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 536              		.loc 1 119 5 discriminator 18 view .LVU124
+ 537 00a0 03F01F02 		and	r2, r3, #31
+ 538              	.LVL60:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 539              		.loc 1 119 5 discriminator 18 view .LVU125
+ 540 00a4 1F2B     		cmp	r3, #31
+ 541 00a6 EFD8     		bhi	.L30
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 542              		.loc 1 119 5 is_stmt 0 discriminator 6 view .LVU126
+ 543 00a8 0123     		movs	r3, #1
+ 544              	.LVL61:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 545              		.loc 1 119 5 discriminator 6 view .LVU127
+ 546 00aa 9340     		lsls	r3, r3, r2
+ 547 00ac 1842     		tst	r0, r3
+ 548 00ae EBD0     		beq	.L30
+ 549              	.LVL62:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 550              		.loc 1 119 5 discriminator 6 view .LVU128
+ 551              	.LBE11:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 552              		.loc 1 119 5 is_stmt 1 view .LVU129
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 553              		.loc 1 119 5 view .LVU130
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 554              		.loc 1 119 5 view .LVU131
+ 555              	.LBB12:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 556              		.loc 1 119 5 view .LVU132
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 557              		.loc 1 119 5 view .LVU133
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 558              		.loc 1 119 5 view .LVU134
+ 559 00b0 6309     		lsrs	r3, r4, #5
+ 560              	.LVL63:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 561              		.loc 1 119 5 view .LVU135
+ 562 00b2 04F01F07 		and	r7, r4, #31
+ 563              	.LVL64:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 564              		.loc 1 119 5 view .LVU136
+ 565 00b6 1F2C     		cmp	r4, #31
+ 566 00b8 E6D8     		bhi	.L30
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 567              		.loc 1 119 5 discriminator 14 view .LVU137
+ 568 00ba 56F82320 		ldr	r2, [r6, r3, lsl #2]
+ 569              	.LVL65:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 570              		.loc 1 119 5 is_stmt 0 discriminator 14 view .LVU138
+ 571 00be 0121     		movs	r1, #1
+ 572 00c0 B940     		lsls	r1, r1, r7
+ 573 00c2 0A43     		orrs	r2, r2, r1
+ 574 00c4 46F82320 		str	r2, [r6, r3, lsl #2]
+ 575              	.LVL66:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 576              		.loc 1 119 5 discriminator 14 view .LVU139
+ 577 00c8 DEE7     		b	.L30
+ 578              	.LVL67:
+ 579              	.L36:
+ 119:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 580              		.loc 1 119 5 discriminator 14 view .LVU140
+ 581              	.LBE12:
+ 582              	.LBE9:
+ 121:../Switch/core/fal/tiger/fal_tiger_lag.c **** }
+ 583              		.loc 1 121 12 view .LVU141
+ 584 00ca 0020     		movs	r0, #0
+ 585 00cc B4E7     		b	.L21
+ 586              	.L38:
+ 587 00ce 00BF     		.align	2
+ 588              	.L37:
+ 589 00d0 00000000 		.word	yt_debug_level
+ 590 00d4 00000000 		.word	_yt_errmsg
+ 591 00d8 00000000 		.word	_yt_prompt_msg
+ 592 00dc 00000000 		.word	.LC3
+ 593 00e0 00000000 		.word	__FUNCTION__.0
+ 594 00e4 08000000 		.word	.LC4
+ 595 00e8 44000000 		.word	.LC1
+ 596 00ec 00000000 		.word	gpSwitchUnit
+ 597              		.cfi_endproc
+ 598              	.LFE6:
+ 600              		.section	.rodata.fal_tiger_lag_group_port_set.str1.4,"aMS",%progbits,1
+ 601              		.align	2
+ 602              	.LC5:
+ 603 0000 68616C5F 		.ascii	"hal_table_reg_write(unit,162,index+idx_offset,sizeo"
+ 603      7461626C 
+ 603      655F7265 
+ 603      675F7772 
+ 603      69746528 
+ 604 0033 66286C69 		.ascii	"f(link_agg_membern_t),&member_entry[index])\000"
+ 604      6E6B5F61 
+ 604      67675F6D 
+ 604      656D6265 
+ 604      726E5F74 
+ 605 005f 00       		.align	2
+ 606              	.LC6:
+ 607 0060 68616C5F 		.ascii	"hal_table_reg_write(unit,161,groupId,sizeof(link_ag"
+ 607      7461626C 
+ 607      655F7265 
+ 607      675F7772 
+ 607      69746528 
+ 608 0093 675F6772 		.ascii	"g_groupn_t),&group_entry)\000"
+ 608      6F75706E 
+ 608      5F74292C 
+ 608      2667726F 
+ 608      75705F65 
+ 609              		.section	.text.fal_tiger_lag_group_port_set,"ax",%progbits
+ 610              		.align	1
+ 611              		.global	fal_tiger_lag_group_port_set
+ 612              		.syntax unified
+ 613              		.thumb
+ 614              		.thumb_func
+ 616              	fal_tiger_lag_group_port_set:
+ 617              	.LVL68:
+ 618              	.LFB5:
+  54:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_groupn_t group_entry;
+ 619              		.loc 1 54 1 is_stmt 1 view -0
+ 620              		.cfi_startproc
+ 621              		@ args = 0, pretend = 0, frame = 40
+ 622              		@ frame_needed = 0, uses_anonymous_args = 0
+  54:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_groupn_t group_entry;
+ 623              		.loc 1 54 1 is_stmt 0 view .LVU143
+ 624 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 625              		.cfi_def_cfa_offset 32
+ 626              		.cfi_offset 4, -32
+ 627              		.cfi_offset 5, -28
+ 628              		.cfi_offset 6, -24
+ 629              		.cfi_offset 7, -20
+ 630              		.cfi_offset 8, -16
+ 631              		.cfi_offset 9, -12
+ 632              		.cfi_offset 10, -8
+ 633              		.cfi_offset 14, -4
+ 634 0004 8CB0     		sub	sp, sp, #48
+ 635              		.cfi_def_cfa_offset 80
+ 636 0006 0392     		str	r2, [sp, #12]
+  55:../Switch/core/fal/tiger/fal_tiger_lag.c ****     link_agg_membern_t member_entry[LAG_MEM_NUM_PERGRP];
+ 637              		.loc 1 55 5 is_stmt 1 view .LVU144
+  56:../Switch/core/fal/tiger/fal_tiger_lag.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 638              		.loc 1 56 5 view .LVU145
+  57:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t index = 0;
+ 639              		.loc 1 57 5 view .LVU146
+ 640              	.LVL69:
+  58:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t macid = 0;
+ 641              		.loc 1 58 5 view .LVU147
+  59:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint32_t  mask;
+ 642              		.loc 1 59 5 view .LVU148
+  60:../Switch/core/fal/tiger/fal_tiger_lag.c ****     yt_port_mask_t macmask;
+ 643              		.loc 1 60 5 view .LVU149
+  61:../Switch/core/fal/tiger/fal_tiger_lag.c ****     yt_port_mask_t temp_member_portmask;
+ 644              		.loc 1 61 5 view .LVU150
+  62:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t idx_offset = 0;
+ 645              		.loc 1 62 5 view .LVU151
+  63:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 646              		.loc 1 63 5 view .LVU152
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 647              		.loc 1 65 5 view .LVU153
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 648              		.loc 1 65 5 view .LVU154
+ 649 0008 0129     		cmp	r1, #1
+ 650 000a 15D8     		bhi	.L61
+ 651 000c 0746     		mov	r7, r0
+ 652 000e 8846     		mov	r8, r1
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 653              		.loc 1 65 5 discriminator 2 view .LVU155
+  68:../Switch/core/fal/tiger/fal_tiger_lag.c ****     if(member_portmask.portbits[0] & temp_member_portmask.portbits[0])
+ 654              		.loc 1 68 5 discriminator 2 view .LVU156
+ 655 0010 05AA     		add	r2, sp, #20
+ 656 0012 0139     		subs	r1, r1, #1
+ 657              	.LVL70:
+  68:../Switch/core/fal/tiger/fal_tiger_lag.c ****     if(member_portmask.portbits[0] & temp_member_portmask.portbits[0])
+ 658              		.loc 1 68 5 is_stmt 0 discriminator 2 view .LVU157
+ 659 0014 18BF     		it	ne
+ 660 0016 0121     		movne	r1, #1
+ 661 0018 FFF7FEFF 		bl	fal_tiger_lag_group_port_get
+ 662              	.LVL71:
+  69:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 663              		.loc 1 69 5 is_stmt 1 discriminator 2 view .LVU158
+  69:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 664              		.loc 1 69 7 is_stmt 0 discriminator 2 view .LVU159
+ 665 001c 039A     		ldr	r2, [sp, #12]
+ 666 001e 059B     		ldr	r3, [sp, #20]
+ 667 0020 1A42     		tst	r2, r3
+ 668 0022 40F0C980 		bne	.L57
+  74:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CAL_YTPLIST_TO_MLIST(unit, member_portmask, macmask);
+ 669              		.loc 1 74 5 is_stmt 1 view .LVU160
+ 670 0026 1022     		movs	r2, #16
+ 671 0028 0021     		movs	r1, #0
+ 672 002a 07A8     		add	r0, sp, #28
+ 673 002c FFF7FEFF 		bl	osal_memset
+ 674              	.LVL72:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 675              		.loc 1 75 5 view .LVU161
+ 676              	.LBB13:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 677              		.loc 1 75 5 view .LVU162
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 678              		.loc 1 75 5 view .LVU163
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 679              		.loc 1 75 5 view .LVU164
+ 680              	.LBB14:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 681              		.loc 1 75 5 view .LVU165
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 682              		.loc 1 75 5 view .LVU166
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 683              		.loc 1 75 5 is_stmt 0 view .LVU167
+ 684 0030 0023     		movs	r3, #0
+ 685              	.LVL73:
+ 686              	.L43:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 687              		.loc 1 75 5 is_stmt 1 discriminator 1 view .LVU168
+ 688 0032 93B1     		cbz	r3, .L44
+ 689              	.LBE14:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 690              		.loc 1 75 5 is_stmt 0 view .LVU169
+ 691 0034 0023     		movs	r3, #0
+ 692              	.LVL74:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 693              		.loc 1 75 5 view .LVU170
+ 694 0036 1BE0     		b	.L45
+ 695              	.LVL75:
+ 696              	.L61:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 697              		.loc 1 75 5 view .LVU171
+ 698              	.LBE13:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 699              		.loc 1 65 5 is_stmt 1 discriminator 1 view .LVU172
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 700              		.loc 1 65 5 discriminator 1 view .LVU173
+ 701 0038 614B     		ldr	r3, .L70
+ 702 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 703 003c 012B     		cmp	r3, #1
+ 704 003e 04D8     		bhi	.L62
+ 705              	.LVL76:
+ 706              	.L41:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 707              		.loc 1 65 5 discriminator 5 view .LVU174
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 708              		.loc 1 65 5 discriminator 5 view .LVU175
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 709              		.loc 1 65 5 discriminator 5 view .LVU176
+ 710 0040 0524     		movs	r4, #5
+ 711              	.LVL77:
+ 712              	.L39:
+ 107:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 713              		.loc 1 107 1 is_stmt 0 view .LVU177
+ 714 0042 2046     		mov	r0, r4
+ 715 0044 0CB0     		add	sp, sp, #48
+ 716              		.cfi_remember_state
+ 717              		.cfi_def_cfa_offset 32
+ 718              		@ sp needed
+ 719 0046 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 720              	.LVL78:
+ 721              	.L62:
+ 722              		.cfi_restore_state
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 723              		.loc 1 65 5 is_stmt 1 discriminator 3 view .LVU178
+ 724              	.LBB18:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 725              		.loc 1 65 5 discriminator 3 view .LVU179
+ 726 004a 5E4B     		ldr	r3, .L70+4
+ 727 004c 5A69     		ldr	r2, [r3, #20]
+ 728 004e 5E4B     		ldr	r3, .L70+8
+ 729 0050 9968     		ldr	r1, [r3, #8]
+ 730              	.LVL79:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 731              		.loc 1 65 5 is_stmt 0 discriminator 3 view .LVU180
+ 732 0052 5E48     		ldr	r0, .L70+12
+ 733              	.LVL80:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 734              		.loc 1 65 5 discriminator 3 view .LVU181
+ 735 0054 FFF7FEFF 		bl	osal_printf
+ 736              	.LVL81:
+ 737 0058 F2E7     		b	.L41
+ 738              	.LVL82:
+ 739              	.L44:
+  65:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 740              		.loc 1 65 5 discriminator 3 view .LVU182
+ 741              	.LBE18:
+ 742              	.LBB19:
+ 743              	.LBB15:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 744              		.loc 1 75 5 is_stmt 1 discriminator 3 view .LVU183
+ 745 005a 0CAA     		add	r2, sp, #48
+ 746 005c 02EB8302 		add	r2, r2, r3, lsl #2
+ 747 0060 0021     		movs	r1, #0
+ 748 0062 42F8181C 		str	r1, [r2, #-24]
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 749              		.loc 1 75 5 discriminator 3 view .LVU184
+ 750 0066 0133     		adds	r3, r3, #1
+ 751              	.LVL83:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 752              		.loc 1 75 5 is_stmt 0 discriminator 3 view .LVU185
+ 753 0068 DBB2     		uxtb	r3, r3
+ 754              	.LVL84:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 755              		.loc 1 75 5 discriminator 3 view .LVU186
+ 756 006a E2E7     		b	.L43
+ 757              	.LVL85:
+ 758              	.L46:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 759              		.loc 1 75 5 discriminator 3 view .LVU187
+ 760              	.LBE15:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 761              		.loc 1 75 5 is_stmt 1 discriminator 16 view .LVU188
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 762              		.loc 1 75 5 discriminator 16 view .LVU189
+ 763 006c 0133     		adds	r3, r3, #1
+ 764              	.LVL86:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 765              		.loc 1 75 5 is_stmt 0 discriminator 16 view .LVU190
+ 766 006e DBB2     		uxtb	r3, r3
+ 767              	.LVL87:
+ 768              	.L45:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 769              		.loc 1 75 5 is_stmt 1 discriminator 17 view .LVU191
+ 770 0070 574A     		ldr	r2, .L70+16
+ 771 0072 52F82710 		ldr	r1, [r2, r7, lsl #2]
+ 772 0076 0A7D     		ldrb	r2, [r1, #20]	@ zero_extendqisi2
+ 773 0078 9A42     		cmp	r2, r3
+ 774 007a 21D9     		bls	.L63
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 775              		.loc 1 75 5 discriminator 18 view .LVU192
+ 776              	.LBB16:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 777              		.loc 1 75 5 discriminator 18 view .LVU193
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 778              		.loc 1 75 5 discriminator 18 view .LVU194
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 779              		.loc 1 75 5 discriminator 18 view .LVU195
+ 780 007c 5A09     		lsrs	r2, r3, #5
+ 781              	.LVL88:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 782              		.loc 1 75 5 discriminator 18 view .LVU196
+ 783 007e 03F01F00 		and	r0, r3, #31
+ 784              	.LVL89:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 785              		.loc 1 75 5 discriminator 18 view .LVU197
+ 786 0082 1F2B     		cmp	r3, #31
+ 787 0084 F2D8     		bhi	.L46
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 788              		.loc 1 75 5 is_stmt 0 discriminator 6 view .LVU198
+ 789 0086 0CAC     		add	r4, sp, #48
+ 790 0088 04EB8202 		add	r2, r4, r2, lsl #2
+ 791              	.LVL90:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 792              		.loc 1 75 5 discriminator 6 view .LVU199
+ 793 008c 52F8244C 		ldr	r4, [r2, #-36]
+ 794 0090 0122     		movs	r2, #1
+ 795 0092 8240     		lsls	r2, r2, r0
+ 796 0094 1442     		tst	r4, r2
+ 797 0096 E9D0     		beq	.L46
+ 798              	.LVL91:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 799              		.loc 1 75 5 discriminator 6 view .LVU200
+ 800              	.LBE16:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 801              		.loc 1 75 5 is_stmt 1 view .LVU201
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 802              		.loc 1 75 5 view .LVU202
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 803              		.loc 1 75 5 view .LVU203
+ 804              	.LBB17:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 805              		.loc 1 75 5 view .LVU204
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 806              		.loc 1 75 5 view .LVU205
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 807              		.loc 1 75 5 view .LVU206
+ 808 0098 9A1D     		adds	r2, r3, #6
+ 809 009a 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 810 009e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 811 00a0 5109     		lsrs	r1, r2, #5
+ 812              	.LVL92:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 813              		.loc 1 75 5 view .LVU207
+ 814 00a2 02F01F04 		and	r4, r2, #31
+ 815              	.LVL93:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 816              		.loc 1 75 5 view .LVU208
+ 817 00a6 1F2A     		cmp	r2, #31
+ 818 00a8 E0D8     		bhi	.L46
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 819              		.loc 1 75 5 discriminator 14 view .LVU209
+ 820 00aa 0CAA     		add	r2, sp, #48
+ 821 00ac 02EB8101 		add	r1, r2, r1, lsl #2
+ 822              	.LVL94:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 823              		.loc 1 75 5 is_stmt 0 discriminator 14 view .LVU210
+ 824 00b0 51F8182C 		ldr	r2, [r1, #-24]
+ 825 00b4 0120     		movs	r0, #1
+ 826              	.LVL95:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 827              		.loc 1 75 5 discriminator 14 view .LVU211
+ 828 00b6 A040     		lsls	r0, r0, r4
+ 829 00b8 0243     		orrs	r2, r2, r0
+ 830 00ba 41F8182C 		str	r2, [r1, #-24]
+ 831 00be D5E7     		b	.L46
+ 832              	.LVL96:
+ 833              	.L63:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 834              		.loc 1 75 5 discriminator 14 view .LVU212
+ 835              	.LBE17:
+ 836              	.LBE19:
+  75:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 837              		.loc 1 75 5 is_stmt 1 discriminator 19 view .LVU213
+  77:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 838              		.loc 1 77 5 discriminator 19 view .LVU214
+  77:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 839              		.loc 1 77 10 is_stmt 0 discriminator 19 view .LVU215
+ 840 00c0 DDF81890 		ldr	r9, [sp, #24]
+ 841              	.LVL97:
+  79:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 842              		.loc 1 79 5 is_stmt 1 discriminator 19 view .LVU216
+  77:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 843              		.loc 1 77 10 is_stmt 0 discriminator 19 view .LVU217
+ 844 00c4 4C46     		mov	r4, r9
+  59:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint32_t  mask;
+ 845              		.loc 1 59 13 discriminator 19 view .LVU218
+ 846 00c6 0025     		movs	r5, #0
+  58:../Switch/core/fal/tiger/fal_tiger_lag.c ****     uint8_t macid = 0;
+ 847              		.loc 1 58 13 discriminator 19 view .LVU219
+ 848 00c8 2E46     		mov	r6, r5
+  79:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 849              		.loc 1 79 10 discriminator 19 view .LVU220
+ 850 00ca 02E0     		b	.L48
+ 851              	.LVL98:
+ 852              	.L49:
+  90:../Switch/core/fal/tiger/fal_tiger_lag.c ****         mask >>= 1;
+ 853              		.loc 1 90 9 is_stmt 1 view .LVU221
+  90:../Switch/core/fal/tiger/fal_tiger_lag.c ****         mask >>= 1;
+ 854              		.loc 1 90 14 is_stmt 0 view .LVU222
+ 855 00cc 0135     		adds	r5, r5, #1
+ 856              	.LVL99:
+  90:../Switch/core/fal/tiger/fal_tiger_lag.c ****         mask >>= 1;
+ 857              		.loc 1 90 14 view .LVU223
+ 858 00ce EDB2     		uxtb	r5, r5
+ 859              	.LVL100:
+  91:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 860              		.loc 1 91 9 is_stmt 1 view .LVU224
+  91:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 861              		.loc 1 91 14 is_stmt 0 view .LVU225
+ 862 00d0 6408     		lsrs	r4, r4, #1
+ 863              	.LVL101:
+ 864              	.L48:
+  79:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 865              		.loc 1 79 11 is_stmt 1 view .LVU226
+ 866 00d2 7CB1     		cbz	r4, .L64
+  81:../Switch/core/fal/tiger/fal_tiger_lag.c ****         {
+ 867              		.loc 1 81 9 view .LVU227
+  81:../Switch/core/fal/tiger/fal_tiger_lag.c ****         {
+ 868              		.loc 1 81 11 is_stmt 0 view .LVU228
+ 869 00d4 14F0010F 		tst	r4, #1
+ 870 00d8 F8D0     		beq	.L49
+  83:../Switch/core/fal/tiger/fal_tiger_lag.c ****             {
+ 871              		.loc 1 83 13 is_stmt 1 view .LVU229
+  83:../Switch/core/fal/tiger/fal_tiger_lag.c ****             {
+ 872              		.loc 1 83 15 is_stmt 0 view .LVU230
+ 873 00da 032E     		cmp	r6, #3
+ 874 00dc 6ED8     		bhi	.L58
+  87:../Switch/core/fal/tiger/fal_tiger_lag.c ****             index++;
+ 875              		.loc 1 87 13 is_stmt 1 view .LVU231
+ 876 00de 2B46     		mov	r3, r5
+ 877 00e0 07AA     		add	r2, sp, #28
+ 878 00e2 02EB8602 		add	r2, r2, r6, lsl #2
+ 879 00e6 0021     		movs	r1, #0
+ 880 00e8 A220     		movs	r0, #162
+ 881 00ea FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 882              	.LVL102:
+  88:../Switch/core/fal/tiger/fal_tiger_lag.c ****         }
+ 883              		.loc 1 88 13 view .LVU232
+  88:../Switch/core/fal/tiger/fal_tiger_lag.c ****         }
+ 884              		.loc 1 88 18 is_stmt 0 view .LVU233
+ 885 00ee 0136     		adds	r6, r6, #1
+ 886              	.LVL103:
+  88:../Switch/core/fal/tiger/fal_tiger_lag.c ****         }
+ 887              		.loc 1 88 18 view .LVU234
+ 888 00f0 F6B2     		uxtb	r6, r6
+ 889              	.LVL104:
+  88:../Switch/core/fal/tiger/fal_tiger_lag.c ****         }
+ 890              		.loc 1 88 18 view .LVU235
+ 891 00f2 EBE7     		b	.L49
+ 892              	.L64:
+  94:../Switch/core/fal/tiger/fal_tiger_lag.c **** 
+ 893              		.loc 1 94 5 is_stmt 1 view .LVU236
+ 894 00f4 3346     		mov	r3, r6
+ 895 00f6 0BAA     		add	r2, sp, #44
+ 896 00f8 0121     		movs	r1, #1
+ 897 00fa A120     		movs	r0, #161
+ 898 00fc FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 899              	.LVL105:
+  96:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 900              		.loc 1 96 5 view .LVU237
+  96:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 901              		.loc 1 96 16 is_stmt 0 view .LVU238
+ 902 0100 B8F1010F 		cmp	r8, #1
+ 903 0104 16D0     		beq	.L65
+ 904 0106 4FF0000A 		mov	r10, #0
+ 905              	.L51:
+ 906              	.LVL106:
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 907              		.loc 1 98 5 is_stmt 1 discriminator 4 view .LVU239
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 908              		.loc 1 98 14 is_stmt 0 discriminator 4 view .LVU240
+ 909 010a 0025     		movs	r5, #0
+ 910              	.LVL107:
+ 911              	.L52:
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 912              		.loc 1 98 23 is_stmt 1 discriminator 2 view .LVU241
+ 913 010c 032D     		cmp	r5, #3
+ 914 010e 2AD8     		bhi	.L66
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 915              		.loc 1 100 9 view .LVU242
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 916              		.loc 1 100 9 view .LVU243
+ 917 0110 07AB     		add	r3, sp, #28
+ 918 0112 03EB8503 		add	r3, r3, r5, lsl #2
+ 919 0116 0093     		str	r3, [sp]
+ 920 0118 0423     		movs	r3, #4
+ 921 011a 0AEB0502 		add	r2, r10, r5
+ 922 011e A221     		movs	r1, #162
+ 923 0120 3846     		mov	r0, r7
+ 924 0122 FFF7FEFF 		bl	hal_table_reg_write
+ 925              	.LVL108:
+ 926 0126 0646     		mov	r6, r0
+ 927              	.LVL109:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 928              		.loc 1 100 9 is_stmt 0 view .LVU244
+ 929 0128 10F0FF03 		ands	r3, r0, #255
+ 930 012c 05D1     		bne	.L67
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 931              		.loc 1 100 9 is_stmt 1 discriminator 2 view .LVU245
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 932              		.loc 1 98 49 discriminator 2 view .LVU246
+ 933 012e 0135     		adds	r5, r5, #1
+ 934              	.LVL110:
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 935              		.loc 1 98 49 is_stmt 0 discriminator 2 view .LVU247
+ 936 0130 EDB2     		uxtb	r5, r5
+ 937              	.LVL111:
+  98:../Switch/core/fal/tiger/fal_tiger_lag.c ****     {
+ 938              		.loc 1 98 49 discriminator 2 view .LVU248
+ 939 0132 EBE7     		b	.L52
+ 940              	.LVL112:
+ 941              	.L65:
+  96:../Switch/core/fal/tiger/fal_tiger_lag.c ****     
+ 942              		.loc 1 96 16 view .LVU249
+ 943 0134 4FF0040A 		mov	r10, #4
+ 944 0138 E7E7     		b	.L51
+ 945              	.LVL113:
+ 946              	.L67:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 947              		.loc 1 100 9 is_stmt 1 discriminator 1 view .LVU250
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 948              		.loc 1 100 9 discriminator 1 view .LVU251
+ 949 013a 214A     		ldr	r2, .L70
+ 950 013c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 951 013e 012A     		cmp	r2, #1
+ 952 0140 01D8     		bhi	.L68
+ 953              	.LVL114:
+ 954              	.L54:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 955              		.loc 1 100 9 discriminator 5 view .LVU252
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 956              		.loc 1 100 9 discriminator 5 view .LVU253
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 957              		.loc 1 100 9 discriminator 5 view .LVU254
+ 958 0142 F4B2     		uxtb	r4, r6
+ 959              	.LVL115:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 960              		.loc 1 100 9 is_stmt 0 discriminator 5 view .LVU255
+ 961 0144 7DE7     		b	.L39
+ 962              	.LVL116:
+ 963              	.L68:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 964              		.loc 1 100 9 is_stmt 1 discriminator 3 view .LVU256
+ 965              	.LBB20:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 966              		.loc 1 100 9 discriminator 3 view .LVU257
+ 967 0146 142B     		cmp	r3, #20
+ 968 0148 28BF     		it	cs
+ 969 014a 1423     		movcs	r3, #20
+ 970 014c 1A46     		mov	r2, r3
+ 971 014e 214B     		ldr	r3, .L70+20
+ 972 0150 0093     		str	r3, [sp]
+ 973 0152 214B     		ldr	r3, .L70+24
+ 974 0154 1B49     		ldr	r1, .L70+4
+ 975 0156 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 976 015a 1B49     		ldr	r1, .L70+8
+ 977 015c 8968     		ldr	r1, [r1, #8]
+ 978 015e 1F48     		ldr	r0, .L70+28
+ 979              	.LVL117:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 980              		.loc 1 100 9 is_stmt 0 discriminator 3 view .LVU258
+ 981 0160 FFF7FEFF 		bl	osal_printf
+ 982              	.LVL118:
+ 983 0164 EDE7     		b	.L54
+ 984              	.LVL119:
+ 985              	.L66:
+ 100:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 986              		.loc 1 100 9 discriminator 3 view .LVU259
+ 987              	.LBE20:
+ 103:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, LINK_AGG_GROUPNm, groupId, sizeof(link_agg_groupn_t), &grou
+ 988              		.loc 1 103 5 is_stmt 1 view .LVU260
+ 989 0166 0BAD     		add	r5, sp, #44
+ 990              	.LVL120:
+ 103:../Switch/core/fal/tiger/fal_tiger_lag.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, LINK_AGG_GROUPNm, groupId, sizeof(link_agg_groupn_t), &grou
+ 991              		.loc 1 103 5 is_stmt 0 view .LVU261
+ 992 0168 4B46     		mov	r3, r9
+ 993 016a 2A46     		mov	r2, r5
+ 994 016c 0021     		movs	r1, #0
+ 995 016e A120     		movs	r0, #161
+ 996 0170 FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 997              	.LVL121:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 998              		.loc 1 104 5 is_stmt 1 view .LVU262
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 999              		.loc 1 104 5 view .LVU263
+ 1000 0174 0095     		str	r5, [sp]
+ 1001 0176 0423     		movs	r3, #4
+ 1002 0178 4246     		mov	r2, r8
+ 1003 017a A121     		movs	r1, #161
+ 1004 017c 3846     		mov	r0, r7
+ 1005 017e FFF7FEFF 		bl	hal_table_reg_write
+ 1006              	.LVL122:
+ 1007 0182 0546     		mov	r5, r0
+ 1008              	.LVL123:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1009              		.loc 1 104 5 is_stmt 0 view .LVU264
+ 1010 0184 10F0FF03 		ands	r3, r0, #255
+ 1011 0188 3FF45BAF 		beq	.L39
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1012              		.loc 1 104 5 is_stmt 1 discriminator 1 view .LVU265
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1013              		.loc 1 104 5 discriminator 1 view .LVU266
+ 1014 018c 0C4A     		ldr	r2, .L70
+ 1015 018e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1016 0190 012A     		cmp	r2, #1
+ 1017 0192 01D8     		bhi	.L69
+ 1018              	.LVL124:
+ 1019              	.L56:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1020              		.loc 1 104 5 discriminator 5 view .LVU267
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1021              		.loc 1 104 5 discriminator 5 view .LVU268
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1022              		.loc 1 104 5 discriminator 5 view .LVU269
+ 1023 0194 ECB2     		uxtb	r4, r5
+ 1024              	.LVL125:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1025              		.loc 1 104 5 is_stmt 0 discriminator 5 view .LVU270
+ 1026 0196 54E7     		b	.L39
+ 1027              	.LVL126:
+ 1028              	.L69:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1029              		.loc 1 104 5 is_stmt 1 discriminator 3 view .LVU271
+ 1030              	.LBB21:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1031              		.loc 1 104 5 discriminator 3 view .LVU272
+ 1032 0198 142B     		cmp	r3, #20
+ 1033 019a 28BF     		it	cs
+ 1034 019c 1423     		movcs	r3, #20
+ 1035 019e 1A46     		mov	r2, r3
+ 1036 01a0 0C4B     		ldr	r3, .L70+20
+ 1037 01a2 0093     		str	r3, [sp]
+ 1038 01a4 0E4B     		ldr	r3, .L70+32
+ 1039 01a6 0749     		ldr	r1, .L70+4
+ 1040 01a8 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 1041 01ac 0649     		ldr	r1, .L70+8
+ 1042 01ae 8968     		ldr	r1, [r1, #8]
+ 1043 01b0 0A48     		ldr	r0, .L70+28
+ 1044              	.LVL127:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1045              		.loc 1 104 5 is_stmt 0 discriminator 3 view .LVU273
+ 1046 01b2 FFF7FEFF 		bl	osal_printf
+ 1047              	.LVL128:
+ 1048 01b6 EDE7     		b	.L56
+ 1049              	.LVL129:
+ 1050              	.L57:
+ 104:../Switch/core/fal/tiger/fal_tiger_lag.c ****    
+ 1051              		.loc 1 104 5 discriminator 3 view .LVU274
+ 1052              	.LBE21:
+  71:../Switch/core/fal/tiger/fal_tiger_lag.c ****     }
+ 1053              		.loc 1 71 16 view .LVU275
+ 1054 01b8 0B24     		movs	r4, #11
+ 1055 01ba 42E7     		b	.L39
+ 1056              	.LVL130:
+ 1057              	.L58:
+  85:../Switch/core/fal/tiger/fal_tiger_lag.c ****             }
+ 1058              		.loc 1 85 24 view .LVU276
+ 1059 01bc 0824     		movs	r4, #8
+ 1060              	.LVL131:
+  85:../Switch/core/fal/tiger/fal_tiger_lag.c ****             }
+ 1061              		.loc 1 85 24 view .LVU277
+ 1062 01be 40E7     		b	.L39
+ 1063              	.L71:
+ 1064              		.align	2
+ 1065              	.L70:
+ 1066 01c0 00000000 		.word	yt_debug_level
+ 1067 01c4 00000000 		.word	_yt_errmsg
+ 1068 01c8 00000000 		.word	_yt_prompt_msg
+ 1069 01cc 00000000 		.word	.LC3
+ 1070 01d0 00000000 		.word	gpSwitchUnit
+ 1071 01d4 00000000 		.word	__FUNCTION__.1
+ 1072 01d8 00000000 		.word	.LC5
+ 1073 01dc 44000000 		.word	.LC1
+ 1074 01e0 60000000 		.word	.LC6
+ 1075              		.cfi_endproc
+ 1076              	.LFE5:
+ 1078              		.section	.rodata.__FUNCTION__.0,"a"
+ 1079              		.align	2
+ 1082              	__FUNCTION__.0:
+ 1083 0000 66616C5F 		.ascii	"fal_tiger_lag_group_port_get\000"
+ 1083      74696765 
+ 1083      725F6C61 
+ 1083      675F6772 
+ 1083      6F75705F 
+ 1084              		.section	.rodata.__FUNCTION__.1,"a"
+ 1085              		.align	2
+ 1088              	__FUNCTION__.1:
+ 1089 0000 66616C5F 		.ascii	"fal_tiger_lag_group_port_set\000"
+ 1089      74696765 
+ 1089      725F6C61 
+ 1089      675F6772 
+ 1089      6F75705F 
+ 1090              		.section	.rodata.__FUNCTION__.2,"a"
+ 1091              		.align	2
+ 1094              	__FUNCTION__.2:
+ 1095 0000 66616C5F 		.ascii	"fal_tiger_lag_hash_sel_get\000"
+ 1095      74696765 
+ 1095      725F6C61 
+ 1095      675F6861 
+ 1095      73685F73 
+ 1096              		.section	.rodata.__FUNCTION__.3,"a"
+ 1097              		.align	2
+ 1100              	__FUNCTION__.3:
+ 1101 0000 66616C5F 		.ascii	"fal_tiger_lag_hash_sel_set\000"
+ 1101      74696765 
+ 1101      725F6C61 
+ 1101      675F6861 
+ 1101      73685F73 
+ 1102              		.text
+ 1103              	.Letext0:
+ 1104              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 1105              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 1106              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 1107              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\cal/cal_bprofile.h"
+ 1108              		.file 6 "../Switch/core/fal/tiger/fal_tiger_entry.h"
+ 1109              		.file 7 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\hal/hal_mem.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 fal_tiger_lag.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:19     .rodata.fal_tiger_lag_hash_sel_set.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:31     .text.fal_tiger_lag_hash_sel_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:37     .text.fal_tiger_lag_hash_sel_set:00000000 fal_tiger_lag_hash_sel_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:190    .text.fal_tiger_lag_hash_sel_set:000000a0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1100   .rodata.__FUNCTION__.3:00000000 __FUNCTION__.3
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:202    .text.fal_tiger_lag_hash_sel_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:208    .text.fal_tiger_lag_hash_sel_get:00000000 fal_tiger_lag_hash_sel_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:313    .text.fal_tiger_lag_hash_sel_get:00000060 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1094   .rodata.__FUNCTION__.2:00000000 __FUNCTION__.2
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:323    .rodata.fal_tiger_lag_group_port_get.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:331    .text.fal_tiger_lag_group_port_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:337    .text.fal_tiger_lag_group_port_get:00000000 fal_tiger_lag_group_port_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:589    .text.fal_tiger_lag_group_port_get:000000d0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1082   .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:601    .rodata.fal_tiger_lag_group_port_set.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:610    .text.fal_tiger_lag_group_port_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:616    .text.fal_tiger_lag_group_port_set:00000000 fal_tiger_lag_group_port_set
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1066   .text.fal_tiger_lag_group_port_set:000001c0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1088   .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1079   .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1085   .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1091   .rodata.__FUNCTION__.2:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc0bJkna.s:1097   .rodata.__FUNCTION__.3:00000000 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.eec47faa946e01877de19a2f99ee7710
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_vlan.h.17.4dbe63e648ff65010c51c5f8a737ac2d
+                           .group:00000000 wm4.yt_acl.h.25.ad9531373d966dccc96222e31e0234b5
+                           .group:00000000 wm4.yt_nic.h.17.4e5ceed38d9cfbd9b5db2d4b069b6961
+                           .group:00000000 wm4.yt_loopdetect.h.17.4739c2e436a8e779d4d8c89037b81aea
+                           .group:00000000 wm4.yt_multicast.h.17.9c1d51b153e5e1785468d9c0ad6414a4
+                           .group:00000000 wm4.yt_port.h.17.f9740394ebf086646c9c567db1605abb
+                           .group:00000000 wm4.yt_stat.h.17.f87caec2ee71e59f920ea3778bda3fad
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.fal_cmm.h.21.abca9355ca9f68b8c1596045f4695bae
+                           .group:00000000 wm4.fal_tiger_entry.h.5.7362ab6fe03ebf954c0b1cff89cdb238
+                           .group:00000000 wm4.fal_tiger_struct.h.6.65f60ff609860805c56cf9902d7678f2
+
+UNDEFINED SYMBOLS
+hal_table_reg_read
+osal_printf
+hal_tbl_reg_field_set
+hal_table_reg_write
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+hal_tbl_reg_field_get
+gpSwitchUnit
+osal_memset

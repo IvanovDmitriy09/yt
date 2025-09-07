@@ -1,0 +1,2113 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"fal_tiger_mirror.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/fal/tiger/fal_tiger_mirror.c"
+  18              		.section	.rodata.fal_tiger_que_colorAware_enable_set.str1.4,"aMS",%progbits,1
+  19              		.align	2
+  20              	.LC0:
+  21 0000 68616C5F 		.ascii	"hal_mem32_read(unit, regAddr, &regVal2)\000"
+  21      6D656D33 
+  21      325F7265 
+  21      61642875 
+  21      6E69742C 
+  22              		.align	2
+  23              	.LC1:
+  24 0028 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+  24      206F6620 
+  24      22257322 
+  24      20696E20 
+  24      25730D0A 
+  25 003d 000000   		.align	2
+  26              	.LC2:
+  27 0040 68616C5F 		.ascii	"hal_mem32_read(unit, regAddr, &regVal)\000"
+  27      6D656D33 
+  27      325F7265 
+  27      61642875 
+  27      6E69742C 
+  28 0067 00       		.align	2
+  29              	.LC3:
+  30 0068 68616C5F 		.ascii	"hal_mem32_write(unit, regAddr - 4, regVal2)\000"
+  30      6D656D33 
+  30      325F7772 
+  30      69746528 
+  30      756E6974 
+  31              		.align	2
+  32              	.LC4:
+  33 0094 68616C5F 		.ascii	"hal_mem32_write(unit, regAddr, regVal)\000"
+  33      6D656D33 
+  33      325F7772 
+  33      69746528 
+  33      756E6974 
+  34              		.section	.text.fal_tiger_que_colorAware_enable_set,"ax",%progbits
+  35              		.align	1
+  36              		.syntax unified
+  37              		.thumb
+  38              		.thumb_func
+  40              	fal_tiger_que_colorAware_enable_set:
+  41              	.LVL0:
+  42              	.LFB3:
+   1:../Switch/core/fal/tiger/fal_tiger_mirror.c **** /*
+   2:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  * Include Files
+   3:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  */
+   4:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "yt_error.h"
+   5:../Switch/core/fal/tiger/fal_tiger_mirror.c **** //#include "osal_mem.h"
+   6:../Switch/core/fal/tiger/fal_tiger_mirror.c **** //#include "osal_print.h"
+   7:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "fal_tiger_mirror.h"
+   8:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "hal_mem.h"
+   9:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "fal_tiger_struct.h"
+  10:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "fal_tiger_entry.h"
+  11:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "fal_tiger_mem.h"
+  12:../Switch/core/fal/tiger/fal_tiger_mirror.c **** #include "fal_tiger_qos.h"
+  13:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  14:../Switch/core/fal/tiger/fal_tiger_mirror.c **** /*
+  15:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  * Symbol Definition
+  16:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  */
+  17:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  18:../Switch/core/fal/tiger/fal_tiger_mirror.c **** /*
+  19:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  * Macro Declaration
+  20:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  */
+  21:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  22:../Switch/core/fal/tiger/fal_tiger_mirror.c **** /*
+  23:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  * Data Declaration
+  24:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  */
+  25:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  26:../Switch/core/fal/tiger/fal_tiger_mirror.c **** /*
+  27:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  * Function Declaration
+  28:../Switch/core/fal/tiger/fal_tiger_mirror.c ****  */
+  29:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  30:../Switch/core/fal/tiger/fal_tiger_mirror.c **** static uint32_t fal_tiger_que_colorAware_enable_set(yt_unit_t unit, yt_macid_t macid, yt_enable_t e
+  31:../Switch/core/fal/tiger/fal_tiger_mirror.c **** {
+  43              		.loc 1 31 1 view -0
+  44              		.cfi_startproc
+  45              		@ args = 0, pretend = 0, frame = 8
+  46              		@ frame_needed = 0, uses_anonymous_args = 0
+  47              		.loc 1 31 1 is_stmt 0 view .LVU1
+  48 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  49              		.cfi_def_cfa_offset 32
+  50              		.cfi_offset 4, -32
+  51              		.cfi_offset 5, -28
+  52              		.cfi_offset 6, -24
+  53              		.cfi_offset 7, -20
+  54              		.cfi_offset 8, -16
+  55              		.cfi_offset 9, -12
+  56              		.cfi_offset 10, -8
+  57              		.cfi_offset 14, -4
+  58 0004 84B0     		sub	sp, sp, #16
+  59              		.cfi_def_cfa_offset 48
+  60 0006 0546     		mov	r5, r0
+  61 0008 0E46     		mov	r6, r1
+  62 000a 1746     		mov	r7, r2
+  32:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t regAddr;
+  63              		.loc 1 32 5 is_stmt 1 view .LVU2
+  33:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t regVal;
+  64              		.loc 1 33 5 view .LVU3
+  34:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t regVal2;
+  65              		.loc 1 34 5 view .LVU4
+  35:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t qid;
+  66              		.loc 1 35 5 view .LVU5
+  36:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     cmm_err_t ret = CMM_ERR_OK;
+  67              		.loc 1 36 5 view .LVU6
+  68              	.LVL1:
+  37:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  38:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     for (qid = 0; qid < CAL_MAX_UCAST_QUEUE_NUM(unit); qid++)
+  69              		.loc 1 38 5 view .LVU7
+  70              		.loc 1 38 14 is_stmt 0 view .LVU8
+  71 000c 4FF00008 		mov	r8, #0
+  72              		.loc 1 38 5 view .LVU9
+  73 0010 45E0     		b	.L2
+  74              	.LVL2:
+  75              	.L29:
+  39:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+  40:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr = QOS_FORCEAC_UCASTQUE_REG(unit, macid, qid);
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal2), ret);
+  76              		.loc 1 41 9 is_stmt 1 discriminator 1 view .LVU10
+  77              		.loc 1 41 9 discriminator 1 view .LVU11
+  78 0012 7E4A     		ldr	r2, .L38
+  79 0014 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  80 0016 012A     		cmp	r2, #1
+  81 0018 03D8     		bhi	.L24
+  82              	.LVL3:
+  83              	.L4:
+  84              		.loc 1 41 9 discriminator 5 view .LVU12
+  85              		.loc 1 41 9 discriminator 5 view .LVU13
+  86              		.loc 1 41 9 discriminator 5 view .LVU14
+  87 001a E0B2     		uxtb	r0, r4
+  88              	.LVL4:
+  89              	.L1:
+  42:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+  44:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+  45:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+  46:../Switch/core/fal/tiger/fal_tiger_mirror.c ****             SET_BIT(regVal, 27);
+  47:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+  48:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         else
+  49:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+  50:../Switch/core/fal/tiger/fal_tiger_mirror.c ****             CLEAR_BIT(regVal, 27);
+  51:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr - 4, regVal2), ret);
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+  54:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+  55:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     for (qid = 0; qid < CAL_MAX_MCAST_QUEUE_NUM(unit); qid++)
+  57:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+  58:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr = QOS_FORCEAC_MCASTQUE_REG(unit, macid, qid);
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+  60:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+  61:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+  62:../Switch/core/fal/tiger/fal_tiger_mirror.c ****             SET_BIT(regVal, 28);
+  63:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+  64:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         else
+  65:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+  66:../Switch/core/fal/tiger/fal_tiger_mirror.c ****             CLEAR_BIT(regVal, 28);
+  67:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+  69:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+  70:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  71:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     return CMM_ERR_OK;
+  72:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+  90              		.loc 1 72 1 is_stmt 0 view .LVU15
+  91 001c 04B0     		add	sp, sp, #16
+  92              		.cfi_remember_state
+  93              		.cfi_def_cfa_offset 32
+  94              		@ sp needed
+  95 001e BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+  96              	.LVL5:
+  97              	.L24:
+  98              		.cfi_restore_state
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+  99              		.loc 1 41 9 is_stmt 1 discriminator 3 view .LVU16
+ 100              	.LBB2:
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 101              		.loc 1 41 9 discriminator 3 view .LVU17
+ 102 0022 142B     		cmp	r3, #20
+ 103 0024 28BF     		it	cs
+ 104 0026 1423     		movcs	r3, #20
+ 105 0028 1A46     		mov	r2, r3
+ 106 002a 794B     		ldr	r3, .L38+4
+ 107 002c 0093     		str	r3, [sp]
+ 108 002e 794B     		ldr	r3, .L38+8
+ 109 0030 7949     		ldr	r1, .L38+12
+ 110 0032 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 111 0036 7949     		ldr	r1, .L38+16
+ 112 0038 8968     		ldr	r1, [r1, #8]
+ 113 003a 7948     		ldr	r0, .L38+20
+ 114              	.LVL6:
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 115              		.loc 1 41 9 is_stmt 0 discriminator 3 view .LVU18
+ 116 003c FFF7FEFF 		bl	osal_printf
+ 117              	.LVL7:
+ 118 0040 EBE7     		b	.L4
+ 119              	.LVL8:
+ 120              	.L30:
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 121              		.loc 1 41 9 discriminator 3 view .LVU19
+ 122              	.LBE2:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 123              		.loc 1 43 9 is_stmt 1 discriminator 1 view .LVU20
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 124              		.loc 1 43 9 discriminator 1 view .LVU21
+ 125 0042 724A     		ldr	r2, .L38
+ 126 0044 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 127 0046 012A     		cmp	r2, #1
+ 128 0048 01D8     		bhi	.L25
+ 129              	.LVL9:
+ 130              	.L7:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 131              		.loc 1 43 9 discriminator 5 view .LVU22
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 132              		.loc 1 43 9 discriminator 5 view .LVU23
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 133              		.loc 1 43 9 discriminator 5 view .LVU24
+ 134 004a E0B2     		uxtb	r0, r4
+ 135 004c E6E7     		b	.L1
+ 136              	.LVL10:
+ 137              	.L25:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 138              		.loc 1 43 9 discriminator 3 view .LVU25
+ 139              	.LBB3:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 140              		.loc 1 43 9 discriminator 3 view .LVU26
+ 141 004e 142B     		cmp	r3, #20
+ 142 0050 28BF     		it	cs
+ 143 0052 1423     		movcs	r3, #20
+ 144 0054 1A46     		mov	r2, r3
+ 145 0056 6E4B     		ldr	r3, .L38+4
+ 146 0058 0093     		str	r3, [sp]
+ 147 005a 724B     		ldr	r3, .L38+24
+ 148 005c 6E49     		ldr	r1, .L38+12
+ 149 005e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 150 0062 6E49     		ldr	r1, .L38+16
+ 151 0064 8968     		ldr	r1, [r1, #8]
+ 152 0066 6E48     		ldr	r0, .L38+20
+ 153              	.LVL11:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 154              		.loc 1 43 9 is_stmt 0 discriminator 3 view .LVU27
+ 155 0068 FFF7FEFF 		bl	osal_printf
+ 156              	.LVL12:
+ 157 006c EDE7     		b	.L7
+ 158              	.LVL13:
+ 159              	.L8:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 160              		.loc 1 43 9 discriminator 3 view .LVU28
+ 161              	.LBE3:
+  50:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+ 162              		.loc 1 50 13 is_stmt 1 view .LVU29
+ 163 006e 039B     		ldr	r3, [sp, #12]
+ 164 0070 23F00063 		bic	r3, r3, #134217728
+ 165 0074 0393     		str	r3, [sp, #12]
+ 166              	.L9:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 167              		.loc 1 52 9 view .LVU30
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 168              		.loc 1 52 9 view .LVU31
+ 169 0076 029A     		ldr	r2, [sp, #8]
+ 170 0078 4946     		mov	r1, r9
+ 171 007a 2846     		mov	r0, r5
+ 172              	.LVL14:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 173              		.loc 1 52 9 is_stmt 0 view .LVU32
+ 174 007c FFF7FEFF 		bl	hal_mem32_write
+ 175              	.LVL15:
+ 176 0080 0446     		mov	r4, r0
+ 177              	.LVL16:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 178              		.loc 1 52 9 view .LVU33
+ 179 0082 10F0FF03 		ands	r3, r0, #255
+ 180 0086 35D1     		bne	.L26
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 181              		.loc 1 52 9 is_stmt 1 discriminator 2 view .LVU34
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 182              		.loc 1 53 9 discriminator 2 view .LVU35
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 183              		.loc 1 53 9 discriminator 2 view .LVU36
+ 184 0088 039A     		ldr	r2, [sp, #12]
+ 185 008a 5146     		mov	r1, r10
+ 186 008c 2846     		mov	r0, r5
+ 187              	.LVL17:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 188              		.loc 1 53 9 is_stmt 0 discriminator 2 view .LVU37
+ 189 008e FFF7FEFF 		bl	hal_mem32_write
+ 190              	.LVL18:
+ 191 0092 0446     		mov	r4, r0
+ 192              	.LVL19:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 193              		.loc 1 53 9 discriminator 2 view .LVU38
+ 194 0094 10F0FF03 		ands	r3, r0, #255
+ 195 0098 42D1     		bne	.L27
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 196              		.loc 1 53 9 is_stmt 1 discriminator 2 view .LVU39
+  38:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 197              		.loc 1 38 59 discriminator 2 view .LVU40
+ 198 009a 08F10108 		add	r8, r8, #1
+ 199              	.LVL20:
+ 200              	.L2:
+  38:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 201              		.loc 1 38 23 discriminator 2 view .LVU41
+  38:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 202              		.loc 1 38 25 is_stmt 0 discriminator 2 view .LVU42
+ 203 009e 624B     		ldr	r3, .L38+28
+ 204 00a0 53F82530 		ldr	r3, [r3, r5, lsl #2]
+ 205 00a4 D3F8AC30 		ldr	r3, [r3, #172]
+ 206 00a8 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+  38:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 207              		.loc 1 38 23 discriminator 2 view .LVU43
+ 208 00aa 4145     		cmp	r1, r8
+ 209 00ac 4ED9     		bls	.L28
+  40:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal2), ret);
+ 210              		.loc 1 40 9 is_stmt 1 view .LVU44
+  40:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal2), ret);
+ 211              		.loc 1 40 19 is_stmt 0 view .LVU45
+ 212 00ae 06FB0181 		mla	r1, r6, r1, r8
+ 213 00b2 01F5C021 		add	r1, r1, #393216
+ 214 00b6 01F50071 		add	r1, r1, #512
+  40:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal2), ret);
+ 215              		.loc 1 40 17 view .LVU46
+ 216 00ba 4FEAC109 		lsl	r9, r1, #3
+ 217              	.LVL21:
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 218              		.loc 1 41 9 is_stmt 1 view .LVU47
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 219              		.loc 1 41 9 view .LVU48
+ 220 00be 02AA     		add	r2, sp, #8
+ 221 00c0 4946     		mov	r1, r9
+ 222 00c2 2846     		mov	r0, r5
+ 223 00c4 FFF7FEFF 		bl	hal_mem32_read
+ 224              	.LVL22:
+ 225 00c8 0446     		mov	r4, r0
+ 226              	.LVL23:
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 227              		.loc 1 41 9 is_stmt 0 view .LVU49
+ 228 00ca 10F0FF03 		ands	r3, r0, #255
+ 229 00ce A0D1     		bne	.L29
+  41:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         regAddr += 4;
+ 230              		.loc 1 41 9 is_stmt 1 discriminator 2 view .LVU50
+  42:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+ 231              		.loc 1 42 9 discriminator 2 view .LVU51
+  42:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+ 232              		.loc 1 42 17 is_stmt 0 discriminator 2 view .LVU52
+ 233 00d0 09F1040A 		add	r10, r9, #4
+ 234              	.LVL24:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 235              		.loc 1 43 9 is_stmt 1 discriminator 2 view .LVU53
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 236              		.loc 1 43 9 discriminator 2 view .LVU54
+ 237 00d4 03AA     		add	r2, sp, #12
+ 238 00d6 5146     		mov	r1, r10
+ 239 00d8 2846     		mov	r0, r5
+ 240              	.LVL25:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 241              		.loc 1 43 9 is_stmt 0 discriminator 2 view .LVU55
+ 242 00da FFF7FEFF 		bl	hal_mem32_read
+ 243              	.LVL26:
+ 244 00de 0446     		mov	r4, r0
+ 245              	.LVL27:
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 246              		.loc 1 43 9 discriminator 2 view .LVU56
+ 247 00e0 10F0FF03 		ands	r3, r0, #255
+ 248 00e4 ADD1     		bne	.L30
+  43:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 249              		.loc 1 43 9 is_stmt 1 discriminator 2 view .LVU57
+  44:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+ 250              		.loc 1 44 9 discriminator 2 view .LVU58
+  44:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+ 251              		.loc 1 44 12 is_stmt 0 discriminator 2 view .LVU59
+ 252 00e6 002F     		cmp	r7, #0
+ 253 00e8 C1D0     		beq	.L8
+  46:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+ 254              		.loc 1 46 13 is_stmt 1 view .LVU60
+ 255 00ea 039B     		ldr	r3, [sp, #12]
+ 256 00ec 43F00063 		orr	r3, r3, #134217728
+ 257 00f0 0393     		str	r3, [sp, #12]
+ 258 00f2 C0E7     		b	.L9
+ 259              	.L26:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 260              		.loc 1 52 9 discriminator 1 view .LVU61
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 261              		.loc 1 52 9 discriminator 1 view .LVU62
+ 262 00f4 454A     		ldr	r2, .L38
+ 263 00f6 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 264 00f8 012A     		cmp	r2, #1
+ 265 00fa 01D8     		bhi	.L31
+ 266              	.LVL28:
+ 267              	.L11:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 268              		.loc 1 52 9 discriminator 5 view .LVU63
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 269              		.loc 1 52 9 discriminator 5 view .LVU64
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 270              		.loc 1 52 9 discriminator 5 view .LVU65
+ 271 00fc E0B2     		uxtb	r0, r4
+ 272 00fe 8DE7     		b	.L1
+ 273              	.LVL29:
+ 274              	.L31:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 275              		.loc 1 52 9 discriminator 3 view .LVU66
+ 276              	.LBB4:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 277              		.loc 1 52 9 discriminator 3 view .LVU67
+ 278 0100 142B     		cmp	r3, #20
+ 279 0102 28BF     		it	cs
+ 280 0104 1423     		movcs	r3, #20
+ 281 0106 1A46     		mov	r2, r3
+ 282 0108 414B     		ldr	r3, .L38+4
+ 283 010a 0093     		str	r3, [sp]
+ 284 010c 474B     		ldr	r3, .L38+32
+ 285 010e 4249     		ldr	r1, .L38+12
+ 286 0110 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 287 0114 4149     		ldr	r1, .L38+16
+ 288 0116 8968     		ldr	r1, [r1, #8]
+ 289 0118 4148     		ldr	r0, .L38+20
+ 290              	.LVL30:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 291              		.loc 1 52 9 is_stmt 0 discriminator 3 view .LVU68
+ 292 011a FFF7FEFF 		bl	osal_printf
+ 293              	.LVL31:
+ 294 011e EDE7     		b	.L11
+ 295              	.LVL32:
+ 296              	.L27:
+  52:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, regAddr, regVal), ret);
+ 297              		.loc 1 52 9 discriminator 3 view .LVU69
+ 298              	.LBE4:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 299              		.loc 1 53 9 is_stmt 1 discriminator 1 view .LVU70
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 300              		.loc 1 53 9 discriminator 1 view .LVU71
+ 301 0120 3A4A     		ldr	r2, .L38
+ 302 0122 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 303 0124 012A     		cmp	r2, #1
+ 304 0126 01D8     		bhi	.L32
+ 305              	.LVL33:
+ 306              	.L13:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 307              		.loc 1 53 9 discriminator 5 view .LVU72
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 308              		.loc 1 53 9 discriminator 5 view .LVU73
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 309              		.loc 1 53 9 discriminator 5 view .LVU74
+ 310 0128 E0B2     		uxtb	r0, r4
+ 311 012a 77E7     		b	.L1
+ 312              	.LVL34:
+ 313              	.L32:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 314              		.loc 1 53 9 discriminator 3 view .LVU75
+ 315              	.LBB5:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 316              		.loc 1 53 9 discriminator 3 view .LVU76
+ 317 012c 142B     		cmp	r3, #20
+ 318 012e 28BF     		it	cs
+ 319 0130 1423     		movcs	r3, #20
+ 320 0132 1A46     		mov	r2, r3
+ 321 0134 364B     		ldr	r3, .L38+4
+ 322 0136 0093     		str	r3, [sp]
+ 323 0138 3D4B     		ldr	r3, .L38+36
+ 324 013a 3749     		ldr	r1, .L38+12
+ 325 013c 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 326 0140 3649     		ldr	r1, .L38+16
+ 327 0142 8968     		ldr	r1, [r1, #8]
+ 328 0144 3648     		ldr	r0, .L38+20
+ 329              	.LVL35:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 330              		.loc 1 53 9 is_stmt 0 discriminator 3 view .LVU77
+ 331 0146 FFF7FEFF 		bl	osal_printf
+ 332              	.LVL36:
+ 333 014a EDE7     		b	.L13
+ 334              	.LVL37:
+ 335              	.L28:
+  53:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 336              		.loc 1 53 9 discriminator 3 view .LVU78
+ 337              	.LBE5:
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 338              		.loc 1 56 14 view .LVU79
+ 339 014c 4FF00008 		mov	r8, #0
+ 340              	.LVL38:
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 341              		.loc 1 56 14 view .LVU80
+ 342 0150 24E0     		b	.L15
+ 343              	.LVL39:
+ 344              	.L36:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 345              		.loc 1 59 9 is_stmt 1 discriminator 1 view .LVU81
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 346              		.loc 1 59 9 discriminator 1 view .LVU82
+ 347 0152 2E4A     		ldr	r2, .L38
+ 348 0154 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 349 0156 012A     		cmp	r2, #1
+ 350 0158 01D8     		bhi	.L33
+ 351              	.LVL40:
+ 352              	.L17:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 353              		.loc 1 59 9 discriminator 5 view .LVU83
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 354              		.loc 1 59 9 discriminator 5 view .LVU84
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 355              		.loc 1 59 9 discriminator 5 view .LVU85
+ 356 015a E0B2     		uxtb	r0, r4
+ 357 015c 5EE7     		b	.L1
+ 358              	.LVL41:
+ 359              	.L33:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 360              		.loc 1 59 9 discriminator 3 view .LVU86
+ 361              	.LBB6:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 362              		.loc 1 59 9 discriminator 3 view .LVU87
+ 363 015e 142B     		cmp	r3, #20
+ 364 0160 28BF     		it	cs
+ 365 0162 1423     		movcs	r3, #20
+ 366 0164 1A46     		mov	r2, r3
+ 367 0166 2A4B     		ldr	r3, .L38+4
+ 368 0168 0093     		str	r3, [sp]
+ 369 016a 2E4B     		ldr	r3, .L38+24
+ 370 016c 2A49     		ldr	r1, .L38+12
+ 371 016e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 372 0172 2A49     		ldr	r1, .L38+16
+ 373 0174 8968     		ldr	r1, [r1, #8]
+ 374 0176 2A48     		ldr	r0, .L38+20
+ 375              	.LVL42:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 376              		.loc 1 59 9 is_stmt 0 discriminator 3 view .LVU88
+ 377 0178 FFF7FEFF 		bl	osal_printf
+ 378              	.LVL43:
+ 379 017c EDE7     		b	.L17
+ 380              	.LVL44:
+ 381              	.L18:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 382              		.loc 1 59 9 discriminator 3 view .LVU89
+ 383              	.LBE6:
+  66:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+ 384              		.loc 1 66 13 is_stmt 1 view .LVU90
+ 385 017e 039B     		ldr	r3, [sp, #12]
+ 386 0180 23F08053 		bic	r3, r3, #268435456
+ 387 0184 0393     		str	r3, [sp, #12]
+ 388              	.L19:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 389              		.loc 1 68 9 view .LVU91
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 390              		.loc 1 68 9 view .LVU92
+ 391 0186 039A     		ldr	r2, [sp, #12]
+ 392 0188 4946     		mov	r1, r9
+ 393 018a 2846     		mov	r0, r5
+ 394              	.LVL45:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 395              		.loc 1 68 9 is_stmt 0 view .LVU93
+ 396 018c FFF7FEFF 		bl	hal_mem32_write
+ 397              	.LVL46:
+ 398 0190 0446     		mov	r4, r0
+ 399              	.LVL47:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 400              		.loc 1 68 9 view .LVU94
+ 401 0192 10F0FF03 		ands	r3, r0, #255
+ 402 0196 21D1     		bne	.L34
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 403              		.loc 1 68 9 is_stmt 1 discriminator 2 view .LVU95
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 404              		.loc 1 56 59 discriminator 2 view .LVU96
+ 405 0198 08F10108 		add	r8, r8, #1
+ 406              	.LVL48:
+ 407              	.L15:
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 408              		.loc 1 56 23 discriminator 2 view .LVU97
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 409              		.loc 1 56 25 is_stmt 0 discriminator 2 view .LVU98
+ 410 019c 224B     		ldr	r3, .L38+28
+ 411 019e 53F82530 		ldr	r3, [r3, r5, lsl #2]
+ 412 01a2 D3F8AC30 		ldr	r3, [r3, #172]
+ 413 01a6 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+  56:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 414              		.loc 1 56 23 discriminator 2 view .LVU99
+ 415 01a8 4145     		cmp	r1, r8
+ 416 01aa 2DD9     		bls	.L35
+  58:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+ 417              		.loc 1 58 9 is_stmt 1 view .LVU100
+  58:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+ 418              		.loc 1 58 19 is_stmt 0 view .LVU101
+ 419 01ac 06FB0181 		mla	r1, r6, r1, r8
+ 420 01b0 01F54021 		add	r1, r1, #786432
+ 421 01b4 01F50061 		add	r1, r1, #2048
+  58:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, regAddr, &regVal), ret);
+ 422              		.loc 1 58 17 view .LVU102
+ 423 01b8 4FEA8109 		lsl	r9, r1, #2
+ 424              	.LVL49:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 425              		.loc 1 59 9 is_stmt 1 view .LVU103
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 426              		.loc 1 59 9 view .LVU104
+ 427 01bc 03AA     		add	r2, sp, #12
+ 428 01be 4946     		mov	r1, r9
+ 429 01c0 2846     		mov	r0, r5
+ 430 01c2 FFF7FEFF 		bl	hal_mem32_read
+ 431              	.LVL50:
+ 432 01c6 0446     		mov	r4, r0
+ 433              	.LVL51:
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 434              		.loc 1 59 9 is_stmt 0 view .LVU105
+ 435 01c8 10F0FF03 		ands	r3, r0, #255
+ 436 01cc C1D1     		bne	.L36
+  59:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         if (enable)
+ 437              		.loc 1 59 9 is_stmt 1 discriminator 2 view .LVU106
+  60:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+ 438              		.loc 1 60 9 discriminator 2 view .LVU107
+  60:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         {
+ 439              		.loc 1 60 12 is_stmt 0 discriminator 2 view .LVU108
+ 440 01ce 002F     		cmp	r7, #0
+ 441 01d0 D5D0     		beq	.L18
+  62:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         }
+ 442              		.loc 1 62 13 is_stmt 1 view .LVU109
+ 443 01d2 039B     		ldr	r3, [sp, #12]
+ 444 01d4 43F08053 		orr	r3, r3, #268435456
+ 445 01d8 0393     		str	r3, [sp, #12]
+ 446 01da D4E7     		b	.L19
+ 447              	.L34:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 448              		.loc 1 68 9 discriminator 1 view .LVU110
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 449              		.loc 1 68 9 discriminator 1 view .LVU111
+ 450 01dc 0B4A     		ldr	r2, .L38
+ 451 01de 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 452 01e0 012A     		cmp	r2, #1
+ 453 01e2 01D8     		bhi	.L37
+ 454              	.LVL52:
+ 455              	.L21:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 456              		.loc 1 68 9 discriminator 5 view .LVU112
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 457              		.loc 1 68 9 discriminator 5 view .LVU113
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 458              		.loc 1 68 9 discriminator 5 view .LVU114
+ 459 01e4 E0B2     		uxtb	r0, r4
+ 460 01e6 19E7     		b	.L1
+ 461              	.LVL53:
+ 462              	.L37:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 463              		.loc 1 68 9 discriminator 3 view .LVU115
+ 464              	.LBB7:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 465              		.loc 1 68 9 discriminator 3 view .LVU116
+ 466 01e8 142B     		cmp	r3, #20
+ 467 01ea 28BF     		it	cs
+ 468 01ec 1423     		movcs	r3, #20
+ 469 01ee 1A46     		mov	r2, r3
+ 470 01f0 074B     		ldr	r3, .L38+4
+ 471 01f2 0093     		str	r3, [sp]
+ 472 01f4 0E4B     		ldr	r3, .L38+36
+ 473 01f6 0849     		ldr	r1, .L38+12
+ 474 01f8 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 475 01fc 0749     		ldr	r1, .L38+16
+ 476 01fe 8968     		ldr	r1, [r1, #8]
+ 477 0200 0748     		ldr	r0, .L38+20
+ 478              	.LVL54:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 479              		.loc 1 68 9 is_stmt 0 discriminator 3 view .LVU117
+ 480 0202 FFF7FEFF 		bl	osal_printf
+ 481              	.LVL55:
+ 482 0206 EDE7     		b	.L21
+ 483              	.LVL56:
+ 484              	.L35:
+  68:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 485              		.loc 1 68 9 discriminator 3 view .LVU118
+ 486              	.LBE7:
+  71:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 487              		.loc 1 71 12 view .LVU119
+ 488 0208 0020     		movs	r0, #0
+ 489 020a 07E7     		b	.L1
+ 490              	.L39:
+ 491              		.align	2
+ 492              	.L38:
+ 493 020c 00000000 		.word	yt_debug_level
+ 494 0210 00000000 		.word	__FUNCTION__.1
+ 495 0214 00000000 		.word	.LC0
+ 496 0218 00000000 		.word	_yt_errmsg
+ 497 021c 00000000 		.word	_yt_prompt_msg
+ 498 0220 28000000 		.word	.LC1
+ 499 0224 40000000 		.word	.LC2
+ 500 0228 00000000 		.word	gpSwitchUnit
+ 501 022c 68000000 		.word	.LC3
+ 502 0230 94000000 		.word	.LC4
+ 503              		.cfi_endproc
+ 504              	.LFE3:
+ 506              		.section	.rodata.fal_tiger_mirror_port_set.str1.4,"aMS",%progbits,1
+ 507              		.align	2
+ 508              	.LC5:
+ 509 0000 68616C5F 		.ascii	"hal_table_reg_read(unit,213,0,sizeof(mirror_ctrl_t)"
+ 509      7461626C 
+ 509      655F7265 
+ 509      675F7265 
+ 509      61642875 
+ 510 0033 2C266D69 		.ascii	",&mirror_ctrl)\000"
+ 510      72726F72 
+ 510      5F637472 
+ 510      6C2900
+ 511 0042 0000     		.align	2
+ 512              	.LC6:
+ 513 0044 68616C5F 		.ascii	"hal_table_reg_write(unit,213,0,sizeof(mirror_ctrl_t"
+ 513      7461626C 
+ 513      655F7265 
+ 513      675F7772 
+ 513      69746528 
+ 514 0077 292C266D 		.ascii	"),&mirror_ctrl)\000"
+ 514      6972726F 
+ 514      725F6374 
+ 514      726C2900 
+ 515              		.section	.text.fal_tiger_mirror_port_set,"ax",%progbits
+ 516              		.align	1
+ 517              		.global	fal_tiger_mirror_port_set
+ 518              		.syntax unified
+ 519              		.thumb
+ 520              		.thumb_func
+ 522              	fal_tiger_mirror_port_set:
+ 523              	.LVL57:
+ 524              	.LFB4:
+  73:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  74:../Switch/core/fal/tiger/fal_tiger_mirror.c **** yt_ret_t fal_tiger_mirror_port_set(yt_unit_t unit, yt_port_t target_port, yt_port_mask_t rx_portmas
+  75:../Switch/core/fal/tiger/fal_tiger_mirror.c **** {
+ 525              		.loc 1 75 1 is_stmt 1 view -0
+ 526              		.cfi_startproc
+ 527              		@ args = 0, pretend = 0, frame = 24
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 529              		.loc 1 75 1 is_stmt 0 view .LVU121
+ 530 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 531              		.cfi_def_cfa_offset 20
+ 532              		.cfi_offset 4, -20
+ 533              		.cfi_offset 5, -16
+ 534              		.cfi_offset 6, -12
+ 535              		.cfi_offset 7, -8
+ 536              		.cfi_offset 14, -4
+ 537 0002 89B0     		sub	sp, sp, #36
+ 538              		.cfi_def_cfa_offset 56
+ 539 0004 0546     		mov	r5, r0
+ 540 0006 0392     		str	r2, [sp, #12]
+ 541 0008 0293     		str	r3, [sp, #8]
+  76:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     mirror_ctrl_t mirror_ctrl;
+ 542              		.loc 1 76 5 is_stmt 1 view .LVU122
+  77:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     yt_macid_t macid;
+ 543              		.loc 1 77 5 view .LVU123
+  78:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     yt_macid_t orgMacid;
+ 544              		.loc 1 78 5 view .LVU124
+  79:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     yt_port_mask_t macmask;
+ 545              		.loc 1 79 5 view .LVU125
+  80:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 546              		.loc 1 80 5 view .LVU126
+ 547              	.LVL58:
+  81:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  82:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macid = CAL_YTP_TO_MAC(unit,target_port);
+ 548              		.loc 1 82 5 view .LVU127
+ 549              		.loc 1 82 13 is_stmt 0 view .LVU128
+ 550 000a 794B     		ldr	r3, .L70
+ 551 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 552 000e 53B1     		cbz	r3, .L59
+ 553              		.loc 1 82 13 discriminator 1 view .LVU129
+ 554 0010 784B     		ldr	r3, .L70+4
+ 555 0012 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 556 0016 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 557 0018 8A42     		cmp	r2, r1
+ 558 001a 18D9     		bls	.L60
+ 559              		.loc 1 82 13 discriminator 3 view .LVU130
+ 560 001c 0631     		adds	r1, r1, #6
+ 561              	.LVL59:
+ 562              		.loc 1 82 13 discriminator 3 view .LVU131
+ 563 001e 53F82130 		ldr	r3, [r3, r1, lsl #2]
+ 564 0022 1F78     		ldrb	r7, [r3]	@ zero_extendqisi2
+ 565 0024 00E0     		b	.L41
+ 566              	.LVL60:
+ 567              	.L59:
+ 568              		.loc 1 82 13 view .LVU132
+ 569 0026 FF27     		movs	r7, #255
+ 570              	.LVL61:
+ 571              	.L41:
+  83:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, MIRROR_CTRLm, 0, sizeof(mirror_ctrl_t), &mirror_ctrl), ret);
+ 572              		.loc 1 84 5 is_stmt 1 discriminator 6 view .LVU133
+ 573              		.loc 1 84 5 discriminator 6 view .LVU134
+ 574 0028 07AB     		add	r3, sp, #28
+ 575 002a 0093     		str	r3, [sp]
+ 576 002c 0423     		movs	r3, #4
+ 577 002e 0022     		movs	r2, #0
+ 578 0030 D521     		movs	r1, #213
+ 579 0032 2846     		mov	r0, r5
+ 580              	.LVL62:
+ 581              		.loc 1 84 5 is_stmt 0 discriminator 6 view .LVU135
+ 582 0034 FFF7FEFF 		bl	hal_table_reg_read
+ 583              	.LVL63:
+ 584 0038 0646     		mov	r6, r0
+ 585              	.LVL64:
+ 586              		.loc 1 84 5 discriminator 6 view .LVU136
+ 587 003a 10F0FF04 		ands	r4, r0, #255
+ 588 003e 17D0     		beq	.L42
+ 589              		.loc 1 84 5 is_stmt 1 discriminator 1 view .LVU137
+ 590              		.loc 1 84 5 discriminator 1 view .LVU138
+ 591 0040 6D4B     		ldr	r3, .L70+8
+ 592 0042 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 593 0044 012B     		cmp	r3, #1
+ 594 0046 04D8     		bhi	.L63
+ 595              	.LVL65:
+ 596              	.L43:
+ 597              		.loc 1 84 5 discriminator 5 view .LVU139
+ 598              		.loc 1 84 5 discriminator 5 view .LVU140
+ 599              		.loc 1 84 5 discriminator 5 view .LVU141
+ 600 0048 F0B2     		uxtb	r0, r6
+ 601              	.LVL66:
+ 602              	.L40:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+  86:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  87:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     if(orgMacid != macid)
+  88:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+  89:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         fal_tiger_que_colorAware_enable_set(unit, orgMacid, YT_ENABLE);
+  90:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+  91:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     if(rx_portmask.portbits[0] == 0 && tx_portmask.portbits[0] == 0)/*disable portmirror*/
+  93:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+  94:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         fal_tiger_que_colorAware_enable_set(unit, macid, YT_ENABLE);
+  95:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+  96:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     else
+  97:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+  98:../Switch/core/fal/tiger/fal_tiger_mirror.c ****         fal_tiger_que_colorAware_enable_set(unit, macid, YT_DISABLE);
+  99:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 100:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 101:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, macid);
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_YTPLIST_TO_MLIST(unit,rx_portmask, macmask);
+ 103:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_YTPLIST_TO_MLIST(unit,tx_portmask, macmask);
+ 105:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 106:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CMM_ERR_CHK(HAL_TBL_REG_WRITE(unit, MIRROR_CTRLm, 0, sizeof(mirror_ctrl_t), &mirror_ctrl), ret)
+ 108:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 109:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     return CMM_ERR_OK;
+ 110:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 603              		.loc 1 110 1 is_stmt 0 view .LVU142
+ 604 004a 09B0     		add	sp, sp, #36
+ 605              		.cfi_remember_state
+ 606              		.cfi_def_cfa_offset 20
+ 607              		@ sp needed
+ 608 004c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 609              	.LVL67:
+ 610              	.L60:
+ 611              		.cfi_restore_state
+  82:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 612              		.loc 1 82 13 view .LVU143
+ 613 004e FF27     		movs	r7, #255
+ 614 0050 EAE7     		b	.L41
+ 615              	.LVL68:
+ 616              	.L63:
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 617              		.loc 1 84 5 is_stmt 1 discriminator 3 view .LVU144
+ 618              	.LBB8:
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 619              		.loc 1 84 5 discriminator 3 view .LVU145
+ 620 0052 142C     		cmp	r4, #20
+ 621 0054 28BF     		it	cs
+ 622 0056 1424     		movcs	r4, #20
+ 623 0058 684B     		ldr	r3, .L70+12
+ 624 005a 0093     		str	r3, [sp]
+ 625 005c 684B     		ldr	r3, .L70+16
+ 626 005e 694A     		ldr	r2, .L70+20
+ 627 0060 52F82420 		ldr	r2, [r2, r4, lsl #2]
+ 628 0064 6849     		ldr	r1, .L70+24
+ 629 0066 8968     		ldr	r1, [r1, #8]
+ 630 0068 6848     		ldr	r0, .L70+28
+ 631              	.LVL69:
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 632              		.loc 1 84 5 is_stmt 0 discriminator 3 view .LVU146
+ 633 006a FFF7FEFF 		bl	osal_printf
+ 634              	.LVL70:
+ 635 006e EBE7     		b	.L43
+ 636              	.LVL71:
+ 637              	.L42:
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 638              		.loc 1 84 5 discriminator 3 view .LVU147
+ 639              	.LBE8:
+  84:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 640              		.loc 1 84 5 is_stmt 1 discriminator 2 view .LVU148
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 641              		.loc 1 85 5 discriminator 2 view .LVU149
+ 642              	.LBB9:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 643              		.loc 1 85 5 discriminator 2 view .LVU150
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 644              		.loc 1 85 5 discriminator 2 view .LVU151
+ 645 0070 05AB     		add	r3, sp, #20
+ 646 0072 07AA     		add	r2, sp, #28
+ 647 0074 0221     		movs	r1, #2
+ 648 0076 D520     		movs	r0, #213
+ 649              	.LVL72:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 650              		.loc 1 85 5 is_stmt 0 discriminator 2 view .LVU152
+ 651 0078 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 652              	.LVL73:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 653              		.loc 1 85 5 is_stmt 1 discriminator 2 view .LVU153
+ 654 007c 0599     		ldr	r1, [sp, #20]
+ 655              	.LVL74:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 656              		.loc 1 85 5 is_stmt 0 discriminator 2 view .LVU154
+ 657              	.LBE9:
+  85:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &orgMacid);
+ 658              		.loc 1 85 5 is_stmt 1 discriminator 2 view .LVU155
+  87:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 659              		.loc 1 87 5 discriminator 2 view .LVU156
+  87:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 660              		.loc 1 87 7 is_stmt 0 discriminator 2 view .LVU157
+ 661 007e B942     		cmp	r1, r7
+ 662 0080 12D1     		bne	.L64
+ 663              	.LVL75:
+ 664              	.L45:
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 665              		.loc 1 92 5 is_stmt 1 view .LVU158
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 666              		.loc 1 92 28 is_stmt 0 view .LVU159
+ 667 0082 039B     		ldr	r3, [sp, #12]
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 668              		.loc 1 92 7 view .LVU160
+ 669 0084 0BB9     		cbnz	r3, .L46
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 670              		.loc 1 92 60 discriminator 1 view .LVU161
+ 671 0086 029B     		ldr	r3, [sp, #8]
+  92:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     {
+ 672              		.loc 1 92 37 discriminator 1 view .LVU162
+ 673 0088 9BB1     		cbz	r3, .L65
+ 674              	.L46:
+  98:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 675              		.loc 1 98 9 is_stmt 1 view .LVU163
+ 676 008a 0022     		movs	r2, #0
+ 677 008c 3946     		mov	r1, r7
+ 678 008e 2846     		mov	r0, r5
+ 679 0090 FFF7FEFF 		bl	fal_tiger_que_colorAware_enable_set
+ 680              	.LVL76:
+ 681              	.L47:
+ 101:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_YTPLIST_TO_MLIST(unit,rx_portmask, macmask);
+ 682              		.loc 1 101 5 view .LVU164
+ 683 0094 3B46     		mov	r3, r7
+ 684 0096 07AA     		add	r2, sp, #28
+ 685 0098 0221     		movs	r1, #2
+ 686 009a D520     		movs	r0, #213
+ 687 009c FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 688              	.LVL77:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 689              		.loc 1 102 5 view .LVU165
+ 690              	.LBB10:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 691              		.loc 1 102 5 view .LVU166
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 692              		.loc 1 102 5 view .LVU167
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 693              		.loc 1 102 5 view .LVU168
+ 694              	.LBB11:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 695              		.loc 1 102 5 view .LVU169
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 696              		.loc 1 102 5 view .LVU170
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 697              		.loc 1 102 5 is_stmt 0 view .LVU171
+ 698 00a0 2346     		mov	r3, r4
+ 699              	.LVL78:
+ 700              	.L48:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 701              		.loc 1 102 5 is_stmt 1 discriminator 1 view .LVU172
+ 702 00a2 63B1     		cbz	r3, .L49
+ 703              	.LBE11:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 704              		.loc 1 102 5 is_stmt 0 view .LVU173
+ 705 00a4 2346     		mov	r3, r4
+ 706              	.LVL79:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 707              		.loc 1 102 5 view .LVU174
+ 708 00a6 15E0     		b	.L50
+ 709              	.LVL80:
+ 710              	.L64:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 711              		.loc 1 102 5 view .LVU175
+ 712              	.LBE10:
+  89:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 713              		.loc 1 89 9 is_stmt 1 view .LVU176
+ 714 00a8 0122     		movs	r2, #1
+ 715 00aa 2846     		mov	r0, r5
+ 716 00ac FFF7FEFF 		bl	fal_tiger_que_colorAware_enable_set
+ 717              	.LVL81:
+  89:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 718              		.loc 1 89 9 is_stmt 0 view .LVU177
+ 719 00b0 E7E7     		b	.L45
+ 720              	.L65:
+  94:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     }
+ 721              		.loc 1 94 9 is_stmt 1 view .LVU178
+ 722 00b2 0122     		movs	r2, #1
+ 723 00b4 3946     		mov	r1, r7
+ 724 00b6 2846     		mov	r0, r5
+ 725 00b8 FFF7FEFF 		bl	fal_tiger_que_colorAware_enable_set
+ 726              	.LVL82:
+ 727 00bc EAE7     		b	.L47
+ 728              	.LVL83:
+ 729              	.L49:
+ 730              	.LBB15:
+ 731              	.LBB12:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 732              		.loc 1 102 5 discriminator 3 view .LVU179
+ 733 00be 08AA     		add	r2, sp, #32
+ 734 00c0 02EB8302 		add	r2, r2, r3, lsl #2
+ 735 00c4 0021     		movs	r1, #0
+ 736 00c6 42F8081C 		str	r1, [r2, #-8]
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 737              		.loc 1 102 5 discriminator 3 view .LVU180
+ 738 00ca 0133     		adds	r3, r3, #1
+ 739              	.LVL84:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 740              		.loc 1 102 5 is_stmt 0 discriminator 3 view .LVU181
+ 741 00cc DBB2     		uxtb	r3, r3
+ 742              	.LVL85:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 743              		.loc 1 102 5 discriminator 3 view .LVU182
+ 744 00ce E8E7     		b	.L48
+ 745              	.LVL86:
+ 746              	.L51:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 747              		.loc 1 102 5 discriminator 3 view .LVU183
+ 748              	.LBE12:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 749              		.loc 1 102 5 is_stmt 1 discriminator 16 view .LVU184
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 750              		.loc 1 102 5 discriminator 16 view .LVU185
+ 751 00d0 0133     		adds	r3, r3, #1
+ 752              	.LVL87:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 753              		.loc 1 102 5 is_stmt 0 discriminator 16 view .LVU186
+ 754 00d2 DBB2     		uxtb	r3, r3
+ 755              	.LVL88:
+ 756              	.L50:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 757              		.loc 1 102 5 is_stmt 1 discriminator 17 view .LVU187
+ 758 00d4 474A     		ldr	r2, .L70+4
+ 759 00d6 52F82510 		ldr	r1, [r2, r5, lsl #2]
+ 760 00da 0A7D     		ldrb	r2, [r1, #20]	@ zero_extendqisi2
+ 761 00dc 9A42     		cmp	r2, r3
+ 762 00de 22D9     		bls	.L66
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 763              		.loc 1 102 5 discriminator 18 view .LVU188
+ 764              	.LBB13:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 765              		.loc 1 102 5 discriminator 18 view .LVU189
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 766              		.loc 1 102 5 discriminator 18 view .LVU190
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 767              		.loc 1 102 5 discriminator 18 view .LVU191
+ 768 00e0 C3F34712 		ubfx	r2, r3, #5, #8
+ 769              	.LVL89:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 770              		.loc 1 102 5 discriminator 18 view .LVU192
+ 771 00e4 03F01F00 		and	r0, r3, #31
+ 772              	.LVL90:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 773              		.loc 1 102 5 discriminator 18 view .LVU193
+ 774 00e8 1F2B     		cmp	r3, #31
+ 775 00ea F1D8     		bhi	.L51
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 776              		.loc 1 102 5 is_stmt 0 discriminator 6 view .LVU194
+ 777 00ec 08AE     		add	r6, sp, #32
+ 778 00ee 06EB8202 		add	r2, r6, r2, lsl #2
+ 779              	.LVL91:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 780              		.loc 1 102 5 discriminator 6 view .LVU195
+ 781 00f2 52F8146C 		ldr	r6, [r2, #-20]
+ 782 00f6 0122     		movs	r2, #1
+ 783 00f8 8240     		lsls	r2, r2, r0
+ 784 00fa 1642     		tst	r6, r2
+ 785 00fc E8D0     		beq	.L51
+ 786              	.LVL92:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 787              		.loc 1 102 5 discriminator 6 view .LVU196
+ 788              	.LBE13:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 789              		.loc 1 102 5 is_stmt 1 view .LVU197
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 790              		.loc 1 102 5 view .LVU198
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 791              		.loc 1 102 5 view .LVU199
+ 792              	.LBB14:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 793              		.loc 1 102 5 view .LVU200
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 794              		.loc 1 102 5 view .LVU201
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 795              		.loc 1 102 5 view .LVU202
+ 796 00fe 9A1D     		adds	r2, r3, #6
+ 797 0100 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 798 0104 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 799 0106 5109     		lsrs	r1, r2, #5
+ 800              	.LVL93:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 801              		.loc 1 102 5 view .LVU203
+ 802 0108 02F01F06 		and	r6, r2, #31
+ 803              	.LVL94:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 804              		.loc 1 102 5 view .LVU204
+ 805 010c 1F2A     		cmp	r2, #31
+ 806 010e DFD8     		bhi	.L51
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 807              		.loc 1 102 5 discriminator 14 view .LVU205
+ 808 0110 08AA     		add	r2, sp, #32
+ 809 0112 02EB8102 		add	r2, r2, r1, lsl #2
+ 810 0116 52F8081C 		ldr	r1, [r2, #-8]
+ 811              	.LVL95:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 812              		.loc 1 102 5 is_stmt 0 discriminator 14 view .LVU206
+ 813 011a 0120     		movs	r0, #1
+ 814              	.LVL96:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 815              		.loc 1 102 5 discriminator 14 view .LVU207
+ 816 011c B040     		lsls	r0, r0, r6
+ 817 011e 0143     		orrs	r1, r1, r0
+ 818 0120 42F8081C 		str	r1, [r2, #-8]
+ 819 0124 D4E7     		b	.L51
+ 820              	.LVL97:
+ 821              	.L66:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 822              		.loc 1 102 5 discriminator 14 view .LVU208
+ 823              	.LBE14:
+ 824              	.LBE15:
+ 102:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 825              		.loc 1 102 5 is_stmt 1 discriminator 19 view .LVU209
+ 103:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_YTPLIST_TO_MLIST(unit,tx_portmask, macmask);
+ 826              		.loc 1 103 5 discriminator 19 view .LVU210
+ 827 0126 069B     		ldr	r3, [sp, #24]
+ 828              	.LVL98:
+ 103:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_YTPLIST_TO_MLIST(unit,tx_portmask, macmask);
+ 829              		.loc 1 103 5 is_stmt 0 discriminator 19 view .LVU211
+ 830 0128 07AA     		add	r2, sp, #28
+ 831 012a 0021     		movs	r1, #0
+ 832 012c D520     		movs	r0, #213
+ 833 012e FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 834              	.LVL99:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 835              		.loc 1 104 5 is_stmt 1 discriminator 19 view .LVU212
+ 836              	.LBB16:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 837              		.loc 1 104 5 discriminator 19 view .LVU213
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 838              		.loc 1 104 5 discriminator 19 view .LVU214
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 839              		.loc 1 104 5 discriminator 19 view .LVU215
+ 840              	.LBB17:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 841              		.loc 1 104 5 discriminator 19 view .LVU216
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 842              		.loc 1 104 5 discriminator 19 view .LVU217
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 843              		.loc 1 104 5 is_stmt 0 discriminator 19 view .LVU218
+ 844 0132 2346     		mov	r3, r4
+ 845              	.LVL100:
+ 846              	.L53:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 847              		.loc 1 104 5 is_stmt 1 discriminator 1 view .LVU219
+ 848 0134 53B9     		cbnz	r3, .L55
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 849              		.loc 1 104 5 discriminator 3 view .LVU220
+ 850 0136 08AA     		add	r2, sp, #32
+ 851 0138 02EB8302 		add	r2, r2, r3, lsl #2
+ 852 013c 0021     		movs	r1, #0
+ 853 013e 42F8081C 		str	r1, [r2, #-8]
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 854              		.loc 1 104 5 discriminator 3 view .LVU221
+ 855 0142 0133     		adds	r3, r3, #1
+ 856              	.LVL101:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 857              		.loc 1 104 5 is_stmt 0 discriminator 3 view .LVU222
+ 858 0144 DBB2     		uxtb	r3, r3
+ 859              	.LVL102:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 860              		.loc 1 104 5 discriminator 3 view .LVU223
+ 861 0146 F5E7     		b	.L53
+ 862              	.LVL103:
+ 863              	.L56:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 864              		.loc 1 104 5 discriminator 3 view .LVU224
+ 865              	.LBE17:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 866              		.loc 1 104 5 is_stmt 1 discriminator 16 view .LVU225
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 867              		.loc 1 104 5 discriminator 16 view .LVU226
+ 868 0148 0134     		adds	r4, r4, #1
+ 869              	.LVL104:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 870              		.loc 1 104 5 is_stmt 0 discriminator 16 view .LVU227
+ 871 014a E4B2     		uxtb	r4, r4
+ 872              	.LVL105:
+ 873              	.L55:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 874              		.loc 1 104 5 is_stmt 1 discriminator 17 view .LVU228
+ 875 014c 294B     		ldr	r3, .L70+4
+ 876 014e 53F82520 		ldr	r2, [r3, r5, lsl #2]
+ 877 0152 137D     		ldrb	r3, [r2, #20]	@ zero_extendqisi2
+ 878 0154 A342     		cmp	r3, r4
+ 879 0156 21D9     		bls	.L67
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 880              		.loc 1 104 5 discriminator 18 view .LVU229
+ 881              	.LBB18:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 882              		.loc 1 104 5 discriminator 18 view .LVU230
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 883              		.loc 1 104 5 discriminator 18 view .LVU231
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 884              		.loc 1 104 5 discriminator 18 view .LVU232
+ 885 0158 6309     		lsrs	r3, r4, #5
+ 886              	.LVL106:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 887              		.loc 1 104 5 discriminator 18 view .LVU233
+ 888 015a 04F01F01 		and	r1, r4, #31
+ 889              	.LVL107:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 890              		.loc 1 104 5 discriminator 18 view .LVU234
+ 891 015e 1F2C     		cmp	r4, #31
+ 892 0160 F2D8     		bhi	.L56
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 893              		.loc 1 104 5 is_stmt 0 discriminator 6 view .LVU235
+ 894 0162 08A8     		add	r0, sp, #32
+ 895 0164 00EB8303 		add	r3, r0, r3, lsl #2
+ 896              	.LVL108:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 897              		.loc 1 104 5 discriminator 6 view .LVU236
+ 898 0168 53F8180C 		ldr	r0, [r3, #-24]
+ 899 016c 0123     		movs	r3, #1
+ 900 016e 8B40     		lsls	r3, r3, r1
+ 901 0170 1842     		tst	r0, r3
+ 902 0172 E9D0     		beq	.L56
+ 903              	.LVL109:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 904              		.loc 1 104 5 discriminator 6 view .LVU237
+ 905              	.LBE18:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 906              		.loc 1 104 5 is_stmt 1 view .LVU238
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 907              		.loc 1 104 5 view .LVU239
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 908              		.loc 1 104 5 view .LVU240
+ 909              	.LBB19:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 910              		.loc 1 104 5 view .LVU241
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 911              		.loc 1 104 5 view .LVU242
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 912              		.loc 1 104 5 view .LVU243
+ 913 0174 A31D     		adds	r3, r4, #6
+ 914 0176 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 915 017a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 916 017c 5A09     		lsrs	r2, r3, #5
+ 917              	.LVL110:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 918              		.loc 1 104 5 view .LVU244
+ 919 017e 03F01F00 		and	r0, r3, #31
+ 920              	.LVL111:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 921              		.loc 1 104 5 view .LVU245
+ 922 0182 1F2B     		cmp	r3, #31
+ 923 0184 E0D8     		bhi	.L56
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 924              		.loc 1 104 5 discriminator 14 view .LVU246
+ 925 0186 08AB     		add	r3, sp, #32
+ 926 0188 03EB8203 		add	r3, r3, r2, lsl #2
+ 927 018c 53F8082C 		ldr	r2, [r3, #-8]
+ 928              	.LVL112:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 929              		.loc 1 104 5 is_stmt 0 discriminator 14 view .LVU247
+ 930 0190 0121     		movs	r1, #1
+ 931              	.LVL113:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 932              		.loc 1 104 5 discriminator 14 view .LVU248
+ 933 0192 8140     		lsls	r1, r1, r0
+ 934 0194 0A43     		orrs	r2, r2, r1
+ 935 0196 43F8082C 		str	r2, [r3, #-8]
+ 936 019a D5E7     		b	.L56
+ 937              	.LVL114:
+ 938              	.L67:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 939              		.loc 1 104 5 discriminator 14 view .LVU249
+ 940              	.LBE19:
+ 941              	.LBE16:
+ 104:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_SET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, macmask.portbits[0]);
+ 942              		.loc 1 104 5 is_stmt 1 discriminator 19 view .LVU250
+ 105:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 943              		.loc 1 105 5 discriminator 19 view .LVU251
+ 944 019c 07AC     		add	r4, sp, #28
+ 945              	.LVL115:
+ 105:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 946              		.loc 1 105 5 is_stmt 0 discriminator 19 view .LVU252
+ 947 019e 069B     		ldr	r3, [sp, #24]
+ 948 01a0 2246     		mov	r2, r4
+ 949 01a2 0121     		movs	r1, #1
+ 950 01a4 D520     		movs	r0, #213
+ 951 01a6 FFF7FEFF 		bl	hal_tbl_reg_field_set
+ 952              	.LVL116:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 953              		.loc 1 107 5 is_stmt 1 discriminator 19 view .LVU253
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 954              		.loc 1 107 5 discriminator 19 view .LVU254
+ 955 01aa 0094     		str	r4, [sp]
+ 956 01ac 0423     		movs	r3, #4
+ 957 01ae 0022     		movs	r2, #0
+ 958 01b0 D521     		movs	r1, #213
+ 959 01b2 2846     		mov	r0, r5
+ 960 01b4 FFF7FEFF 		bl	hal_table_reg_write
+ 961              	.LVL117:
+ 962 01b8 0646     		mov	r6, r0
+ 963              	.LVL118:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 964              		.loc 1 107 5 is_stmt 0 discriminator 19 view .LVU255
+ 965 01ba 10F0FF03 		ands	r3, r0, #255
+ 966 01be 01D1     		bne	.L68
+ 109:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 967              		.loc 1 109 12 view .LVU256
+ 968 01c0 0020     		movs	r0, #0
+ 969              	.LVL119:
+ 109:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 970              		.loc 1 109 12 view .LVU257
+ 971 01c2 42E7     		b	.L40
+ 972              	.LVL120:
+ 973              	.L68:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 974              		.loc 1 107 5 is_stmt 1 discriminator 1 view .LVU258
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 975              		.loc 1 107 5 discriminator 1 view .LVU259
+ 976 01c4 0C4A     		ldr	r2, .L70+8
+ 977 01c6 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 978 01c8 012A     		cmp	r2, #1
+ 979 01ca 01D8     		bhi	.L69
+ 980              	.LVL121:
+ 981              	.L58:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 982              		.loc 1 107 5 discriminator 5 view .LVU260
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 983              		.loc 1 107 5 discriminator 5 view .LVU261
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 984              		.loc 1 107 5 discriminator 5 view .LVU262
+ 985 01cc F0B2     		uxtb	r0, r6
+ 986 01ce 3CE7     		b	.L40
+ 987              	.LVL122:
+ 988              	.L69:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 989              		.loc 1 107 5 discriminator 3 view .LVU263
+ 990              	.LBB20:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 991              		.loc 1 107 5 discriminator 3 view .LVU264
+ 992 01d0 142B     		cmp	r3, #20
+ 993 01d2 28BF     		it	cs
+ 994 01d4 1423     		movcs	r3, #20
+ 995 01d6 1A46     		mov	r2, r3
+ 996 01d8 084B     		ldr	r3, .L70+12
+ 997 01da 0093     		str	r3, [sp]
+ 998 01dc 0C4B     		ldr	r3, .L70+32
+ 999 01de 0949     		ldr	r1, .L70+20
+ 1000 01e0 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 1001 01e4 0849     		ldr	r1, .L70+24
+ 1002 01e6 8968     		ldr	r1, [r1, #8]
+ 1003 01e8 0848     		ldr	r0, .L70+28
+ 1004              	.LVL123:
+ 107:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1005              		.loc 1 107 5 is_stmt 0 discriminator 3 view .LVU265
+ 1006 01ea FFF7FEFF 		bl	osal_printf
+ 1007              	.LVL124:
+ 1008 01ee EDE7     		b	.L58
+ 1009              	.L71:
+ 1010              		.align	2
+ 1011              	.L70:
+ 1012 01f0 00000000 		.word	gcal_inited
+ 1013 01f4 00000000 		.word	gpSwitchUnit
+ 1014 01f8 00000000 		.word	yt_debug_level
+ 1015 01fc 00000000 		.word	__FUNCTION__.2
+ 1016 0200 00000000 		.word	.LC5
+ 1017 0204 00000000 		.word	_yt_errmsg
+ 1018 0208 00000000 		.word	_yt_prompt_msg
+ 1019 020c 28000000 		.word	.LC1
+ 1020 0210 44000000 		.word	.LC6
+ 1021              	.LBE20:
+ 1022              		.cfi_endproc
+ 1023              	.LFE4:
+ 1025              		.section	.text.fal_tiger_mirror_port_get,"ax",%progbits
+ 1026              		.align	1
+ 1027              		.global	fal_tiger_mirror_port_get
+ 1028              		.syntax unified
+ 1029              		.thumb
+ 1030              		.thumb_func
+ 1032              	fal_tiger_mirror_port_get:
+ 1033              	.LVL125:
+ 1034              	.LFB5:
+ 111:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 112:../Switch/core/fal/tiger/fal_tiger_mirror.c **** yt_ret_t fal_tiger_mirror_port_get(yt_unit_t unit, yt_port_t *p_target_port, yt_port_mask_t *p_rx_p
+ 113:../Switch/core/fal/tiger/fal_tiger_mirror.c **** {
+ 1035              		.loc 1 113 1 is_stmt 1 view -0
+ 1036              		.cfi_startproc
+ 1037              		@ args = 0, pretend = 0, frame = 16
+ 1038              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1039              		.loc 1 113 1 is_stmt 0 view .LVU267
+ 1040 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1041              		.cfi_def_cfa_offset 28
+ 1042              		.cfi_offset 4, -28
+ 1043              		.cfi_offset 5, -24
+ 1044              		.cfi_offset 6, -20
+ 1045              		.cfi_offset 7, -16
+ 1046              		.cfi_offset 8, -12
+ 1047              		.cfi_offset 9, -8
+ 1048              		.cfi_offset 14, -4
+ 1049 0004 87B0     		sub	sp, sp, #28
+ 1050              		.cfi_def_cfa_offset 56
+ 1051 0006 0646     		mov	r6, r0
+ 1052 0008 8946     		mov	r9, r1
+ 1053 000a 9046     		mov	r8, r2
+ 1054 000c 1F46     		mov	r7, r3
+ 114:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     mirror_ctrl_t mirror_ctrl;
+ 1055              		.loc 1 114 5 is_stmt 1 view .LVU268
+ 115:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     yt_port_mask_t macmask;
+ 1056              		.loc 1 115 5 view .LVU269
+ 116:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t macid;
+ 1057              		.loc 1 116 5 view .LVU270
+ 117:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t ingr_mirror;
+ 1058              		.loc 1 117 5 view .LVU271
+ 118:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     uint32_t egr_mirror;
+ 1059              		.loc 1 118 5 view .LVU272
+ 119:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 1060              		.loc 1 119 5 view .LVU273
+ 1061              	.LVL126:
+ 120:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CMM_ERR_CHK(HAL_TBL_REG_READ(unit, MIRROR_CTRLm, 0, sizeof(mirror_ctrl_t), &mirror_ctrl), ret);
+ 1062              		.loc 1 121 5 view .LVU274
+ 1063              		.loc 1 121 5 view .LVU275
+ 1064 000e 05AB     		add	r3, sp, #20
+ 1065              	.LVL127:
+ 1066              		.loc 1 121 5 is_stmt 0 view .LVU276
+ 1067 0010 0093     		str	r3, [sp]
+ 1068 0012 0423     		movs	r3, #4
+ 1069 0014 0022     		movs	r2, #0
+ 1070              	.LVL128:
+ 1071              		.loc 1 121 5 view .LVU277
+ 1072 0016 D521     		movs	r1, #213
+ 1073              	.LVL129:
+ 1074              		.loc 1 121 5 view .LVU278
+ 1075 0018 FFF7FEFF 		bl	hal_table_reg_read
+ 1076              	.LVL130:
+ 1077              		.loc 1 121 5 view .LVU279
+ 1078 001c 10F0FF04 		ands	r4, r0, #255
+ 1079 0020 17D0     		beq	.L73
+ 1080 0022 0546     		mov	r5, r0
+ 1081              		.loc 1 121 5 is_stmt 1 discriminator 1 view .LVU280
+ 1082              		.loc 1 121 5 discriminator 1 view .LVU281
+ 1083 0024 534B     		ldr	r3, .L97
+ 1084 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1085 0028 012B     		cmp	r3, #1
+ 1086 002a 03D8     		bhi	.L93
+ 1087              	.LVL131:
+ 1088              	.L74:
+ 1089              		.loc 1 121 5 discriminator 5 view .LVU282
+ 1090              		.loc 1 121 5 discriminator 5 view .LVU283
+ 1091              		.loc 1 121 5 discriminator 5 view .LVU284
+ 1092 002c E8B2     		uxtb	r0, r5
+ 1093              	.L72:
+ 122:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_MIRROR_PORTf, &mirror_ctrl, &macid);
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 125:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CMM_CLEAR_MEMBER_PORT(macmask);
+ 127:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_INGR_MIRROR_ENf, &mirror_ctrl, &ingr_mirror);
+ 129:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_rx_portmask));
+ 131:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     HAL_FIELD_GET(MIRROR_CTRLm, MIRROR_CTRL_EGR_MIRROR_ENf, &mirror_ctrl, &egr_mirror);
+ 133:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_tx_portmask));
+ 135:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 136:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     return CMM_ERR_OK;
+ 137:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 1094              		.loc 1 137 1 is_stmt 0 view .LVU285
+ 1095 002e 07B0     		add	sp, sp, #28
+ 1096              		.cfi_remember_state
+ 1097              		.cfi_def_cfa_offset 28
+ 1098              		@ sp needed
+ 1099 0030 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1100              	.LVL132:
+ 1101              	.L93:
+ 1102              		.cfi_restore_state
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1103              		.loc 1 121 5 is_stmt 1 discriminator 3 view .LVU286
+ 1104              	.LBB21:
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1105              		.loc 1 121 5 discriminator 3 view .LVU287
+ 1106 0034 142C     		cmp	r4, #20
+ 1107 0036 28BF     		it	cs
+ 1108 0038 1424     		movcs	r4, #20
+ 1109 003a 4F4B     		ldr	r3, .L97+4
+ 1110 003c 0093     		str	r3, [sp]
+ 1111 003e 4F4B     		ldr	r3, .L97+8
+ 1112 0040 4F4A     		ldr	r2, .L97+12
+ 1113 0042 52F82420 		ldr	r2, [r2, r4, lsl #2]
+ 1114 0046 4F49     		ldr	r1, .L97+16
+ 1115 0048 8968     		ldr	r1, [r1, #8]
+ 1116 004a 4F48     		ldr	r0, .L97+20
+ 1117              	.LVL133:
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1118              		.loc 1 121 5 is_stmt 0 discriminator 3 view .LVU288
+ 1119 004c FFF7FEFF 		bl	osal_printf
+ 1120              	.LVL134:
+ 1121 0050 ECE7     		b	.L74
+ 1122              	.LVL135:
+ 1123              	.L73:
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1124              		.loc 1 121 5 discriminator 3 view .LVU289
+ 1125              	.LBE21:
+ 121:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1126              		.loc 1 121 5 is_stmt 1 discriminator 2 view .LVU290
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1127              		.loc 1 123 5 discriminator 2 view .LVU291
+ 1128              	.LBB22:
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1129              		.loc 1 123 5 discriminator 2 view .LVU292
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1130              		.loc 1 123 5 discriminator 2 view .LVU293
+ 1131 0052 03AB     		add	r3, sp, #12
+ 1132 0054 05AA     		add	r2, sp, #20
+ 1133 0056 0221     		movs	r1, #2
+ 1134 0058 D520     		movs	r0, #213
+ 1135              	.LVL136:
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1136              		.loc 1 123 5 is_stmt 0 discriminator 2 view .LVU294
+ 1137 005a FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 1138              	.LVL137:
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1139              		.loc 1 123 5 is_stmt 1 discriminator 2 view .LVU295
+ 1140 005e 0399     		ldr	r1, [sp, #12]
+ 1141              	.LVL138:
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1142              		.loc 1 123 5 is_stmt 0 discriminator 2 view .LVU296
+ 1143              	.LBE22:
+ 123:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MAC_TO_YTP(unit, macid, (*p_target_port));
+ 1144              		.loc 1 123 5 is_stmt 1 discriminator 2 view .LVU297
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1145              		.loc 1 124 5 discriminator 2 view .LVU298
+ 1146              	.LBB23:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1147              		.loc 1 124 5 discriminator 2 view .LVU299
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1148              		.loc 1 124 5 discriminator 2 view .LVU300
+ 1149 0060 FF23     		movs	r3, #255
+ 1150 0062 C9F80030 		str	r3, [r9]
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1151              		.loc 1 124 5 discriminator 2 view .LVU301
+ 1152              	.LVL139:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1153              		.loc 1 124 5 is_stmt 0 discriminator 2 view .LVU302
+ 1154 0066 2546     		mov	r5, r4
+ 1155              	.LVL140:
+ 1156              	.L76:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1157              		.loc 1 124 5 is_stmt 1 discriminator 5 view .LVU303
+ 1158 0068 484B     		ldr	r3, .L97+24
+ 1159 006a 53F82630 		ldr	r3, [r3, r6, lsl #2]
+ 1160 006e 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 1161 0070 AA42     		cmp	r2, r5
+ 1162 0072 0AD9     		bls	.L78
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1163              		.loc 1 124 5 discriminator 6 view .LVU304
+ 1164 0074 AA1D     		adds	r2, r5, #6
+ 1165 0076 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 1166 007a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1167 007c 9942     		cmp	r1, r3
+ 1168 007e 02D0     		beq	.L94
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1169              		.loc 1 124 5 discriminator 3 view .LVU305
+ 1170 0080 0135     		adds	r5, r5, #1
+ 1171              	.LVL141:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1172              		.loc 1 124 5 is_stmt 0 discriminator 3 view .LVU306
+ 1173 0082 EDB2     		uxtb	r5, r5
+ 1174              	.LVL142:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1175              		.loc 1 124 5 discriminator 3 view .LVU307
+ 1176 0084 F0E7     		b	.L76
+ 1177              	.L94:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1178              		.loc 1 124 5 is_stmt 1 discriminator 2 view .LVU308
+ 1179 0086 C9F80050 		str	r5, [r9]
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1180              		.loc 1 124 5 discriminator 2 view .LVU309
+ 1181              	.L78:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1182              		.loc 1 124 5 is_stmt 0 discriminator 1 view .LVU310
+ 1183 008a 2146     		mov	r1, r4
+ 1184              	.LVL143:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1185              		.loc 1 124 5 discriminator 1 view .LVU311
+ 1186 008c 07E0     		b	.L80
+ 1187              	.LVL144:
+ 1188              	.L81:
+ 124:../Switch/core/fal/tiger/fal_tiger_mirror.c **** 
+ 1189              		.loc 1 124 5 discriminator 1 view .LVU312
+ 1190              	.LBE23:
+ 1191              	.LBB24:
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1192              		.loc 1 126 5 is_stmt 1 discriminator 3 view .LVU313
+ 1193 008e 06AB     		add	r3, sp, #24
+ 1194 0090 03EB8103 		add	r3, r3, r1, lsl #2
+ 1195 0094 0022     		movs	r2, #0
+ 1196 0096 43F8082C 		str	r2, [r3, #-8]
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1197              		.loc 1 126 5 discriminator 3 view .LVU314
+ 1198 009a 0131     		adds	r1, r1, #1
+ 1199              	.LVL145:
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1200              		.loc 1 126 5 is_stmt 0 discriminator 3 view .LVU315
+ 1201 009c C9B2     		uxtb	r1, r1
+ 1202              	.LVL146:
+ 1203              	.L80:
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1204              		.loc 1 126 5 is_stmt 1 discriminator 1 view .LVU316
+ 1205 009e 0029     		cmp	r1, #0
+ 1206 00a0 F5D0     		beq	.L81
+ 1207              	.LBE24:
+ 126:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1208              		.loc 1 126 5 discriminator 4 view .LVU317
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1209              		.loc 1 128 5 discriminator 4 view .LVU318
+ 1210              	.LBB25:
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1211              		.loc 1 128 5 discriminator 4 view .LVU319
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1212              		.loc 1 128 5 discriminator 4 view .LVU320
+ 1213 00a2 03AB     		add	r3, sp, #12
+ 1214 00a4 05AA     		add	r2, sp, #20
+ 1215 00a6 0021     		movs	r1, #0
+ 1216              	.LVL147:
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1217              		.loc 1 128 5 is_stmt 0 discriminator 4 view .LVU321
+ 1218 00a8 D520     		movs	r0, #213
+ 1219 00aa FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 1220              	.LVL148:
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1221              		.loc 1 128 5 is_stmt 1 discriminator 4 view .LVU322
+ 1222 00ae 0398     		ldr	r0, [sp, #12]
+ 1223              	.LVL149:
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1224              		.loc 1 128 5 is_stmt 0 discriminator 4 view .LVU323
+ 1225              	.LBE25:
+ 128:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = ingr_mirror;
+ 1226              		.loc 1 128 5 is_stmt 1 discriminator 4 view .LVU324
+ 129:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_rx_portmask));
+ 1227              		.loc 1 129 5 discriminator 4 view .LVU325
+ 129:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_rx_portmask));
+ 1228              		.loc 1 129 25 is_stmt 0 discriminator 4 view .LVU326
+ 1229 00b0 0490     		str	r0, [sp, #16]
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1230              		.loc 1 130 5 is_stmt 1 discriminator 4 view .LVU327
+ 1231              	.LBB26:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1232              		.loc 1 130 5 discriminator 4 view .LVU328
+ 1233              	.LVL150:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1234              		.loc 1 130 5 discriminator 4 view .LVU329
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1235              		.loc 1 130 5 discriminator 4 view .LVU330
+ 1236              	.LBB27:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1237              		.loc 1 130 5 discriminator 4 view .LVU331
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1238              		.loc 1 130 5 discriminator 4 view .LVU332
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1239              		.loc 1 130 5 is_stmt 0 discriminator 4 view .LVU333
+ 1240 00b2 2346     		mov	r3, r4
+ 1241              	.LVL151:
+ 1242              	.L82:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1243              		.loc 1 130 5 is_stmt 1 discriminator 1 view .LVU334
+ 1244 00b4 0BB1     		cbz	r3, .L83
+ 1245              	.LBE27:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1246              		.loc 1 130 5 is_stmt 0 view .LVU335
+ 1247 00b6 2146     		mov	r1, r4
+ 1248 00b8 07E0     		b	.L84
+ 1249              	.L83:
+ 1250              	.LBB28:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1251              		.loc 1 130 5 is_stmt 1 discriminator 3 view .LVU336
+ 1252 00ba 0022     		movs	r2, #0
+ 1253 00bc 48F82320 		str	r2, [r8, r3, lsl #2]
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1254              		.loc 1 130 5 discriminator 3 view .LVU337
+ 1255 00c0 0133     		adds	r3, r3, #1
+ 1256              	.LVL152:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1257              		.loc 1 130 5 is_stmt 0 discriminator 3 view .LVU338
+ 1258 00c2 DBB2     		uxtb	r3, r3
+ 1259              	.LVL153:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1260              		.loc 1 130 5 discriminator 3 view .LVU339
+ 1261 00c4 F6E7     		b	.L82
+ 1262              	.LVL154:
+ 1263              	.L85:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1264              		.loc 1 130 5 discriminator 3 view .LVU340
+ 1265              	.LBE28:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1266              		.loc 1 130 5 is_stmt 1 discriminator 16 view .LVU341
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1267              		.loc 1 130 5 discriminator 16 view .LVU342
+ 1268 00c6 0131     		adds	r1, r1, #1
+ 1269              	.LVL155:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1270              		.loc 1 130 5 is_stmt 0 discriminator 16 view .LVU343
+ 1271 00c8 C9B2     		uxtb	r1, r1
+ 1272              	.LVL156:
+ 1273              	.L84:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1274              		.loc 1 130 5 is_stmt 1 discriminator 17 view .LVU344
+ 1275 00ca 304B     		ldr	r3, .L97+24
+ 1276 00cc 53F82630 		ldr	r3, [r3, r6, lsl #2]
+ 1277 00d0 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 1278 00d2 8A42     		cmp	r2, r1
+ 1279 00d4 1AD9     		bls	.L95
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1280              		.loc 1 130 5 discriminator 18 view .LVU345
+ 1281              	.LBB29:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1282              		.loc 1 130 5 discriminator 18 view .LVU346
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1283              		.loc 1 130 5 discriminator 18 view .LVU347
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1284              		.loc 1 130 5 discriminator 18 view .LVU348
+ 1285 00d6 8A1D     		adds	r2, r1, #6
+ 1286 00d8 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 1287 00dc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1288              	.LVL157:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1289              		.loc 1 130 5 discriminator 18 view .LVU349
+ 1290 00de 03F01F02 		and	r2, r3, #31
+ 1291              	.LVL158:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1292              		.loc 1 130 5 discriminator 18 view .LVU350
+ 1293 00e2 1F2B     		cmp	r3, #31
+ 1294 00e4 EFD8     		bhi	.L85
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1295              		.loc 1 130 5 is_stmt 0 discriminator 6 view .LVU351
+ 1296 00e6 0123     		movs	r3, #1
+ 1297              	.LVL159:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1298              		.loc 1 130 5 discriminator 6 view .LVU352
+ 1299 00e8 9340     		lsls	r3, r3, r2
+ 1300 00ea 1842     		tst	r0, r3
+ 1301 00ec EBD0     		beq	.L85
+ 1302              	.LVL160:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1303              		.loc 1 130 5 discriminator 6 view .LVU353
+ 1304              	.LBE29:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1305              		.loc 1 130 5 is_stmt 1 view .LVU354
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1306              		.loc 1 130 5 view .LVU355
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1307              		.loc 1 130 5 view .LVU356
+ 1308              	.LBB30:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1309              		.loc 1 130 5 view .LVU357
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1310              		.loc 1 130 5 view .LVU358
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1311              		.loc 1 130 5 view .LVU359
+ 1312 00ee C1F34713 		ubfx	r3, r1, #5, #8
+ 1313              	.LVL161:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1314              		.loc 1 130 5 view .LVU360
+ 1315 00f2 01F01F0C 		and	ip, r1, #31
+ 1316              	.LVL162:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1317              		.loc 1 130 5 view .LVU361
+ 1318 00f6 1F29     		cmp	r1, #31
+ 1319 00f8 E5D8     		bhi	.L85
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1320              		.loc 1 130 5 discriminator 14 view .LVU362
+ 1321 00fa 58F82320 		ldr	r2, [r8, r3, lsl #2]
+ 1322              	.LVL163:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1323              		.loc 1 130 5 is_stmt 0 discriminator 14 view .LVU363
+ 1324 00fe 0125     		movs	r5, #1
+ 1325 0100 05FA0CF5 		lsl	r5, r5, ip
+ 1326 0104 2A43     		orrs	r2, r2, r5
+ 1327 0106 48F82320 		str	r2, [r8, r3, lsl #2]
+ 1328              	.LVL164:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1329              		.loc 1 130 5 discriminator 14 view .LVU364
+ 1330 010a DCE7     		b	.L85
+ 1331              	.LVL165:
+ 1332              	.L95:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1333              		.loc 1 130 5 discriminator 14 view .LVU365
+ 1334              	.LBE30:
+ 1335              	.LBE26:
+ 130:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     
+ 1336              		.loc 1 130 5 is_stmt 1 discriminator 19 view .LVU366
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1337              		.loc 1 132 5 discriminator 19 view .LVU367
+ 1338              	.LBB31:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1339              		.loc 1 132 5 discriminator 19 view .LVU368
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1340              		.loc 1 132 5 discriminator 19 view .LVU369
+ 1341 010c 03AB     		add	r3, sp, #12
+ 1342 010e 05AA     		add	r2, sp, #20
+ 1343 0110 0121     		movs	r1, #1
+ 1344              	.LVL166:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1345              		.loc 1 132 5 is_stmt 0 discriminator 19 view .LVU370
+ 1346 0112 D520     		movs	r0, #213
+ 1347              	.LVL167:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1348              		.loc 1 132 5 discriminator 19 view .LVU371
+ 1349 0114 FFF7FEFF 		bl	hal_tbl_reg_field_get
+ 1350              	.LVL168:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1351              		.loc 1 132 5 is_stmt 1 discriminator 19 view .LVU372
+ 1352 0118 0399     		ldr	r1, [sp, #12]
+ 1353              	.LVL169:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1354              		.loc 1 132 5 is_stmt 0 discriminator 19 view .LVU373
+ 1355              	.LBE31:
+ 132:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     macmask.portbits[0] = egr_mirror;
+ 1356              		.loc 1 132 5 is_stmt 1 discriminator 19 view .LVU374
+ 133:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_tx_portmask));
+ 1357              		.loc 1 133 5 discriminator 19 view .LVU375
+ 133:../Switch/core/fal/tiger/fal_tiger_mirror.c ****     CAL_MLIST_TO_YTPLIST(unit, macmask, (*p_tx_portmask));
+ 1358              		.loc 1 133 25 is_stmt 0 discriminator 19 view .LVU376
+ 1359 011a 0491     		str	r1, [sp, #16]
+ 1360              	.LVL170:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1361              		.loc 1 134 5 is_stmt 1 discriminator 19 view .LVU377
+ 1362              	.LBB32:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1363              		.loc 1 134 5 discriminator 19 view .LVU378
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1364              		.loc 1 134 5 discriminator 19 view .LVU379
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1365              		.loc 1 134 5 discriminator 19 view .LVU380
+ 1366              	.LBB33:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1367              		.loc 1 134 5 discriminator 19 view .LVU381
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1368              		.loc 1 134 5 discriminator 19 view .LVU382
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1369              		.loc 1 134 5 is_stmt 0 discriminator 19 view .LVU383
+ 1370 011c 2346     		mov	r3, r4
+ 1371              	.LVL171:
+ 1372              	.L87:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1373              		.loc 1 134 5 is_stmt 1 discriminator 1 view .LVU384
+ 1374 011e 3BB9     		cbnz	r3, .L89
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1375              		.loc 1 134 5 discriminator 3 view .LVU385
+ 1376 0120 0022     		movs	r2, #0
+ 1377 0122 47F82320 		str	r2, [r7, r3, lsl #2]
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1378              		.loc 1 134 5 discriminator 3 view .LVU386
+ 1379 0126 0133     		adds	r3, r3, #1
+ 1380              	.LVL172:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1381              		.loc 1 134 5 is_stmt 0 discriminator 3 view .LVU387
+ 1382 0128 DBB2     		uxtb	r3, r3
+ 1383              	.LVL173:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1384              		.loc 1 134 5 discriminator 3 view .LVU388
+ 1385 012a F8E7     		b	.L87
+ 1386              	.LVL174:
+ 1387              	.L90:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1388              		.loc 1 134 5 discriminator 3 view .LVU389
+ 1389              	.LBE33:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1390              		.loc 1 134 5 is_stmt 1 discriminator 16 view .LVU390
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1391              		.loc 1 134 5 discriminator 16 view .LVU391
+ 1392 012c 0134     		adds	r4, r4, #1
+ 1393              	.LVL175:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1394              		.loc 1 134 5 is_stmt 0 discriminator 16 view .LVU392
+ 1395 012e E4B2     		uxtb	r4, r4
+ 1396              	.LVL176:
+ 1397              	.L89:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1398              		.loc 1 134 5 is_stmt 1 discriminator 17 view .LVU393
+ 1399 0130 164B     		ldr	r3, .L97+24
+ 1400 0132 53F82630 		ldr	r3, [r3, r6, lsl #2]
+ 1401 0136 1A7D     		ldrb	r2, [r3, #20]	@ zero_extendqisi2
+ 1402 0138 A242     		cmp	r2, r4
+ 1403 013a 18D9     		bls	.L96
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1404              		.loc 1 134 5 discriminator 18 view .LVU394
+ 1405              	.LBB34:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1406              		.loc 1 134 5 discriminator 18 view .LVU395
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1407              		.loc 1 134 5 discriminator 18 view .LVU396
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1408              		.loc 1 134 5 discriminator 18 view .LVU397
+ 1409 013c A21D     		adds	r2, r4, #6
+ 1410 013e 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 1411 0142 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1412              	.LVL177:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1413              		.loc 1 134 5 discriminator 18 view .LVU398
+ 1414 0144 03F01F02 		and	r2, r3, #31
+ 1415              	.LVL178:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1416              		.loc 1 134 5 discriminator 18 view .LVU399
+ 1417 0148 1F2B     		cmp	r3, #31
+ 1418 014a EFD8     		bhi	.L90
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1419              		.loc 1 134 5 is_stmt 0 discriminator 6 view .LVU400
+ 1420 014c 0123     		movs	r3, #1
+ 1421              	.LVL179:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1422              		.loc 1 134 5 discriminator 6 view .LVU401
+ 1423 014e 9340     		lsls	r3, r3, r2
+ 1424 0150 1942     		tst	r1, r3
+ 1425 0152 EBD0     		beq	.L90
+ 1426              	.LVL180:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1427              		.loc 1 134 5 discriminator 6 view .LVU402
+ 1428              	.LBE34:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1429              		.loc 1 134 5 is_stmt 1 view .LVU403
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1430              		.loc 1 134 5 view .LVU404
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1431              		.loc 1 134 5 view .LVU405
+ 1432              	.LBB35:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1433              		.loc 1 134 5 view .LVU406
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1434              		.loc 1 134 5 view .LVU407
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1435              		.loc 1 134 5 view .LVU408
+ 1436 0154 6309     		lsrs	r3, r4, #5
+ 1437              	.LVL181:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1438              		.loc 1 134 5 view .LVU409
+ 1439 0156 04F01F05 		and	r5, r4, #31
+ 1440              	.LVL182:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1441              		.loc 1 134 5 view .LVU410
+ 1442 015a 1F2C     		cmp	r4, #31
+ 1443 015c E6D8     		bhi	.L90
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1444              		.loc 1 134 5 discriminator 14 view .LVU411
+ 1445 015e 57F82320 		ldr	r2, [r7, r3, lsl #2]
+ 1446              	.LVL183:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1447              		.loc 1 134 5 is_stmt 0 discriminator 14 view .LVU412
+ 1448 0162 0120     		movs	r0, #1
+ 1449 0164 A840     		lsls	r0, r0, r5
+ 1450 0166 0243     		orrs	r2, r2, r0
+ 1451 0168 47F82320 		str	r2, [r7, r3, lsl #2]
+ 1452              	.LVL184:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1453              		.loc 1 134 5 discriminator 14 view .LVU413
+ 1454 016c DEE7     		b	.L90
+ 1455              	.LVL185:
+ 1456              	.L96:
+ 134:../Switch/core/fal/tiger/fal_tiger_mirror.c ****    
+ 1457              		.loc 1 134 5 discriminator 14 view .LVU414
+ 1458              	.LBE35:
+ 1459              	.LBE32:
+ 136:../Switch/core/fal/tiger/fal_tiger_mirror.c **** }
+ 1460              		.loc 1 136 12 view .LVU415
+ 1461 016e 0020     		movs	r0, #0
+ 1462 0170 5DE7     		b	.L72
+ 1463              	.L98:
+ 1464 0172 00BF     		.align	2
+ 1465              	.L97:
+ 1466 0174 00000000 		.word	yt_debug_level
+ 1467 0178 00000000 		.word	__FUNCTION__.0
+ 1468 017c 00000000 		.word	.LC5
+ 1469 0180 00000000 		.word	_yt_errmsg
+ 1470 0184 00000000 		.word	_yt_prompt_msg
+ 1471 0188 28000000 		.word	.LC1
+ 1472 018c 00000000 		.word	gpSwitchUnit
+ 1473              		.cfi_endproc
+ 1474              	.LFE5:
+ 1476              		.section	.rodata.__FUNCTION__.0,"a"
+ 1477              		.align	2
+ 1480              	__FUNCTION__.0:
+ 1481 0000 66616C5F 		.ascii	"fal_tiger_mirror_port_get\000"
+ 1481      74696765 
+ 1481      725F6D69 
+ 1481      72726F72 
+ 1481      5F706F72 
+ 1482              		.section	.rodata.__FUNCTION__.1,"a"
+ 1483              		.align	2
+ 1486              	__FUNCTION__.1:
+ 1487 0000 66616C5F 		.ascii	"fal_tiger_que_colorAware_enable_set\000"
+ 1487      74696765 
+ 1487      725F7175 
+ 1487      655F636F 
+ 1487      6C6F7241 
+ 1488              		.section	.rodata.__FUNCTION__.2,"a"
+ 1489              		.align	2
+ 1492              	__FUNCTION__.2:
+ 1493 0000 66616C5F 		.ascii	"fal_tiger_mirror_port_set\000"
+ 1493      74696765 
+ 1493      725F6D69 
+ 1493      72726F72 
+ 1493      5F706F72 
+ 1494              		.text
+ 1495              	.Letext0:
+ 1496              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 1497              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 1498              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 1499              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\cal/cal_bprofile.h"
+ 1500              		.file 6 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\cal/cal_mgm.h"
+ 1501              		.file 7 "../Switch/core/fal/tiger/fal_tiger_entry.h"
+ 1502              		.file 8 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\hal/hal_mem.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 fal_tiger_mirror.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:19     .rodata.fal_tiger_que_colorAware_enable_set.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:35     .text.fal_tiger_que_colorAware_enable_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:40     .text.fal_tiger_que_colorAware_enable_set:00000000 fal_tiger_que_colorAware_enable_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:493    .text.fal_tiger_que_colorAware_enable_set:0000020c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1486   .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:507    .rodata.fal_tiger_mirror_port_set.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:516    .text.fal_tiger_mirror_port_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:522    .text.fal_tiger_mirror_port_set:00000000 fal_tiger_mirror_port_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1012   .text.fal_tiger_mirror_port_set:000001f0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1492   .rodata.__FUNCTION__.2:00000000 __FUNCTION__.2
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1026   .text.fal_tiger_mirror_port_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1032   .text.fal_tiger_mirror_port_get:00000000 fal_tiger_mirror_port_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1466   .text.fal_tiger_mirror_port_get:00000174 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1480   .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1477   .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1483   .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccuVgIPF.s:1489   .rodata.__FUNCTION__.2:00000000 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.eec47faa946e01877de19a2f99ee7710
+                           .group:00000000 wm4.yt_cmm.h.12.5273de39c1b049d4c73c2c31caf670b1
+                           .group:00000000 wm4.yt_vlan.h.27.cbfc53d6b95550ade50fea715c623f6e
+                           .group:00000000 wm4.yt_acl.h.25.ad9531373d966dccc96222e31e0234b5
+                           .group:00000000 wm4.yt_nic.h.17.4e5ceed38d9cfbd9b5db2d4b069b6961
+                           .group:00000000 wm4.yt_loopdetect.h.17.4739c2e436a8e779d4d8c89037b81aea
+                           .group:00000000 wm4.yt_multicast.h.17.9c1d51b153e5e1785468d9c0ad6414a4
+                           .group:00000000 wm4.yt_port.h.17.f9740394ebf086646c9c567db1605abb
+                           .group:00000000 wm4.yt_stat.h.17.f87caec2ee71e59f920ea3778bda3fad
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.fal_cmm.h.21.abca9355ca9f68b8c1596045f4695bae
+                           .group:00000000 wm4.fal_tiger_struct.h.6.65f60ff609860805c56cf9902d7678f2
+                           .group:00000000 wm4.fal_tiger_entry.h.5.7362ab6fe03ebf954c0b1cff89cdb238
+                           .group:00000000 wm4.fal_tiger_qos.h.17.f4b37d24596e99c802aec81329c236f2
+
+UNDEFINED SYMBOLS
+osal_printf
+hal_mem32_write
+hal_mem32_read
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
+gpSwitchUnit
+hal_table_reg_read
+hal_tbl_reg_field_get
+hal_tbl_reg_field_set
+hal_table_reg_write
+gcal_inited

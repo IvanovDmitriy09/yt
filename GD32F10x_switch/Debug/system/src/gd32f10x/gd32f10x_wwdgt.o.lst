@@ -1,0 +1,434 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_wwdgt.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_wwdgt.c"
+  18              		.section	.text.wwdgt_deinit,"ax",%progbits
+  19              		.align	1
+  20              		.global	wwdgt_deinit
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	wwdgt_deinit:
+  26              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \file    gd32f10x_wwdgt.c
+   3:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief   WWDGT driver
+   4:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+   5:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  10:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  11:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  14:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     Redistribution and use in source and binary forms, with or without modification,
+  15:../system/src/gd32f10x/gd32f10x_wwdgt.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  17:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  18:../system/src/gd32f10x/gd32f10x_wwdgt.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  20:../system/src/gd32f10x/gd32f10x_wwdgt.c ****        this list of conditions and the following disclaimer in the documentation
+  21:../system/src/gd32f10x/gd32f10x_wwdgt.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  23:../system/src/gd32f10x/gd32f10x_wwdgt.c ****        may be used to endorse or promote products derived from this software without
+  24:../system/src/gd32f10x/gd32f10x_wwdgt.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  26:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:../system/src/gd32f10x/gd32f10x_wwdgt.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  28:../system/src/gd32f10x/gd32f10x_wwdgt.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  29:../system/src/gd32f10x/gd32f10x_wwdgt.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  30:../system/src/gd32f10x/gd32f10x_wwdgt.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  31:../system/src/gd32f10x/gd32f10x_wwdgt.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  32:../system/src/gd32f10x/gd32f10x_wwdgt.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  33:../system/src/gd32f10x/gd32f10x_wwdgt.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  34:../system/src/gd32f10x/gd32f10x_wwdgt.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  35:../system/src/gd32f10x/gd32f10x_wwdgt.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  37:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  38:../system/src/gd32f10x/gd32f10x_wwdgt.c **** #include "gd32f10x_wwdgt.h"
+  39:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  40:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+  41:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      reset the window watchdog timer configuration
+  42:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  none
+  43:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+  44:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+  45:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  46:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_deinit(void)
+  47:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+  27              		.loc 1 47 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+  48:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     rcu_periph_reset_enable(RCU_WWDGTRST);
+  35              		.loc 1 48 5 view .LVU1
+  36 0002 40F20B40 		movw	r0, #1035
+  37 0006 FFF7FEFF 		bl	rcu_periph_reset_enable
+  38              	.LVL0:
+  49:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     rcu_periph_reset_disable(RCU_WWDGTRST);
+  39              		.loc 1 49 5 view .LVU2
+  40 000a 40F20B40 		movw	r0, #1035
+  41 000e FFF7FEFF 		bl	rcu_periph_reset_disable
+  42              	.LVL1:
+  50:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+  43              		.loc 1 50 1 is_stmt 0 view .LVU3
+  44 0012 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE56:
+  48              		.section	.text.wwdgt_enable,"ax",%progbits
+  49              		.align	1
+  50              		.global	wwdgt_enable
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	wwdgt_enable:
+  56              	.LFB57:
+  51:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  52:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+  53:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      start the window watchdog timer counter
+  54:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  none
+  55:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+  56:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+  57:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  58:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_enable(void)
+  59:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+  57              		.loc 1 59 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  60:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_CTL |= WWDGT_CTL_WDGTEN;
+  62              		.loc 1 60 5 view .LVU5
+  63 0000 034A     		ldr	r2, .L4
+  64 0002 D2F8003C 		ldr	r3, [r2, #3072]
+  65              		.loc 1 60 15 is_stmt 0 view .LVU6
+  66 0006 43F08003 		orr	r3, r3, #128
+  67 000a C2F8003C 		str	r3, [r2, #3072]
+  61:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+  68              		.loc 1 61 1 view .LVU7
+  69 000e 7047     		bx	lr
+  70              	.L5:
+  71              		.align	2
+  72              	.L4:
+  73 0010 00200040 		.word	1073750016
+  74              		.cfi_endproc
+  75              	.LFE57:
+  77              		.section	.text.wwdgt_counter_update,"ax",%progbits
+  78              		.align	1
+  79              		.global	wwdgt_counter_update
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  84              	wwdgt_counter_update:
+  85              	.LVL2:
+  86              	.LFB58:
+  62:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  63:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+  64:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      configure the window watchdog timer counter value
+  65:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  counter_value: 0x00 - 0x7F
+  66:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+  67:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+  68:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  69:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_counter_update(uint16_t counter_value)
+  70:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+  87              		.loc 1 70 1 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		@ link register save eliminated.
+  71:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_CTL = (uint32_t)(CTL_CNT(counter_value));
+  92              		.loc 1 71 5 view .LVU9
+  93              		.loc 1 71 17 is_stmt 0 view .LVU10
+  94 0000 00F07F00 		and	r0, r0, #127
+  95              	.LVL3:
+  96              		.loc 1 71 15 view .LVU11
+  97 0004 014B     		ldr	r3, .L7
+  98 0006 C3F8000C 		str	r0, [r3, #3072]
+  72:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+  99              		.loc 1 72 1 view .LVU12
+ 100 000a 7047     		bx	lr
+ 101              	.L8:
+ 102              		.align	2
+ 103              	.L7:
+ 104 000c 00200040 		.word	1073750016
+ 105              		.cfi_endproc
+ 106              	.LFE58:
+ 108              		.section	.text.wwdgt_config,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	wwdgt_config
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	wwdgt_config:
+ 116              	.LVL4:
+ 117              	.LFB59:
+  73:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  74:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+  75:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      configure counter value, window value, and prescaler divider value
+  76:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  counter: 0x00 - 0x7F
+  77:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  window: 0x00 - 0x7F
+  78:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  prescaler: wwdgt prescaler value
+  79:../system/src/gd32f10x/gd32f10x_wwdgt.c ****                 only one parameter can be selected which is shown as below:
+  80:../system/src/gd32f10x/gd32f10x_wwdgt.c ****       \arg        WWDGT_CFG_PSC_DIV1: the time base of window watchdog counter = (PCLK1/4096)/1
+  81:../system/src/gd32f10x/gd32f10x_wwdgt.c ****       \arg        WWDGT_CFG_PSC_DIV2: the time base of window watchdog counter = (PCLK1/4096)/2
+  82:../system/src/gd32f10x/gd32f10x_wwdgt.c ****       \arg        WWDGT_CFG_PSC_DIV4: the time base of window watchdog counter = (PCLK1/4096)/4
+  83:../system/src/gd32f10x/gd32f10x_wwdgt.c ****       \arg        WWDGT_CFG_PSC_DIV8: the time base of window watchdog counter = (PCLK1/4096)/8
+  84:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+  85:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+  86:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  87:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_config(uint16_t counter, uint16_t window, uint32_t prescaler)
+  88:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+ 118              		.loc 1 88 1 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+  89:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_CTL = (uint32_t)(CTL_CNT(counter));
+ 123              		.loc 1 89 5 view .LVU14
+ 124              		.loc 1 89 17 is_stmt 0 view .LVU15
+ 125 0000 00F07F00 		and	r0, r0, #127
+ 126              	.LVL5:
+ 127              		.loc 1 89 15 view .LVU16
+ 128 0004 044B     		ldr	r3, .L10
+ 129 0006 C3F8000C 		str	r0, [r3, #3072]
+  90:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_CFG = (uint32_t)(CFG_WIN(window) | prescaler);
+ 130              		.loc 1 90 5 is_stmt 1 view .LVU17
+ 131              		.loc 1 90 28 is_stmt 0 view .LVU18
+ 132 000a 01F07F01 		and	r1, r1, #127
+ 133              	.LVL6:
+ 134              		.loc 1 90 17 view .LVU19
+ 135 000e 1143     		orrs	r1, r1, r2
+ 136              		.loc 1 90 15 view .LVU20
+ 137 0010 C3F8041C 		str	r1, [r3, #3076]
+  91:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+ 138              		.loc 1 91 1 view .LVU21
+ 139 0014 7047     		bx	lr
+ 140              	.L11:
+ 141 0016 00BF     		.align	2
+ 142              	.L10:
+ 143 0018 00200040 		.word	1073750016
+ 144              		.cfi_endproc
+ 145              	.LFE59:
+ 147              		.section	.text.wwdgt_flag_get,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	wwdgt_flag_get
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 154              	wwdgt_flag_get:
+ 155              	.LFB60:
+  92:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+  93:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+  94:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      check early wakeup interrupt state of WWDGT
+  95:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  none
+  96:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+  97:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     FlagStatus: SET or RESET
+  98:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+  99:../system/src/gd32f10x/gd32f10x_wwdgt.c **** FlagStatus wwdgt_flag_get(void)
+ 100:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+ 156              		.loc 1 100 1 is_stmt 1 view -0
+ 157              		.cfi_startproc
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160              		@ link register save eliminated.
+ 101:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     if(WWDGT_STAT & WWDGT_STAT_EWIF) {
+ 161              		.loc 1 101 5 view .LVU23
+ 162              		.loc 1 101 8 is_stmt 0 view .LVU24
+ 163 0000 044B     		ldr	r3, .L15
+ 164 0002 D3F8083C 		ldr	r3, [r3, #3080]
+ 165              		.loc 1 101 7 view .LVU25
+ 166 0006 13F0010F 		tst	r3, #1
+ 167 000a 01D1     		bne	.L14
+ 102:../system/src/gd32f10x/gd32f10x_wwdgt.c ****         return SET;
+ 103:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     }
+ 104:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+ 105:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     return RESET;
+ 168              		.loc 1 105 12 view .LVU26
+ 169 000c 0020     		movs	r0, #0
+ 170 000e 7047     		bx	lr
+ 171              	.L14:
+ 102:../system/src/gd32f10x/gd32f10x_wwdgt.c ****         return SET;
+ 172              		.loc 1 102 16 view .LVU27
+ 173 0010 0120     		movs	r0, #1
+ 106:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+ 174              		.loc 1 106 1 view .LVU28
+ 175 0012 7047     		bx	lr
+ 176              	.L16:
+ 177              		.align	2
+ 178              	.L15:
+ 179 0014 00200040 		.word	1073750016
+ 180              		.cfi_endproc
+ 181              	.LFE60:
+ 183              		.section	.text.wwdgt_flag_clear,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	wwdgt_flag_clear
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 190              	wwdgt_flag_clear:
+ 191              	.LFB61:
+ 107:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+ 108:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+ 109:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      clear early wakeup interrupt state of WWDGT
+ 110:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  none
+ 111:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+ 112:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+ 113:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+ 114:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_flag_clear(void)
+ 115:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+ 192              		.loc 1 115 1 is_stmt 1 view -0
+ 193              		.cfi_startproc
+ 194              		@ args = 0, pretend = 0, frame = 0
+ 195              		@ frame_needed = 0, uses_anonymous_args = 0
+ 196              		@ link register save eliminated.
+ 116:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_STAT = (uint32_t)(RESET);
+ 197              		.loc 1 116 5 view .LVU30
+ 198              		.loc 1 116 16 is_stmt 0 view .LVU31
+ 199 0000 024B     		ldr	r3, .L18
+ 200 0002 0022     		movs	r2, #0
+ 201 0004 C3F8082C 		str	r2, [r3, #3080]
+ 117:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+ 202              		.loc 1 117 1 view .LVU32
+ 203 0008 7047     		bx	lr
+ 204              	.L19:
+ 205 000a 00BF     		.align	2
+ 206              	.L18:
+ 207 000c 00200040 		.word	1073750016
+ 208              		.cfi_endproc
+ 209              	.LFE61:
+ 211              		.section	.text.wwdgt_interrupt_enable,"ax",%progbits
+ 212              		.align	1
+ 213              		.global	wwdgt_interrupt_enable
+ 214              		.syntax unified
+ 215              		.thumb
+ 216              		.thumb_func
+ 218              	wwdgt_interrupt_enable:
+ 219              	.LFB62:
+ 118:../system/src/gd32f10x/gd32f10x_wwdgt.c **** 
+ 119:../system/src/gd32f10x/gd32f10x_wwdgt.c **** /*!
+ 120:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \brief      enable early wakeup interrupt of WWDGT
+ 121:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[in]  none
+ 122:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \param[out] none
+ 123:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     \retval     none
+ 124:../system/src/gd32f10x/gd32f10x_wwdgt.c **** */
+ 125:../system/src/gd32f10x/gd32f10x_wwdgt.c **** void wwdgt_interrupt_enable(void)
+ 126:../system/src/gd32f10x/gd32f10x_wwdgt.c **** {
+ 220              		.loc 1 126 1 is_stmt 1 view -0
+ 221              		.cfi_startproc
+ 222              		@ args = 0, pretend = 0, frame = 0
+ 223              		@ frame_needed = 0, uses_anonymous_args = 0
+ 224              		@ link register save eliminated.
+ 127:../system/src/gd32f10x/gd32f10x_wwdgt.c ****     WWDGT_CFG |= WWDGT_CFG_EWIE;
+ 225              		.loc 1 127 5 view .LVU34
+ 226 0000 034A     		ldr	r2, .L21
+ 227 0002 D2F8043C 		ldr	r3, [r2, #3076]
+ 228              		.loc 1 127 15 is_stmt 0 view .LVU35
+ 229 0006 43F40073 		orr	r3, r3, #512
+ 230 000a C2F8043C 		str	r3, [r2, #3076]
+ 128:../system/src/gd32f10x/gd32f10x_wwdgt.c **** }
+ 231              		.loc 1 128 1 view .LVU36
+ 232 000e 7047     		bx	lr
+ 233              	.L22:
+ 234              		.align	2
+ 235              	.L21:
+ 236 0010 00200040 		.word	1073750016
+ 237              		.cfi_endproc
+ 238              	.LFE62:
+ 240              		.text
+ 241              	.Letext0:
+ 242              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 243              		.file 3 "../system/inc/cmsis/gd32f10x.h"
+ 244              		.file 4 "../system/inc/gd32f10x/gd32f10x_rcu.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_wwdgt.c
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:19     .text.wwdgt_deinit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:25     .text.wwdgt_deinit:00000000 wwdgt_deinit
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:49     .text.wwdgt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:55     .text.wwdgt_enable:00000000 wwdgt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:73     .text.wwdgt_enable:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:78     .text.wwdgt_counter_update:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:84     .text.wwdgt_counter_update:00000000 wwdgt_counter_update
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:104    .text.wwdgt_counter_update:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:109    .text.wwdgt_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:115    .text.wwdgt_config:00000000 wwdgt_config
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:143    .text.wwdgt_config:00000018 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:148    .text.wwdgt_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:154    .text.wwdgt_flag_get:00000000 wwdgt_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:179    .text.wwdgt_flag_get:00000014 $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:184    .text.wwdgt_flag_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:190    .text.wwdgt_flag_clear:00000000 wwdgt_flag_clear
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:207    .text.wwdgt_flag_clear:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:212    .text.wwdgt_interrupt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:218    .text.wwdgt_interrupt_enable:00000000 wwdgt_interrupt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\cc3SgYWW.s:236    .text.wwdgt_interrupt_enable:00000010 $d
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_spi.h.39.902664de8fc67c732b453548a8b810bf
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.44.e03f09fc673f6f69624bf773ef6bdced
+
+UNDEFINED SYMBOLS
+rcu_periph_reset_enable
+rcu_periph_reset_disable

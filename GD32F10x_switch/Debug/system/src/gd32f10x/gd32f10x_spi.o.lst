@@ -1,0 +1,2022 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"gd32f10x_spi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../system/src/gd32f10x/gd32f10x_spi.c"
+  18              		.section	.text.spi_i2s_deinit,"ax",%progbits
+  19              		.align	1
+  20              		.global	spi_i2s_deinit
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	spi_i2s_deinit:
+  26              	.LVL0:
+  27              	.LFB56:
+   1:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+   2:../system/src/gd32f10x/gd32f10x_spi.c ****     \file    gd32f10x_spi.c
+   3:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief   SPI driver
+   4:../system/src/gd32f10x/gd32f10x_spi.c **** 
+   5:../system/src/gd32f10x/gd32f10x_spi.c ****     \version 2014-12-26, V1.0.0, firmware for GD32F10x
+   6:../system/src/gd32f10x/gd32f10x_spi.c ****     \version 2017-06-20, V2.0.0, firmware for GD32F10x
+   7:../system/src/gd32f10x/gd32f10x_spi.c ****     \version 2018-07-31, V2.1.0, firmware for GD32F10x
+   8:../system/src/gd32f10x/gd32f10x_spi.c ****     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+   9:../system/src/gd32f10x/gd32f10x_spi.c **** */
+  10:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  11:../system/src/gd32f10x/gd32f10x_spi.c **** /*
+  12:../system/src/gd32f10x/gd32f10x_spi.c ****     Copyright (c) 2020, GigaDevice Semiconductor Inc.
+  13:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  14:../system/src/gd32f10x/gd32f10x_spi.c ****     Redistribution and use in source and binary forms, with or without modification,
+  15:../system/src/gd32f10x/gd32f10x_spi.c **** are permitted provided that the following conditions are met:
+  16:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  17:../system/src/gd32f10x/gd32f10x_spi.c ****     1. Redistributions of source code must retain the above copyright notice, this
+  18:../system/src/gd32f10x/gd32f10x_spi.c ****        list of conditions and the following disclaimer.
+  19:../system/src/gd32f10x/gd32f10x_spi.c ****     2. Redistributions in binary form must reproduce the above copyright notice,
+  20:../system/src/gd32f10x/gd32f10x_spi.c ****        this list of conditions and the following disclaimer in the documentation
+  21:../system/src/gd32f10x/gd32f10x_spi.c ****        and/or other materials provided with the distribution.
+  22:../system/src/gd32f10x/gd32f10x_spi.c ****     3. Neither the name of the copyright holder nor the names of its contributors
+  23:../system/src/gd32f10x/gd32f10x_spi.c ****        may be used to endorse or promote products derived from this software without
+  24:../system/src/gd32f10x/gd32f10x_spi.c ****        specific prior written permission.
+  25:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  26:../system/src/gd32f10x/gd32f10x_spi.c ****     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:../system/src/gd32f10x/gd32f10x_spi.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  28:../system/src/gd32f10x/gd32f10x_spi.c **** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  29:../system/src/gd32f10x/gd32f10x_spi.c **** IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  30:../system/src/gd32f10x/gd32f10x_spi.c **** INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+  31:../system/src/gd32f10x/gd32f10x_spi.c **** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  32:../system/src/gd32f10x/gd32f10x_spi.c **** PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  33:../system/src/gd32f10x/gd32f10x_spi.c **** WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  34:../system/src/gd32f10x/gd32f10x_spi.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+  35:../system/src/gd32f10x/gd32f10x_spi.c **** OF SUCH DAMAGE.
+  36:../system/src/gd32f10x/gd32f10x_spi.c **** */
+  37:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  38:../system/src/gd32f10x/gd32f10x_spi.c **** #include "gd32f10x_spi.h"
+  39:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  40:../system/src/gd32f10x/gd32f10x_spi.c **** /* SPI/I2S parameter initialization mask */
+  41:../system/src/gd32f10x/gd32f10x_spi.c **** #define SPI_INIT_MASK                   ((uint32_t)0x00003040U)  /*!< SPI parameter initialization 
+  42:../system/src/gd32f10x/gd32f10x_spi.c **** #define I2S_INIT_MASK                   ((uint32_t)0x0000F047U)  /*!< I2S parameter initialization 
+  43:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  44:../system/src/gd32f10x/gd32f10x_spi.c **** /* I2S clock source selection, multiplication and division mask */
+  45:../system/src/gd32f10x/gd32f10x_spi.c **** #define I2S1_CLOCK_SEL                  ((uint32_t)0x00020000U)  /* I2S1 clock source selection */
+  46:../system/src/gd32f10x/gd32f10x_spi.c **** #define I2S2_CLOCK_SEL                  ((uint32_t)0x00040000U)  /* I2S2 clock source selection */
+  47:../system/src/gd32f10x/gd32f10x_spi.c **** #define I2S_CLOCK_MUL_MASK              ((uint32_t)0x0000F000U)  /* I2S clock multiplication mask *
+  48:../system/src/gd32f10x/gd32f10x_spi.c **** #define I2S_CLOCK_DIV_MASK              ((uint32_t)0x000000F0U)  /* I2S clock division mask */
+  49:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  50:../system/src/gd32f10x/gd32f10x_spi.c **** /* reset value and offset */
+  51:../system/src/gd32f10x/gd32f10x_spi.c **** #define SPI_I2SPSC_RESET                ((uint32_t)0x00000002U)  /*!< I2S clock prescaler register 
+  52:../system/src/gd32f10x/gd32f10x_spi.c **** #define RCU_CFG1_PREDV1_OFFSET          4U                       /* PREDV1 offset in RCU_CFG1 */
+  53:../system/src/gd32f10x/gd32f10x_spi.c **** #define RCU_CFG1_PLL2MF_OFFSET          12U                      /* PLL2MF offset in RCU_CFG1 */
+  54:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  55:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+  56:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      reset SPI and I2S
+  57:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+  58:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+  59:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+  60:../system/src/gd32f10x/gd32f10x_spi.c **** */
+  61:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_i2s_deinit(uint32_t spi_periph)
+  62:../system/src/gd32f10x/gd32f10x_spi.c **** {
+  28              		.loc 1 62 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 62 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  63:../system/src/gd32f10x/gd32f10x_spi.c ****     switch(spi_periph) {
+  37              		.loc 1 63 5 is_stmt 1 view .LVU2
+  38 0002 134B     		ldr	r3, .L8
+  39 0004 9842     		cmp	r0, r3
+  40 0006 1AD0     		beq	.L2
+  41 0008 03F57443 		add	r3, r3, #62464
+  42 000c 9842     		cmp	r0, r3
+  43 000e 04D0     		beq	.L3
+  44 0010 A3F57843 		sub	r3, r3, #63488
+  45 0014 9842     		cmp	r0, r3
+  46 0016 09D0     		beq	.L7
+  47              	.LVL1:
+  48              	.L1:
+  64:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI0:
+  65:../system/src/gd32f10x/gd32f10x_spi.c ****         /* reset SPI0 */
+  66:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_enable(RCU_SPI0RST);
+  67:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI0RST);
+  68:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  69:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI1:
+  70:../system/src/gd32f10x/gd32f10x_spi.c ****         /* reset SPI1 and I2S1 */
+  71:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_enable(RCU_SPI1RST);
+  72:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI1RST);
+  73:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  74:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI2:
+  75:../system/src/gd32f10x/gd32f10x_spi.c ****         /* reset SPI2 and I2S2 */
+  76:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_enable(RCU_SPI2RST);
+  77:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI2RST);
+  78:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  79:../system/src/gd32f10x/gd32f10x_spi.c ****     default :
+  80:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  81:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+  82:../system/src/gd32f10x/gd32f10x_spi.c **** }
+  49              		.loc 1 82 1 is_stmt 0 view .LVU3
+  50 0018 08BD     		pop	{r3, pc}
+  51              	.LVL2:
+  52              	.L3:
+  66:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI0RST);
+  53              		.loc 1 66 9 is_stmt 1 view .LVU4
+  54 001a 4FF44370 		mov	r0, #780
+  55              	.LVL3:
+  66:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI0RST);
+  56              		.loc 1 66 9 is_stmt 0 view .LVU5
+  57 001e FFF7FEFF 		bl	rcu_periph_reset_enable
+  58              	.LVL4:
+  67:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  59              		.loc 1 67 9 is_stmt 1 view .LVU6
+  60 0022 4FF44370 		mov	r0, #780
+  61 0026 FFF7FEFF 		bl	rcu_periph_reset_disable
+  62              	.LVL5:
+  68:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI1:
+  63              		.loc 1 68 9 view .LVU7
+  64 002a F5E7     		b	.L1
+  65              	.LVL6:
+  66              	.L7:
+  71:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI1RST);
+  67              		.loc 1 71 9 view .LVU8
+  68 002c 40F20E40 		movw	r0, #1038
+  69              	.LVL7:
+  71:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI1RST);
+  70              		.loc 1 71 9 is_stmt 0 view .LVU9
+  71 0030 FFF7FEFF 		bl	rcu_periph_reset_enable
+  72              	.LVL8:
+  72:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  73              		.loc 1 72 9 is_stmt 1 view .LVU10
+  74 0034 40F20E40 		movw	r0, #1038
+  75 0038 FFF7FEFF 		bl	rcu_periph_reset_disable
+  76              	.LVL9:
+  73:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI2:
+  77              		.loc 1 73 9 view .LVU11
+  78 003c ECE7     		b	.L1
+  79              	.LVL10:
+  80              	.L2:
+  76:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI2RST);
+  81              		.loc 1 76 9 view .LVU12
+  82 003e 40F20F40 		movw	r0, #1039
+  83              	.LVL11:
+  76:../system/src/gd32f10x/gd32f10x_spi.c ****         rcu_periph_reset_disable(RCU_SPI2RST);
+  84              		.loc 1 76 9 is_stmt 0 view .LVU13
+  85 0042 FFF7FEFF 		bl	rcu_periph_reset_enable
+  86              	.LVL12:
+  77:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+  87              		.loc 1 77 9 is_stmt 1 view .LVU14
+  88 0046 40F20F40 		movw	r0, #1039
+  89 004a FFF7FEFF 		bl	rcu_periph_reset_disable
+  90              	.LVL13:
+  78:../system/src/gd32f10x/gd32f10x_spi.c ****     default :
+  91              		.loc 1 78 9 view .LVU15
+  92              		.loc 1 82 1 is_stmt 0 view .LVU16
+  93 004e E3E7     		b	.L1
+  94              	.L9:
+  95              		.align	2
+  96              	.L8:
+  97 0050 003C0040 		.word	1073757184
+  98              		.cfi_endproc
+  99              	.LFE56:
+ 101              		.section	.text.spi_struct_para_init,"ax",%progbits
+ 102              		.align	1
+ 103              		.global	spi_struct_para_init
+ 104              		.syntax unified
+ 105              		.thumb
+ 106              		.thumb_func
+ 108              	spi_struct_para_init:
+ 109              	.LVL14:
+ 110              	.LFB57:
+  83:../system/src/gd32f10x/gd32f10x_spi.c **** 
+  84:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+  85:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      initialize the parameters of SPI structure with the default values
+  86:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  none
+  87:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] spi_parameter_struct: the initialized structure spi_parameter_struct pointer
+  88:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+  89:../system/src/gd32f10x/gd32f10x_spi.c **** */
+  90:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_struct_para_init(spi_parameter_struct *spi_struct)
+  91:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 111              		.loc 1 91 1 is_stmt 1 view -0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		@ link register save eliminated.
+  92:../system/src/gd32f10x/gd32f10x_spi.c ****     /* configure the SPI structure with the default values */
+  93:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->device_mode          = SPI_SLAVE;
+ 116              		.loc 1 93 5 view .LVU18
+ 117              		.loc 1 93 38 is_stmt 0 view .LVU19
+ 118 0000 0023     		movs	r3, #0
+ 119 0002 0360     		str	r3, [r0]
+  94:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->trans_mode           = SPI_TRANSMODE_FULLDUPLEX;
+ 120              		.loc 1 94 5 is_stmt 1 view .LVU20
+ 121              		.loc 1 94 38 is_stmt 0 view .LVU21
+ 122 0004 4360     		str	r3, [r0, #4]
+  95:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->frame_size           = SPI_FRAMESIZE_8BIT;
+ 123              		.loc 1 95 5 is_stmt 1 view .LVU22
+ 124              		.loc 1 95 38 is_stmt 0 view .LVU23
+ 125 0006 8360     		str	r3, [r0, #8]
+  96:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->nss                  = SPI_NSS_HARD;
+ 126              		.loc 1 96 5 is_stmt 1 view .LVU24
+ 127              		.loc 1 96 38 is_stmt 0 view .LVU25
+ 128 0008 C360     		str	r3, [r0, #12]
+  97:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->endian               = SPI_ENDIAN_MSB;
+ 129              		.loc 1 97 5 is_stmt 1 view .LVU26
+ 130              		.loc 1 97 38 is_stmt 0 view .LVU27
+ 131 000a 0361     		str	r3, [r0, #16]
+  98:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->clock_polarity_phase = SPI_CK_PL_LOW_PH_1EDGE;
+ 132              		.loc 1 98 5 is_stmt 1 view .LVU28
+ 133              		.loc 1 98 38 is_stmt 0 view .LVU29
+ 134 000c 4361     		str	r3, [r0, #20]
+  99:../system/src/gd32f10x/gd32f10x_spi.c ****     spi_struct->prescale             = SPI_PSC_2;
+ 135              		.loc 1 99 5 is_stmt 1 view .LVU30
+ 136              		.loc 1 99 38 is_stmt 0 view .LVU31
+ 137 000e 8361     		str	r3, [r0, #24]
+ 100:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 138              		.loc 1 100 1 view .LVU32
+ 139 0010 7047     		bx	lr
+ 140              		.cfi_endproc
+ 141              	.LFE57:
+ 143              		.section	.text.spi_init,"ax",%progbits
+ 144              		.align	1
+ 145              		.global	spi_init
+ 146              		.syntax unified
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	spi_init:
+ 151              	.LVL15:
+ 152              	.LFB58:
+ 101:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 102:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 103:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      initialize SPI parameters
+ 104:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 105:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_struct: SPI parameter initialization stuct members of the structure
+ 106:../system/src/gd32f10x/gd32f10x_spi.c ****                             and the member values are shown as below:
+ 107:../system/src/gd32f10x/gd32f10x_spi.c ****                   device_mode: SPI_MASTER, SPI_SLAVE
+ 108:../system/src/gd32f10x/gd32f10x_spi.c ****                   trans_mode: SPI_TRANSMODE_FULLDUPLEX, SPI_TRANSMODE_RECEIVEONLY,
+ 109:../system/src/gd32f10x/gd32f10x_spi.c ****                               SPI_TRANSMODE_BDRECEIVE, SPI_TRANSMODE_BDTRANSMIT
+ 110:../system/src/gd32f10x/gd32f10x_spi.c ****                   frame_size: SPI_FRAMESIZE_16BIT, SPI_FRAMESIZE_8BIT
+ 111:../system/src/gd32f10x/gd32f10x_spi.c ****                   nss: SPI_NSS_SOFT, SPI_NSS_HARD
+ 112:../system/src/gd32f10x/gd32f10x_spi.c ****                   endian: SPI_ENDIAN_MSB, SPI_ENDIAN_LSB
+ 113:../system/src/gd32f10x/gd32f10x_spi.c ****                   clock_polarity_phase: SPI_CK_PL_LOW_PH_1EDGE, SPI_CK_PL_HIGH_PH_1EDGE
+ 114:../system/src/gd32f10x/gd32f10x_spi.c ****                                         SPI_CK_PL_LOW_PH_2EDGE, SPI_CK_PL_HIGH_PH_2EDGE
+ 115:../system/src/gd32f10x/gd32f10x_spi.c ****                   prescale: SPI_PSC_n (n=2,4,8,16,32,64,128,256)
+ 116:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 117:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 118:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 119:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_init(uint32_t spi_periph, spi_parameter_struct *spi_struct)
+ 120:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 153              		.loc 1 120 1 is_stmt 1 view -0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 0
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157              		@ link register save eliminated.
+ 121:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t reg = 0U;
+ 158              		.loc 1 121 5 view .LVU34
+ 122:../system/src/gd32f10x/gd32f10x_spi.c ****     reg = SPI_CTL0(spi_periph);
+ 159              		.loc 1 122 5 view .LVU35
+ 160              		.loc 1 122 9 is_stmt 0 view .LVU36
+ 161 0000 0268     		ldr	r2, [r0]
+ 162              	.LVL16:
+ 123:../system/src/gd32f10x/gd32f10x_spi.c ****     reg &= SPI_INIT_MASK;
+ 163              		.loc 1 123 5 is_stmt 1 view .LVU37
+ 164              		.loc 1 123 9 is_stmt 0 view .LVU38
+ 165 0002 02F44152 		and	r2, r2, #12352
+ 166              	.LVL17:
+ 124:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 125:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI as master or slave */
+ 126:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->device_mode;
+ 167              		.loc 1 126 5 is_stmt 1 view .LVU39
+ 168              		.loc 1 126 22 is_stmt 0 view .LVU40
+ 169 0006 0B68     		ldr	r3, [r1]
+ 170              		.loc 1 126 9 view .LVU41
+ 171 0008 1A43     		orrs	r2, r2, r3
+ 172              	.LVL18:
+ 127:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI transfer mode */
+ 128:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->trans_mode;
+ 173              		.loc 1 128 5 is_stmt 1 view .LVU42
+ 174              		.loc 1 128 22 is_stmt 0 view .LVU43
+ 175 000a 4B68     		ldr	r3, [r1, #4]
+ 176              		.loc 1 128 9 view .LVU44
+ 177 000c 1A43     		orrs	r2, r2, r3
+ 178              	.LVL19:
+ 129:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI frame size */
+ 130:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->frame_size;
+ 179              		.loc 1 130 5 is_stmt 1 view .LVU45
+ 180              		.loc 1 130 22 is_stmt 0 view .LVU46
+ 181 000e 8B68     		ldr	r3, [r1, #8]
+ 182              		.loc 1 130 9 view .LVU47
+ 183 0010 1A43     		orrs	r2, r2, r3
+ 184              	.LVL20:
+ 131:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI NSS use hardware or software */
+ 132:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->nss;
+ 185              		.loc 1 132 5 is_stmt 1 view .LVU48
+ 186              		.loc 1 132 22 is_stmt 0 view .LVU49
+ 187 0012 CB68     		ldr	r3, [r1, #12]
+ 188              		.loc 1 132 9 view .LVU50
+ 189 0014 1A43     		orrs	r2, r2, r3
+ 190              	.LVL21:
+ 133:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI LSB or MSB */
+ 134:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->endian;
+ 191              		.loc 1 134 5 is_stmt 1 view .LVU51
+ 192              		.loc 1 134 22 is_stmt 0 view .LVU52
+ 193 0016 0B69     		ldr	r3, [r1, #16]
+ 194              		.loc 1 134 9 view .LVU53
+ 195 0018 1A43     		orrs	r2, r2, r3
+ 196              	.LVL22:
+ 135:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI polarity and phase */
+ 136:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->clock_polarity_phase;
+ 197              		.loc 1 136 5 is_stmt 1 view .LVU54
+ 198              		.loc 1 136 22 is_stmt 0 view .LVU55
+ 199 001a 4B69     		ldr	r3, [r1, #20]
+ 200              		.loc 1 136 9 view .LVU56
+ 201 001c 1A43     		orrs	r2, r2, r3
+ 202              	.LVL23:
+ 137:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI prescale to adjust transmit speed */
+ 138:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= spi_struct->prescale;
+ 203              		.loc 1 138 5 is_stmt 1 view .LVU57
+ 204              		.loc 1 138 22 is_stmt 0 view .LVU58
+ 205 001e 8B69     		ldr	r3, [r1, #24]
+ 206              		.loc 1 138 9 view .LVU59
+ 207 0020 1343     		orrs	r3, r3, r2
+ 208              	.LVL24:
+ 139:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 140:../system/src/gd32f10x/gd32f10x_spi.c ****     /* write to SPI_CTL0 register */
+ 141:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) = (uint32_t)reg;
+ 209              		.loc 1 141 5 is_stmt 1 view .LVU60
+ 210              		.loc 1 141 26 is_stmt 0 view .LVU61
+ 211 0022 0360     		str	r3, [r0]
+ 142:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 143:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select SPI mode */
+ 144:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) &= (uint32_t)(~SPI_I2SCTL_I2SSEL);
+ 212              		.loc 1 144 5 is_stmt 1 view .LVU62
+ 213 0024 C369     		ldr	r3, [r0, #28]
+ 214              	.LVL25:
+ 215              		.loc 1 144 28 is_stmt 0 view .LVU63
+ 216 0026 23F40063 		bic	r3, r3, #2048
+ 217 002a C361     		str	r3, [r0, #28]
+ 218              	.LVL26:
+ 145:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 219              		.loc 1 145 1 view .LVU64
+ 220 002c 7047     		bx	lr
+ 221              		.cfi_endproc
+ 222              	.LFE58:
+ 224              		.section	.text.spi_enable,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	spi_enable
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 231              	spi_enable:
+ 232              	.LVL27:
+ 233              	.LFB59:
+ 146:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 147:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 148:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      enable SPI
+ 149:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 150:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 151:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 152:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 153:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_enable(uint32_t spi_periph)
+ 154:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 234              		.loc 1 154 1 is_stmt 1 view -0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		@ link register save eliminated.
+ 155:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)SPI_CTL0_SPIEN;
+ 239              		.loc 1 155 5 view .LVU66
+ 240 0000 0368     		ldr	r3, [r0]
+ 241              		.loc 1 155 26 is_stmt 0 view .LVU67
+ 242 0002 43F04003 		orr	r3, r3, #64
+ 243 0006 0360     		str	r3, [r0]
+ 156:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 244              		.loc 1 156 1 view .LVU68
+ 245 0008 7047     		bx	lr
+ 246              		.cfi_endproc
+ 247              	.LFE59:
+ 249              		.section	.text.spi_disable,"ax",%progbits
+ 250              		.align	1
+ 251              		.global	spi_disable
+ 252              		.syntax unified
+ 253              		.thumb
+ 254              		.thumb_func
+ 256              	spi_disable:
+ 257              	.LVL28:
+ 258              	.LFB60:
+ 157:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 158:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 159:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      disable SPI
+ 160:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 161:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 162:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 163:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 164:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_disable(uint32_t spi_periph)
+ 165:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 259              		.loc 1 165 1 is_stmt 1 view -0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 0
+ 262              		@ frame_needed = 0, uses_anonymous_args = 0
+ 263              		@ link register save eliminated.
+ 166:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) &= (uint32_t)(~SPI_CTL0_SPIEN);
+ 264              		.loc 1 166 5 view .LVU70
+ 265 0000 0368     		ldr	r3, [r0]
+ 266              		.loc 1 166 26 is_stmt 0 view .LVU71
+ 267 0002 23F04003 		bic	r3, r3, #64
+ 268 0006 0360     		str	r3, [r0]
+ 167:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 269              		.loc 1 167 1 view .LVU72
+ 270 0008 7047     		bx	lr
+ 271              		.cfi_endproc
+ 272              	.LFE60:
+ 274              		.section	.text.i2s_init,"ax",%progbits
+ 275              		.align	1
+ 276              		.global	i2s_init
+ 277              		.syntax unified
+ 278              		.thumb
+ 279              		.thumb_func
+ 281              	i2s_init:
+ 282              	.LVL29:
+ 283              	.LFB61:
+ 168:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 169:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 170:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      initialize I2S parameter
+ 171:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=1,2)
+ 172:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  mode: I2S operation mode
+ 173:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 174:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MODE_SLAVETX: I2S slave transmit mode
+ 175:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MODE_SLAVERX: I2S slave receive mode
+ 176:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MODE_MASTERTX: I2S master transmit mode
+ 177:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MODE_MASTERRX: I2S master receive mode
+ 178:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  standard: I2S standard
+ 179:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 180:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_STD_PHILLIPS: I2S phillips standard
+ 181:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_STD_MSB: I2S MSB standard
+ 182:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_STD_LSB: I2S LSB standard
+ 183:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_STD_PCMSHORT: I2S PCM short standard
+ 184:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_STD_PCMLONG: I2S PCM long standard
+ 185:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  ckpl: I2S idle state clock polarity
+ 186:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 187:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_CKPL_LOW: I2S clock polarity low level
+ 188:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_CKPL_HIGH: I2S clock polarity high level
+ 189:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 190:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 191:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 192:../system/src/gd32f10x/gd32f10x_spi.c **** void i2s_init(uint32_t spi_periph, uint32_t mode, uint32_t standard, uint32_t ckpl)
+ 193:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 284              		.loc 1 193 1 is_stmt 1 view -0
+ 285              		.cfi_startproc
+ 286              		@ args = 0, pretend = 0, frame = 0
+ 287              		@ frame_needed = 0, uses_anonymous_args = 0
+ 288              		@ link register save eliminated.
+ 289              		.loc 1 193 1 is_stmt 0 view .LVU74
+ 290 0000 10B4     		push	{r4}
+ 291              		.cfi_def_cfa_offset 4
+ 292              		.cfi_offset 4, -4
+ 194:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t reg = 0U;
+ 293              		.loc 1 194 5 is_stmt 1 view .LVU75
+ 294              	.LVL30:
+ 195:../system/src/gd32f10x/gd32f10x_spi.c ****     reg = SPI_I2SCTL(spi_periph);
+ 295              		.loc 1 195 5 view .LVU76
+ 296              		.loc 1 195 9 is_stmt 0 view .LVU77
+ 297 0002 C469     		ldr	r4, [r0, #28]
+ 298              	.LVL31:
+ 196:../system/src/gd32f10x/gd32f10x_spi.c ****     reg &= I2S_INIT_MASK;
+ 299              		.loc 1 196 5 is_stmt 1 view .LVU78
+ 300              		.loc 1 196 9 is_stmt 0 view .LVU79
+ 301 0004 4FF2470C 		movw	ip, #61511
+ 302 0008 04EA0C0C 		and	ip, r4, ip
+ 303              	.LVL32:
+ 197:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 198:../system/src/gd32f10x/gd32f10x_spi.c ****     /* enable I2S mode */
+ 199:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= (uint32_t)SPI_I2SCTL_I2SSEL;
+ 304              		.loc 1 199 5 is_stmt 1 view .LVU80
+ 305              		.loc 1 199 9 is_stmt 0 view .LVU81
+ 306 000c 4CF4006C 		orr	ip, ip, #2048
+ 307              	.LVL33:
+ 200:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select I2S mode */
+ 201:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= (uint32_t)mode;
+ 308              		.loc 1 201 5 is_stmt 1 view .LVU82
+ 309              		.loc 1 201 9 is_stmt 0 view .LVU83
+ 310 0010 4CEA010C 		orr	ip, ip, r1
+ 311              	.LVL34:
+ 202:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select I2S standard */
+ 203:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= (uint32_t)standard;
+ 312              		.loc 1 203 5 is_stmt 1 view .LVU84
+ 313              		.loc 1 203 9 is_stmt 0 view .LVU85
+ 314 0014 4CEA020C 		orr	ip, ip, r2
+ 315              	.LVL35:
+ 204:../system/src/gd32f10x/gd32f10x_spi.c ****     /* select I2S polarity */
+ 205:../system/src/gd32f10x/gd32f10x_spi.c ****     reg |= (uint32_t)ckpl;
+ 316              		.loc 1 205 5 is_stmt 1 view .LVU86
+ 317              		.loc 1 205 9 is_stmt 0 view .LVU87
+ 318 0018 4CEA0303 		orr	r3, ip, r3
+ 319              	.LVL36:
+ 206:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 207:../system/src/gd32f10x/gd32f10x_spi.c ****     /* write to SPI_I2SCTL register */
+ 208:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) = (uint32_t)reg;
+ 320              		.loc 1 208 5 is_stmt 1 view .LVU88
+ 321              		.loc 1 208 28 is_stmt 0 view .LVU89
+ 322 001c C361     		str	r3, [r0, #28]
+ 209:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 323              		.loc 1 209 1 view .LVU90
+ 324 001e 10BC     		pop	{r4}
+ 325              		.cfi_restore 4
+ 326              		.cfi_def_cfa_offset 0
+ 327 0020 7047     		bx	lr
+ 328              		.cfi_endproc
+ 329              	.LFE61:
+ 331              		.section	.text.i2s_psc_config,"ax",%progbits
+ 332              		.align	1
+ 333              		.global	i2s_psc_config
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 338              	i2s_psc_config:
+ 339              	.LVL37:
+ 340              	.LFB62:
+ 210:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 211:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 212:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      configure I2S prescaler
+ 213:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=1,2)
+ 214:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  audiosample: I2S audio sample rate
+ 215:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 216:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_8K: audio sample rate is 8KHz
+ 217:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_11K: audio sample rate is 11KHz
+ 218:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_16K: audio sample rate is 16KHz
+ 219:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_22K: audio sample rate is 22KHz
+ 220:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_32K: audio sample rate is 32KHz
+ 221:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_44K: audio sample rate is 44KHz
+ 222:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_48K: audio sample rate is 48KHz
+ 223:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_96K: audio sample rate is 96KHz
+ 224:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_AUDIOSAMPLE_192K: audio sample rate is 192KHz
+ 225:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  frameformat: I2S data length and channel length
+ 226:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 227:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FRAMEFORMAT_DT16B_CH16B: I2S data length is 16 bit and channel length is 16 b
+ 228:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FRAMEFORMAT_DT16B_CH32B: I2S data length is 16 bit and channel length is 32 b
+ 229:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FRAMEFORMAT_DT24B_CH32B: I2S data length is 24 bit and channel length is 32 b
+ 230:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FRAMEFORMAT_DT32B_CH32B: I2S data length is 32 bit and channel length is 32 b
+ 231:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  mckout: I2S master clock output
+ 232:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 233:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MCKOUT_ENABLE: enable I2S master clock output
+ 234:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_MCKOUT_DISABLE: disable 2S master clock output
+ 235:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 236:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 237:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 238:../system/src/gd32f10x/gd32f10x_spi.c **** void i2s_psc_config(uint32_t spi_periph, uint32_t audiosample, uint32_t frameformat, uint32_t mckou
+ 239:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 341              		.loc 1 239 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		.loc 1 239 1 is_stmt 0 view .LVU92
+ 346 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 347              		.cfi_def_cfa_offset 24
+ 348              		.cfi_offset 3, -24
+ 349              		.cfi_offset 4, -20
+ 350              		.cfi_offset 5, -16
+ 351              		.cfi_offset 6, -12
+ 352              		.cfi_offset 7, -8
+ 353              		.cfi_offset 14, -4
+ 354 0002 0546     		mov	r5, r0
+ 355 0004 0C46     		mov	r4, r1
+ 356 0006 1646     		mov	r6, r2
+ 357 0008 1F46     		mov	r7, r3
+ 240:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t i2sdiv = 2U, i2sof = 0U;
+ 358              		.loc 1 240 5 is_stmt 1 view .LVU93
+ 359              	.LVL38:
+ 241:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t clks = 0U;
+ 360              		.loc 1 241 5 view .LVU94
+ 242:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t i2sclock = 0U;
+ 361              		.loc 1 242 5 view .LVU95
+ 243:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 244:../system/src/gd32f10x/gd32f10x_spi.c ****     /* deinitialize SPI_I2SPSC register */
+ 245:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SPSC(spi_periph) = SPI_I2SPSC_RESET;
+ 362              		.loc 1 245 5 view .LVU96
+ 363              		.loc 1 245 28 is_stmt 0 view .LVU97
+ 364 000a 0223     		movs	r3, #2
+ 365              	.LVL39:
+ 366              		.loc 1 245 28 view .LVU98
+ 367 000c 0362     		str	r3, [r0, #32]
+ 246:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 247:../system/src/gd32f10x/gd32f10x_spi.c **** #ifdef GD32F10X_CL
+ 248:../system/src/gd32f10x/gd32f10x_spi.c ****     /* get the I2S clock source */
+ 249:../system/src/gd32f10x/gd32f10x_spi.c ****     if(SPI1 == ((uint32_t)spi_periph)) {
+ 250:../system/src/gd32f10x/gd32f10x_spi.c ****         /* I2S1 clock source selection */
+ 251:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = I2S1_CLOCK_SEL;
+ 252:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 253:../system/src/gd32f10x/gd32f10x_spi.c ****         /* I2S2 clock source selection */
+ 254:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = I2S2_CLOCK_SEL;
+ 255:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 256:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 257:../system/src/gd32f10x/gd32f10x_spi.c ****     if(0U != (RCU_CFG1 & clks)) {
+ 258:../system/src/gd32f10x/gd32f10x_spi.c ****         /* get RCU PLL2 clock multiplication factor */
+ 259:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)((RCU_CFG1 & I2S_CLOCK_MUL_MASK) >> RCU_CFG1_PLL2MF_OFFSET);
+ 260:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 261:../system/src/gd32f10x/gd32f10x_spi.c ****         if((clks > 5U) && (clks < 15U)) {
+ 262:../system/src/gd32f10x/gd32f10x_spi.c ****             /* multiplier is between 8 and 14 */
+ 263:../system/src/gd32f10x/gd32f10x_spi.c ****             clks += 2U;
+ 264:../system/src/gd32f10x/gd32f10x_spi.c ****         } else {
+ 265:../system/src/gd32f10x/gd32f10x_spi.c ****             if(15U == clks) {
+ 266:../system/src/gd32f10x/gd32f10x_spi.c ****                 /* multiplier is 20 */
+ 267:../system/src/gd32f10x/gd32f10x_spi.c ****                 clks = 20U;
+ 268:../system/src/gd32f10x/gd32f10x_spi.c ****             }
+ 269:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 270:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 271:../system/src/gd32f10x/gd32f10x_spi.c ****         /* get the PREDV1 value */
+ 272:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sclock = (uint32_t)(((RCU_CFG1 & I2S_CLOCK_DIV_MASK) >>  RCU_CFG1_PREDV1_OFFSET) + 1U);
+ 273:../system/src/gd32f10x/gd32f10x_spi.c ****         /* calculate I2S clock based on PLL2 and PREDV1 */
+ 274:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sclock = (uint32_t)((HXTAL_VALUE / i2sclock) * clks * 2U);
+ 275:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 276:../system/src/gd32f10x/gd32f10x_spi.c ****         /* get system clock */
+ 277:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sclock = rcu_clock_freq_get(CK_SYS);
+ 278:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 279:../system/src/gd32f10x/gd32f10x_spi.c **** #else
+ 280:../system/src/gd32f10x/gd32f10x_spi.c ****     /* get system clock */
+ 281:../system/src/gd32f10x/gd32f10x_spi.c ****     i2sclock = rcu_clock_freq_get(CK_SYS);
+ 368              		.loc 1 281 5 is_stmt 1 view .LVU99
+ 369              		.loc 1 281 16 is_stmt 0 view .LVU100
+ 370 000e 0020     		movs	r0, #0
+ 371              	.LVL40:
+ 372              		.loc 1 281 16 view .LVU101
+ 373 0010 FFF7FEFF 		bl	rcu_clock_freq_get
+ 374              	.LVL41:
+ 282:../system/src/gd32f10x/gd32f10x_spi.c **** #endif /* GD32F10X_CL */
+ 283:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 284:../system/src/gd32f10x/gd32f10x_spi.c ****     /* configure the prescaler depending on the mclk output state, the frame format and audio sampl
+ 285:../system/src/gd32f10x/gd32f10x_spi.c ****     if(I2S_MCKOUT_ENABLE == mckout) {
+ 375              		.loc 1 285 5 is_stmt 1 view .LVU102
+ 376              		.loc 1 285 7 is_stmt 0 view .LVU103
+ 377 0014 B7F5007F 		cmp	r7, #512
+ 378 0018 07D0     		beq	.L23
+ 286:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)(((i2sclock / 256U) * 10U) / audiosample);
+ 287:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 288:../system/src/gd32f10x/gd32f10x_spi.c ****         if(I2S_FRAMEFORMAT_DT16B_CH16B == frameformat) {
+ 379              		.loc 1 288 9 is_stmt 1 view .LVU104
+ 380              		.loc 1 288 11 is_stmt 0 view .LVU105
+ 381 001a 36BB     		cbnz	r6, .L19
+ 289:../system/src/gd32f10x/gd32f10x_spi.c ****             clks = (uint32_t)(((i2sclock / 32U) * 10U) / audiosample);
+ 382              		.loc 1 289 13 is_stmt 1 view .LVU106
+ 383              		.loc 1 289 42 is_stmt 0 view .LVU107
+ 384 001c 4009     		lsrs	r0, r0, #5
+ 385              	.LVL42:
+ 386              		.loc 1 289 49 view .LVU108
+ 387 001e 00EB8000 		add	r0, r0, r0, lsl #2
+ 388 0022 4000     		lsls	r0, r0, #1
+ 389              		.loc 1 289 18 view .LVU109
+ 390 0024 B0FBF4F1 		udiv	r1, r0, r4
+ 391              	.LVL43:
+ 392              		.loc 1 289 18 view .LVU110
+ 393 0028 05E0     		b	.L18
+ 394              	.LVL44:
+ 395              	.L23:
+ 286:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)(((i2sclock / 256U) * 10U) / audiosample);
+ 396              		.loc 1 286 9 is_stmt 1 view .LVU111
+ 286:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)(((i2sclock / 256U) * 10U) / audiosample);
+ 397              		.loc 1 286 38 is_stmt 0 view .LVU112
+ 398 002a 000A     		lsrs	r0, r0, #8
+ 399              	.LVL45:
+ 286:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)(((i2sclock / 256U) * 10U) / audiosample);
+ 400              		.loc 1 286 46 view .LVU113
+ 401 002c 00EB8000 		add	r0, r0, r0, lsl #2
+ 402 0030 4000     		lsls	r0, r0, #1
+ 286:../system/src/gd32f10x/gd32f10x_spi.c ****         clks = (uint32_t)(((i2sclock / 256U) * 10U) / audiosample);
+ 403              		.loc 1 286 14 view .LVU114
+ 404 0032 B0FBF4F1 		udiv	r1, r0, r4
+ 405              	.LVL46:
+ 406              	.L18:
+ 290:../system/src/gd32f10x/gd32f10x_spi.c ****         } else {
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****             clks = (uint32_t)(((i2sclock / 64U) * 10U) / audiosample);
+ 292:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 293:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 294:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 295:../system/src/gd32f10x/gd32f10x_spi.c ****     /* remove the floating point */
+ 296:../system/src/gd32f10x/gd32f10x_spi.c ****     clks = (clks + 5U) / 10U;
+ 407              		.loc 1 296 5 is_stmt 1 view .LVU115
+ 408              		.loc 1 296 18 is_stmt 0 view .LVU116
+ 409 0036 0531     		adds	r1, r1, #5
+ 410              	.LVL47:
+ 411              		.loc 1 296 10 view .LVU117
+ 412 0038 0F4B     		ldr	r3, .L24
+ 413 003a A3FB0131 		umull	r3, r1, r3, r1
+ 414              	.LVL48:
+ 297:../system/src/gd32f10x/gd32f10x_spi.c ****     i2sof  = (clks & 0x00000001U);
+ 415              		.loc 1 297 5 is_stmt 1 view .LVU118
+ 416              		.loc 1 297 12 is_stmt 0 view .LVU119
+ 417 003e C1F3C003 		ubfx	r3, r1, #3, #1
+ 418              	.LVL49:
+ 298:../system/src/gd32f10x/gd32f10x_spi.c ****     i2sdiv = ((clks - i2sof) / 2U);
+ 419              		.loc 1 298 5 is_stmt 1 view .LVU120
+ 420              		.loc 1 298 21 is_stmt 0 view .LVU121
+ 421 0042 C3EBD101 		rsb	r1, r3, r1, lsr #3
+ 422              	.LVL50:
+ 423              		.loc 1 298 12 view .LVU122
+ 424 0046 4908     		lsrs	r1, r1, #1
+ 425              	.LVL51:
+ 299:../system/src/gd32f10x/gd32f10x_spi.c ****     i2sof  = (i2sof << 8U);
+ 426              		.loc 1 299 5 is_stmt 1 view .LVU123
+ 427              		.loc 1 299 12 is_stmt 0 view .LVU124
+ 428 0048 1B02     		lsls	r3, r3, #8
+ 429              	.LVL52:
+ 300:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 301:../system/src/gd32f10x/gd32f10x_spi.c ****     /* set the default values */
+ 302:../system/src/gd32f10x/gd32f10x_spi.c ****     if((i2sdiv < 2U) || (i2sdiv > 255U)) {
+ 430              		.loc 1 302 5 is_stmt 1 view .LVU125
+ 431              		.loc 1 302 22 is_stmt 0 view .LVU126
+ 432 004a 8A1E     		subs	r2, r1, #2
+ 433              		.loc 1 302 7 view .LVU127
+ 434 004c FD2A     		cmp	r2, #253
+ 435 004e 01D9     		bls	.L20
+ 303:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sdiv = 2U;
+ 304:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sof = 0U;
+ 436              		.loc 1 304 15 view .LVU128
+ 437 0050 0023     		movs	r3, #0
+ 438              	.LVL53:
+ 303:../system/src/gd32f10x/gd32f10x_spi.c ****         i2sdiv = 2U;
+ 439              		.loc 1 303 16 view .LVU129
+ 440 0052 0221     		movs	r1, #2
+ 441              	.LVL54:
+ 442              	.L20:
+ 305:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 306:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 307:../system/src/gd32f10x/gd32f10x_spi.c ****     /* configure SPI_I2SPSC */
+ 308:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SPSC(spi_periph) = (uint32_t)(i2sdiv | i2sof | mckout);
+ 443              		.loc 1 308 5 is_stmt 1 view .LVU130
+ 444              		.loc 1 308 48 is_stmt 0 view .LVU131
+ 445 0054 1943     		orrs	r1, r1, r3
+ 446              	.LVL55:
+ 447              		.loc 1 308 56 view .LVU132
+ 448 0056 3943     		orrs	r1, r1, r7
+ 449              		.loc 1 308 28 view .LVU133
+ 450 0058 2962     		str	r1, [r5, #32]
+ 309:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 310:../system/src/gd32f10x/gd32f10x_spi.c ****     /* clear SPI_I2SCTL_DTLEN and SPI_I2SCTL_CHLEN bits */
+ 311:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) &= (uint32_t)(~(SPI_I2SCTL_DTLEN | SPI_I2SCTL_CHLEN));
+ 451              		.loc 1 311 5 is_stmt 1 view .LVU134
+ 452 005a EB69     		ldr	r3, [r5, #28]
+ 453              	.LVL56:
+ 454              		.loc 1 311 28 is_stmt 0 view .LVU135
+ 455 005c 23F00703 		bic	r3, r3, #7
+ 456 0060 EB61     		str	r3, [r5, #28]
+ 312:../system/src/gd32f10x/gd32f10x_spi.c ****     /* configure data frame format */
+ 313:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) |= (uint32_t)frameformat;
+ 457              		.loc 1 313 5 is_stmt 1 view .LVU136
+ 458 0062 EB69     		ldr	r3, [r5, #28]
+ 459              		.loc 1 313 28 is_stmt 0 view .LVU137
+ 460 0064 3343     		orrs	r3, r3, r6
+ 461 0066 EB61     		str	r3, [r5, #28]
+ 314:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 462              		.loc 1 314 1 view .LVU138
+ 463 0068 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 464              	.LVL57:
+ 465              	.L19:
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 466              		.loc 1 291 13 is_stmt 1 view .LVU139
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 467              		.loc 1 291 42 is_stmt 0 view .LVU140
+ 468 006a 8009     		lsrs	r0, r0, #6
+ 469              	.LVL58:
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 470              		.loc 1 291 49 view .LVU141
+ 471 006c 00EB8000 		add	r0, r0, r0, lsl #2
+ 472 0070 4000     		lsls	r0, r0, #1
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 473              		.loc 1 291 18 view .LVU142
+ 474 0072 B0FBF4F1 		udiv	r1, r0, r4
+ 475              	.LVL59:
+ 291:../system/src/gd32f10x/gd32f10x_spi.c ****         }
+ 476              		.loc 1 291 18 view .LVU143
+ 477 0076 DEE7     		b	.L18
+ 478              	.L25:
+ 479              		.align	2
+ 480              	.L24:
+ 481 0078 CDCCCCCC 		.word	-858993459
+ 482              		.cfi_endproc
+ 483              	.LFE62:
+ 485              		.section	.text.i2s_enable,"ax",%progbits
+ 486              		.align	1
+ 487              		.global	i2s_enable
+ 488              		.syntax unified
+ 489              		.thumb
+ 490              		.thumb_func
+ 492              	i2s_enable:
+ 493              	.LVL60:
+ 494              	.LFB63:
+ 315:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 316:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 317:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      enable I2S
+ 318:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=1,2)
+ 319:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 320:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 321:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 322:../system/src/gd32f10x/gd32f10x_spi.c **** void i2s_enable(uint32_t spi_periph)
+ 323:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 495              		.loc 1 323 1 is_stmt 1 view -0
+ 496              		.cfi_startproc
+ 497              		@ args = 0, pretend = 0, frame = 0
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 499              		@ link register save eliminated.
+ 324:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) |= (uint32_t)SPI_I2SCTL_I2SEN;
+ 500              		.loc 1 324 5 view .LVU145
+ 501 0000 C369     		ldr	r3, [r0, #28]
+ 502              		.loc 1 324 28 is_stmt 0 view .LVU146
+ 503 0002 43F48063 		orr	r3, r3, #1024
+ 504 0006 C361     		str	r3, [r0, #28]
+ 325:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 505              		.loc 1 325 1 view .LVU147
+ 506 0008 7047     		bx	lr
+ 507              		.cfi_endproc
+ 508              	.LFE63:
+ 510              		.section	.text.i2s_disable,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	i2s_disable
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	i2s_disable:
+ 518              	.LVL61:
+ 519              	.LFB64:
+ 326:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 327:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 328:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      disable I2S
+ 329:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=1,2)
+ 330:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 331:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 332:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 333:../system/src/gd32f10x/gd32f10x_spi.c **** void i2s_disable(uint32_t spi_periph)
+ 334:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 520              		.loc 1 334 1 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		@ link register save eliminated.
+ 335:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_I2SCTL(spi_periph) &= (uint32_t)(~SPI_I2SCTL_I2SEN);
+ 525              		.loc 1 335 5 view .LVU149
+ 526 0000 C369     		ldr	r3, [r0, #28]
+ 527              		.loc 1 335 28 is_stmt 0 view .LVU150
+ 528 0002 23F48063 		bic	r3, r3, #1024
+ 529 0006 C361     		str	r3, [r0, #28]
+ 336:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 530              		.loc 1 336 1 view .LVU151
+ 531 0008 7047     		bx	lr
+ 532              		.cfi_endproc
+ 533              	.LFE64:
+ 535              		.section	.text.spi_nss_output_enable,"ax",%progbits
+ 536              		.align	1
+ 537              		.global	spi_nss_output_enable
+ 538              		.syntax unified
+ 539              		.thumb
+ 540              		.thumb_func
+ 542              	spi_nss_output_enable:
+ 543              	.LVL62:
+ 544              	.LFB65:
+ 337:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 338:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 339:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      enable SPI NSS output
+ 340:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 341:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 342:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 343:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 344:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_nss_output_enable(uint32_t spi_periph)
+ 345:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 545              		.loc 1 345 1 is_stmt 1 view -0
+ 546              		.cfi_startproc
+ 547              		@ args = 0, pretend = 0, frame = 0
+ 548              		@ frame_needed = 0, uses_anonymous_args = 0
+ 549              		@ link register save eliminated.
+ 346:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL1(spi_periph) |= (uint32_t)SPI_CTL1_NSSDRV;
+ 550              		.loc 1 346 5 view .LVU153
+ 551 0000 4368     		ldr	r3, [r0, #4]
+ 552              		.loc 1 346 26 is_stmt 0 view .LVU154
+ 553 0002 43F00403 		orr	r3, r3, #4
+ 554 0006 4360     		str	r3, [r0, #4]
+ 347:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 555              		.loc 1 347 1 view .LVU155
+ 556 0008 7047     		bx	lr
+ 557              		.cfi_endproc
+ 558              	.LFE65:
+ 560              		.section	.text.spi_nss_output_disable,"ax",%progbits
+ 561              		.align	1
+ 562              		.global	spi_nss_output_disable
+ 563              		.syntax unified
+ 564              		.thumb
+ 565              		.thumb_func
+ 567              	spi_nss_output_disable:
+ 568              	.LVL63:
+ 569              	.LFB66:
+ 348:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 349:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 350:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      disable SPI NSS output
+ 351:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 352:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 353:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 354:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 355:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_nss_output_disable(uint32_t spi_periph)
+ 356:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 570              		.loc 1 356 1 is_stmt 1 view -0
+ 571              		.cfi_startproc
+ 572              		@ args = 0, pretend = 0, frame = 0
+ 573              		@ frame_needed = 0, uses_anonymous_args = 0
+ 574              		@ link register save eliminated.
+ 357:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL1(spi_periph) &= (uint32_t)(~SPI_CTL1_NSSDRV);
+ 575              		.loc 1 357 5 view .LVU157
+ 576 0000 4368     		ldr	r3, [r0, #4]
+ 577              		.loc 1 357 26 is_stmt 0 view .LVU158
+ 578 0002 23F00403 		bic	r3, r3, #4
+ 579 0006 4360     		str	r3, [r0, #4]
+ 358:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 580              		.loc 1 358 1 view .LVU159
+ 581 0008 7047     		bx	lr
+ 582              		.cfi_endproc
+ 583              	.LFE66:
+ 585              		.section	.text.spi_nss_internal_high,"ax",%progbits
+ 586              		.align	1
+ 587              		.global	spi_nss_internal_high
+ 588              		.syntax unified
+ 589              		.thumb
+ 590              		.thumb_func
+ 592              	spi_nss_internal_high:
+ 593              	.LVL64:
+ 594              	.LFB67:
+ 359:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 360:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 361:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      SPI NSS pin high level in software mode
+ 362:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 363:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 364:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 365:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 366:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_nss_internal_high(uint32_t spi_periph)
+ 367:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 595              		.loc 1 367 1 is_stmt 1 view -0
+ 596              		.cfi_startproc
+ 597              		@ args = 0, pretend = 0, frame = 0
+ 598              		@ frame_needed = 0, uses_anonymous_args = 0
+ 599              		@ link register save eliminated.
+ 368:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)SPI_CTL0_SWNSS;
+ 600              		.loc 1 368 5 view .LVU161
+ 601 0000 0368     		ldr	r3, [r0]
+ 602              		.loc 1 368 26 is_stmt 0 view .LVU162
+ 603 0002 43F48073 		orr	r3, r3, #256
+ 604 0006 0360     		str	r3, [r0]
+ 369:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 605              		.loc 1 369 1 view .LVU163
+ 606 0008 7047     		bx	lr
+ 607              		.cfi_endproc
+ 608              	.LFE67:
+ 610              		.section	.text.spi_nss_internal_low,"ax",%progbits
+ 611              		.align	1
+ 612              		.global	spi_nss_internal_low
+ 613              		.syntax unified
+ 614              		.thumb
+ 615              		.thumb_func
+ 617              	spi_nss_internal_low:
+ 618              	.LVL65:
+ 619              	.LFB68:
+ 370:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 371:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 372:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      SPI NSS pin low level in software mode
+ 373:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 374:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 375:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 376:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 377:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_nss_internal_low(uint32_t spi_periph)
+ 378:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 620              		.loc 1 378 1 is_stmt 1 view -0
+ 621              		.cfi_startproc
+ 622              		@ args = 0, pretend = 0, frame = 0
+ 623              		@ frame_needed = 0, uses_anonymous_args = 0
+ 624              		@ link register save eliminated.
+ 379:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) &= (uint32_t)(~SPI_CTL0_SWNSS);
+ 625              		.loc 1 379 5 view .LVU165
+ 626 0000 0368     		ldr	r3, [r0]
+ 627              		.loc 1 379 26 is_stmt 0 view .LVU166
+ 628 0002 23F48073 		bic	r3, r3, #256
+ 629 0006 0360     		str	r3, [r0]
+ 380:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 630              		.loc 1 380 1 view .LVU167
+ 631 0008 7047     		bx	lr
+ 632              		.cfi_endproc
+ 633              	.LFE68:
+ 635              		.section	.text.spi_dma_enable,"ax",%progbits
+ 636              		.align	1
+ 637              		.global	spi_dma_enable
+ 638              		.syntax unified
+ 639              		.thumb
+ 640              		.thumb_func
+ 642              	spi_dma_enable:
+ 643              	.LVL66:
+ 644              	.LFB69:
+ 381:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 382:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 383:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      enable SPI DMA send or receive
+ 384:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 385:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  dma: SPI DMA mode
+ 386:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 387:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_DMA_TRANSMIT: SPI transmit data using DMA
+ 388:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_DMA_RECEIVE: SPI receive data using DMA
+ 389:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 390:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 391:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 392:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_dma_enable(uint32_t spi_periph, uint8_t dma)
+ 393:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 645              		.loc 1 393 1 is_stmt 1 view -0
+ 646              		.cfi_startproc
+ 647              		@ args = 0, pretend = 0, frame = 0
+ 648              		@ frame_needed = 0, uses_anonymous_args = 0
+ 649              		@ link register save eliminated.
+ 394:../system/src/gd32f10x/gd32f10x_spi.c ****     if(SPI_DMA_TRANSMIT == dma) {
+ 650              		.loc 1 394 5 view .LVU169
+ 651              		.loc 1 394 7 is_stmt 0 view .LVU170
+ 652 0000 21B9     		cbnz	r1, .L33
+ 395:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL1(spi_periph) |= (uint32_t)SPI_CTL1_DMATEN;
+ 653              		.loc 1 395 9 is_stmt 1 view .LVU171
+ 654 0002 4368     		ldr	r3, [r0, #4]
+ 655              		.loc 1 395 30 is_stmt 0 view .LVU172
+ 656 0004 43F00203 		orr	r3, r3, #2
+ 657 0008 4360     		str	r3, [r0, #4]
+ 658 000a 7047     		bx	lr
+ 659              	.L33:
+ 396:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 397:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL1(spi_periph) |= (uint32_t)SPI_CTL1_DMAREN;
+ 660              		.loc 1 397 9 is_stmt 1 view .LVU173
+ 661 000c 4368     		ldr	r3, [r0, #4]
+ 662              		.loc 1 397 30 is_stmt 0 view .LVU174
+ 663 000e 43F00103 		orr	r3, r3, #1
+ 664 0012 4360     		str	r3, [r0, #4]
+ 398:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 399:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 665              		.loc 1 399 1 view .LVU175
+ 666 0014 7047     		bx	lr
+ 667              		.cfi_endproc
+ 668              	.LFE69:
+ 670              		.section	.text.spi_dma_disable,"ax",%progbits
+ 671              		.align	1
+ 672              		.global	spi_dma_disable
+ 673              		.syntax unified
+ 674              		.thumb
+ 675              		.thumb_func
+ 677              	spi_dma_disable:
+ 678              	.LVL67:
+ 679              	.LFB70:
+ 400:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 401:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 402:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      disable SPI DMA send or receive
+ 403:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 404:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  dma: SPI DMA mode
+ 405:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 406:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_DMA_TRANSMIT: SPI transmit data using DMA
+ 407:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_DMA_RECEIVE: SPI receive data using DMA
+ 408:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 409:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 410:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 411:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_dma_disable(uint32_t spi_periph, uint8_t dma)
+ 412:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 680              		.loc 1 412 1 is_stmt 1 view -0
+ 681              		.cfi_startproc
+ 682              		@ args = 0, pretend = 0, frame = 0
+ 683              		@ frame_needed = 0, uses_anonymous_args = 0
+ 684              		@ link register save eliminated.
+ 413:../system/src/gd32f10x/gd32f10x_spi.c ****     if(SPI_DMA_TRANSMIT == dma) {
+ 685              		.loc 1 413 5 view .LVU177
+ 686              		.loc 1 413 7 is_stmt 0 view .LVU178
+ 687 0000 21B9     		cbnz	r1, .L36
+ 414:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL1(spi_periph) &= (uint32_t)(~SPI_CTL1_DMATEN);
+ 688              		.loc 1 414 9 is_stmt 1 view .LVU179
+ 689 0002 4368     		ldr	r3, [r0, #4]
+ 690              		.loc 1 414 30 is_stmt 0 view .LVU180
+ 691 0004 23F00203 		bic	r3, r3, #2
+ 692 0008 4360     		str	r3, [r0, #4]
+ 693 000a 7047     		bx	lr
+ 694              	.L36:
+ 415:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 416:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL1(spi_periph) &= (uint32_t)(~SPI_CTL1_DMAREN);
+ 695              		.loc 1 416 9 is_stmt 1 view .LVU181
+ 696 000c 4368     		ldr	r3, [r0, #4]
+ 697              		.loc 1 416 30 is_stmt 0 view .LVU182
+ 698 000e 23F00103 		bic	r3, r3, #1
+ 699 0012 4360     		str	r3, [r0, #4]
+ 417:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 418:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 700              		.loc 1 418 1 view .LVU183
+ 701 0014 7047     		bx	lr
+ 702              		.cfi_endproc
+ 703              	.LFE70:
+ 705              		.section	.text.spi_i2s_data_frame_format_config,"ax",%progbits
+ 706              		.align	1
+ 707              		.global	spi_i2s_data_frame_format_config
+ 708              		.syntax unified
+ 709              		.thumb
+ 710              		.thumb_func
+ 712              	spi_i2s_data_frame_format_config:
+ 713              	.LVL68:
+ 714              	.LFB71:
+ 419:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 420:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 421:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      configure SPI data frame format
+ 422:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 423:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  frame_format: SPI frame size
+ 424:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 425:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FRAMESIZE_16BIT: SPI frame size is 16 bits
+ 426:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FRAMESIZE_8BIT: SPI frame size is 8 bits
+ 427:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 428:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 429:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 430:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_i2s_data_frame_format_config(uint32_t spi_periph, uint16_t frame_format)
+ 431:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 715              		.loc 1 431 1 is_stmt 1 view -0
+ 716              		.cfi_startproc
+ 717              		@ args = 0, pretend = 0, frame = 0
+ 718              		@ frame_needed = 0, uses_anonymous_args = 0
+ 719              		@ link register save eliminated.
+ 432:../system/src/gd32f10x/gd32f10x_spi.c ****     /* clear SPI_CTL0_FF16 bit */
+ 433:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) &= (uint32_t)(~SPI_CTL0_FF16);
+ 720              		.loc 1 433 5 view .LVU185
+ 721 0000 0368     		ldr	r3, [r0]
+ 722              		.loc 1 433 26 is_stmt 0 view .LVU186
+ 723 0002 23F40063 		bic	r3, r3, #2048
+ 724 0006 0360     		str	r3, [r0]
+ 434:../system/src/gd32f10x/gd32f10x_spi.c ****     /* configure SPI_CTL0_FF16 bit */
+ 435:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)frame_format;
+ 725              		.loc 1 435 5 is_stmt 1 view .LVU187
+ 726 0008 0368     		ldr	r3, [r0]
+ 727              		.loc 1 435 26 is_stmt 0 view .LVU188
+ 728 000a 0B43     		orrs	r3, r3, r1
+ 729 000c 0360     		str	r3, [r0]
+ 436:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 730              		.loc 1 436 1 view .LVU189
+ 731 000e 7047     		bx	lr
+ 732              		.cfi_endproc
+ 733              	.LFE71:
+ 735              		.section	.text.spi_bidirectional_transfer_config,"ax",%progbits
+ 736              		.align	1
+ 737              		.global	spi_bidirectional_transfer_config
+ 738              		.syntax unified
+ 739              		.thumb
+ 740              		.thumb_func
+ 742              	spi_bidirectional_transfer_config:
+ 743              	.LVL69:
+ 744              	.LFB72:
+ 437:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 438:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 439:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      configure SPI bidirectional transfer direction
+ 440:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 441:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  transfer_direction: SPI transfer direction
+ 442:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 443:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_BIDIRECTIONAL_TRANSMIT: SPI work in transmit-only mode
+ 444:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_BIDIRECTIONAL_RECEIVE: SPI work in receive-only mode
+ 445:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 446:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 447:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 448:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_bidirectional_transfer_config(uint32_t spi_periph, uint32_t transfer_direction)
+ 449:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 745              		.loc 1 449 1 is_stmt 1 view -0
+ 746              		.cfi_startproc
+ 747              		@ args = 0, pretend = 0, frame = 0
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749              		@ link register save eliminated.
+ 450:../system/src/gd32f10x/gd32f10x_spi.c ****     if(SPI_BIDIRECTIONAL_TRANSMIT == transfer_direction) {
+ 750              		.loc 1 450 5 view .LVU191
+ 751              		.loc 1 450 7 is_stmt 0 view .LVU192
+ 752 0000 B1F5804F 		cmp	r1, #16384
+ 753 0004 04D0     		beq	.L42
+ 451:../system/src/gd32f10x/gd32f10x_spi.c ****         /* set the transmit only mode */
+ 452:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL0(spi_periph) |= (uint32_t)SPI_BIDIRECTIONAL_TRANSMIT;
+ 453:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 454:../system/src/gd32f10x/gd32f10x_spi.c ****         /* set the receive only mode */
+ 455:../system/src/gd32f10x/gd32f10x_spi.c ****         SPI_CTL0(spi_periph) &= SPI_BIDIRECTIONAL_RECEIVE;
+ 754              		.loc 1 455 9 is_stmt 1 view .LVU193
+ 755 0006 0368     		ldr	r3, [r0]
+ 756              		.loc 1 455 30 is_stmt 0 view .LVU194
+ 757 0008 23F48043 		bic	r3, r3, #16384
+ 758 000c 0360     		str	r3, [r0]
+ 456:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 457:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 759              		.loc 1 457 1 view .LVU195
+ 760 000e 7047     		bx	lr
+ 761              	.L42:
+ 452:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 762              		.loc 1 452 9 is_stmt 1 view .LVU196
+ 763 0010 0368     		ldr	r3, [r0]
+ 452:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 764              		.loc 1 452 30 is_stmt 0 view .LVU197
+ 765 0012 43F48043 		orr	r3, r3, #16384
+ 766 0016 0360     		str	r3, [r0]
+ 767 0018 7047     		bx	lr
+ 768              		.cfi_endproc
+ 769              	.LFE72:
+ 771              		.section	.text.spi_i2s_data_transmit,"ax",%progbits
+ 772              		.align	1
+ 773              		.global	spi_i2s_data_transmit
+ 774              		.syntax unified
+ 775              		.thumb
+ 776              		.thumb_func
+ 778              	spi_i2s_data_transmit:
+ 779              	.LVL70:
+ 780              	.LFB73:
+ 458:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 459:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 460:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      SPI transmit data
+ 461:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 462:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  data: 16-bit data
+ 463:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 464:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 465:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 466:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_i2s_data_transmit(uint32_t spi_periph, uint16_t data)
+ 467:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 781              		.loc 1 467 1 is_stmt 1 view -0
+ 782              		.cfi_startproc
+ 783              		@ args = 0, pretend = 0, frame = 0
+ 784              		@ frame_needed = 0, uses_anonymous_args = 0
+ 785              		@ link register save eliminated.
+ 468:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_DATA(spi_periph) = (uint32_t)data;
+ 786              		.loc 1 468 5 view .LVU199
+ 787              		.loc 1 468 26 is_stmt 0 view .LVU200
+ 788 0000 C160     		str	r1, [r0, #12]
+ 469:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 789              		.loc 1 469 1 view .LVU201
+ 790 0002 7047     		bx	lr
+ 791              		.cfi_endproc
+ 792              	.LFE73:
+ 794              		.section	.text.spi_i2s_data_receive,"ax",%progbits
+ 795              		.align	1
+ 796              		.global	spi_i2s_data_receive
+ 797              		.syntax unified
+ 798              		.thumb
+ 799              		.thumb_func
+ 801              	spi_i2s_data_receive:
+ 802              	.LVL71:
+ 803              	.LFB74:
+ 470:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 471:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 472:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      SPI receive data
+ 473:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 474:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 475:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     16-bit data
+ 476:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 477:../system/src/gd32f10x/gd32f10x_spi.c **** uint16_t spi_i2s_data_receive(uint32_t spi_periph)
+ 478:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 804              		.loc 1 478 1 is_stmt 1 view -0
+ 805              		.cfi_startproc
+ 806              		@ args = 0, pretend = 0, frame = 0
+ 807              		@ frame_needed = 0, uses_anonymous_args = 0
+ 808              		@ link register save eliminated.
+ 479:../system/src/gd32f10x/gd32f10x_spi.c ****     return ((uint16_t)SPI_DATA(spi_periph));
+ 809              		.loc 1 479 5 view .LVU203
+ 810              		.loc 1 479 23 is_stmt 0 view .LVU204
+ 811 0000 C068     		ldr	r0, [r0, #12]
+ 812              	.LVL72:
+ 480:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 813              		.loc 1 480 1 view .LVU205
+ 814 0002 80B2     		uxth	r0, r0
+ 815 0004 7047     		bx	lr
+ 816              		.cfi_endproc
+ 817              	.LFE74:
+ 819              		.section	.text.spi_crc_polynomial_set,"ax",%progbits
+ 820              		.align	1
+ 821              		.global	spi_crc_polynomial_set
+ 822              		.syntax unified
+ 823              		.thumb
+ 824              		.thumb_func
+ 826              	spi_crc_polynomial_set:
+ 827              	.LVL73:
+ 828              	.LFB75:
+ 481:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 482:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 483:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      set SPI CRC polynomial
+ 484:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 485:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  crc_poly: CRC polynomial value
+ 486:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 487:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 488:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 489:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_crc_polynomial_set(uint32_t spi_periph, uint16_t crc_poly)
+ 490:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 829              		.loc 1 490 1 is_stmt 1 view -0
+ 830              		.cfi_startproc
+ 831              		@ args = 0, pretend = 0, frame = 0
+ 832              		@ frame_needed = 0, uses_anonymous_args = 0
+ 833              		@ link register save eliminated.
+ 491:../system/src/gd32f10x/gd32f10x_spi.c ****     /* enable SPI CRC */
+ 492:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)SPI_CTL0_CRCEN;
+ 834              		.loc 1 492 5 view .LVU207
+ 835 0000 0368     		ldr	r3, [r0]
+ 836              		.loc 1 492 26 is_stmt 0 view .LVU208
+ 837 0002 43F40053 		orr	r3, r3, #8192
+ 838 0006 0360     		str	r3, [r0]
+ 493:../system/src/gd32f10x/gd32f10x_spi.c ****     /* set SPI CRC polynomial */
+ 494:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CRCPOLY(spi_periph) = (uint32_t)crc_poly;
+ 839              		.loc 1 494 5 is_stmt 1 view .LVU209
+ 840              		.loc 1 494 29 is_stmt 0 view .LVU210
+ 841 0008 0161     		str	r1, [r0, #16]
+ 495:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 842              		.loc 1 495 1 view .LVU211
+ 843 000a 7047     		bx	lr
+ 844              		.cfi_endproc
+ 845              	.LFE75:
+ 847              		.section	.text.spi_crc_polynomial_get,"ax",%progbits
+ 848              		.align	1
+ 849              		.global	spi_crc_polynomial_get
+ 850              		.syntax unified
+ 851              		.thumb
+ 852              		.thumb_func
+ 854              	spi_crc_polynomial_get:
+ 855              	.LVL74:
+ 856              	.LFB76:
+ 496:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 497:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 498:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      get SPI CRC polynomial
+ 499:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 500:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 501:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     16-bit CRC polynomial
+ 502:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 503:../system/src/gd32f10x/gd32f10x_spi.c **** uint16_t spi_crc_polynomial_get(uint32_t spi_periph)
+ 504:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 857              		.loc 1 504 1 is_stmt 1 view -0
+ 858              		.cfi_startproc
+ 859              		@ args = 0, pretend = 0, frame = 0
+ 860              		@ frame_needed = 0, uses_anonymous_args = 0
+ 861              		@ link register save eliminated.
+ 505:../system/src/gd32f10x/gd32f10x_spi.c ****     return ((uint16_t)SPI_CRCPOLY(spi_periph));
+ 862              		.loc 1 505 5 view .LVU213
+ 863              		.loc 1 505 23 is_stmt 0 view .LVU214
+ 864 0000 0069     		ldr	r0, [r0, #16]
+ 865              	.LVL75:
+ 506:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 866              		.loc 1 506 1 view .LVU215
+ 867 0002 80B2     		uxth	r0, r0
+ 868 0004 7047     		bx	lr
+ 869              		.cfi_endproc
+ 870              	.LFE76:
+ 872              		.section	.text.spi_crc_on,"ax",%progbits
+ 873              		.align	1
+ 874              		.global	spi_crc_on
+ 875              		.syntax unified
+ 876              		.thumb
+ 877              		.thumb_func
+ 879              	spi_crc_on:
+ 880              	.LVL76:
+ 881              	.LFB77:
+ 507:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 508:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 509:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      turn on SPI CRC function 
+ 510:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 511:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 512:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 513:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 514:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_crc_on(uint32_t spi_periph)
+ 515:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 882              		.loc 1 515 1 is_stmt 1 view -0
+ 883              		.cfi_startproc
+ 884              		@ args = 0, pretend = 0, frame = 0
+ 885              		@ frame_needed = 0, uses_anonymous_args = 0
+ 886              		@ link register save eliminated.
+ 516:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)SPI_CTL0_CRCEN;
+ 887              		.loc 1 516 5 view .LVU217
+ 888 0000 0368     		ldr	r3, [r0]
+ 889              		.loc 1 516 26 is_stmt 0 view .LVU218
+ 890 0002 43F40053 		orr	r3, r3, #8192
+ 891 0006 0360     		str	r3, [r0]
+ 517:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 892              		.loc 1 517 1 view .LVU219
+ 893 0008 7047     		bx	lr
+ 894              		.cfi_endproc
+ 895              	.LFE77:
+ 897              		.section	.text.spi_crc_off,"ax",%progbits
+ 898              		.align	1
+ 899              		.global	spi_crc_off
+ 900              		.syntax unified
+ 901              		.thumb
+ 902              		.thumb_func
+ 904              	spi_crc_off:
+ 905              	.LVL77:
+ 906              	.LFB78:
+ 518:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 519:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 520:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      turn off SPI CRC function
+ 521:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 522:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 523:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 524:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 525:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_crc_off(uint32_t spi_periph)
+ 526:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 907              		.loc 1 526 1 is_stmt 1 view -0
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 0
+ 910              		@ frame_needed = 0, uses_anonymous_args = 0
+ 911              		@ link register save eliminated.
+ 527:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) &= (uint32_t)(~SPI_CTL0_CRCEN);
+ 912              		.loc 1 527 5 view .LVU221
+ 913 0000 0368     		ldr	r3, [r0]
+ 914              		.loc 1 527 26 is_stmt 0 view .LVU222
+ 915 0002 23F40053 		bic	r3, r3, #8192
+ 916 0006 0360     		str	r3, [r0]
+ 528:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 917              		.loc 1 528 1 view .LVU223
+ 918 0008 7047     		bx	lr
+ 919              		.cfi_endproc
+ 920              	.LFE78:
+ 922              		.section	.text.spi_crc_next,"ax",%progbits
+ 923              		.align	1
+ 924              		.global	spi_crc_next
+ 925              		.syntax unified
+ 926              		.thumb
+ 927              		.thumb_func
+ 929              	spi_crc_next:
+ 930              	.LVL78:
+ 931              	.LFB79:
+ 529:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 530:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 531:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      SPI next data is CRC value
+ 532:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 533:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 534:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 535:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 536:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_crc_next(uint32_t spi_periph)
+ 537:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 932              		.loc 1 537 1 is_stmt 1 view -0
+ 933              		.cfi_startproc
+ 934              		@ args = 0, pretend = 0, frame = 0
+ 935              		@ frame_needed = 0, uses_anonymous_args = 0
+ 936              		@ link register save eliminated.
+ 538:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL0(spi_periph) |= (uint32_t)SPI_CTL0_CRCNT;
+ 937              		.loc 1 538 5 view .LVU225
+ 938 0000 0368     		ldr	r3, [r0]
+ 939              		.loc 1 538 26 is_stmt 0 view .LVU226
+ 940 0002 43F48053 		orr	r3, r3, #4096
+ 941 0006 0360     		str	r3, [r0]
+ 539:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 942              		.loc 1 539 1 view .LVU227
+ 943 0008 7047     		bx	lr
+ 944              		.cfi_endproc
+ 945              	.LFE79:
+ 947              		.section	.text.spi_crc_get,"ax",%progbits
+ 948              		.align	1
+ 949              		.global	spi_crc_get
+ 950              		.syntax unified
+ 951              		.thumb
+ 952              		.thumb_func
+ 954              	spi_crc_get:
+ 955              	.LVL79:
+ 956              	.LFB80:
+ 540:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 541:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 542:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      get SPI CRC send value or receive value
+ 543:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 544:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  crc: SPI crc value
+ 545:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 546:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_CRC_TX: get transmit crc value
+ 547:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_CRC_RX: get receive crc value
+ 548:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 549:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     16-bit CRC value
+ 550:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 551:../system/src/gd32f10x/gd32f10x_spi.c **** uint16_t spi_crc_get(uint32_t spi_periph, uint8_t crc)
+ 552:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 957              		.loc 1 552 1 is_stmt 1 view -0
+ 958              		.cfi_startproc
+ 959              		@ args = 0, pretend = 0, frame = 0
+ 960              		@ frame_needed = 0, uses_anonymous_args = 0
+ 961              		@ link register save eliminated.
+ 553:../system/src/gd32f10x/gd32f10x_spi.c ****     if(SPI_CRC_TX == crc) {
+ 962              		.loc 1 553 5 view .LVU229
+ 963              		.loc 1 553 7 is_stmt 0 view .LVU230
+ 964 0000 11B9     		cbnz	r1, .L51
+ 554:../system/src/gd32f10x/gd32f10x_spi.c ****         return ((uint16_t)(SPI_TCRC(spi_periph)));
+ 965              		.loc 1 554 9 is_stmt 1 view .LVU231
+ 966              		.loc 1 554 28 is_stmt 0 view .LVU232
+ 967 0002 8069     		ldr	r0, [r0, #24]
+ 968              	.LVL80:
+ 969              		.loc 1 554 17 view .LVU233
+ 970 0004 80B2     		uxth	r0, r0
+ 971 0006 7047     		bx	lr
+ 972              	.LVL81:
+ 973              	.L51:
+ 555:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 556:../system/src/gd32f10x/gd32f10x_spi.c ****         return ((uint16_t)(SPI_RCRC(spi_periph)));
+ 974              		.loc 1 556 9 is_stmt 1 view .LVU234
+ 975              		.loc 1 556 28 is_stmt 0 view .LVU235
+ 976 0008 4069     		ldr	r0, [r0, #20]
+ 977              	.LVL82:
+ 978              		.loc 1 556 17 view .LVU236
+ 979 000a 80B2     		uxth	r0, r0
+ 557:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 558:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 980              		.loc 1 558 1 view .LVU237
+ 981 000c 7047     		bx	lr
+ 982              		.cfi_endproc
+ 983              	.LFE80:
+ 985              		.section	.text.spi_crc_error_clear,"ax",%progbits
+ 986              		.align	1
+ 987              		.global	spi_crc_error_clear
+ 988              		.syntax unified
+ 989              		.thumb
+ 990              		.thumb_func
+ 992              	spi_crc_error_clear:
+ 993              	.LVL83:
+ 994              	.LFB81:
+ 559:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 560:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 561:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      clear SPI CRC error flag status
+ 562:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 563:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 564:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 565:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 566:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_crc_error_clear(uint32_t spi_periph)
+ 567:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 995              		.loc 1 567 1 is_stmt 1 view -0
+ 996              		.cfi_startproc
+ 997              		@ args = 0, pretend = 0, frame = 0
+ 998              		@ frame_needed = 0, uses_anonymous_args = 0
+ 999              		@ link register save eliminated.
+ 568:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_STAT(spi_periph) = (uint32_t)(~SPI_FLAG_CRCERR);
+ 1000              		.loc 1 568 5 view .LVU239
+ 1001              		.loc 1 568 26 is_stmt 0 view .LVU240
+ 1002 0000 6FF01003 		mvn	r3, #16
+ 1003 0004 8360     		str	r3, [r0, #8]
+ 569:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 1004              		.loc 1 569 1 view .LVU241
+ 1005 0006 7047     		bx	lr
+ 1006              		.cfi_endproc
+ 1007              	.LFE81:
+ 1009              		.section	.text.spi_i2s_flag_get,"ax",%progbits
+ 1010              		.align	1
+ 1011              		.global	spi_i2s_flag_get
+ 1012              		.syntax unified
+ 1013              		.thumb
+ 1014              		.thumb_func
+ 1016              	spi_i2s_flag_get:
+ 1017              	.LVL84:
+ 1018              	.LFB82:
+ 570:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 571:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 572:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      get SPI and I2S flag status
+ 573:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 574:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  flag: SPI/I2S flag status
+ 575:../system/src/gd32f10x/gd32f10x_spi.c ****                 one or more parameters can be selected which are shown as below:
+ 576:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_TBE: transmit buffer empty flag
+ 577:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_RBNE: receive buffer not empty flag
+ 578:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_TRANS: transmit on-going flag
+ 579:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_RXORERR: receive overrun error flag
+ 580:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_CONFERR: mode config error flag
+ 581:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_FLAG_CRCERR: CRC error flag
+ 582:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FLAG_RXORERR: overrun error flag
+ 583:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FLAG_TXURERR: underrun error flag
+ 584:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_FLAG_CH: channel side flag
+ 585:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 586:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     FlagStatus: SET or RESET
+ 587:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 588:../system/src/gd32f10x/gd32f10x_spi.c **** FlagStatus spi_i2s_flag_get(uint32_t spi_periph, uint32_t flag)
+ 589:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 1019              		.loc 1 589 1 is_stmt 1 view -0
+ 1020              		.cfi_startproc
+ 1021              		@ args = 0, pretend = 0, frame = 0
+ 1022              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1023              		@ link register save eliminated.
+ 590:../system/src/gd32f10x/gd32f10x_spi.c ****     if(RESET != (SPI_STAT(spi_periph) & flag)) {
+ 1024              		.loc 1 590 5 view .LVU243
+ 1025              		.loc 1 590 18 is_stmt 0 view .LVU244
+ 1026 0000 8368     		ldr	r3, [r0, #8]
+ 1027              		.loc 1 590 7 view .LVU245
+ 1028 0002 0B42     		tst	r3, r1
+ 1029 0004 01D0     		beq	.L56
+ 591:../system/src/gd32f10x/gd32f10x_spi.c ****         return SET;
+ 1030              		.loc 1 591 16 view .LVU246
+ 1031 0006 0120     		movs	r0, #1
+ 1032              	.LVL85:
+ 1033              		.loc 1 591 16 view .LVU247
+ 1034 0008 7047     		bx	lr
+ 1035              	.LVL86:
+ 1036              	.L56:
+ 592:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 593:../system/src/gd32f10x/gd32f10x_spi.c ****         return RESET;
+ 1037              		.loc 1 593 16 view .LVU248
+ 1038 000a 0020     		movs	r0, #0
+ 1039              	.LVL87:
+ 594:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 595:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 1040              		.loc 1 595 1 view .LVU249
+ 1041 000c 7047     		bx	lr
+ 1042              		.cfi_endproc
+ 1043              	.LFE82:
+ 1045              		.section	.text.spi_i2s_interrupt_enable,"ax",%progbits
+ 1046              		.align	1
+ 1047              		.global	spi_i2s_interrupt_enable
+ 1048              		.syntax unified
+ 1049              		.thumb
+ 1050              		.thumb_func
+ 1052              	spi_i2s_interrupt_enable:
+ 1053              	.LVL88:
+ 1054              	.LFB83:
+ 596:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 597:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 598:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      enable SPI and I2S interrupt
+ 599:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 600:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  interrupt: SPI/I2S interrupt
+ 601:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 602:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_TBE: transmit buffer empty interrupt
+ 603:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_RBNE: receive buffer not empty interrupt
+ 604:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_ERR: CRC error, configuration error, reception overrun error,
+ 605:../system/src/gd32f10x/gd32f10x_spi.c ****                                    transmission underrun error and format error interrupt
+ 606:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 607:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 608:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 609:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_i2s_interrupt_enable(uint32_t spi_periph, uint8_t interrupt)
+ 610:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 1055              		.loc 1 610 1 is_stmt 1 view -0
+ 1056              		.cfi_startproc
+ 1057              		@ args = 0, pretend = 0, frame = 0
+ 1058              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1059              		@ link register save eliminated.
+ 611:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL1(spi_periph) |= (uint32_t)interrupt;
+ 1060              		.loc 1 611 5 view .LVU251
+ 1061 0000 4368     		ldr	r3, [r0, #4]
+ 1062              		.loc 1 611 26 is_stmt 0 view .LVU252
+ 1063 0002 0B43     		orrs	r3, r3, r1
+ 1064 0004 4360     		str	r3, [r0, #4]
+ 612:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 1065              		.loc 1 612 1 view .LVU253
+ 1066 0006 7047     		bx	lr
+ 1067              		.cfi_endproc
+ 1068              	.LFE83:
+ 1070              		.section	.text.spi_i2s_interrupt_disable,"ax",%progbits
+ 1071              		.align	1
+ 1072              		.global	spi_i2s_interrupt_disable
+ 1073              		.syntax unified
+ 1074              		.thumb
+ 1075              		.thumb_func
+ 1077              	spi_i2s_interrupt_disable:
+ 1078              	.LVL89:
+ 1079              	.LFB84:
+ 613:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 614:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 615:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      disable SPI and I2S interrupt
+ 616:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 617:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  interrupt: SPI/I2S interrupt
+ 618:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 619:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_TBE: transmit buffer empty interrupt
+ 620:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_RBNE: receive buffer not empty interrupt
+ 621:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_ERR: CRC error, configuration error, reception overrun error,
+ 622:../system/src/gd32f10x/gd32f10x_spi.c ****                                    transmission underrun error and format error interrupt
+ 623:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 624:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     none
+ 625:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 626:../system/src/gd32f10x/gd32f10x_spi.c **** void spi_i2s_interrupt_disable(uint32_t spi_periph, uint8_t interrupt)
+ 627:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 1080              		.loc 1 627 1 is_stmt 1 view -0
+ 1081              		.cfi_startproc
+ 1082              		@ args = 0, pretend = 0, frame = 0
+ 1083              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1084              		@ link register save eliminated.
+ 628:../system/src/gd32f10x/gd32f10x_spi.c ****     SPI_CTL1(spi_periph) &= ~(uint32_t)interrupt;
+ 1085              		.loc 1 628 5 view .LVU255
+ 1086 0000 4368     		ldr	r3, [r0, #4]
+ 1087              		.loc 1 628 26 is_stmt 0 view .LVU256
+ 1088 0002 23EA0103 		bic	r3, r3, r1
+ 1089 0006 4360     		str	r3, [r0, #4]
+ 629:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 1090              		.loc 1 629 1 view .LVU257
+ 1091 0008 7047     		bx	lr
+ 1092              		.cfi_endproc
+ 1093              	.LFE84:
+ 1095              		.section	.text.spi_i2s_interrupt_flag_get,"ax",%progbits
+ 1096              		.align	1
+ 1097              		.global	spi_i2s_interrupt_flag_get
+ 1098              		.syntax unified
+ 1099              		.thumb
+ 1100              		.thumb_func
+ 1102              	spi_i2s_interrupt_flag_get:
+ 1103              	.LVL90:
+ 1104              	.LFB85:
+ 630:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 631:../system/src/gd32f10x/gd32f10x_spi.c **** /*!
+ 632:../system/src/gd32f10x/gd32f10x_spi.c ****     \brief      get SPI and I2S interrupt flag status
+ 633:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  spi_periph: SPIx(x=0,1,2)
+ 634:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[in]  interrupt: SPI/I2S interrupt flag status
+ 635:../system/src/gd32f10x/gd32f10x_spi.c ****                 only one parameter can be selected which is shown as below:
+ 636:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_FLAG_TBE: transmit buffer empty interrupt flag
+ 637:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_FLAG_RBNE: receive buffer not empty interrupt flag
+ 638:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_I2S_INT_FLAG_RXORERR: overrun interrupt flag
+ 639:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_INT_FLAG_CONFERR: config error interrupt flag
+ 640:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        SPI_INT_FLAG_CRCERR: CRC error interrupt flag
+ 641:../system/src/gd32f10x/gd32f10x_spi.c ****       \arg        I2S_INT_FLAG_TXURERR: underrun error interrupt flag
+ 642:../system/src/gd32f10x/gd32f10x_spi.c ****     \param[out] none
+ 643:../system/src/gd32f10x/gd32f10x_spi.c ****     \retval     FlagStatus: SET or RESET
+ 644:../system/src/gd32f10x/gd32f10x_spi.c **** */
+ 645:../system/src/gd32f10x/gd32f10x_spi.c **** FlagStatus spi_i2s_interrupt_flag_get(uint32_t spi_periph, uint8_t interrupt)
+ 646:../system/src/gd32f10x/gd32f10x_spi.c **** {
+ 1105              		.loc 1 646 1 is_stmt 1 view -0
+ 1106              		.cfi_startproc
+ 1107              		@ args = 0, pretend = 0, frame = 0
+ 1108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1109              		@ link register save eliminated.
+ 647:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t reg1 = SPI_STAT(spi_periph);
+ 1110              		.loc 1 647 5 view .LVU259
+ 1111              		.loc 1 647 14 is_stmt 0 view .LVU260
+ 1112 0000 8368     		ldr	r3, [r0, #8]
+ 1113              	.LVL91:
+ 648:../system/src/gd32f10x/gd32f10x_spi.c ****     uint32_t reg2 = SPI_CTL1(spi_periph);
+ 1114              		.loc 1 648 5 is_stmt 1 view .LVU261
+ 1115              		.loc 1 648 14 is_stmt 0 view .LVU262
+ 1116 0002 4268     		ldr	r2, [r0, #4]
+ 1117              	.LVL92:
+ 649:../system/src/gd32f10x/gd32f10x_spi.c **** 
+ 650:../system/src/gd32f10x/gd32f10x_spi.c ****     switch(interrupt) {
+ 1118              		.loc 1 650 5 is_stmt 1 view .LVU263
+ 1119 0004 0529     		cmp	r1, #5
+ 1120 0006 08D8     		bhi	.L60
+ 1121 0008 DFE801F0 		tbb	[pc, r1]
+ 1122              	.LVL93:
+ 1123              	.L62:
+ 1124 000c 03       		.byte	(.L67-.L62)/2
+ 1125 000d 0B       		.byte	(.L66-.L62)/2
+ 1126 000e 10       		.byte	(.L65-.L62)/2
+ 1127 000f 15       		.byte	(.L64-.L62)/2
+ 1128 0010 1A       		.byte	(.L63-.L62)/2
+ 1129 0011 1F       		.byte	(.L61-.L62)/2
+ 1130              		.p2align 1
+ 1131              	.L67:
+ 651:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI/I2S transmit buffer empty interrupt */
+ 652:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI_I2S_INT_FLAG_TBE:
+ 653:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_TBE;
+ 1132              		.loc 1 653 9 view .LVU264
+ 1133              		.loc 1 653 14 is_stmt 0 view .LVU265
+ 1134 0012 03F00203 		and	r3, r3, #2
+ 1135              	.LVL94:
+ 654:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_TBEIE;
+ 1136              		.loc 1 654 9 is_stmt 1 view .LVU266
+ 1137              		.loc 1 654 14 is_stmt 0 view .LVU267
+ 1138 0016 02F08002 		and	r2, r2, #128
+ 1139              	.LVL95:
+ 655:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1140              		.loc 1 655 9 is_stmt 1 view .LVU268
+ 1141              	.L60:
+ 656:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI/I2S receive buffer not empty interrupt */
+ 657:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI_I2S_INT_FLAG_RBNE:
+ 658:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_RBNE;
+ 659:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_RBNEIE;
+ 660:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 661:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI/I2S overrun interrupt */
+ 662:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI_I2S_INT_FLAG_RXORERR:
+ 663:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_RXORERR;
+ 664:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 665:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 666:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI config error interrupt */
+ 667:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI_INT_FLAG_CONFERR:
+ 668:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_CONFERR;
+ 669:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 670:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 671:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI CRC error interrupt */
+ 672:../system/src/gd32f10x/gd32f10x_spi.c ****     case SPI_INT_FLAG_CRCERR:
+ 673:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_CRCERR;
+ 674:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 675:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 676:../system/src/gd32f10x/gd32f10x_spi.c ****     /* I2S underrun error interrupt */
+ 677:../system/src/gd32f10x/gd32f10x_spi.c ****     case I2S_INT_FLAG_TXURERR:
+ 678:../system/src/gd32f10x/gd32f10x_spi.c ****         reg1 = reg1 & SPI_STAT_TXURERR;
+ 679:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 680:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 681:../system/src/gd32f10x/gd32f10x_spi.c ****     default :
+ 682:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 683:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 684:../system/src/gd32f10x/gd32f10x_spi.c ****     /*get SPI/I2S interrupt flag status */
+ 685:../system/src/gd32f10x/gd32f10x_spi.c ****     if((0U != reg1) && (0U != reg2)) {
+ 1142              		.loc 1 685 5 view .LVU269
+ 1143              		.loc 1 685 7 is_stmt 0 view .LVU270
+ 1144 001a DBB1     		cbz	r3, .L69
+ 1145              		.loc 1 685 21 discriminator 1 view .LVU271
+ 1146 001c E2B9     		cbnz	r2, .L70
+ 686:../system/src/gd32f10x/gd32f10x_spi.c ****         return SET;
+ 687:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 688:../system/src/gd32f10x/gd32f10x_spi.c ****         return RESET;
+ 1147              		.loc 1 688 16 view .LVU272
+ 1148 001e 0020     		movs	r0, #0
+ 1149 0020 7047     		bx	lr
+ 1150              	.L66:
+ 658:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_RBNEIE;
+ 1151              		.loc 1 658 9 is_stmt 1 view .LVU273
+ 658:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_RBNEIE;
+ 1152              		.loc 1 658 14 is_stmt 0 view .LVU274
+ 1153 0022 03F00103 		and	r3, r3, #1
+ 1154              	.LVL96:
+ 659:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1155              		.loc 1 659 9 is_stmt 1 view .LVU275
+ 659:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1156              		.loc 1 659 14 is_stmt 0 view .LVU276
+ 1157 0026 02F04002 		and	r2, r2, #64
+ 1158              	.LVL97:
+ 660:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI/I2S overrun interrupt */
+ 1159              		.loc 1 660 9 is_stmt 1 view .LVU277
+ 1160 002a F6E7     		b	.L60
+ 1161              	.L65:
+ 663:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1162              		.loc 1 663 9 view .LVU278
+ 663:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1163              		.loc 1 663 14 is_stmt 0 view .LVU279
+ 1164 002c 03F04003 		and	r3, r3, #64
+ 1165              	.LVL98:
+ 664:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1166              		.loc 1 664 9 is_stmt 1 view .LVU280
+ 664:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1167              		.loc 1 664 14 is_stmt 0 view .LVU281
+ 1168 0030 02F02002 		and	r2, r2, #32
+ 1169              	.LVL99:
+ 665:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI config error interrupt */
+ 1170              		.loc 1 665 9 is_stmt 1 view .LVU282
+ 1171 0034 F1E7     		b	.L60
+ 1172              	.L64:
+ 668:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1173              		.loc 1 668 9 view .LVU283
+ 668:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1174              		.loc 1 668 14 is_stmt 0 view .LVU284
+ 1175 0036 03F02003 		and	r3, r3, #32
+ 1176              	.LVL100:
+ 669:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1177              		.loc 1 669 9 is_stmt 1 view .LVU285
+ 669:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1178              		.loc 1 669 14 is_stmt 0 view .LVU286
+ 1179 003a 02F02002 		and	r2, r2, #32
+ 1180              	.LVL101:
+ 670:../system/src/gd32f10x/gd32f10x_spi.c ****     /* SPI CRC error interrupt */
+ 1181              		.loc 1 670 9 is_stmt 1 view .LVU287
+ 1182 003e ECE7     		b	.L60
+ 1183              	.L63:
+ 673:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1184              		.loc 1 673 9 view .LVU288
+ 673:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1185              		.loc 1 673 14 is_stmt 0 view .LVU289
+ 1186 0040 03F01003 		and	r3, r3, #16
+ 1187              	.LVL102:
+ 674:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1188              		.loc 1 674 9 is_stmt 1 view .LVU290
+ 674:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1189              		.loc 1 674 14 is_stmt 0 view .LVU291
+ 1190 0044 02F02002 		and	r2, r2, #32
+ 1191              	.LVL103:
+ 675:../system/src/gd32f10x/gd32f10x_spi.c ****     /* I2S underrun error interrupt */
+ 1192              		.loc 1 675 9 is_stmt 1 view .LVU292
+ 1193 0048 E7E7     		b	.L60
+ 1194              	.L61:
+ 678:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1195              		.loc 1 678 9 view .LVU293
+ 678:../system/src/gd32f10x/gd32f10x_spi.c ****         reg2 = reg2 & SPI_CTL1_ERRIE;
+ 1196              		.loc 1 678 14 is_stmt 0 view .LVU294
+ 1197 004a 03F00803 		and	r3, r3, #8
+ 1198              	.LVL104:
+ 679:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1199              		.loc 1 679 9 is_stmt 1 view .LVU295
+ 679:../system/src/gd32f10x/gd32f10x_spi.c ****         break;
+ 1200              		.loc 1 679 14 is_stmt 0 view .LVU296
+ 1201 004e 02F02002 		and	r2, r2, #32
+ 1202              	.LVL105:
+ 680:../system/src/gd32f10x/gd32f10x_spi.c ****     default :
+ 1203              		.loc 1 680 9 is_stmt 1 view .LVU297
+ 1204 0052 E2E7     		b	.L60
+ 1205              	.L69:
+ 1206              		.loc 1 688 16 is_stmt 0 view .LVU298
+ 1207 0054 0020     		movs	r0, #0
+ 1208 0056 7047     		bx	lr
+ 1209              	.L70:
+ 686:../system/src/gd32f10x/gd32f10x_spi.c ****     } else {
+ 1210              		.loc 1 686 16 view .LVU299
+ 1211 0058 0120     		movs	r0, #1
+ 689:../system/src/gd32f10x/gd32f10x_spi.c ****     }
+ 690:../system/src/gd32f10x/gd32f10x_spi.c **** }
+ 1212              		.loc 1 690 1 view .LVU300
+ 1213 005a 7047     		bx	lr
+ 1214              		.cfi_endproc
+ 1215              	.LFE85:
+ 1217              		.text
+ 1218              	.Letext0:
+ 1219              		.file 2 "c:\\users\\dmitriy\\appdata\\roaming\\xpacks\\@xpack-dev-tools\\arm-none-eabi-gcc\\12.3.1
+ 1220              		.file 3 "../system/inc/cmsis/gd32f10x.h"
+ 1221              		.file 4 "../system/inc/gd32f10x/gd32f10x_rcu.h"
+ 1222              		.file 5 "../system/inc/gd32f10x/gd32f10x_spi.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 gd32f10x_spi.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:19     .text.spi_i2s_deinit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:25     .text.spi_i2s_deinit:00000000 spi_i2s_deinit
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:97     .text.spi_i2s_deinit:00000050 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:102    .text.spi_struct_para_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:108    .text.spi_struct_para_init:00000000 spi_struct_para_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:144    .text.spi_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:150    .text.spi_init:00000000 spi_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:225    .text.spi_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:231    .text.spi_enable:00000000 spi_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:250    .text.spi_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:256    .text.spi_disable:00000000 spi_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:275    .text.i2s_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:281    .text.i2s_init:00000000 i2s_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:332    .text.i2s_psc_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:338    .text.i2s_psc_config:00000000 i2s_psc_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:481    .text.i2s_psc_config:00000078 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:486    .text.i2s_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:492    .text.i2s_enable:00000000 i2s_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:511    .text.i2s_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:517    .text.i2s_disable:00000000 i2s_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:536    .text.spi_nss_output_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:542    .text.spi_nss_output_enable:00000000 spi_nss_output_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:561    .text.spi_nss_output_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:567    .text.spi_nss_output_disable:00000000 spi_nss_output_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:586    .text.spi_nss_internal_high:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:592    .text.spi_nss_internal_high:00000000 spi_nss_internal_high
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:611    .text.spi_nss_internal_low:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:617    .text.spi_nss_internal_low:00000000 spi_nss_internal_low
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:636    .text.spi_dma_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:642    .text.spi_dma_enable:00000000 spi_dma_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:671    .text.spi_dma_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:677    .text.spi_dma_disable:00000000 spi_dma_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:706    .text.spi_i2s_data_frame_format_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:712    .text.spi_i2s_data_frame_format_config:00000000 spi_i2s_data_frame_format_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:736    .text.spi_bidirectional_transfer_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:742    .text.spi_bidirectional_transfer_config:00000000 spi_bidirectional_transfer_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:772    .text.spi_i2s_data_transmit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:778    .text.spi_i2s_data_transmit:00000000 spi_i2s_data_transmit
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:795    .text.spi_i2s_data_receive:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:801    .text.spi_i2s_data_receive:00000000 spi_i2s_data_receive
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:820    .text.spi_crc_polynomial_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:826    .text.spi_crc_polynomial_set:00000000 spi_crc_polynomial_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:848    .text.spi_crc_polynomial_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:854    .text.spi_crc_polynomial_get:00000000 spi_crc_polynomial_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:873    .text.spi_crc_on:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:879    .text.spi_crc_on:00000000 spi_crc_on
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:898    .text.spi_crc_off:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:904    .text.spi_crc_off:00000000 spi_crc_off
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:923    .text.spi_crc_next:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:929    .text.spi_crc_next:00000000 spi_crc_next
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:948    .text.spi_crc_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:954    .text.spi_crc_get:00000000 spi_crc_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:986    .text.spi_crc_error_clear:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:992    .text.spi_crc_error_clear:00000000 spi_crc_error_clear
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1010   .text.spi_i2s_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1016   .text.spi_i2s_flag_get:00000000 spi_i2s_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1046   .text.spi_i2s_interrupt_enable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1052   .text.spi_i2s_interrupt_enable:00000000 spi_i2s_interrupt_enable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1071   .text.spi_i2s_interrupt_disable:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1077   .text.spi_i2s_interrupt_disable:00000000 spi_i2s_interrupt_disable
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1096   .text.spi_i2s_interrupt_flag_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1102   .text.spi_i2s_interrupt_flag_get:00000000 spi_i2s_interrupt_flag_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1124   .text.spi_i2s_interrupt_flag_get:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccfdW2Pm.s:1130   .text.spi_i2s_interrupt_flag_get:00000012 $t
+                           .group:00000000 wm4.0.3ac34e011645c1b8d95761511e5c0518
+                           .group:00000000 wm4.gd32f10x.h.39.34aa79a68d44b3fc31805fff8eeec626
+                           .group:00000000 wm4.core_cm3.h.47.f403a0b1a9e3f5bd328e41f4fa5fc23b
+                           .group:00000000 wm4.stdintgcc.h.29.6d480f4ba0f60596e88234283d42444f
+                           .group:00000000 wm4.core_cmInstr.h.39.c66a1c911732cf6be44e58f2bee25308
+                           .group:00000000 wm4.core_cm3.h.155.db3dfdf4b365cc230a717221b218ddd5
+                           .group:00000000 wm4.gd32f10x.h.320.528bbe72ec64ad23b6e5473e267247b4
+                           .group:00000000 wm4.gd32f10x_adc.h.44.619483e99e32c90a5f7c6ed512bbf95b
+                           .group:00000000 wm4.gd32f10x_bkp.h.39.4da6e92b74c7310fa25e26e16145cf9d
+                           .group:00000000 wm4.gd32f10x_can.h.41.99143e9b2de50f71c3392eea2d9e706b
+                           .group:00000000 wm4.gd32f10x_crc.h.39.4c0c7ace19ba22146d7643de7dde24e0
+                           .group:00000000 wm4.gd32f10x_dac.h.39.a3dd044652013a67f3cc1bbd4333b1f5
+                           .group:00000000 wm4.gd32f10x_dma.h.40.e0e420e6b56a4398ac3aa49fe3f1eb37
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.185.882514a1a6169ceba9142f401cbe27c6
+                           .group:00000000 wm4.stddef.h.39.f07083f9b666a9e5c52a336c758fdd72
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.gd32f10x_enet.h.44.638fb20a727f17a9f45c8bef0e4dc155
+                           .group:00000000 wm4.gd32f10x_exmc.h.39.cd31f13ab884fb77a3b2d0dd19135c79
+                           .group:00000000 wm4.gd32f10x_exti.h.39.f641ba5efef75aed967e0eca0d908b22
+                           .group:00000000 wm4.gd32f10x_fmc.h.39.7e6aa836f91030dd1ff3782a069962bf
+                           .group:00000000 wm4.gd32f10x_gpio.h.39.80b4d0c5aa2b4bb9a76b4f0ed7eb4f37
+                           .group:00000000 wm4.gd32f10x_i2c.h.40.8897e5891a1cbe807de60657ffffdeb4
+                           .group:00000000 wm4.gd32f10x_fwdgt.h.39.98d7bcc523d52c51b47267d3aa630510
+                           .group:00000000 wm4.gd32f10x_dbg.h.40.7f011e3bfaf652db4fef79974773282c
+                           .group:00000000 wm4.gd32f10x_misc.h.39.02269a148ed2e3625e137e1efd69eb5b
+                           .group:00000000 wm4.gd32f10x_pmu.h.39.74926372d4607639ac6680132fe98aa1
+                           .group:00000000 wm4.gd32f10x_rcu.h.39.8a90a017c64bad5f5bd02c211060734d
+                           .group:00000000 wm4.gd32f10x_rtc.h.39.8a002d392eec882fcd681ea51f1c73a0
+                           .group:00000000 wm4.gd32f10x_sdio.h.39.f2faa8e3b059e0ddee4e4ee996fe3269
+                           .group:00000000 wm4.gd32f10x_timer.h.39.bb5f06befe0b01a2e83ec1dec4ea7722
+                           .group:00000000 wm4.gd32f10x_usart.h.39.77325e272b5abf9a7b4cf37f2c34644a
+                           .group:00000000 wm4.gd32f10x_wwdgt.h.39.3fa1c00ac1b6c8ed1fb1e9f65bb3835a
+                           .group:00000000 wm4.gd32f10x_spi.h.44.6385826dfe7c40897115cdab5db0ada3
+
+UNDEFINED SYMBOLS
+rcu_periph_reset_enable
+rcu_periph_reset_disable
+rcu_clock_freq_get

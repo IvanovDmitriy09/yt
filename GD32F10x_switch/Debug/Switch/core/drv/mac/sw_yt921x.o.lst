@@ -1,0 +1,1527 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sw_yt921x.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/drv/mac/sw_yt921x.c"
+  18              		.section	.text.yt9215_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	yt9215_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	yt9215_init:
+  26              	.LVL0:
+  27              	.LFB3:
+   1:../Switch/core/drv/mac/sw_yt921x.c **** /*******************************************************************************
+   2:../Switch/core/drv/mac/sw_yt921x.c **** *                                                                              *
+   3:../Switch/core/drv/mac/sw_yt921x.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../Switch/core/drv/mac/sw_yt921x.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../Switch/core/drv/mac/sw_yt921x.c **** *                                                                              *
+   6:../Switch/core/drv/mac/sw_yt921x.c **** ********************************************************************************
+   7:../Switch/core/drv/mac/sw_yt921x.c **** */
+   8:../Switch/core/drv/mac/sw_yt921x.c **** 
+   9:../Switch/core/drv/mac/sw_yt921x.c **** #include "sw_yt921x.h"
+  10:../Switch/core/drv/mac/sw_yt921x.c **** #include "hal_mem.h"
+  11:../Switch/core/drv/mac/sw_yt921x.c **** #include "yt_util.h"
+  12:../Switch/core/drv/mac/sw_yt921x.c **** 
+  13:../Switch/core/drv/mac/sw_yt921x.c **** yt_switch_drv_func_t yt9215_drv_func =
+  14:../Switch/core/drv/mac/sw_yt921x.c **** {
+  15:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_init = yt9215_init,
+  16:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_mac_config = yt9215_mac_config,
+  17:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_led_config = yt9215_led_config,
+  18:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_intif_read = yt9215_intif_read,
+  19:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_intif_write = yt9215_intif_write,
+  20:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_extif_read = yt9215_extif_read,
+  21:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_extif_write = yt9215_extif_write,
+  22:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_extif_polling_config = yt9215_extif_polling_config,
+  23:../Switch/core/drv/mac/sw_yt921x.c ****     .switch_edata_read = yt9215_edata_read,
+  24:../Switch/core/drv/mac/sw_yt921x.c **** };
+  25:../Switch/core/drv/mac/sw_yt921x.c **** 
+  26:../Switch/core/drv/mac/sw_yt921x.c **** yt_switch_drv_t yt9215_drv =
+  27:../Switch/core/drv/mac/sw_yt921x.c **** {
+  28:../Switch/core/drv/mac/sw_yt921x.c ****     .chip_id = YT_SW_ID_9215,
+  29:../Switch/core/drv/mac/sw_yt921x.c ****     .chip_model = YT_SW_MODEL_9215,
+  30:../Switch/core/drv/mac/sw_yt921x.c ****     .pDrvFunc = &yt9215_drv_func
+  31:../Switch/core/drv/mac/sw_yt921x.c **** };
+  32:../Switch/core/drv/mac/sw_yt921x.c **** 
+  33:../Switch/core/drv/mac/sw_yt921x.c **** yt_switch_drv_t yt9218_drv =
+  34:../Switch/core/drv/mac/sw_yt921x.c **** {
+  35:../Switch/core/drv/mac/sw_yt921x.c ****     .chip_id = YT_SW_ID_9218,
+  36:../Switch/core/drv/mac/sw_yt921x.c ****     .chip_model = YT_SW_MODEL_9218,
+  37:../Switch/core/drv/mac/sw_yt921x.c ****     .pDrvFunc = &yt9215_drv_func
+  38:../Switch/core/drv/mac/sw_yt921x.c **** };
+  39:../Switch/core/drv/mac/sw_yt921x.c **** 
+  40:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_init(yt_unit_t unit)
+  41:../Switch/core/drv/mac/sw_yt921x.c **** {
+  28              		.loc 1 41 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  42:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_UNUSED_PARAM(unit);
+  33              		.loc 1 42 5 view .LVU1
+  43:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_OK;
+  34              		.loc 1 43 5 view .LVU2
+  44:../Switch/core/drv/mac/sw_yt921x.c **** }
+  35              		.loc 1 44 1 is_stmt 0 view .LVU3
+  36 0000 0020     		movs	r0, #0
+  37              	.LVL1:
+  38              		.loc 1 44 1 view .LVU4
+  39 0002 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE3:
+  43              		.section	.text.yt9215_mac_config,"ax",%progbits
+  44              		.align	1
+  45              		.global	yt9215_mac_config
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  50              	yt9215_mac_config:
+  51              	.LVL2:
+  52              	.LFB4:
+  45:../Switch/core/drv/mac/sw_yt921x.c **** 
+  46:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_mac_config(yt_unit_t unit)
+  47:../Switch/core/drv/mac/sw_yt921x.c **** {
+  53              		.loc 1 47 1 is_stmt 1 view -0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57              		@ link register save eliminated.
+  48:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_UNUSED_PARAM(unit);
+  58              		.loc 1 48 5 view .LVU6
+  49:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_OK;
+  59              		.loc 1 49 5 view .LVU7
+  50:../Switch/core/drv/mac/sw_yt921x.c **** }
+  60              		.loc 1 50 1 is_stmt 0 view .LVU8
+  61 0000 0020     		movs	r0, #0
+  62              	.LVL3:
+  63              		.loc 1 50 1 view .LVU9
+  64 0002 7047     		bx	lr
+  65              		.cfi_endproc
+  66              	.LFE4:
+  68              		.section	.text.yt9215_led_config,"ax",%progbits
+  69              		.align	1
+  70              		.global	yt9215_led_config
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  75              	yt9215_led_config:
+  76              	.LVL4:
+  77              	.LFB5:
+  51:../Switch/core/drv/mac/sw_yt921x.c **** 
+  52:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_led_config(yt_unit_t unit)
+  53:../Switch/core/drv/mac/sw_yt921x.c **** {
+  78              		.loc 1 53 1 is_stmt 1 view -0
+  79              		.cfi_startproc
+  80              		@ args = 0, pretend = 0, frame = 0
+  81              		@ frame_needed = 0, uses_anonymous_args = 0
+  82              		@ link register save eliminated.
+  54:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_UNUSED_PARAM(unit);
+  83              		.loc 1 54 5 view .LVU11
+  55:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_OK;
+  84              		.loc 1 55 5 view .LVU12
+  56:../Switch/core/drv/mac/sw_yt921x.c **** }
+  85              		.loc 1 56 1 is_stmt 0 view .LVU13
+  86 0000 0020     		movs	r0, #0
+  87              	.LVL5:
+  88              		.loc 1 56 1 view .LVU14
+  89 0002 7047     		bx	lr
+  90              		.cfi_endproc
+  91              	.LFE5:
+  93              		.section	.text.yt9215_extif_polling_config,"ax",%progbits
+  94              		.align	1
+  95              		.global	yt9215_extif_polling_config
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+ 100              	yt9215_extif_polling_config:
+ 101              	.LVL6:
+ 102              	.LFB10:
+  57:../Switch/core/drv/mac/sw_yt921x.c **** 
+  58:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_intif_read(yt_unit_t unit, uint8_t intif_addr, uint32_t regAddr, uint16_t *pData)
+  59:../Switch/core/drv/mac/sw_yt921x.c **** {
+  60:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+  61:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+  62:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+  63:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+  64:../Switch/core/drv/mac/sw_yt921x.c **** 
+  65:../Switch/core/drv/mac/sw_yt921x.c ****     INT_SMI_LOCK();
+  66:../Switch/core/drv/mac/sw_yt921x.c **** 
+  67:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, INT_IF_ACCESS_ADDR_CTRL, &base_data), YT_INT_SMI_LOCK_
+  68:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00FFF1;
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 2 << 2);
+  70:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+  71:../Switch/core/drv/mac/sw_yt921x.c **** 
+  72:../Switch/core/drv/mac/sw_yt921x.c ****     op_data = 1;
+  73:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+  74:../Switch/core/drv/mac/sw_yt921x.c **** 
+  75:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+  76:../Switch/core/drv/mac/sw_yt921x.c ****     {
+  77:../Switch/core/drv/mac/sw_yt921x.c ****         CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, INT_IF_ACCESS_FRAME_CTRL, &op_data), YT_INT_SMI_LO
+  78:../Switch/core/drv/mac/sw_yt921x.c **** 
+  79:../Switch/core/drv/mac/sw_yt921x.c ****         if(!op_data)
+  80:../Switch/core/drv/mac/sw_yt921x.c ****         {
+  81:../Switch/core/drv/mac/sw_yt921x.c ****             CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, INT_IF_ACCESS_DATA_1_ADDR, &base_data), YT_INT
+  82:../Switch/core/drv/mac/sw_yt921x.c ****             *pData = base_data;
+  83:../Switch/core/drv/mac/sw_yt921x.c ****             INT_SMI_UNLOCK();
+  84:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+  85:../Switch/core/drv/mac/sw_yt921x.c ****         }
+  86:../Switch/core/drv/mac/sw_yt921x.c ****         wait_count ++;
+  87:../Switch/core/drv/mac/sw_yt921x.c ****     }
+  88:../Switch/core/drv/mac/sw_yt921x.c **** 
+  89:../Switch/core/drv/mac/sw_yt921x.c ****     INT_SMI_UNLOCK();
+  90:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+  91:../Switch/core/drv/mac/sw_yt921x.c **** }
+  92:../Switch/core/drv/mac/sw_yt921x.c **** 
+  93:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_intif_write(yt_unit_t unit, uint8_t intif_addr, uint32_t regAddr, uint16_t data)
+  94:../Switch/core/drv/mac/sw_yt921x.c **** {
+  95:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+  96:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+  97:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+  98:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+  99:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 100:../Switch/core/drv/mac/sw_yt921x.c ****     INT_SMI_LOCK();
+ 101:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 102:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, INT_IF_ACCESS_ADDR_CTRL, &base_data), YT_INT_SMI_LOCK_
+ 103:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00FFF1;
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 1 << 2);
+ 105:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 106:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_DATA_0_ADDR, data), YT_INT_SMI_LOCK_ID,
+ 107:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 108:../Switch/core/drv/mac/sw_yt921x.c ****     op_data = 1;
+ 109:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+ 110:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 111:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+ 112:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 113:../Switch/core/drv/mac/sw_yt921x.c ****         CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, INT_IF_ACCESS_FRAME_CTRL, &op_data), YT_INT_SMI_LO
+ 114:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 115:../Switch/core/drv/mac/sw_yt921x.c ****         if(!op_data)
+ 116:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 117:../Switch/core/drv/mac/sw_yt921x.c ****             INT_SMI_UNLOCK();
+ 118:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 119:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 120:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 121:../Switch/core/drv/mac/sw_yt921x.c ****         wait_count ++;
+ 122:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 123:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 124:../Switch/core/drv/mac/sw_yt921x.c ****     INT_SMI_UNLOCK();
+ 125:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 126:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 127:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 128:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_extif_read(yt_unit_t unit, uint8_t extif_addr, uint32_t regAddr, uint16_t *pData)
+ 129:../Switch/core/drv/mac/sw_yt921x.c **** {
+ 130:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 131:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 132:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 133:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 134:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 135:../Switch/core/drv/mac/sw_yt921x.c ****     EXT_SMI_LOCK();
+ 136:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 137:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, EXT_IF_ACCESS_ADDR_CTRL, &base_data), YT_EXT_SMI_LOCK_
+ 138:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00F0F1;/*clause 22*/
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 2 << 2);
+ 140:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 141:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 142:../Switch/core/drv/mac/sw_yt921x.c ****     op_data = 1;
+ 143:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 144:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 145:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+ 146:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 147:../Switch/core/drv/mac/sw_yt921x.c ****         CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, EXT_IF_ACCESS_FRAME_CTRL, &op_data), YT_EXT_SMI_LO
+ 148:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 149:../Switch/core/drv/mac/sw_yt921x.c ****         if(!op_data)
+ 150:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 151:../Switch/core/drv/mac/sw_yt921x.c ****             CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, EXT_IF_ACCESS_DATA_1_ADDR, &base_data), YT_EXT
+ 152:../Switch/core/drv/mac/sw_yt921x.c ****             *pData = base_data;
+ 153:../Switch/core/drv/mac/sw_yt921x.c ****             EXT_SMI_UNLOCK();
+ 154:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 155:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 156:../Switch/core/drv/mac/sw_yt921x.c ****         wait_count ++;
+ 157:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 158:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 159:../Switch/core/drv/mac/sw_yt921x.c ****     EXT_SMI_UNLOCK();
+ 160:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 161:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 162:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 163:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_extif_write(yt_unit_t unit, uint8_t extif_addr, uint32_t regAddr, uint16_t data)
+ 164:../Switch/core/drv/mac/sw_yt921x.c **** {
+ 165:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 166:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 167:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 168:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 169:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 170:../Switch/core/drv/mac/sw_yt921x.c ****     EXT_SMI_LOCK();
+ 171:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 172:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, EXT_IF_ACCESS_ADDR_CTRL, &base_data), YT_EXT_SMI_LOCK_
+ 173:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00F0F1;/*clause 22*/
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 1 << 2);
+ 175:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 176:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_DATA_0_ADDR, data), YT_EXT_SMI_LOCK_ID,
+ 177:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 178:../Switch/core/drv/mac/sw_yt921x.c ****     op_data = 1;
+ 179:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 180:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 181:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+ 182:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 183:../Switch/core/drv/mac/sw_yt921x.c ****         CMM_ERR_UNLOCK(HAL_MEM_DIRECT_READ(unit, EXT_IF_ACCESS_FRAME_CTRL, &op_data), YT_EXT_SMI_LO
+ 184:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 185:../Switch/core/drv/mac/sw_yt921x.c ****         if(!op_data)
+ 186:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 187:../Switch/core/drv/mac/sw_yt921x.c ****             EXT_SMI_UNLOCK();
+ 188:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 189:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 190:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 191:../Switch/core/drv/mac/sw_yt921x.c ****         wait_count ++;
+ 192:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 193:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 194:../Switch/core/drv/mac/sw_yt921x.c ****     EXT_SMI_UNLOCK();
+ 195:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 196:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 197:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 198:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_extif_polling_config(yt_unit_t unit)
+ 199:../Switch/core/drv/mac/sw_yt921x.c **** {
+ 103              		.loc 1 199 1 is_stmt 1 view -0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              		@ link register save eliminated.
+ 200:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_UNUSED_PARAM(unit);
+ 108              		.loc 1 200 5 view .LVU16
+ 201:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_OK;
+ 109              		.loc 1 201 5 view .LVU17
+ 202:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 110              		.loc 1 202 1 is_stmt 0 view .LVU18
+ 111 0000 0020     		movs	r0, #0
+ 112              	.LVL7:
+ 113              		.loc 1 202 1 view .LVU19
+ 114 0002 7047     		bx	lr
+ 115              		.cfi_endproc
+ 116              	.LFE10:
+ 118              		.section	.text.yt9215_intif_read,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	yt9215_intif_read
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	yt9215_intif_read:
+ 126              	.LVL8:
+ 127              	.LFB6:
+  59:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 128              		.loc 1 59 1 is_stmt 1 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 8
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+  59:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 132              		.loc 1 59 1 is_stmt 0 view .LVU21
+ 133 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 134              		.cfi_def_cfa_offset 28
+ 135              		.cfi_offset 4, -28
+ 136              		.cfi_offset 5, -24
+ 137              		.cfi_offset 6, -20
+ 138              		.cfi_offset 7, -16
+ 139              		.cfi_offset 8, -12
+ 140              		.cfi_offset 9, -8
+ 141              		.cfi_offset 14, -4
+ 142 0004 83B0     		sub	sp, sp, #12
+ 143              		.cfi_def_cfa_offset 40
+ 144 0006 0646     		mov	r6, r0
+ 145 0008 0D46     		mov	r5, r1
+ 146 000a 9146     		mov	r9, r2
+ 147 000c 1F46     		mov	r7, r3
+  60:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 148              		.loc 1 60 5 is_stmt 1 view .LVU22
+ 149              	.LVL9:
+  61:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 150              		.loc 1 61 5 view .LVU23
+  62:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 151              		.loc 1 62 5 view .LVU24
+  62:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 152              		.loc 1 62 14 is_stmt 0 view .LVU25
+ 153 000e 0024     		movs	r4, #0
+ 154 0010 0094     		str	r4, [sp]
+  63:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 155              		.loc 1 63 5 is_stmt 1 view .LVU26
+ 156              	.LVL10:
+  65:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 157              		.loc 1 65 5 view .LVU27
+ 158 0012 FFF7FEFF 		bl	INT_SMI_LOCK
+ 159              	.LVL11:
+  67:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00FFF1;
+ 160              		.loc 1 67 5 view .LVU28
+ 161 0016 DFF8A880 		ldr	r8, .L13
+ 162 001a 01AA     		add	r2, sp, #4
+ 163 001c 4146     		mov	r1, r8
+ 164 001e 3046     		mov	r0, r6
+ 165 0020 FFF7FEFF 		bl	hal_mem32_read
+ 166              	.LVL12:
+ 167 0024 2246     		mov	r2, r4
+ 168 0026 0921     		movs	r1, #9
+ 169 0028 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 170              	.LVL13:
+  68:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 2 << 2);
+ 171              		.loc 1 68 5 view .LVU29
+  68:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 2 << 2);
+ 172              		.loc 1 68 15 is_stmt 0 view .LVU30
+ 173 002c 254A     		ldr	r2, .L13+4
+ 174 002e 019B     		ldr	r3, [sp, #4]
+ 175 0030 1A40     		ands	r2, r2, r3
+ 176 0032 0192     		str	r2, [sp, #4]
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 177              		.loc 1 69 5 is_stmt 1 view .LVU31
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 178              		.loc 1 69 37 is_stmt 0 view .LVU32
+ 179 0034 6D05     		lsls	r5, r5, #21
+ 180 0036 05F07875 		and	r5, r5, #65011712
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 181              		.loc 1 69 60 view .LVU33
+ 182 003a 4FEA0949 		lsl	r9, r9, #16
+ 183              	.LVL14:
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 184              		.loc 1 69 60 view .LVU34
+ 185 003e 09F4F819 		and	r9, r9, #2031616
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 186              		.loc 1 69 43 view .LVU35
+ 187 0042 45EA0905 		orr	r5, r5, r9
+  69:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 188              		.loc 1 69 15 view .LVU36
+ 189 0046 2A43     		orrs	r2, r2, r5
+ 190 0048 42F00802 		orr	r2, r2, #8
+ 191 004c 0192     		str	r2, [sp, #4]
+  70:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 192              		.loc 1 70 5 is_stmt 1 view .LVU37
+ 193 004e 4146     		mov	r1, r8
+ 194 0050 3046     		mov	r0, r6
+ 195 0052 FFF7FEFF 		bl	hal_mem32_write
+ 196              	.LVL15:
+ 197 0056 2246     		mov	r2, r4
+ 198 0058 0921     		movs	r1, #9
+ 199 005a FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 200              	.LVL16:
+  72:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+ 201              		.loc 1 72 5 view .LVU38
+  72:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+ 202              		.loc 1 72 13 is_stmt 0 view .LVU39
+ 203 005e 0122     		movs	r2, #1
+ 204 0060 0092     		str	r2, [sp]
+  73:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 205              		.loc 1 73 5 is_stmt 1 view .LVU40
+ 206 0062 4FF47021 		mov	r1, #983040
+ 207 0066 3046     		mov	r0, r6
+ 208 0068 FFF7FEFF 		bl	hal_mem32_write
+ 209              	.LVL17:
+ 210 006c 2246     		mov	r2, r4
+ 211 006e 0921     		movs	r1, #9
+ 212 0070 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 213              	.LVL18:
+  75:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 214              		.loc 1 75 5 view .LVU41
+ 215              	.L6:
+  75:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 216              		.loc 1 75 33 view .LVU42
+ 217 0074 092C     		cmp	r4, #9
+ 218 0076 1BD8     		bhi	.L11
+  77:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 219              		.loc 1 77 9 view .LVU43
+ 220 0078 6A46     		mov	r2, sp
+ 221 007a 4FF47021 		mov	r1, #983040
+ 222 007e 3046     		mov	r0, r6
+ 223 0080 FFF7FEFF 		bl	hal_mem32_read
+ 224              	.LVL19:
+ 225 0084 0022     		movs	r2, #0
+ 226 0086 0921     		movs	r1, #9
+ 227 0088 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 228              	.LVL20:
+  79:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 229              		.loc 1 79 9 view .LVU44
+  79:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 230              		.loc 1 79 12 is_stmt 0 view .LVU45
+ 231 008c 009D     		ldr	r5, [sp]
+  79:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 232              		.loc 1 79 11 view .LVU46
+ 233 008e 0DB1     		cbz	r5, .L12
+  86:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 234              		.loc 1 86 9 is_stmt 1 view .LVU47
+  86:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 235              		.loc 1 86 20 is_stmt 0 view .LVU48
+ 236 0090 0134     		adds	r4, r4, #1
+ 237              	.LVL21:
+  86:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 238              		.loc 1 86 20 view .LVU49
+ 239 0092 EFE7     		b	.L6
+ 240              	.L12:
+ 241              	.LBB2:
+  81:../Switch/core/drv/mac/sw_yt921x.c ****             *pData = base_data;
+ 242              		.loc 1 81 13 is_stmt 1 view .LVU50
+ 243 0094 01AA     		add	r2, sp, #4
+ 244 0096 0C49     		ldr	r1, .L13+8
+ 245 0098 3046     		mov	r0, r6
+ 246 009a FFF7FEFF 		bl	hal_mem32_read
+ 247              	.LVL22:
+ 248 009e 0022     		movs	r2, #0
+ 249 00a0 0921     		movs	r1, #9
+ 250 00a2 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 251              	.LVL23:
+  82:../Switch/core/drv/mac/sw_yt921x.c ****             INT_SMI_UNLOCK();
+ 252              		.loc 1 82 13 view .LVU51
+  82:../Switch/core/drv/mac/sw_yt921x.c ****             INT_SMI_UNLOCK();
+ 253              		.loc 1 82 20 is_stmt 0 view .LVU52
+ 254 00a6 019B     		ldr	r3, [sp, #4]
+ 255 00a8 3B80     		strh	r3, [r7]	@ movhi
+  83:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 256              		.loc 1 83 13 is_stmt 1 view .LVU53
+ 257 00aa FFF7FEFF 		bl	INT_SMI_UNLOCK
+ 258              	.LVL24:
+  84:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 259              		.loc 1 84 13 view .LVU54
+  84:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 260              		.loc 1 84 20 is_stmt 0 view .LVU55
+ 261 00ae 02E0     		b	.L5
+ 262              	.L11:
+  84:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 263              		.loc 1 84 20 view .LVU56
+ 264              	.LBE2:
+  89:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 265              		.loc 1 89 5 is_stmt 1 view .LVU57
+ 266 00b0 FFF7FEFF 		bl	INT_SMI_UNLOCK
+ 267              	.LVL25:
+  90:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 268              		.loc 1 90 5 view .LVU58
+  90:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 269              		.loc 1 90 12 is_stmt 0 view .LVU59
+ 270 00b4 1025     		movs	r5, #16
+ 271              	.L5:
+  91:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 272              		.loc 1 91 1 view .LVU60
+ 273 00b6 2846     		mov	r0, r5
+ 274 00b8 03B0     		add	sp, sp, #12
+ 275              		.cfi_def_cfa_offset 28
+ 276              		@ sp needed
+ 277 00ba BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 278              	.LVL26:
+ 279              	.L14:
+  91:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 280              		.loc 1 91 1 view .LVU61
+ 281 00be 00BF     		.align	2
+ 282              	.L13:
+ 283 00c0 04000F00 		.word	983044
+ 284 00c4 F1FF00FC 		.word	-67043343
+ 285 00c8 0C000F00 		.word	983052
+ 286              		.cfi_endproc
+ 287              	.LFE6:
+ 289              		.section	.text.yt9215_intif_write,"ax",%progbits
+ 290              		.align	1
+ 291              		.global	yt9215_intif_write
+ 292              		.syntax unified
+ 293              		.thumb
+ 294              		.thumb_func
+ 296              	yt9215_intif_write:
+ 297              	.LVL27:
+ 298              	.LFB7:
+  94:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 299              		.loc 1 94 1 is_stmt 1 view -0
+ 300              		.cfi_startproc
+ 301              		@ args = 0, pretend = 0, frame = 8
+ 302              		@ frame_needed = 0, uses_anonymous_args = 0
+  94:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 303              		.loc 1 94 1 is_stmt 0 view .LVU63
+ 304 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 305              		.cfi_def_cfa_offset 28
+ 306              		.cfi_offset 4, -28
+ 307              		.cfi_offset 5, -24
+ 308              		.cfi_offset 6, -20
+ 309              		.cfi_offset 7, -16
+ 310              		.cfi_offset 8, -12
+ 311              		.cfi_offset 9, -8
+ 312              		.cfi_offset 14, -4
+ 313 0004 83B0     		sub	sp, sp, #12
+ 314              		.cfi_def_cfa_offset 40
+ 315 0006 0646     		mov	r6, r0
+ 316 0008 0D46     		mov	r5, r1
+ 317 000a 9146     		mov	r9, r2
+ 318 000c 1F46     		mov	r7, r3
+  95:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 319              		.loc 1 95 5 is_stmt 1 view .LVU64
+ 320              	.LVL28:
+  96:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 321              		.loc 1 96 5 view .LVU65
+  97:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 322              		.loc 1 97 5 view .LVU66
+  97:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 323              		.loc 1 97 14 is_stmt 0 view .LVU67
+ 324 000e 0024     		movs	r4, #0
+ 325 0010 0094     		str	r4, [sp]
+  98:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 326              		.loc 1 98 5 is_stmt 1 view .LVU68
+ 327              	.LVL29:
+ 100:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 328              		.loc 1 100 5 view .LVU69
+ 329 0012 FFF7FEFF 		bl	INT_SMI_LOCK
+ 330              	.LVL30:
+ 102:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00FFF1;
+ 331              		.loc 1 102 5 view .LVU70
+ 332 0016 DFF8A480 		ldr	r8, .L23
+ 333 001a 01AA     		add	r2, sp, #4
+ 334 001c 4146     		mov	r1, r8
+ 335 001e 3046     		mov	r0, r6
+ 336 0020 FFF7FEFF 		bl	hal_mem32_read
+ 337              	.LVL31:
+ 338 0024 2246     		mov	r2, r4
+ 339 0026 0921     		movs	r1, #9
+ 340 0028 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 341              	.LVL32:
+ 103:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 1 << 2);
+ 342              		.loc 1 103 5 view .LVU71
+ 103:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((intif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 1 << 2);
+ 343              		.loc 1 103 15 is_stmt 0 view .LVU72
+ 344 002c 2448     		ldr	r0, .L23+4
+ 345 002e 019B     		ldr	r3, [sp, #4]
+ 346 0030 1840     		ands	r0, r0, r3
+ 347 0032 0190     		str	r0, [sp, #4]
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 348              		.loc 1 104 5 is_stmt 1 view .LVU73
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 349              		.loc 1 104 37 is_stmt 0 view .LVU74
+ 350 0034 6D05     		lsls	r5, r5, #21
+ 351 0036 05F07875 		and	r5, r5, #65011712
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 352              		.loc 1 104 60 view .LVU75
+ 353 003a 4FEA0949 		lsl	r9, r9, #16
+ 354              	.LVL33:
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 355              		.loc 1 104 60 view .LVU76
+ 356 003e 09F4F819 		and	r9, r9, #2031616
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 357              		.loc 1 104 43 view .LVU77
+ 358 0042 45EA0905 		orr	r5, r5, r9
+ 104:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_ADDR_CTRL, base_data), YT_INT_SMI_LOCK_
+ 359              		.loc 1 104 15 view .LVU78
+ 360 0046 2843     		orrs	r0, r0, r5
+ 361 0048 40F00402 		orr	r2, r0, #4
+ 362 004c 0192     		str	r2, [sp, #4]
+ 105:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_DATA_0_ADDR, data), YT_INT_SMI_LOCK_ID,
+ 363              		.loc 1 105 5 is_stmt 1 view .LVU79
+ 364 004e 4146     		mov	r1, r8
+ 365 0050 3046     		mov	r0, r6
+ 366 0052 FFF7FEFF 		bl	hal_mem32_write
+ 367              	.LVL34:
+ 368 0056 2246     		mov	r2, r4
+ 369 0058 0921     		movs	r1, #9
+ 370 005a FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 371              	.LVL35:
+ 106:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 372              		.loc 1 106 5 view .LVU80
+ 373 005e 3A46     		mov	r2, r7
+ 374 0060 1849     		ldr	r1, .L23+8
+ 375 0062 3046     		mov	r0, r6
+ 376 0064 FFF7FEFF 		bl	hal_mem32_write
+ 377              	.LVL36:
+ 378 0068 2246     		mov	r2, r4
+ 379 006a 0921     		movs	r1, #9
+ 380 006c FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 381              	.LVL37:
+ 108:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+ 382              		.loc 1 108 5 view .LVU81
+ 108:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, INT_IF_ACCESS_FRAME_CTRL, op_data), YT_INT_SMI_LOCK_I
+ 383              		.loc 1 108 13 is_stmt 0 view .LVU82
+ 384 0070 0122     		movs	r2, #1
+ 385 0072 0092     		str	r2, [sp]
+ 109:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 386              		.loc 1 109 5 is_stmt 1 view .LVU83
+ 387 0074 4FF47021 		mov	r1, #983040
+ 388 0078 3046     		mov	r0, r6
+ 389 007a FFF7FEFF 		bl	hal_mem32_write
+ 390              	.LVL38:
+ 391 007e 2246     		mov	r2, r4
+ 392 0080 0921     		movs	r1, #9
+ 393 0082 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 394              	.LVL39:
+ 111:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 395              		.loc 1 111 5 view .LVU84
+ 396              	.L16:
+ 111:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 397              		.loc 1 111 33 view .LVU85
+ 398 0086 092C     		cmp	r4, #9
+ 399 0088 10D8     		bhi	.L21
+ 113:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 400              		.loc 1 113 9 view .LVU86
+ 401 008a 6A46     		mov	r2, sp
+ 402 008c 4FF47021 		mov	r1, #983040
+ 403 0090 3046     		mov	r0, r6
+ 404 0092 FFF7FEFF 		bl	hal_mem32_read
+ 405              	.LVL40:
+ 406 0096 0022     		movs	r2, #0
+ 407 0098 0921     		movs	r1, #9
+ 408 009a FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 409              	.LVL41:
+ 115:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 410              		.loc 1 115 9 view .LVU87
+ 115:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 411              		.loc 1 115 12 is_stmt 0 view .LVU88
+ 412 009e 009D     		ldr	r5, [sp]
+ 115:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 413              		.loc 1 115 11 view .LVU89
+ 414 00a0 0DB1     		cbz	r5, .L22
+ 121:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 415              		.loc 1 121 9 is_stmt 1 view .LVU90
+ 121:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 416              		.loc 1 121 20 is_stmt 0 view .LVU91
+ 417 00a2 0134     		adds	r4, r4, #1
+ 418              	.LVL42:
+ 121:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 419              		.loc 1 121 20 view .LVU92
+ 420 00a4 EFE7     		b	.L16
+ 421              	.L22:
+ 422              	.LBB3:
+ 117:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 423              		.loc 1 117 13 is_stmt 1 view .LVU93
+ 424 00a6 FFF7FEFF 		bl	INT_SMI_UNLOCK
+ 425              	.LVL43:
+ 118:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 426              		.loc 1 118 13 view .LVU94
+ 118:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 427              		.loc 1 118 20 is_stmt 0 view .LVU95
+ 428 00aa 02E0     		b	.L15
+ 429              	.L21:
+ 430              	.LBE3:
+ 124:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 431              		.loc 1 124 5 is_stmt 1 view .LVU96
+ 432 00ac FFF7FEFF 		bl	INT_SMI_UNLOCK
+ 433              	.LVL44:
+ 125:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 434              		.loc 1 125 5 view .LVU97
+ 125:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 435              		.loc 1 125 12 is_stmt 0 view .LVU98
+ 436 00b0 1025     		movs	r5, #16
+ 437              	.L15:
+ 126:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 438              		.loc 1 126 1 view .LVU99
+ 439 00b2 2846     		mov	r0, r5
+ 440 00b4 03B0     		add	sp, sp, #12
+ 441              		.cfi_def_cfa_offset 28
+ 442              		@ sp needed
+ 443 00b6 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 444              	.LVL45:
+ 445              	.L24:
+ 126:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 446              		.loc 1 126 1 view .LVU100
+ 447 00ba 00BF     		.align	2
+ 448              	.L23:
+ 449 00bc 04000F00 		.word	983044
+ 450 00c0 F1FF00FC 		.word	-67043343
+ 451 00c4 08000F00 		.word	983048
+ 452              		.cfi_endproc
+ 453              	.LFE7:
+ 455              		.section	.text.yt9215_extif_read,"ax",%progbits
+ 456              		.align	1
+ 457              		.global	yt9215_extif_read
+ 458              		.syntax unified
+ 459              		.thumb
+ 460              		.thumb_func
+ 462              	yt9215_extif_read:
+ 463              	.LVL46:
+ 464              	.LFB8:
+ 129:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 465              		.loc 1 129 1 is_stmt 1 view -0
+ 466              		.cfi_startproc
+ 467              		@ args = 0, pretend = 0, frame = 8
+ 468              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 469              		.loc 1 129 1 is_stmt 0 view .LVU102
+ 470 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 471              		.cfi_def_cfa_offset 28
+ 472              		.cfi_offset 4, -28
+ 473              		.cfi_offset 5, -24
+ 474              		.cfi_offset 6, -20
+ 475              		.cfi_offset 7, -16
+ 476              		.cfi_offset 8, -12
+ 477              		.cfi_offset 9, -8
+ 478              		.cfi_offset 14, -4
+ 479 0004 83B0     		sub	sp, sp, #12
+ 480              		.cfi_def_cfa_offset 40
+ 481 0006 0646     		mov	r6, r0
+ 482 0008 0D46     		mov	r5, r1
+ 483 000a 9146     		mov	r9, r2
+ 484 000c 1F46     		mov	r7, r3
+ 130:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 485              		.loc 1 130 5 is_stmt 1 view .LVU103
+ 486              	.LVL47:
+ 131:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 487              		.loc 1 131 5 view .LVU104
+ 132:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 488              		.loc 1 132 5 view .LVU105
+ 132:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 489              		.loc 1 132 14 is_stmt 0 view .LVU106
+ 490 000e 0024     		movs	r4, #0
+ 491 0010 0094     		str	r4, [sp]
+ 133:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 492              		.loc 1 133 5 is_stmt 1 view .LVU107
+ 493              	.LVL48:
+ 135:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 494              		.loc 1 135 5 view .LVU108
+ 495 0012 FFF7FEFF 		bl	EXT_SMI_LOCK
+ 496              	.LVL49:
+ 137:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00F0F1;/*clause 22*/
+ 497              		.loc 1 137 5 view .LVU109
+ 498 0016 DFF8A880 		ldr	r8, .L33
+ 499 001a 01AA     		add	r2, sp, #4
+ 500 001c 4146     		mov	r1, r8
+ 501 001e 3046     		mov	r0, r6
+ 502 0020 FFF7FEFF 		bl	hal_mem32_read
+ 503              	.LVL50:
+ 504 0024 2246     		mov	r2, r4
+ 505 0026 0A21     		movs	r1, #10
+ 506 0028 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 507              	.LVL51:
+ 138:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 2 << 2);
+ 508              		.loc 1 138 5 view .LVU110
+ 138:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 2 << 2);
+ 509              		.loc 1 138 15 is_stmt 0 view .LVU111
+ 510 002c 254A     		ldr	r2, .L33+4
+ 511 002e 019B     		ldr	r3, [sp, #4]
+ 512 0030 1A40     		ands	r2, r2, r3
+ 513 0032 0192     		str	r2, [sp, #4]
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 514              		.loc 1 139 5 is_stmt 1 view .LVU112
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 515              		.loc 1 139 37 is_stmt 0 view .LVU113
+ 516 0034 6D05     		lsls	r5, r5, #21
+ 517 0036 05F07875 		and	r5, r5, #65011712
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 518              		.loc 1 139 60 view .LVU114
+ 519 003a 4FEA0949 		lsl	r9, r9, #16
+ 520              	.LVL52:
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 521              		.loc 1 139 60 view .LVU115
+ 522 003e 09F4F819 		and	r9, r9, #2031616
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 523              		.loc 1 139 43 view .LVU116
+ 524 0042 45EA0905 		orr	r5, r5, r9
+ 139:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 525              		.loc 1 139 15 view .LVU117
+ 526 0046 2A43     		orrs	r2, r2, r5
+ 527 0048 42F48162 		orr	r2, r2, #1032
+ 528 004c 0192     		str	r2, [sp, #4]
+ 140:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 529              		.loc 1 140 5 is_stmt 1 view .LVU118
+ 530 004e 4146     		mov	r1, r8
+ 531 0050 3046     		mov	r0, r6
+ 532 0052 FFF7FEFF 		bl	hal_mem32_write
+ 533              	.LVL53:
+ 534 0056 2246     		mov	r2, r4
+ 535 0058 0A21     		movs	r1, #10
+ 536 005a FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 537              	.LVL54:
+ 142:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 538              		.loc 1 142 5 view .LVU119
+ 142:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 539              		.loc 1 142 13 is_stmt 0 view .LVU120
+ 540 005e 0122     		movs	r2, #1
+ 541 0060 0092     		str	r2, [sp]
+ 143:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 542              		.loc 1 143 5 is_stmt 1 view .LVU121
+ 543 0062 4FF4D421 		mov	r1, #434176
+ 544 0066 3046     		mov	r0, r6
+ 545 0068 FFF7FEFF 		bl	hal_mem32_write
+ 546              	.LVL55:
+ 547 006c 2246     		mov	r2, r4
+ 548 006e 0A21     		movs	r1, #10
+ 549 0070 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 550              	.LVL56:
+ 145:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 551              		.loc 1 145 5 view .LVU122
+ 552              	.L26:
+ 145:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 553              		.loc 1 145 33 view .LVU123
+ 554 0074 092C     		cmp	r4, #9
+ 555 0076 1BD8     		bhi	.L31
+ 147:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 556              		.loc 1 147 9 view .LVU124
+ 557 0078 6A46     		mov	r2, sp
+ 558 007a 4FF4D421 		mov	r1, #434176
+ 559 007e 3046     		mov	r0, r6
+ 560 0080 FFF7FEFF 		bl	hal_mem32_read
+ 561              	.LVL57:
+ 562 0084 0022     		movs	r2, #0
+ 563 0086 0A21     		movs	r1, #10
+ 564 0088 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 565              	.LVL58:
+ 149:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 566              		.loc 1 149 9 view .LVU125
+ 149:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 567              		.loc 1 149 12 is_stmt 0 view .LVU126
+ 568 008c 009D     		ldr	r5, [sp]
+ 149:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 569              		.loc 1 149 11 view .LVU127
+ 570 008e 0DB1     		cbz	r5, .L32
+ 156:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 571              		.loc 1 156 9 is_stmt 1 view .LVU128
+ 156:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 572              		.loc 1 156 20 is_stmt 0 view .LVU129
+ 573 0090 0134     		adds	r4, r4, #1
+ 574              	.LVL59:
+ 156:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 575              		.loc 1 156 20 view .LVU130
+ 576 0092 EFE7     		b	.L26
+ 577              	.L32:
+ 578              	.LBB4:
+ 151:../Switch/core/drv/mac/sw_yt921x.c ****             *pData = base_data;
+ 579              		.loc 1 151 13 is_stmt 1 view .LVU131
+ 580 0094 01AA     		add	r2, sp, #4
+ 581 0096 0C49     		ldr	r1, .L33+8
+ 582 0098 3046     		mov	r0, r6
+ 583 009a FFF7FEFF 		bl	hal_mem32_read
+ 584              	.LVL60:
+ 585 009e 0022     		movs	r2, #0
+ 586 00a0 0A21     		movs	r1, #10
+ 587 00a2 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 588              	.LVL61:
+ 152:../Switch/core/drv/mac/sw_yt921x.c ****             EXT_SMI_UNLOCK();
+ 589              		.loc 1 152 13 view .LVU132
+ 152:../Switch/core/drv/mac/sw_yt921x.c ****             EXT_SMI_UNLOCK();
+ 590              		.loc 1 152 20 is_stmt 0 view .LVU133
+ 591 00a6 019B     		ldr	r3, [sp, #4]
+ 592 00a8 3B80     		strh	r3, [r7]	@ movhi
+ 153:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 593              		.loc 1 153 13 is_stmt 1 view .LVU134
+ 594 00aa FFF7FEFF 		bl	EXT_SMI_UNLOCK
+ 595              	.LVL62:
+ 154:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 596              		.loc 1 154 13 view .LVU135
+ 154:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 597              		.loc 1 154 20 is_stmt 0 view .LVU136
+ 598 00ae 02E0     		b	.L25
+ 599              	.L31:
+ 154:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 600              		.loc 1 154 20 view .LVU137
+ 601              	.LBE4:
+ 159:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 602              		.loc 1 159 5 is_stmt 1 view .LVU138
+ 603 00b0 FFF7FEFF 		bl	EXT_SMI_UNLOCK
+ 604              	.LVL63:
+ 160:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 605              		.loc 1 160 5 view .LVU139
+ 160:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 606              		.loc 1 160 12 is_stmt 0 view .LVU140
+ 607 00b4 1025     		movs	r5, #16
+ 608              	.L25:
+ 161:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 609              		.loc 1 161 1 view .LVU141
+ 610 00b6 2846     		mov	r0, r5
+ 611 00b8 03B0     		add	sp, sp, #12
+ 612              		.cfi_def_cfa_offset 28
+ 613              		@ sp needed
+ 614 00ba BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 615              	.LVL64:
+ 616              	.L34:
+ 161:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 617              		.loc 1 161 1 view .LVU142
+ 618 00be 00BF     		.align	2
+ 619              	.L33:
+ 620 00c0 04A00600 		.word	434180
+ 621 00c4 F1F000FC 		.word	-67047183
+ 622 00c8 0CA00600 		.word	434188
+ 623              		.cfi_endproc
+ 624              	.LFE8:
+ 626              		.section	.text.yt9215_extif_write,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	yt9215_extif_write
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	yt9215_extif_write:
+ 634              	.LVL65:
+ 635              	.LFB9:
+ 164:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 636              		.loc 1 164 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 8
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 640              		.loc 1 164 1 is_stmt 0 view .LVU144
+ 641 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 642              		.cfi_def_cfa_offset 28
+ 643              		.cfi_offset 4, -28
+ 644              		.cfi_offset 5, -24
+ 645              		.cfi_offset 6, -20
+ 646              		.cfi_offset 7, -16
+ 647              		.cfi_offset 8, -12
+ 648              		.cfi_offset 9, -8
+ 649              		.cfi_offset 14, -4
+ 650 0004 83B0     		sub	sp, sp, #12
+ 651              		.cfi_def_cfa_offset 40
+ 652 0006 0646     		mov	r6, r0
+ 653 0008 0D46     		mov	r5, r1
+ 654 000a 9146     		mov	r9, r2
+ 655 000c 1F46     		mov	r7, r3
+ 165:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t base_data;
+ 656              		.loc 1 165 5 is_stmt 1 view .LVU145
+ 657              	.LVL66:
+ 166:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 658              		.loc 1 166 5 view .LVU146
+ 167:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 659              		.loc 1 167 5 view .LVU147
+ 167:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 660              		.loc 1 167 14 is_stmt 0 view .LVU148
+ 661 000e 0024     		movs	r4, #0
+ 662 0010 0094     		str	r4, [sp]
+ 168:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 663              		.loc 1 168 5 is_stmt 1 view .LVU149
+ 664              	.LVL67:
+ 170:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 665              		.loc 1 170 5 view .LVU150
+ 666 0012 FFF7FEFF 		bl	EXT_SMI_LOCK
+ 667              	.LVL68:
+ 172:../Switch/core/drv/mac/sw_yt921x.c ****     base_data &= 0xFC00F0F1;/*clause 22*/
+ 668              		.loc 1 172 5 view .LVU151
+ 669 0016 DFF8A880 		ldr	r8, .L43
+ 670 001a 01AA     		add	r2, sp, #4
+ 671 001c 4146     		mov	r1, r8
+ 672 001e 3046     		mov	r0, r6
+ 673 0020 FFF7FEFF 		bl	hal_mem32_read
+ 674              	.LVL69:
+ 675 0024 2246     		mov	r2, r4
+ 676 0026 0A21     		movs	r1, #10
+ 677 0028 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 678              	.LVL70:
+ 173:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 1 << 2);
+ 679              		.loc 1 173 5 view .LVU152
+ 173:../Switch/core/drv/mac/sw_yt921x.c ****     base_data |= ((extif_addr&0x1f) << 21 | (regAddr&0x1f) << 16 | 4<<8 | 1 << 2);
+ 680              		.loc 1 173 15 is_stmt 0 view .LVU153
+ 681 002c 254A     		ldr	r2, .L43+4
+ 682 002e 019B     		ldr	r3, [sp, #4]
+ 683 0030 1A40     		ands	r2, r2, r3
+ 684 0032 0192     		str	r2, [sp, #4]
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 685              		.loc 1 174 5 is_stmt 1 view .LVU154
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 686              		.loc 1 174 37 is_stmt 0 view .LVU155
+ 687 0034 6D05     		lsls	r5, r5, #21
+ 688 0036 05F07875 		and	r5, r5, #65011712
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 689              		.loc 1 174 60 view .LVU156
+ 690 003a 4FEA0949 		lsl	r9, r9, #16
+ 691              	.LVL71:
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 692              		.loc 1 174 60 view .LVU157
+ 693 003e 09F4F819 		and	r9, r9, #2031616
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 694              		.loc 1 174 43 view .LVU158
+ 695 0042 45EA0905 		orr	r5, r5, r9
+ 174:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_ADDR_CTRL, base_data), YT_EXT_SMI_LOCK_
+ 696              		.loc 1 174 15 view .LVU159
+ 697 0046 2A43     		orrs	r2, r2, r5
+ 698 0048 42F48062 		orr	r2, r2, #1024
+ 699 004c 42F00402 		orr	r2, r2, #4
+ 700 0050 0192     		str	r2, [sp, #4]
+ 175:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_DATA_0_ADDR, data), YT_EXT_SMI_LOCK_ID,
+ 701              		.loc 1 175 5 is_stmt 1 view .LVU160
+ 702 0052 4146     		mov	r1, r8
+ 703 0054 3046     		mov	r0, r6
+ 704 0056 FFF7FEFF 		bl	hal_mem32_write
+ 705              	.LVL72:
+ 706 005a 2246     		mov	r2, r4
+ 707 005c 0A21     		movs	r1, #10
+ 708 005e FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 709              	.LVL73:
+ 176:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 710              		.loc 1 176 5 view .LVU161
+ 711 0062 3A46     		mov	r2, r7
+ 712 0064 1849     		ldr	r1, .L43+8
+ 713 0066 3046     		mov	r0, r6
+ 714 0068 FFF7FEFF 		bl	hal_mem32_write
+ 715              	.LVL74:
+ 716 006c 2246     		mov	r2, r4
+ 717 006e 0A21     		movs	r1, #10
+ 718 0070 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 719              	.LVL75:
+ 178:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 720              		.loc 1 178 5 view .LVU162
+ 178:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_UNLOCK(HAL_MEM_DIRECT_WRITE(unit, EXT_IF_ACCESS_FRAME_CTRL, op_data), YT_EXT_SMI_LOCK_I
+ 721              		.loc 1 178 13 is_stmt 0 view .LVU163
+ 722 0074 0122     		movs	r2, #1
+ 723 0076 0092     		str	r2, [sp]
+ 179:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 724              		.loc 1 179 5 is_stmt 1 view .LVU164
+ 725 0078 4FF4D421 		mov	r1, #434176
+ 726 007c 3046     		mov	r0, r6
+ 727 007e FFF7FEFF 		bl	hal_mem32_write
+ 728              	.LVL76:
+ 729 0082 2246     		mov	r2, r4
+ 730 0084 0A21     		movs	r1, #10
+ 731 0086 FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 732              	.LVL77:
+ 181:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 733              		.loc 1 181 5 view .LVU165
+ 734              	.L36:
+ 181:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 735              		.loc 1 181 33 view .LVU166
+ 736 008a 092C     		cmp	r4, #9
+ 737 008c 10D8     		bhi	.L41
+ 183:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 738              		.loc 1 183 9 view .LVU167
+ 739 008e 6A46     		mov	r2, sp
+ 740 0090 4FF4D421 		mov	r1, #434176
+ 741 0094 3046     		mov	r0, r6
+ 742 0096 FFF7FEFF 		bl	hal_mem32_read
+ 743              	.LVL78:
+ 744 009a 0022     		movs	r2, #0
+ 745 009c 0A21     		movs	r1, #10
+ 746 009e FFF7FEFF 		bl	CMM_ERR_UNLOCK
+ 747              	.LVL79:
+ 185:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 748              		.loc 1 185 9 view .LVU168
+ 185:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 749              		.loc 1 185 12 is_stmt 0 view .LVU169
+ 750 00a2 009D     		ldr	r5, [sp]
+ 185:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 751              		.loc 1 185 11 view .LVU170
+ 752 00a4 0DB1     		cbz	r5, .L42
+ 191:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 753              		.loc 1 191 9 is_stmt 1 view .LVU171
+ 191:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 754              		.loc 1 191 20 is_stmt 0 view .LVU172
+ 755 00a6 0134     		adds	r4, r4, #1
+ 756              	.LVL80:
+ 191:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 757              		.loc 1 191 20 view .LVU173
+ 758 00a8 EFE7     		b	.L36
+ 759              	.L42:
+ 760              	.LBB5:
+ 187:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 761              		.loc 1 187 13 is_stmt 1 view .LVU174
+ 762 00aa FFF7FEFF 		bl	EXT_SMI_UNLOCK
+ 763              	.LVL81:
+ 188:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 764              		.loc 1 188 13 view .LVU175
+ 188:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 765              		.loc 1 188 20 is_stmt 0 view .LVU176
+ 766 00ae 02E0     		b	.L35
+ 767              	.L41:
+ 768              	.LBE5:
+ 194:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 769              		.loc 1 194 5 is_stmt 1 view .LVU177
+ 770 00b0 FFF7FEFF 		bl	EXT_SMI_UNLOCK
+ 771              	.LVL82:
+ 195:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 772              		.loc 1 195 5 view .LVU178
+ 195:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 773              		.loc 1 195 12 is_stmt 0 view .LVU179
+ 774 00b4 1025     		movs	r5, #16
+ 775              	.L35:
+ 196:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 776              		.loc 1 196 1 view .LVU180
+ 777 00b6 2846     		mov	r0, r5
+ 778 00b8 03B0     		add	sp, sp, #12
+ 779              		.cfi_def_cfa_offset 28
+ 780              		@ sp needed
+ 781 00ba BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 782              	.LVL83:
+ 783              	.L44:
+ 196:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 784              		.loc 1 196 1 view .LVU181
+ 785 00be 00BF     		.align	2
+ 786              	.L43:
+ 787 00c0 04A00600 		.word	434180
+ 788 00c4 F1F000FC 		.word	-67047183
+ 789 00c8 08A00600 		.word	434184
+ 790              		.cfi_endproc
+ 791              	.LFE9:
+ 793              		.section	.rodata.yt9215_edata_read.str1.4,"aMS",%progbits,1
+ 794              		.align	2
+ 795              	.LC0:
+ 796 0000 68616C5F 		.ascii	"hal_mem32_write(unit, (0xE0000), op_data)\000"
+ 796      6D656D33 
+ 796      325F7772 
+ 796      69746528 
+ 796      756E6974 
+ 797 002a 0000     		.align	2
+ 798              	.LC1:
+ 799 002c 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+ 799      206F6620 
+ 799      22257322 
+ 799      20696E20 
+ 799      25730D0A 
+ 800 0041 000000   		.align	2
+ 801              	.LC2:
+ 802 0044 68616C5F 		.ascii	"hal_mem32_read(unit, (0xE0004), &op_data)\000"
+ 802      6D656D33 
+ 802      325F7265 
+ 802      61642875 
+ 802      6E69742C 
+ 803              		.section	.text.yt9215_edata_read,"ax",%progbits
+ 804              		.align	1
+ 805              		.global	yt9215_edata_read
+ 806              		.syntax unified
+ 807              		.thumb
+ 808              		.thumb_func
+ 810              	yt9215_edata_read:
+ 811              	.LVL84:
+ 812              	.LFB11:
+ 203:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 204:../Switch/core/drv/mac/sw_yt921x.c **** yt_ret_t yt9215_edata_read(yt_unit_t unit, uint8_t addr, uint8_t *pData)
+ 205:../Switch/core/drv/mac/sw_yt921x.c **** {
+ 813              		.loc 1 205 1 is_stmt 1 view -0
+ 814              		.cfi_startproc
+ 815              		@ args = 0, pretend = 0, frame = 8
+ 816              		@ frame_needed = 0, uses_anonymous_args = 0
+ 817              		.loc 1 205 1 is_stmt 0 view .LVU183
+ 818 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 819              		.cfi_def_cfa_offset 20
+ 820              		.cfi_offset 4, -20
+ 821              		.cfi_offset 5, -16
+ 822              		.cfi_offset 6, -12
+ 823              		.cfi_offset 7, -8
+ 824              		.cfi_offset 14, -4
+ 825 0002 85B0     		sub	sp, sp, #20
+ 826              		.cfi_def_cfa_offset 40
+ 827 0004 0746     		mov	r7, r0
+ 828 0006 1646     		mov	r6, r2
+ 206:../Switch/core/drv/mac/sw_yt921x.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 829              		.loc 1 206 5 is_stmt 1 view .LVU184
+ 830              	.LVL85:
+ 207:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t op_data = 0;
+ 831              		.loc 1 207 5 view .LVU185
+ 832              		.loc 1 207 14 is_stmt 0 view .LVU186
+ 833 0008 0023     		movs	r3, #0
+ 834 000a 0393     		str	r3, [sp, #12]
+ 208:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 835              		.loc 1 208 5 is_stmt 1 view .LVU187
+ 836              	.LVL86:
+ 209:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 210:../Switch/core/drv/mac/sw_yt921x.c ****     op_data = 0x05 | ((addr << 8) & 0xFF00);
+ 837              		.loc 1 210 5 view .LVU188
+ 838              		.loc 1 210 35 is_stmt 0 view .LVU189
+ 839 000c 0A02     		lsls	r2, r1, #8
+ 840              	.LVL87:
+ 841              		.loc 1 210 20 view .LVU190
+ 842 000e 42F00502 		orr	r2, r2, #5
+ 843              		.loc 1 210 13 view .LVU191
+ 844 0012 0392     		str	r2, [sp, #12]
+ 211:../Switch/core/drv/mac/sw_yt921x.c ****     CMM_ERR_CHK(HAL_MEM_DIRECT_WRITE(unit, E_OP_CTRL_0, op_data), ret);
+ 845              		.loc 1 211 5 is_stmt 1 view .LVU192
+ 846              		.loc 1 211 5 view .LVU193
+ 847 0014 4FF46021 		mov	r1, #917504
+ 848              	.LVL88:
+ 849              		.loc 1 211 5 is_stmt 0 view .LVU194
+ 850 0018 FFF7FEFF 		bl	hal_mem32_write
+ 851              	.LVL89:
+ 852              		.loc 1 211 5 view .LVU195
+ 853 001c 10F0FF03 		ands	r3, r0, #255
+ 854 0020 01D1     		bne	.L55
+ 208:../Switch/core/drv/mac/sw_yt921x.c ****     uint32_t wait_count = 0;
+ 855              		.loc 1 208 14 view .LVU196
+ 856 0022 0025     		movs	r5, #0
+ 857 0024 2DE0     		b	.L46
+ 858              	.L55:
+ 859 0026 0446     		mov	r4, r0
+ 860              		.loc 1 211 5 is_stmt 1 discriminator 1 view .LVU197
+ 861              		.loc 1 211 5 discriminator 1 view .LVU198
+ 862 0028 214A     		ldr	r2, .L60
+ 863 002a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 864 002c 012A     		cmp	r2, #1
+ 865 002e 01D8     		bhi	.L56
+ 866              	.LVL90:
+ 867              	.L47:
+ 868              		.loc 1 211 5 discriminator 5 view .LVU199
+ 869              		.loc 1 211 5 discriminator 5 view .LVU200
+ 870              		.loc 1 211 5 discriminator 5 view .LVU201
+ 871 0030 E0B2     		uxtb	r0, r4
+ 872 0032 3BE0     		b	.L45
+ 873              	.LVL91:
+ 874              	.L56:
+ 875              		.loc 1 211 5 discriminator 3 view .LVU202
+ 876              	.LBB6:
+ 877              		.loc 1 211 5 discriminator 3 view .LVU203
+ 878 0034 142B     		cmp	r3, #20
+ 879 0036 28BF     		it	cs
+ 880 0038 1423     		movcs	r3, #20
+ 881 003a 1A46     		mov	r2, r3
+ 882 003c 1D4B     		ldr	r3, .L60+4
+ 883 003e 0093     		str	r3, [sp]
+ 884 0040 1D4B     		ldr	r3, .L60+8
+ 885 0042 1E49     		ldr	r1, .L60+12
+ 886 0044 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 887 0048 1D49     		ldr	r1, .L60+16
+ 888 004a 8968     		ldr	r1, [r1, #8]
+ 889 004c 1D48     		ldr	r0, .L60+20
+ 890              	.LVL92:
+ 891              		.loc 1 211 5 is_stmt 0 discriminator 3 view .LVU204
+ 892 004e FFF7FEFF 		bl	osal_printf
+ 893              	.LVL93:
+ 894 0052 EDE7     		b	.L47
+ 895              	.LVL94:
+ 896              	.L59:
+ 897              		.loc 1 211 5 discriminator 3 view .LVU205
+ 898              	.LBE6:
+ 212:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+ 213:../Switch/core/drv/mac/sw_yt921x.c ****     {
+ 214:../Switch/core/drv/mac/sw_yt921x.c ****         CMM_ERR_CHK(HAL_MEM_DIRECT_READ(unit, E_OP_CTRL_1, &op_data), ret);
+ 899              		.loc 1 214 9 is_stmt 1 discriminator 1 view .LVU206
+ 900              		.loc 1 214 9 discriminator 1 view .LVU207
+ 901 0054 164A     		ldr	r2, .L60
+ 902 0056 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 903 0058 012A     		cmp	r2, #1
+ 904 005a 01D8     		bhi	.L57
+ 905              	.LVL95:
+ 906              	.L50:
+ 907              		.loc 1 214 9 discriminator 5 view .LVU208
+ 908              		.loc 1 214 9 discriminator 5 view .LVU209
+ 909              		.loc 1 214 9 discriminator 5 view .LVU210
+ 910 005c E0B2     		uxtb	r0, r4
+ 911 005e 25E0     		b	.L45
+ 912              	.LVL96:
+ 913              	.L57:
+ 914              		.loc 1 214 9 discriminator 3 view .LVU211
+ 915              	.LBB7:
+ 916              		.loc 1 214 9 discriminator 3 view .LVU212
+ 917 0060 142B     		cmp	r3, #20
+ 918 0062 28BF     		it	cs
+ 919 0064 1423     		movcs	r3, #20
+ 920 0066 1A46     		mov	r2, r3
+ 921 0068 124B     		ldr	r3, .L60+4
+ 922 006a 0093     		str	r3, [sp]
+ 923 006c 164B     		ldr	r3, .L60+24
+ 924 006e 1349     		ldr	r1, .L60+12
+ 925 0070 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 926 0074 1249     		ldr	r1, .L60+16
+ 927 0076 8968     		ldr	r1, [r1, #8]
+ 928 0078 1248     		ldr	r0, .L60+20
+ 929              	.LVL97:
+ 930              		.loc 1 214 9 is_stmt 0 discriminator 3 view .LVU213
+ 931 007a FFF7FEFF 		bl	osal_printf
+ 932              	.LVL98:
+ 933 007e EDE7     		b	.L50
+ 934              	.LVL99:
+ 935              	.L51:
+ 936              		.loc 1 214 9 discriminator 3 view .LVU214
+ 937              	.LBE7:
+ 215:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 216:../Switch/core/drv/mac/sw_yt921x.c ****         if( (op_data & 0x0F) == 0x03)
+ 217:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 218:../Switch/core/drv/mac/sw_yt921x.c ****             *pData = (op_data >> 24) & 0xFF;
+ 219:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 220:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 221:../Switch/core/drv/mac/sw_yt921x.c ****         wait_count++;
+ 938              		.loc 1 221 9 is_stmt 1 view .LVU215
+ 939              		.loc 1 221 19 is_stmt 0 view .LVU216
+ 940 0080 0135     		adds	r5, r5, #1
+ 941              	.LVL100:
+ 942              	.L46:
+ 212:../Switch/core/drv/mac/sw_yt921x.c ****     while(MAX_BUSYING_WAIT_TIME > wait_count)
+ 943              		.loc 1 212 33 is_stmt 1 view .LVU217
+ 944 0082 092D     		cmp	r5, #9
+ 945 0084 11D8     		bhi	.L58
+ 214:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 946              		.loc 1 214 9 view .LVU218
+ 214:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 947              		.loc 1 214 9 view .LVU219
+ 948 0086 03AA     		add	r2, sp, #12
+ 949 0088 1049     		ldr	r1, .L60+28
+ 950 008a 3846     		mov	r0, r7
+ 951 008c FFF7FEFF 		bl	hal_mem32_read
+ 952              	.LVL101:
+ 953 0090 0446     		mov	r4, r0
+ 954              	.LVL102:
+ 214:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 955              		.loc 1 214 9 is_stmt 0 view .LVU220
+ 956 0092 10F0FF03 		ands	r3, r0, #255
+ 957 0096 DDD1     		bne	.L59
+ 214:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 958              		.loc 1 214 9 is_stmt 1 discriminator 2 view .LVU221
+ 216:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 959              		.loc 1 216 9 discriminator 2 view .LVU222
+ 216:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 960              		.loc 1 216 22 is_stmt 0 discriminator 2 view .LVU223
+ 961 0098 039B     		ldr	r3, [sp, #12]
+ 962 009a 03F00F01 		and	r1, r3, #15
+ 216:../Switch/core/drv/mac/sw_yt921x.c ****         {
+ 963              		.loc 1 216 11 discriminator 2 view .LVU224
+ 964 009e 0329     		cmp	r1, #3
+ 965 00a0 EED1     		bne	.L51
+ 218:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 966              		.loc 1 218 13 is_stmt 1 view .LVU225
+ 218:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 967              		.loc 1 218 38 is_stmt 0 view .LVU226
+ 968 00a2 1B0E     		lsrs	r3, r3, #24
+ 218:../Switch/core/drv/mac/sw_yt921x.c ****             return CMM_ERR_OK;
+ 969              		.loc 1 218 20 view .LVU227
+ 970 00a4 3370     		strb	r3, [r6]
+ 219:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 971              		.loc 1 219 13 is_stmt 1 view .LVU228
+ 219:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 972              		.loc 1 219 20 is_stmt 0 view .LVU229
+ 973 00a6 0020     		movs	r0, #0
+ 974              	.LVL103:
+ 219:../Switch/core/drv/mac/sw_yt921x.c ****         }
+ 975              		.loc 1 219 20 view .LVU230
+ 976 00a8 00E0     		b	.L45
+ 977              	.LVL104:
+ 978              	.L58:
+ 222:../Switch/core/drv/mac/sw_yt921x.c ****     }
+ 223:../Switch/core/drv/mac/sw_yt921x.c **** 
+ 224:../Switch/core/drv/mac/sw_yt921x.c ****     return CMM_ERR_BUSYING_TIME;
+ 979              		.loc 1 224 12 view .LVU231
+ 980 00aa 1020     		movs	r0, #16
+ 981              	.LVL105:
+ 982              	.L45:
+ 225:../Switch/core/drv/mac/sw_yt921x.c **** }
+ 983              		.loc 1 225 1 view .LVU232
+ 984 00ac 05B0     		add	sp, sp, #20
+ 985              		.cfi_def_cfa_offset 20
+ 986              		@ sp needed
+ 987 00ae F0BD     		pop	{r4, r5, r6, r7, pc}
+ 988              	.LVL106:
+ 989              	.L61:
+ 990              		.loc 1 225 1 view .LVU233
+ 991              		.align	2
+ 992              	.L60:
+ 993 00b0 00000000 		.word	yt_debug_level
+ 994 00b4 00000000 		.word	__FUNCTION__.0
+ 995 00b8 00000000 		.word	.LC0
+ 996 00bc 00000000 		.word	_yt_errmsg
+ 997 00c0 00000000 		.word	_yt_prompt_msg
+ 998 00c4 2C000000 		.word	.LC1
+ 999 00c8 44000000 		.word	.LC2
+ 1000 00cc 04000E00 		.word	917508
+ 1001              		.cfi_endproc
+ 1002              	.LFE11:
+ 1004              		.section	.rodata.__FUNCTION__.0,"a"
+ 1005              		.align	2
+ 1008              	__FUNCTION__.0:
+ 1009 0000 79743932 		.ascii	"yt9215_edata_read\000"
+ 1009      31355F65 
+ 1009      64617461 
+ 1009      5F726561 
+ 1009      6400
+ 1010              		.global	yt9218_drv
+ 1011              		.section	.data.yt9218_drv,"aw"
+ 1012              		.align	2
+ 1015              	yt9218_drv:
+ 1016 0000 0190     		.short	-28671
+ 1017 0002 01       		.byte	1
+ 1018 0003 00       		.space	1
+ 1019 0004 00000000 		.word	yt9215_drv_func
+ 1020              		.global	yt9215_drv
+ 1021              		.section	.data.yt9215_drv,"aw"
+ 1022              		.align	2
+ 1025              	yt9215_drv:
+ 1026 0000 0290     		.short	-28670
+ 1027 0002 00       		.byte	0
+ 1028 0003 00       		.space	1
+ 1029 0004 00000000 		.word	yt9215_drv_func
+ 1030              		.global	yt9215_drv_func
+ 1031              		.section	.data.yt9215_drv_func,"aw"
+ 1032              		.align	2
+ 1035              	yt9215_drv_func:
+ 1036 0000 00000000 		.word	yt9215_init
+ 1037 0004 00000000 		.word	yt9215_mac_config
+ 1038 0008 00000000 		.word	yt9215_led_config
+ 1039 000c 00000000 		.word	yt9215_intif_read
+ 1040 0010 00000000 		.word	yt9215_intif_write
+ 1041 0014 00000000 		.word	yt9215_extif_read
+ 1042 0018 00000000 		.word	yt9215_extif_write
+ 1043 001c 00000000 		.word	yt9215_extif_polling_config
+ 1044 0020 00000000 		.word	yt9215_edata_read
+ 1045              		.text
+ 1046              	.Letext0:
+ 1047              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 1048              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\fal\\chipdef/chipdef.h"
+ 1049              		.file 4 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_lock.h"
+ 1050              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 1051              		.file 6 "../Switch/core/drv/mac/sw_drv.h"
+ 1052              		.file 7 "../Switch/core/drv/mac/sw_yt921x.h"
+ 1053              		.file 8 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\hal/hal_mem.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 sw_yt921x.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:19     .text.yt9215_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:25     .text.yt9215_init:00000000 yt9215_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:44     .text.yt9215_mac_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:50     .text.yt9215_mac_config:00000000 yt9215_mac_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:69     .text.yt9215_led_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:75     .text.yt9215_led_config:00000000 yt9215_led_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:94     .text.yt9215_extif_polling_config:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:100    .text.yt9215_extif_polling_config:00000000 yt9215_extif_polling_config
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:119    .text.yt9215_intif_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:125    .text.yt9215_intif_read:00000000 yt9215_intif_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:283    .text.yt9215_intif_read:000000c0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:290    .text.yt9215_intif_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:296    .text.yt9215_intif_write:00000000 yt9215_intif_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:449    .text.yt9215_intif_write:000000bc $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:456    .text.yt9215_extif_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:462    .text.yt9215_extif_read:00000000 yt9215_extif_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:620    .text.yt9215_extif_read:000000c0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:627    .text.yt9215_extif_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:633    .text.yt9215_extif_write:00000000 yt9215_extif_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:787    .text.yt9215_extif_write:000000c0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:794    .rodata.yt9215_edata_read.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:804    .text.yt9215_edata_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:810    .text.yt9215_edata_read:00000000 yt9215_edata_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:993    .text.yt9215_edata_read:000000b0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1008   .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1005   .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1015   .data.yt9218_drv:00000000 yt9218_drv
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1012   .data.yt9218_drv:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1035   .data.yt9215_drv_func:00000000 yt9215_drv_func
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1025   .data.yt9215_drv:00000000 yt9215_drv
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1022   .data.yt9215_drv:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccvfdeDr.s:1032   .data.yt9215_drv_func:00000000 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.sw_yt921x.h.14.520c32d1f3d1bcb55ce0218fd4f02f51
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+
+UNDEFINED SYMBOLS
+INT_SMI_LOCK
+hal_mem32_read
+CMM_ERR_UNLOCK
+hal_mem32_write
+INT_SMI_UNLOCK
+EXT_SMI_LOCK
+EXT_SMI_UNLOCK
+osal_printf
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg

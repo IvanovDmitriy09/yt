@@ -1,0 +1,2591 @@
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"hal_mem.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "../Switch/core/hal/hal_mem.c"
+  18              		.section	.text.hal_mem32_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	hal_mem32_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	hal_mem32_init:
+  26              	.LFB3:
+   1:../Switch/core/hal/hal_mem.c **** /*******************************************************************************
+   2:../Switch/core/hal/hal_mem.c **** *                                                                              *
+   3:../Switch/core/hal/hal_mem.c **** *  Copyright (c), 2022, Motorcomm Electronic Technology Co.,Ltd.               *
+   4:../Switch/core/hal/hal_mem.c **** *  Motorcomm Confidential and Proprietary.                                     *
+   5:../Switch/core/hal/hal_mem.c **** *                                                                              *
+   6:../Switch/core/hal/hal_mem.c **** ********************************************************************************
+   7:../Switch/core/hal/hal_mem.c **** */
+   8:../Switch/core/hal/hal_mem.c **** /*
+   9:../Switch/core/hal/hal_mem.c ****  * Include Files
+  10:../Switch/core/hal/hal_mem.c ****  */
+  11:../Switch/core/hal/hal_mem.c **** //#include "osal_mem.h"
+  12:../Switch/core/hal/hal_mem.c **** //#include "osal_sem.h"
+  13:../Switch/core/hal/hal_mem.c **** //#include "osal_print.h"
+  14:../Switch/core/hal/hal_mem.c **** #include "yt_types.h"
+  15:../Switch/core/hal/hal_mem.c **** #include "hal_mem.h"
+  16:../Switch/core/hal/hal_mem.c **** #include "yt_util.h"
+  17:../Switch/core/hal/hal_mem.c **** 
+  18:../Switch/core/hal/hal_mem.c **** #ifdef ACC_UART
+  19:../Switch/core/hal/hal_mem.c **** #include "uart.h"
+  20:../Switch/core/hal/hal_mem.c **** #elif defined ACC_MEM
+  21:../Switch/core/hal/hal_mem.c **** #include "mem.h"
+  22:../Switch/core/hal/hal_mem.c **** #elif defined (SW_CTRL_IOCTL)
+  23:../Switch/core/hal/hal_mem.c **** #include "sw_ctrl_ioctl.h"
+  24:../Switch/core/hal/hal_mem.c **** #else
+  25:../Switch/core/hal/hal_mem.c **** #include "ctrlif.h"
+  26:../Switch/core/hal/hal_mem.c **** #endif
+  27:../Switch/core/hal/hal_mem.c **** 
+  28:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL
+  29:../Switch/core/hal/hal_mem.c **** #include "hal_mem_cmodel.h"
+  30:../Switch/core/hal/hal_mem.c **** #endif
+  31:../Switch/core/hal/hal_mem.c **** 
+  32:../Switch/core/hal/hal_mem.c **** /*
+  33:../Switch/core/hal/hal_mem.c ****  * Data Declaration
+  34:../Switch/core/hal/hal_mem.c ****  */
+  35:../Switch/core/hal/hal_mem.c **** //osal_mux g_cfgmux;
+  36:../Switch/core/hal/hal_mem.c **** 
+  37:../Switch/core/hal/hal_mem.c **** uint8_t ghal_mem32_init      = FALSE;
+  38:../Switch/core/hal/hal_mem.c **** uint8_t ghal_reg_table_init  = FALSE;
+  39:../Switch/core/hal/hal_mem.c **** uint32 DEBUG_MODE_K = 0;
+  40:../Switch/core/hal/hal_mem.c **** 
+  41:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL
+  42:../Switch/core/hal/hal_mem.c **** hal_reg_tbl_mode_t greg_tbl_mode = HAL_REG_TBL_MODE_CMODEL;
+  43:../Switch/core/hal/hal_mem.c **** #else
+  44:../Switch/core/hal/hal_mem.c **** hal_reg_tbl_mode_t greg_tbl_mode = HAL_REG_TBL_MODE_NORMAL;
+  45:../Switch/core/hal/hal_mem.c **** #endif
+  46:../Switch/core/hal/hal_mem.c **** 
+  47:../Switch/core/hal/hal_mem.c **** /*
+  48:../Switch/core/hal/hal_mem.c ****  * Symbol Definition
+  49:../Switch/core/hal/hal_mem.c ****  */
+  50:../Switch/core/hal/hal_mem.c **** 
+  51:../Switch/core/hal/hal_mem.c **** /*
+  52:../Switch/core/hal/hal_mem.c ****  * Macro Declaration
+  53:../Switch/core/hal/hal_mem.c ****  */
+  54:../Switch/core/hal/hal_mem.c **** 
+  55:../Switch/core/hal/hal_mem.c **** #define DRV_MEM_DS_VALID_CHK(mem_id, idx) \
+  56:../Switch/core/hal/hal_mem.c **** do {\
+  57:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((237 <= mem_id), CMM_ERR_INPUT);\
+  58:../Switch/core/hal/hal_mem.c ****     if((sizeof(tbl_reg_list) / sizeof(tbl_reg_list[0])) < 237) \
+  59:../Switch/core/hal/hal_mem.c ****     {\
+  60:../Switch/core/hal/hal_mem.c ****         osal_printf("Mem size %u is less than %u\r\n", (uint32_t)(sizeof(tbl_reg_list)/sizeof(tbl_r
+  61:../Switch/core/hal/hal_mem.c ****         return CMM_ERR_REG_TABLE_NUM;\
+  62:../Switch/core/hal/hal_mem.c ****     }\
+  63:../Switch/core/hal/hal_mem.c ****     if(tbl_reg_list[mem_id].entry_number<= idx )\
+  64:../Switch/core/hal/hal_mem.c ****     {\
+  65:../Switch/core/hal/hal_mem.c ****         osal_printf("Mem %u entry num %u is less than %u\r\n", mem_id, tbl_reg_list[mem_id].entry_n
+  66:../Switch/core/hal/hal_mem.c ****         return CMM_ERR_REG_TABLE_IDX;\
+  67:../Switch/core/hal/hal_mem.c ****     }\
+  68:../Switch/core/hal/hal_mem.c **** } while(0)
+  69:../Switch/core/hal/hal_mem.c **** 
+  70:../Switch/core/hal/hal_mem.c **** /*
+  71:../Switch/core/hal/hal_mem.c ****  * Function Declaration
+  72:../Switch/core/hal/hal_mem.c ****  */
+  73:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_op(uint8_t unit, uint8_t is_write, uint32 mem_id, uint32_t idx, uint3
+  74:../Switch/core/hal/hal_mem.c **** 
+  75:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_normal_write(uint8_t unit, uint32 mem_id, uint32_t idx, uint16_t len,
+  76:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_normal_read(uint8_t unit, uint32 mem_id, uint32_t idx, uint16_t len, 
+  77:../Switch/core/hal/hal_mem.c **** 
+  78:../Switch/core/hal/hal_mem.c **** 
+  79:../Switch/core/hal/hal_mem.c **** uint32_t hal_mem32_init(void)
+  80:../Switch/core/hal/hal_mem.c **** {
+  27              		.loc 1 80 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  81:../Switch/core/hal/hal_mem.c ****     ghal_mem32_init = TRUE;
+  32              		.loc 1 81 5 view .LVU1
+  33              		.loc 1 81 21 is_stmt 0 view .LVU2
+  34 0000 024B     		ldr	r3, .L2
+  35 0002 0122     		movs	r2, #1
+  36 0004 1A70     		strb	r2, [r3]
+  82:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+  37              		.loc 1 82 5 is_stmt 1 view .LVU3
+  83:../Switch/core/hal/hal_mem.c **** }
+  38              		.loc 1 83 1 is_stmt 0 view .LVU4
+  39 0006 0020     		movs	r0, #0
+  40 0008 7047     		bx	lr
+  41              	.L3:
+  42 000a 00BF     		.align	2
+  43              	.L2:
+  44 000c 00000000 		.word	ghal_mem32_init
+  45              		.cfi_endproc
+  46              	.LFE3:
+  48              		.section	.text.hal_table_reg_init,"ax",%progbits
+  49              		.align	1
+  50              		.global	hal_table_reg_init
+  51              		.syntax unified
+  52              		.thumb
+  53              		.thumb_func
+  55              	hal_table_reg_init:
+  56              	.LFB4:
+  84:../Switch/core/hal/hal_mem.c **** 
+  85:../Switch/core/hal/hal_mem.c **** 
+  86:../Switch/core/hal/hal_mem.c **** uint32_t hal_table_reg_init(void)
+  87:../Switch/core/hal/hal_mem.c **** {
+  57              		.loc 1 87 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  88:../Switch/core/hal/hal_mem.c **** //    osal_mux_init(&g_cfgmux, NULL);
+  89:../Switch/core/hal/hal_mem.c ****     
+  90:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL
+  91:../Switch/core/hal/hal_mem.c ****     hal_table_reg_cmodel_init();
+  92:../Switch/core/hal/hal_mem.c **** #endif
+  93:../Switch/core/hal/hal_mem.c **** 
+  94:../Switch/core/hal/hal_mem.c ****     ghal_reg_table_init = TRUE;
+  62              		.loc 1 94 5 view .LVU6
+  63              		.loc 1 94 25 is_stmt 0 view .LVU7
+  64 0000 024B     		ldr	r3, .L5
+  65 0002 0122     		movs	r2, #1
+  66 0004 1A70     		strb	r2, [r3]
+  95:../Switch/core/hal/hal_mem.c **** 
+  96:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+  67              		.loc 1 96 5 is_stmt 1 view .LVU8
+  97:../Switch/core/hal/hal_mem.c **** }
+  68              		.loc 1 97 1 is_stmt 0 view .LVU9
+  69 0006 0020     		movs	r0, #0
+  70 0008 7047     		bx	lr
+  71              	.L6:
+  72 000a 00BF     		.align	2
+  73              	.L5:
+  74 000c 00000000 		.word	ghal_reg_table_init
+  75              		.cfi_endproc
+  76              	.LFE4:
+  78              		.section	.text.hal_mem32_write,"ax",%progbits
+  79              		.align	1
+  80              		.global	hal_mem32_write
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  85              	hal_mem32_write:
+  86              	.LVL0:
+  87              	.LFB5:
+  98:../Switch/core/hal/hal_mem.c **** 
+  99:../Switch/core/hal/hal_mem.c **** uint32_t hal_mem32_write(yt_unit_t unit, uint32_t addr, uint32_t Val)
+ 100:../Switch/core/hal/hal_mem.c **** {
+  88              		.loc 1 100 1 is_stmt 1 view -0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		.loc 1 100 1 is_stmt 0 view .LVU11
+  93 0000 08B5     		push	{r3, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 3, -8
+  96              		.cfi_offset 14, -4
+ 101:../Switch/core/hal/hal_mem.c ****     CMM_UNUSED_PARAM(unit);
+  97              		.loc 1 101 5 is_stmt 1 view .LVU12
+ 102:../Switch/core/hal/hal_mem.c **** #ifdef ACC_UART
+ 103:../Switch/core/hal/hal_mem.c ****     return uart_switch_write( addr,  Val);
+ 104:../Switch/core/hal/hal_mem.c **** #elif defined ACC_MEM
+ 105:../Switch/core/hal/hal_mem.c ****     return mem_switch_write( addr,  Val);
+ 106:../Switch/core/hal/hal_mem.c **** #elif defined(SW_CTRL_IOCTL)
+ 107:../Switch/core/hal/hal_mem.c ****     return sw_ctrl_ioctl_write(unit, addr, Val);
+ 108:../Switch/core/hal/hal_mem.c **** #else
+ 109:../Switch/core/hal/hal_mem.c ****     return ctrlif_reg_write(unit, addr, Val);
+  98              		.loc 1 109 5 view .LVU13
+  99              		.loc 1 109 12 is_stmt 0 view .LVU14
+ 100 0002 FFF7FEFF 		bl	ctrlif_reg_write
+ 101              	.LVL1:
+ 110:../Switch/core/hal/hal_mem.c **** #endif
+ 111:../Switch/core/hal/hal_mem.c **** 
+ 112:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 113:../Switch/core/hal/hal_mem.c **** }
+ 102              		.loc 1 113 1 view .LVU15
+ 103 0006 08BD     		pop	{r3, pc}
+ 104              		.cfi_endproc
+ 105              	.LFE5:
+ 107              		.section	.text.hal_mem32_read,"ax",%progbits
+ 108              		.align	1
+ 109              		.global	hal_mem32_read
+ 110              		.syntax unified
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	hal_mem32_read:
+ 115              	.LVL2:
+ 116              	.LFB6:
+ 114:../Switch/core/hal/hal_mem.c **** uint32_t hal_mem32_read(yt_unit_t unit, uint32_t addr, uint32_t *pVal)
+ 115:../Switch/core/hal/hal_mem.c **** {
+ 117              		.loc 1 115 1 is_stmt 1 view -0
+ 118              		.cfi_startproc
+ 119              		@ args = 0, pretend = 0, frame = 0
+ 120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121              		.loc 1 115 1 is_stmt 0 view .LVU17
+ 122 0000 08B5     		push	{r3, lr}
+ 123              		.cfi_def_cfa_offset 8
+ 124              		.cfi_offset 3, -8
+ 125              		.cfi_offset 14, -4
+ 116:../Switch/core/hal/hal_mem.c ****         CMM_UNUSED_PARAM(unit);
+ 126              		.loc 1 116 9 is_stmt 1 view .LVU18
+ 117:../Switch/core/hal/hal_mem.c ****         
+ 118:../Switch/core/hal/hal_mem.c **** #ifdef ACC_UART
+ 119:../Switch/core/hal/hal_mem.c ****         return uart_switch_read(addr,  pVal);
+ 120:../Switch/core/hal/hal_mem.c **** #elif defined ACC_MEM
+ 121:../Switch/core/hal/hal_mem.c ****         return mem_switch_read( addr,  pVal);
+ 122:../Switch/core/hal/hal_mem.c **** #elif defined(SW_CTRL_IOCTL)
+ 123:../Switch/core/hal/hal_mem.c ****         return sw_ctrl_ioctl_read(unit, addr, pVal);
+ 124:../Switch/core/hal/hal_mem.c **** #else
+ 125:../Switch/core/hal/hal_mem.c ****         return ctrlif_reg_read(unit, addr, pVal);
+ 127              		.loc 1 125 9 view .LVU19
+ 128              		.loc 1 125 16 is_stmt 0 view .LVU20
+ 129 0002 FFF7FEFF 		bl	ctrlif_reg_read
+ 130              	.LVL3:
+ 126:../Switch/core/hal/hal_mem.c **** #endif
+ 127:../Switch/core/hal/hal_mem.c **** }
+ 131              		.loc 1 127 1 view .LVU21
+ 132 0006 08BD     		pop	{r3, pc}
+ 133              		.cfi_endproc
+ 134              	.LFE6:
+ 136              		.section	.rodata.hal_table_reg_op.str1.4,"aMS",%progbits,1
+ 137              		.align	2
+ 138              	.LC0:
+ 139 0000 25732573 		.ascii	"%s%s\015\012\000"
+ 139      0D0A00
+ 140 0007 00       		.align	2
+ 141              	.LC1:
+ 142 0008 4D656D20 		.ascii	"Mem %u entry num %u is less than %u\015\012\000"
+ 142      25752065 
+ 142      6E747279 
+ 142      206E756D 
+ 142      20257520 
+ 143 002e 0000     		.align	2
+ 144              	.LC2:
+ 145 0030 57726974 		.ascii	"Write addr[0x%x] = 0x%x\012\000"
+ 145      65206164 
+ 145      64725B30 
+ 145      7825785D 
+ 145      203D2030 
+ 146 0049 000000   		.align	2
+ 147              	.LC3:
+ 148 004c 52656164 		.ascii	"Read addr[0x%x] = 0x%x\012\000"
+ 148      20616464 
+ 148      725B3078 
+ 148      25785D20 
+ 148      3D203078 
+ 149              		.section	.text.hal_table_reg_op,"ax",%progbits
+ 150              		.align	1
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	hal_table_reg_op:
+ 156              	.LVL4:
+ 157              	.LFB9:
+ 128:../Switch/core/hal/hal_mem.c **** 
+ 129:../Switch/core/hal/hal_mem.c **** 
+ 130:../Switch/core/hal/hal_mem.c **** uint32  hal_tbl_reg_field_get(uint32_t mem_id, uint32_t field_id,  void *entry, void *data)
+ 131:../Switch/core/hal/hal_mem.c **** {
+ 132:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width;
+ 133:../Switch/core/hal/hal_mem.c ****     uint32 value_hi, value_lo, value;
+ 134:../Switch/core/hal/hal_mem.c ****     uint32 *ptbl = (uint32_t *)entry;
+ 135:../Switch/core/hal/hal_mem.c ****     uint32 *pdata = (uint32_t *)data;
+ 136:../Switch/core/hal/hal_mem.c **** 
+ 137:../Switch/core/hal/hal_mem.c ****     if (mem_id >= 237) return CMM_ERR_FAIL; //tbl_reg not found
+ 138:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 139:../Switch/core/hal/hal_mem.c **** 
+ 140:../Switch/core/hal/hal_mem.c ****     word = tbl_reg_list[mem_id].fields[field_id].word_offset; 
+ 141:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 142:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 143:../Switch/core/hal/hal_mem.c **** 
+ 144:../Switch/core/hal/hal_mem.c ****     if (low + width < 32)
+ 145:../Switch/core/hal/hal_mem.c ****     {
+ 146:../Switch/core/hal/hal_mem.c ****         value = ptbl[word];
+ 147:../Switch/core/hal/hal_mem.c ****         *pdata = (uint32)GET_FIELD(value, low, width);
+ 148:../Switch/core/hal/hal_mem.c ****     }
+ 149:../Switch/core/hal/hal_mem.c ****     else
+ 150:../Switch/core/hal/hal_mem.c ****     {    
+ 151:../Switch/core/hal/hal_mem.c ****         if (low == 0 && width == 32)
+ 152:../Switch/core/hal/hal_mem.c ****         {
+ 153:../Switch/core/hal/hal_mem.c ****             *pdata = ptbl[word];
+ 154:../Switch/core/hal/hal_mem.c ****         }
+ 155:../Switch/core/hal/hal_mem.c ****         else
+ 156:../Switch/core/hal/hal_mem.c ****         {
+ 157:../Switch/core/hal/hal_mem.c ****             value_hi = ptbl[word + 1];
+ 158:../Switch/core/hal/hal_mem.c ****             value_lo = ptbl[word];
+ 159:../Switch/core/hal/hal_mem.c ****             value_hi = (uint32)GET_FIELD(value_hi, 0, (width - (32 - low)));
+ 160:../Switch/core/hal/hal_mem.c ****             value_lo = (uint32)GET_FIELD(value_lo, low, (32 - low));
+ 161:../Switch/core/hal/hal_mem.c ****             *pdata = (value_hi << (32 - low)) + value_lo;
+ 162:../Switch/core/hal/hal_mem.c ****         }
+ 163:../Switch/core/hal/hal_mem.c ****     }
+ 164:../Switch/core/hal/hal_mem.c **** 
+ 165:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 166:../Switch/core/hal/hal_mem.c **** }	
+ 167:../Switch/core/hal/hal_mem.c **** 
+ 168:../Switch/core/hal/hal_mem.c **** uint32  hal_tbl_reg_field_set(uint32_t mem_id, uint32_t field_id,  void *entry, uint32_t data)
+ 169:../Switch/core/hal/hal_mem.c **** {
+ 170:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width, value;
+ 171:../Switch/core/hal/hal_mem.c ****     uint32 *ptbl = (uint32_t *)entry;
+ 172:../Switch/core/hal/hal_mem.c **** 
+ 173:../Switch/core/hal/hal_mem.c ****     if (mem_id >= 237) return CMM_ERR_FAIL; //tbl_reg not found
+ 174:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 175:../Switch/core/hal/hal_mem.c **** 
+ 176:../Switch/core/hal/hal_mem.c ****     word = tbl_reg_list[mem_id].fields[field_id].word_offset; 
+ 177:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 178:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 179:../Switch/core/hal/hal_mem.c **** 
+ 180:../Switch/core/hal/hal_mem.c ****     value = ptbl[word];
+ 181:../Switch/core/hal/hal_mem.c ****     value = (uint32)CLR_FIELD(value, low, width);
+ 182:../Switch/core/hal/hal_mem.c ****     if(width == 32)
+ 183:../Switch/core/hal/hal_mem.c ****     {
+ 184:../Switch/core/hal/hal_mem.c ****         value = 0;
+ 185:../Switch/core/hal/hal_mem.c ****     }
+ 186:../Switch/core/hal/hal_mem.c ****     value |= (data << low);
+ 187:../Switch/core/hal/hal_mem.c **** 
+ 188:../Switch/core/hal/hal_mem.c ****     ptbl[word] = value;
+ 189:../Switch/core/hal/hal_mem.c **** 
+ 190:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 191:../Switch/core/hal/hal_mem.c **** }	
+ 192:../Switch/core/hal/hal_mem.c **** 
+ 193:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_op(uint8_t unit, uint8_t is_write, uint32 mem_id, uint32_t idx, uint3
+ 194:../Switch/core/hal/hal_mem.c **** {
+ 158              		.loc 1 194 1 is_stmt 1 view -0
+ 159              		.cfi_startproc
+ 160              		@ args = 8, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              		.loc 1 194 1 is_stmt 0 view .LVU23
+ 163 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 164              		.cfi_def_cfa_offset 40
+ 165              		.cfi_offset 3, -40
+ 166              		.cfi_offset 4, -36
+ 167              		.cfi_offset 5, -32
+ 168              		.cfi_offset 6, -28
+ 169              		.cfi_offset 7, -24
+ 170              		.cfi_offset 8, -20
+ 171              		.cfi_offset 9, -16
+ 172              		.cfi_offset 10, -12
+ 173              		.cfi_offset 11, -8
+ 174              		.cfi_offset 14, -4
+ 175 0004 DDF82C80 		ldr	r8, [sp, #44]
+ 195:../Switch/core/hal/hal_mem.c ****     uint32 i;
+ 176              		.loc 1 195 5 is_stmt 1 view .LVU24
+ 196:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret;
+ 177              		.loc 1 196 5 view .LVU25
+ 197:../Switch/core/hal/hal_mem.c **** 
+ 198:../Switch/core/hal/hal_mem.c ****     /*Use 32bits addr now*/
+ 199:../Switch/core/hal/hal_mem.c ****     uint32 addr;
+ 178              		.loc 1 199 5 view .LVU26
+ 200:../Switch/core/hal/hal_mem.c ****     uint32 *pvalue_tmp = (uint32*)pvalue;
+ 179              		.loc 1 200 5 view .LVU27
+ 180              	.LVL5:
+ 201:../Switch/core/hal/hal_mem.c ****     
+ 202:../Switch/core/hal/hal_mem.c ****     CMM_UNUSED_PARAM(len);
+ 181              		.loc 1 202 5 view .LVU28
+ 203:../Switch/core/hal/hal_mem.c ****     
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((NULL == pvalue), CMM_ERR_NULL_POINT);
+ 182              		.loc 1 204 5 view .LVU29
+ 183              		.loc 1 204 5 view .LVU30
+ 184 0008 B8F1000F 		cmp	r8, #0
+ 185 000c 1FD0     		beq	.L30
+ 186 000e 8246     		mov	r10, r0
+ 187 0010 8946     		mov	r9, r1
+ 188 0012 1646     		mov	r6, r2
+ 189              		.loc 1 204 5 discriminator 2 view .LVU31
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 190              		.loc 1 205 5 discriminator 2 view .LVU32
+ 191              		.loc 1 205 5 discriminator 2 view .LVU33
+ 192 0014 4D4A     		ldr	r2, .L42
+ 193              	.LVL6:
+ 194              		.loc 1 205 5 is_stmt 0 discriminator 2 view .LVU34
+ 195 0016 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 196 0018 3AB3     		cbz	r2, .L31
+ 197              		.loc 1 205 5 is_stmt 1 discriminator 2 view .LVU35
+ 206:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 198              		.loc 1 206 5 discriminator 2 view .LVU36
+ 199              		.loc 1 206 5 discriminator 2 view .LVU37
+ 200 001a 4D4A     		ldr	r2, .L42+4
+ 201 001c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 202 001e 002A     		cmp	r2, #0
+ 203 0020 32D0     		beq	.L32
+ 204              		.loc 1 206 5 discriminator 2 view .LVU38
+ 207:../Switch/core/hal/hal_mem.c **** 
+ 208:../Switch/core/hal/hal_mem.c ****   
+ 209:../Switch/core/hal/hal_mem.c ****     DRV_MEM_DS_VALID_CHK(mem_id, idx);
+ 205              		.loc 1 209 5 discriminator 2 view .LVU39
+ 206              		.loc 1 209 5 discriminator 2 view .LVU40
+ 207              		.loc 1 209 5 discriminator 2 view .LVU41
+ 208 0022 EC2E     		cmp	r6, #236
+ 209 0024 3ED8     		bhi	.L33
+ 210              		.loc 1 209 5 discriminator 7 view .LVU42
+ 211              		.loc 1 209 5 discriminator 7 view .LVU43
+ 212              		.loc 1 209 5 discriminator 7 view .LVU44
+ 213 0026 06EB4601 		add	r1, r6, r6, lsl #1
+ 214              	.LVL7:
+ 215              		.loc 1 209 5 is_stmt 0 discriminator 7 view .LVU45
+ 216 002a 4A4A     		ldr	r2, .L42+8
+ 217 002c 02EBC102 		add	r2, r2, r1, lsl #3
+ 218 0030 D268     		ldr	r2, [r2, #12]
+ 219 0032 9A42     		cmp	r2, r3
+ 220 0034 44D9     		bls	.L34
+ 221              		.loc 1 209 5 is_stmt 1 discriminator 9 view .LVU46
+ 210:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 211:../Switch/core/hal/hal_mem.c ****     
+ 212:../Switch/core/hal/hal_mem.c ****     addr = tbl_reg_list[mem_id].asic_offset + tbl_reg_list[mem_id].max_entry_size*idx ;
+ 222              		.loc 1 212 5 discriminator 9 view .LVU47
+ 223              		.loc 1 212 32 is_stmt 0 discriminator 9 view .LVU48
+ 224 0036 474A     		ldr	r2, .L42+8
+ 225 0038 06EB4601 		add	r1, r6, r6, lsl #1
+ 226 003c 02EBC100 		add	r0, r2, r1, lsl #3
+ 227              	.LVL8:
+ 228              		.loc 1 212 32 discriminator 9 view .LVU49
+ 229 0040 52F83170 		ldr	r7, [r2, r1, lsl #3]
+ 230              		.loc 1 212 67 discriminator 9 view .LVU50
+ 231 0044 4268     		ldr	r2, [r0, #4]
+ 232              		.loc 1 212 10 discriminator 9 view .LVU51
+ 233 0046 03FB0277 		mla	r7, r3, r2, r7
+ 234              	.LVL9:
+ 213:../Switch/core/hal/hal_mem.c **** 
+ 214:../Switch/core/hal/hal_mem.c ****     for(i = 0; (tbl_reg_list[mem_id].entry_real_size/(sizeof(uint32))) > i; i++)
+ 235              		.loc 1 214 5 is_stmt 1 discriminator 9 view .LVU52
+ 236              		.loc 1 214 11 is_stmt 0 discriminator 9 view .LVU53
+ 237 004a 0024     		movs	r4, #0
+ 238              		.loc 1 214 5 discriminator 9 view .LVU54
+ 239 004c 4DE0     		b	.L22
+ 240              	.LVL10:
+ 241              	.L30:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 242              		.loc 1 204 5 is_stmt 1 discriminator 1 view .LVU55
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 243              		.loc 1 204 5 discriminator 1 view .LVU56
+ 244 004e 424B     		ldr	r3, .L42+12
+ 245              	.LVL11:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 246              		.loc 1 204 5 is_stmt 0 discriminator 1 view .LVU57
+ 247 0050 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 248 0052 012B     		cmp	r3, #1
+ 249 0054 01D8     		bhi	.L35
+ 250              	.LVL12:
+ 251              	.L13:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 252              		.loc 1 204 5 is_stmt 1 discriminator 5 view .LVU58
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 253              		.loc 1 204 5 discriminator 5 view .LVU59
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 254              		.loc 1 204 5 discriminator 5 view .LVU60
+ 255 0056 0220     		movs	r0, #2
+ 256 0058 0CE0     		b	.L11
+ 257              	.LVL13:
+ 258              	.L35:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 259              		.loc 1 204 5 discriminator 3 view .LVU61
+ 260              	.LBB2:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 261              		.loc 1 204 5 discriminator 3 view .LVU62
+ 262 005a 404B     		ldr	r3, .L42+16
+ 263 005c 9A68     		ldr	r2, [r3, #8]
+ 264              	.LVL14:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 265              		.loc 1 204 5 is_stmt 0 discriminator 3 view .LVU63
+ 266 005e 404B     		ldr	r3, .L42+20
+ 267 0060 9968     		ldr	r1, [r3, #8]
+ 268              	.LVL15:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 269              		.loc 1 204 5 discriminator 3 view .LVU64
+ 270 0062 4048     		ldr	r0, .L42+24
+ 271              	.LVL16:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 272              		.loc 1 204 5 discriminator 3 view .LVU65
+ 273 0064 FFF7FEFF 		bl	osal_printf
+ 274              	.LVL17:
+ 275 0068 F5E7     		b	.L13
+ 276              	.LVL18:
+ 277              	.L31:
+ 204:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 278              		.loc 1 204 5 discriminator 3 view .LVU66
+ 279              	.LBE2:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 280              		.loc 1 205 5 is_stmt 1 discriminator 1 view .LVU67
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 281              		.loc 1 205 5 discriminator 1 view .LVU68
+ 282 006a 3B4B     		ldr	r3, .L42+12
+ 283              	.LVL19:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 284              		.loc 1 205 5 is_stmt 0 discriminator 1 view .LVU69
+ 285 006c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 286 006e 012B     		cmp	r3, #1
+ 287 0070 02D8     		bhi	.L36
+ 288              	.LVL20:
+ 289              	.L16:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 290              		.loc 1 205 5 is_stmt 1 discriminator 5 view .LVU70
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 291              		.loc 1 205 5 discriminator 5 view .LVU71
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 292              		.loc 1 205 5 discriminator 5 view .LVU72
+ 293 0072 0420     		movs	r0, #4
+ 294              	.LVL21:
+ 295              	.L11:
+ 215:../Switch/core/hal/hal_mem.c ****     {
+ 216:../Switch/core/hal/hal_mem.c ****         if(NULL == (pvalue_tmp + i))
+ 217:../Switch/core/hal/hal_mem.c ****         {
+ 218:../Switch/core/hal/hal_mem.c **** //            osal_mux_unlock(&g_cfgmux);
+ 219:../Switch/core/hal/hal_mem.c ****             return CMM_ERR_NULL_POINT;
+ 220:../Switch/core/hal/hal_mem.c ****         }
+ 221:../Switch/core/hal/hal_mem.c ****         if(is_write)
+ 222:../Switch/core/hal/hal_mem.c ****         {    
+ 223:../Switch/core/hal/hal_mem.c ****             ret = hal_mem32_write(unit, addr, *(pvalue_tmp + i));
+ 224:../Switch/core/hal/hal_mem.c ****             if(DEBUG_MODE_K == 1)
+ 225:../Switch/core/hal/hal_mem.c ****             {
+ 226:../Switch/core/hal/hal_mem.c ****                   osal_printf("Write addr[0x%x] = 0x%x\n",addr,*(uint32 *)(pvalue_tmp + i));
+ 227:../Switch/core/hal/hal_mem.c ****             }
+ 228:../Switch/core/hal/hal_mem.c ****         }
+ 229:../Switch/core/hal/hal_mem.c ****         else
+ 230:../Switch/core/hal/hal_mem.c ****         {
+ 231:../Switch/core/hal/hal_mem.c ****             ret = hal_mem32_read(unit, addr, pvalue_tmp + i);
+ 232:../Switch/core/hal/hal_mem.c ****         }
+ 233:../Switch/core/hal/hal_mem.c **** 
+ 234:../Switch/core/hal/hal_mem.c ****         if(CMM_ERR_OK != ret)
+ 235:../Switch/core/hal/hal_mem.c ****         {
+ 236:../Switch/core/hal/hal_mem.c **** //            osal_mux_unlock(&g_cfgmux);
+ 237:../Switch/core/hal/hal_mem.c ****             return ret;
+ 238:../Switch/core/hal/hal_mem.c ****         }
+ 239:../Switch/core/hal/hal_mem.c **** 
+ 240:../Switch/core/hal/hal_mem.c ****         if(is_write == 0)
+ 241:../Switch/core/hal/hal_mem.c ****        {
+ 242:../Switch/core/hal/hal_mem.c ****           if(DEBUG_MODE_K == 1)
+ 243:../Switch/core/hal/hal_mem.c ****           {
+ 244:../Switch/core/hal/hal_mem.c ****                osal_printf("Read addr[0x%x] = 0x%x\n",addr,*(uint32 *)(pvalue_tmp + i));
+ 245:../Switch/core/hal/hal_mem.c ****           }
+ 246:../Switch/core/hal/hal_mem.c ****        }
+ 247:../Switch/core/hal/hal_mem.c **** 
+ 248:../Switch/core/hal/hal_mem.c ****         addr += (sizeof(uint32));
+ 249:../Switch/core/hal/hal_mem.c ****     }
+ 250:../Switch/core/hal/hal_mem.c **** 
+ 251:../Switch/core/hal/hal_mem.c **** 
+ 252:../Switch/core/hal/hal_mem.c **** //    osal_mux_unlock(&g_cfgmux);
+ 253:../Switch/core/hal/hal_mem.c **** 
+ 254:../Switch/core/hal/hal_mem.c **** 	return CMM_ERR_OK;
+ 255:../Switch/core/hal/hal_mem.c **** }
+ 296              		.loc 1 255 1 is_stmt 0 view .LVU73
+ 297 0074 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 298              	.LVL22:
+ 299              	.L36:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 300              		.loc 1 205 5 is_stmt 1 discriminator 3 view .LVU74
+ 301              	.LBB3:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 302              		.loc 1 205 5 discriminator 3 view .LVU75
+ 303 0078 384B     		ldr	r3, .L42+16
+ 304 007a 1A69     		ldr	r2, [r3, #16]
+ 305 007c 384B     		ldr	r3, .L42+20
+ 306 007e 9968     		ldr	r1, [r3, #8]
+ 307              	.LVL23:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 308              		.loc 1 205 5 is_stmt 0 discriminator 3 view .LVU76
+ 309 0080 3848     		ldr	r0, .L42+24
+ 310              	.LVL24:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 311              		.loc 1 205 5 discriminator 3 view .LVU77
+ 312 0082 FFF7FEFF 		bl	osal_printf
+ 313              	.LVL25:
+ 314 0086 F4E7     		b	.L16
+ 315              	.LVL26:
+ 316              	.L32:
+ 205:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 317              		.loc 1 205 5 discriminator 3 view .LVU78
+ 318              	.LBE3:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 319              		.loc 1 206 5 is_stmt 1 discriminator 1 view .LVU79
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 320              		.loc 1 206 5 discriminator 1 view .LVU80
+ 321 0088 334B     		ldr	r3, .L42+12
+ 322              	.LVL27:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 323              		.loc 1 206 5 is_stmt 0 discriminator 1 view .LVU81
+ 324 008a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 325 008c 012B     		cmp	r3, #1
+ 326 008e 01D8     		bhi	.L37
+ 327              	.LVL28:
+ 328              	.L18:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 329              		.loc 1 206 5 is_stmt 1 discriminator 5 view .LVU82
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 330              		.loc 1 206 5 discriminator 5 view .LVU83
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 331              		.loc 1 206 5 discriminator 5 view .LVU84
+ 332 0090 0420     		movs	r0, #4
+ 333 0092 EFE7     		b	.L11
+ 334              	.LVL29:
+ 335              	.L37:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 336              		.loc 1 206 5 discriminator 3 view .LVU85
+ 337              	.LBB4:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 338              		.loc 1 206 5 discriminator 3 view .LVU86
+ 339 0094 314B     		ldr	r3, .L42+16
+ 340 0096 1A69     		ldr	r2, [r3, #16]
+ 341 0098 314B     		ldr	r3, .L42+20
+ 342 009a 9968     		ldr	r1, [r3, #8]
+ 343              	.LVL30:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 344              		.loc 1 206 5 is_stmt 0 discriminator 3 view .LVU87
+ 345 009c 3148     		ldr	r0, .L42+24
+ 346              	.LVL31:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 347              		.loc 1 206 5 discriminator 3 view .LVU88
+ 348 009e FFF7FEFF 		bl	osal_printf
+ 349              	.LVL32:
+ 350 00a2 F5E7     		b	.L18
+ 351              	.LVL33:
+ 352              	.L33:
+ 206:../Switch/core/hal/hal_mem.c **** 
+ 353              		.loc 1 206 5 discriminator 3 view .LVU89
+ 354              	.LBE4:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 355              		.loc 1 209 5 is_stmt 1 discriminator 1 view .LVU90
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 356              		.loc 1 209 5 discriminator 1 view .LVU91
+ 357 00a4 2C4B     		ldr	r3, .L42+12
+ 358              	.LVL34:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 359              		.loc 1 209 5 is_stmt 0 discriminator 1 view .LVU92
+ 360 00a6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 361 00a8 012B     		cmp	r3, #1
+ 362 00aa 01D8     		bhi	.L38
+ 363              	.LVL35:
+ 364              	.L20:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 365              		.loc 1 209 5 is_stmt 1 discriminator 5 view .LVU93
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 366              		.loc 1 209 5 discriminator 5 view .LVU94
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 367              		.loc 1 209 5 discriminator 5 view .LVU95
+ 368 00ac 0520     		movs	r0, #5
+ 369 00ae E1E7     		b	.L11
+ 370              	.LVL36:
+ 371              	.L38:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 372              		.loc 1 209 5 discriminator 3 view .LVU96
+ 373              	.LBB5:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 374              		.loc 1 209 5 discriminator 3 view .LVU97
+ 375 00b0 2A4B     		ldr	r3, .L42+16
+ 376 00b2 5A69     		ldr	r2, [r3, #20]
+ 377 00b4 2A4B     		ldr	r3, .L42+20
+ 378 00b6 9968     		ldr	r1, [r3, #8]
+ 379              	.LVL37:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 380              		.loc 1 209 5 is_stmt 0 discriminator 3 view .LVU98
+ 381 00b8 2A48     		ldr	r0, .L42+24
+ 382              	.LVL38:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 383              		.loc 1 209 5 discriminator 3 view .LVU99
+ 384 00ba FFF7FEFF 		bl	osal_printf
+ 385              	.LVL39:
+ 386 00be F5E7     		b	.L20
+ 387              	.LVL40:
+ 388              	.L34:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 389              		.loc 1 209 5 discriminator 3 view .LVU100
+ 390              	.LBE5:
+ 391              	.LBB6:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 392              		.loc 1 209 5 is_stmt 1 discriminator 8 view .LVU101
+ 393 00c0 3146     		mov	r1, r6
+ 394 00c2 2948     		ldr	r0, .L42+28
+ 395              	.LVL41:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 396              		.loc 1 209 5 is_stmt 0 discriminator 8 view .LVU102
+ 397 00c4 FFF7FEFF 		bl	osal_printf
+ 398              	.LVL42:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 399              		.loc 1 209 5 is_stmt 1 discriminator 8 view .LVU103
+ 400 00c8 0A20     		movs	r0, #10
+ 401 00ca D3E7     		b	.L11
+ 402              	.LVL43:
+ 403              	.L23:
+ 209:../Switch/core/hal/hal_mem.c **** //    osal_mux_lock(&g_cfgmux);
+ 404              		.loc 1 209 5 is_stmt 0 discriminator 8 view .LVU104
+ 405              	.LBE6:
+ 231:../Switch/core/hal/hal_mem.c ****         }
+ 406              		.loc 1 231 13 is_stmt 1 view .LVU105
+ 231:../Switch/core/hal/hal_mem.c ****         }
+ 407              		.loc 1 231 19 is_stmt 0 view .LVU106
+ 408 00cc 3946     		mov	r1, r7
+ 409 00ce 5046     		mov	r0, r10
+ 410 00d0 FFF7FEFF 		bl	hal_mem32_read
+ 411              	.LVL44:
+ 231:../Switch/core/hal/hal_mem.c ****         }
+ 412              		.loc 1 231 17 view .LVU107
+ 413 00d4 C5B2     		uxtb	r5, r0
+ 414              	.LVL45:
+ 415              	.L24:
+ 234:../Switch/core/hal/hal_mem.c ****         {
+ 416              		.loc 1 234 9 is_stmt 1 view .LVU108
+ 234:../Switch/core/hal/hal_mem.c ****         {
+ 417              		.loc 1 234 11 is_stmt 0 view .LVU109
+ 418 00d6 5DBB     		cbnz	r5, .L39
+ 240:../Switch/core/hal/hal_mem.c ****        {
+ 419              		.loc 1 240 9 is_stmt 1 view .LVU110
+ 240:../Switch/core/hal/hal_mem.c ****        {
+ 420              		.loc 1 240 11 is_stmt 0 view .LVU111
+ 421 00d8 B9F1000F 		cmp	r9, #0
+ 422 00dc 03D1     		bne	.L26
+ 242:../Switch/core/hal/hal_mem.c ****           {
+ 423              		.loc 1 242 11 is_stmt 1 view .LVU112
+ 242:../Switch/core/hal/hal_mem.c ****           {
+ 424              		.loc 1 242 27 is_stmt 0 view .LVU113
+ 425 00de 234B     		ldr	r3, .L42+32
+ 426 00e0 1B68     		ldr	r3, [r3]
+ 242:../Switch/core/hal/hal_mem.c ****           {
+ 427              		.loc 1 242 13 view .LVU114
+ 428 00e2 012B     		cmp	r3, #1
+ 429 00e4 26D0     		beq	.L40
+ 430              	.L26:
+ 248:../Switch/core/hal/hal_mem.c ****     }
+ 431              		.loc 1 248 9 is_stmt 1 discriminator 2 view .LVU115
+ 248:../Switch/core/hal/hal_mem.c ****     }
+ 432              		.loc 1 248 14 is_stmt 0 discriminator 2 view .LVU116
+ 433 00e6 0437     		adds	r7, r7, #4
+ 434              	.LVL46:
+ 214:../Switch/core/hal/hal_mem.c ****     {
+ 435              		.loc 1 214 78 is_stmt 1 discriminator 2 view .LVU117
+ 436 00e8 0134     		adds	r4, r4, #1
+ 437              	.LVL47:
+ 438              	.L22:
+ 214:../Switch/core/hal/hal_mem.c ****     {
+ 439              		.loc 1 214 72 discriminator 1 view .LVU118
+ 214:../Switch/core/hal/hal_mem.c ****     {
+ 440              		.loc 1 214 37 is_stmt 0 discriminator 1 view .LVU119
+ 441 00ea 06EB4602 		add	r2, r6, r6, lsl #1
+ 442 00ee 194B     		ldr	r3, .L42+8
+ 443 00f0 03EBC203 		add	r3, r3, r2, lsl #3
+ 444 00f4 9B68     		ldr	r3, [r3, #8]
+ 214:../Switch/core/hal/hal_mem.c ****     {
+ 445              		.loc 1 214 72 discriminator 1 view .LVU120
+ 446 00f6 B4EB930F 		cmp	r4, r3, lsr #2
+ 447 00fa 22D2     		bcs	.L41
+ 216:../Switch/core/hal/hal_mem.c ****         {
+ 448              		.loc 1 216 9 is_stmt 1 view .LVU121
+ 216:../Switch/core/hal/hal_mem.c ****         {
+ 449              		.loc 1 216 32 is_stmt 0 view .LVU122
+ 450 00fc 4FEA840B 		lsl	fp, r4, #2
+ 216:../Switch/core/hal/hal_mem.c ****         {
+ 451              		.loc 1 216 11 view .LVU123
+ 452 0100 18EB8402 		adds	r2, r8, r4, lsl #2
+ 453 0104 1FD0     		beq	.L28
+ 221:../Switch/core/hal/hal_mem.c ****         {    
+ 454              		.loc 1 221 9 is_stmt 1 view .LVU124
+ 221:../Switch/core/hal/hal_mem.c ****         {    
+ 455              		.loc 1 221 11 is_stmt 0 view .LVU125
+ 456 0106 B9F1000F 		cmp	r9, #0
+ 457 010a DFD0     		beq	.L23
+ 223:../Switch/core/hal/hal_mem.c ****             if(DEBUG_MODE_K == 1)
+ 458              		.loc 1 223 13 is_stmt 1 view .LVU126
+ 223:../Switch/core/hal/hal_mem.c ****             if(DEBUG_MODE_K == 1)
+ 459              		.loc 1 223 19 is_stmt 0 view .LVU127
+ 460 010c 58F80B20 		ldr	r2, [r8, fp]
+ 461 0110 3946     		mov	r1, r7
+ 462 0112 5046     		mov	r0, r10
+ 463 0114 FFF7FEFF 		bl	hal_mem32_write
+ 464              	.LVL48:
+ 223:../Switch/core/hal/hal_mem.c ****             if(DEBUG_MODE_K == 1)
+ 465              		.loc 1 223 17 view .LVU128
+ 466 0118 C5B2     		uxtb	r5, r0
+ 467              	.LVL49:
+ 224:../Switch/core/hal/hal_mem.c ****             {
+ 468              		.loc 1 224 13 is_stmt 1 view .LVU129
+ 224:../Switch/core/hal/hal_mem.c ****             {
+ 469              		.loc 1 224 29 is_stmt 0 view .LVU130
+ 470 011a 144B     		ldr	r3, .L42+32
+ 471 011c 1B68     		ldr	r3, [r3]
+ 224:../Switch/core/hal/hal_mem.c ****             {
+ 472              		.loc 1 224 15 view .LVU131
+ 473 011e 012B     		cmp	r3, #1
+ 474 0120 D9D1     		bne	.L24
+ 475              	.LBB7:
+ 226:../Switch/core/hal/hal_mem.c ****             }
+ 476              		.loc 1 226 19 is_stmt 1 view .LVU132
+ 477 0122 58F80B20 		ldr	r2, [r8, fp]
+ 478 0126 3946     		mov	r1, r7
+ 479 0128 1148     		ldr	r0, .L42+36
+ 480 012a FFF7FEFF 		bl	osal_printf
+ 481              	.LVL50:
+ 482 012e D2E7     		b	.L24
+ 483              	.L39:
+ 226:../Switch/core/hal/hal_mem.c ****             }
+ 484              		.loc 1 226 19 is_stmt 0 view .LVU133
+ 485              	.LBE7:
+ 237:../Switch/core/hal/hal_mem.c ****         }
+ 486              		.loc 1 237 13 is_stmt 1 view .LVU134
+ 237:../Switch/core/hal/hal_mem.c ****         }
+ 487              		.loc 1 237 20 is_stmt 0 view .LVU135
+ 488 0130 2846     		mov	r0, r5
+ 489 0132 9FE7     		b	.L11
+ 490              	.L40:
+ 491              	.LBB8:
+ 244:../Switch/core/hal/hal_mem.c ****           }
+ 492              		.loc 1 244 16 is_stmt 1 view .LVU136
+ 493 0134 58F80B20 		ldr	r2, [r8, fp]
+ 494 0138 3946     		mov	r1, r7
+ 495 013a 0E48     		ldr	r0, .L42+40
+ 496 013c FFF7FEFF 		bl	osal_printf
+ 497              	.LVL51:
+ 498 0140 D1E7     		b	.L26
+ 499              	.LVL52:
+ 500              	.L41:
+ 244:../Switch/core/hal/hal_mem.c ****           }
+ 501              		.loc 1 244 16 is_stmt 0 view .LVU137
+ 502              	.LBE8:
+ 254:../Switch/core/hal/hal_mem.c **** }
+ 503              		.loc 1 254 9 view .LVU138
+ 504 0142 0020     		movs	r0, #0
+ 505 0144 96E7     		b	.L11
+ 506              	.L28:
+ 219:../Switch/core/hal/hal_mem.c ****         }
+ 507              		.loc 1 219 20 view .LVU139
+ 508 0146 0220     		movs	r0, #2
+ 509 0148 94E7     		b	.L11
+ 510              	.L43:
+ 511 014a 00BF     		.align	2
+ 512              	.L42:
+ 513 014c 00000000 		.word	ghal_mem32_init
+ 514 0150 00000000 		.word	ghal_reg_table_init
+ 515 0154 00000000 		.word	tbl_reg_list
+ 516 0158 00000000 		.word	yt_debug_level
+ 517 015c 00000000 		.word	_yt_errmsg
+ 518 0160 00000000 		.word	_yt_prompt_msg
+ 519 0164 00000000 		.word	.LC0
+ 520 0168 08000000 		.word	.LC1
+ 521 016c 00000000 		.word	DEBUG_MODE_K
+ 522 0170 30000000 		.word	.LC2
+ 523 0174 4C000000 		.word	.LC3
+ 524              		.cfi_endproc
+ 525              	.LFE9:
+ 527              		.section	.rodata.hal_table_reg_normal_write.str1.4,"aMS",%progbits,1
+ 528              		.align	2
+ 529              	.LC4:
+ 530 0000 68616C5F 		.ascii	"hal_table_reg_op(unit, 1, mem_id, idx, len, pvalue)"
+ 530      7461626C 
+ 530      655F7265 
+ 530      675F6F70 
+ 530      28756E69 
+ 531 0033 00       		.ascii	"\000"
+ 532              		.align	2
+ 533              	.LC5:
+ 534 0034 25732573 		.ascii	"%s%s of \"%s\" in %s\015\012\000"
+ 534      206F6620 
+ 534      22257322 
+ 534      20696E20 
+ 534      25730D0A 
+ 535              		.section	.text.hal_table_reg_normal_write,"ax",%progbits
+ 536              		.align	1
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 541              	hal_table_reg_normal_write:
+ 542              	.LVL53:
+ 543              	.LFB10:
+ 256:../Switch/core/hal/hal_mem.c **** 
+ 257:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_normal_write(uint8_t unit, uint32 mem_id, uint32_t idx, uint16_t len,
+ 258:../Switch/core/hal/hal_mem.c **** {
+ 544              		.loc 1 258 1 is_stmt 1 view -0
+ 545              		.cfi_startproc
+ 546              		@ args = 4, pretend = 0, frame = 0
+ 547              		@ frame_needed = 0, uses_anonymous_args = 0
+ 548              		.loc 1 258 1 is_stmt 0 view .LVU141
+ 549 0000 30B5     		push	{r4, r5, lr}
+ 550              		.cfi_def_cfa_offset 12
+ 551              		.cfi_offset 4, -12
+ 552              		.cfi_offset 5, -8
+ 553              		.cfi_offset 14, -4
+ 554 0002 83B0     		sub	sp, sp, #12
+ 555              		.cfi_def_cfa_offset 24
+ 556 0004 069C     		ldr	r4, [sp, #24]
+ 259:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret;
+ 557              		.loc 1 259 5 is_stmt 1 view .LVU142
+ 260:../Switch/core/hal/hal_mem.c **** 
+ 261:../Switch/core/hal/hal_mem.c ****     CMM_UNUSED_PARAM(unit);
+ 558              		.loc 1 261 5 view .LVU143
+ 262:../Switch/core/hal/hal_mem.c ****     
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((NULL == pvalue), CMM_ERR_NULL_POINT);
+ 559              		.loc 1 263 5 view .LVU144
+ 560              		.loc 1 263 5 view .LVU145
+ 561 0006 9CB1     		cbz	r4, .L55
+ 562              		.loc 1 263 5 discriminator 2 view .LVU146
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 563              		.loc 1 264 5 discriminator 2 view .LVU147
+ 564              		.loc 1 264 5 discriminator 2 view .LVU148
+ 565 0008 294D     		ldr	r5, .L63
+ 566 000a 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 567 000c F5B1     		cbz	r5, .L56
+ 568              		.loc 1 264 5 discriminator 2 view .LVU149
+ 265:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 569              		.loc 1 265 5 discriminator 2 view .LVU150
+ 570              		.loc 1 265 5 discriminator 2 view .LVU151
+ 571 000e 294D     		ldr	r5, .L63+4
+ 572 0010 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 573 0012 4DB3     		cbz	r5, .L57
+ 574              		.loc 1 265 5 discriminator 2 view .LVU152
+ 266:../Switch/core/hal/hal_mem.c ****     
+ 267:../Switch/core/hal/hal_mem.c ****     CMM_ERR_CHK(hal_table_reg_op(unit, TRUE, mem_id, idx, len, pvalue), ret);
+ 575              		.loc 1 267 5 discriminator 2 view .LVU153
+ 576              		.loc 1 267 5 discriminator 2 view .LVU154
+ 577 0014 0194     		str	r4, [sp, #4]
+ 578 0016 0093     		str	r3, [sp]
+ 579 0018 1346     		mov	r3, r2
+ 580              	.LVL54:
+ 581              		.loc 1 267 5 is_stmt 0 discriminator 2 view .LVU155
+ 582 001a 0A46     		mov	r2, r1
+ 583              	.LVL55:
+ 584              		.loc 1 267 5 discriminator 2 view .LVU156
+ 585 001c 0121     		movs	r1, #1
+ 586              	.LVL56:
+ 587              		.loc 1 267 5 discriminator 2 view .LVU157
+ 588 001e FFF7FEFF 		bl	hal_table_reg_op
+ 589              	.LVL57:
+ 590              		.loc 1 267 5 discriminator 2 view .LVU158
+ 591 0022 0446     		mov	r4, r0
+ 592              	.LVL58:
+ 593              		.loc 1 267 5 discriminator 2 view .LVU159
+ 594 0024 10F0FF03 		ands	r3, r0, #255
+ 595 0028 2CD1     		bne	.L58
+ 268:../Switch/core/hal/hal_mem.c ****     
+ 269:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 596              		.loc 1 269 12 view .LVU160
+ 597 002a 0020     		movs	r0, #0
+ 598              	.LVL59:
+ 599              	.L44:
+ 270:../Switch/core/hal/hal_mem.c **** }
+ 600              		.loc 1 270 1 view .LVU161
+ 601 002c 03B0     		add	sp, sp, #12
+ 602              		.cfi_remember_state
+ 603              		.cfi_def_cfa_offset 12
+ 604              		@ sp needed
+ 605 002e 30BD     		pop	{r4, r5, pc}
+ 606              	.LVL60:
+ 607              	.L55:
+ 608              		.cfi_restore_state
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 609              		.loc 1 263 5 is_stmt 1 discriminator 1 view .LVU162
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 610              		.loc 1 263 5 discriminator 1 view .LVU163
+ 611 0030 214B     		ldr	r3, .L63+8
+ 612              	.LVL61:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 613              		.loc 1 263 5 is_stmt 0 discriminator 1 view .LVU164
+ 614 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 615 0034 012B     		cmp	r3, #1
+ 616 0036 01D8     		bhi	.L59
+ 617              	.LVL62:
+ 618              	.L46:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 619              		.loc 1 263 5 is_stmt 1 discriminator 5 view .LVU165
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 620              		.loc 1 263 5 discriminator 5 view .LVU166
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 621              		.loc 1 263 5 discriminator 5 view .LVU167
+ 622 0038 0220     		movs	r0, #2
+ 623 003a F7E7     		b	.L44
+ 624              	.LVL63:
+ 625              	.L59:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 626              		.loc 1 263 5 discriminator 3 view .LVU168
+ 627              	.LBB9:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 628              		.loc 1 263 5 discriminator 3 view .LVU169
+ 629 003c 1F4B     		ldr	r3, .L63+12
+ 630 003e 9A68     		ldr	r2, [r3, #8]
+ 631              	.LVL64:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 632              		.loc 1 263 5 is_stmt 0 discriminator 3 view .LVU170
+ 633 0040 1F4B     		ldr	r3, .L63+16
+ 634 0042 9968     		ldr	r1, [r3, #8]
+ 635              	.LVL65:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 636              		.loc 1 263 5 discriminator 3 view .LVU171
+ 637 0044 1F48     		ldr	r0, .L63+20
+ 638              	.LVL66:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 639              		.loc 1 263 5 discriminator 3 view .LVU172
+ 640 0046 FFF7FEFF 		bl	osal_printf
+ 641              	.LVL67:
+ 642 004a F5E7     		b	.L46
+ 643              	.LVL68:
+ 644              	.L56:
+ 263:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 645              		.loc 1 263 5 discriminator 3 view .LVU173
+ 646              	.LBE9:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 647              		.loc 1 264 5 is_stmt 1 discriminator 1 view .LVU174
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 648              		.loc 1 264 5 discriminator 1 view .LVU175
+ 649 004c 1A4B     		ldr	r3, .L63+8
+ 650              	.LVL69:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 651              		.loc 1 264 5 is_stmt 0 discriminator 1 view .LVU176
+ 652 004e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 653 0050 012B     		cmp	r3, #1
+ 654 0052 01D8     		bhi	.L60
+ 655              	.LVL70:
+ 656              	.L49:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 657              		.loc 1 264 5 is_stmt 1 discriminator 5 view .LVU177
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 658              		.loc 1 264 5 discriminator 5 view .LVU178
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 659              		.loc 1 264 5 discriminator 5 view .LVU179
+ 660 0054 0420     		movs	r0, #4
+ 661 0056 E9E7     		b	.L44
+ 662              	.LVL71:
+ 663              	.L60:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 664              		.loc 1 264 5 discriminator 3 view .LVU180
+ 665              	.LBB10:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 666              		.loc 1 264 5 discriminator 3 view .LVU181
+ 667 0058 184B     		ldr	r3, .L63+12
+ 668 005a 1A69     		ldr	r2, [r3, #16]
+ 669              	.LVL72:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 670              		.loc 1 264 5 is_stmt 0 discriminator 3 view .LVU182
+ 671 005c 184B     		ldr	r3, .L63+16
+ 672 005e 9968     		ldr	r1, [r3, #8]
+ 673              	.LVL73:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 674              		.loc 1 264 5 discriminator 3 view .LVU183
+ 675 0060 1848     		ldr	r0, .L63+20
+ 676              	.LVL74:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 677              		.loc 1 264 5 discriminator 3 view .LVU184
+ 678 0062 FFF7FEFF 		bl	osal_printf
+ 679              	.LVL75:
+ 680 0066 F5E7     		b	.L49
+ 681              	.LVL76:
+ 682              	.L57:
+ 264:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 683              		.loc 1 264 5 discriminator 3 view .LVU185
+ 684              	.LBE10:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 685              		.loc 1 265 5 is_stmt 1 discriminator 1 view .LVU186
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 686              		.loc 1 265 5 discriminator 1 view .LVU187
+ 687 0068 134B     		ldr	r3, .L63+8
+ 688              	.LVL77:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 689              		.loc 1 265 5 is_stmt 0 discriminator 1 view .LVU188
+ 690 006a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 691 006c 012B     		cmp	r3, #1
+ 692 006e 01D8     		bhi	.L61
+ 693              	.LVL78:
+ 694              	.L51:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 695              		.loc 1 265 5 is_stmt 1 discriminator 5 view .LVU189
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 696              		.loc 1 265 5 discriminator 5 view .LVU190
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 697              		.loc 1 265 5 discriminator 5 view .LVU191
+ 698 0070 0420     		movs	r0, #4
+ 699 0072 DBE7     		b	.L44
+ 700              	.LVL79:
+ 701              	.L61:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 702              		.loc 1 265 5 discriminator 3 view .LVU192
+ 703              	.LBB11:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 704              		.loc 1 265 5 discriminator 3 view .LVU193
+ 705 0074 114B     		ldr	r3, .L63+12
+ 706 0076 1A69     		ldr	r2, [r3, #16]
+ 707              	.LVL80:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 708              		.loc 1 265 5 is_stmt 0 discriminator 3 view .LVU194
+ 709 0078 114B     		ldr	r3, .L63+16
+ 710 007a 9968     		ldr	r1, [r3, #8]
+ 711              	.LVL81:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 712              		.loc 1 265 5 discriminator 3 view .LVU195
+ 713 007c 1148     		ldr	r0, .L63+20
+ 714              	.LVL82:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 715              		.loc 1 265 5 discriminator 3 view .LVU196
+ 716 007e FFF7FEFF 		bl	osal_printf
+ 717              	.LVL83:
+ 718 0082 F5E7     		b	.L51
+ 719              	.LVL84:
+ 720              	.L58:
+ 265:../Switch/core/hal/hal_mem.c ****     
+ 721              		.loc 1 265 5 discriminator 3 view .LVU197
+ 722              	.LBE11:
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 723              		.loc 1 267 5 is_stmt 1 discriminator 1 view .LVU198
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 724              		.loc 1 267 5 discriminator 1 view .LVU199
+ 725 0084 0C4A     		ldr	r2, .L63+8
+ 726 0086 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 727 0088 012A     		cmp	r2, #1
+ 728 008a 01D8     		bhi	.L62
+ 729              	.LVL85:
+ 730              	.L52:
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 731              		.loc 1 267 5 discriminator 5 view .LVU200
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 732              		.loc 1 267 5 discriminator 5 view .LVU201
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 733              		.loc 1 267 5 discriminator 5 view .LVU202
+ 734 008c E0B2     		uxtb	r0, r4
+ 735 008e CDE7     		b	.L44
+ 736              	.LVL86:
+ 737              	.L62:
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 738              		.loc 1 267 5 discriminator 3 view .LVU203
+ 739              	.LBB12:
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 740              		.loc 1 267 5 discriminator 3 view .LVU204
+ 741 0090 142B     		cmp	r3, #20
+ 742 0092 28BF     		it	cs
+ 743 0094 1423     		movcs	r3, #20
+ 744 0096 1A46     		mov	r2, r3
+ 745 0098 0B4B     		ldr	r3, .L63+24
+ 746 009a 0093     		str	r3, [sp]
+ 747 009c 0B4B     		ldr	r3, .L63+28
+ 748 009e 0749     		ldr	r1, .L63+12
+ 749 00a0 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 750 00a4 0649     		ldr	r1, .L63+16
+ 751 00a6 8968     		ldr	r1, [r1, #8]
+ 752 00a8 0948     		ldr	r0, .L63+32
+ 753              	.LVL87:
+ 267:../Switch/core/hal/hal_mem.c ****     
+ 754              		.loc 1 267 5 is_stmt 0 discriminator 3 view .LVU205
+ 755 00aa FFF7FEFF 		bl	osal_printf
+ 756              	.LVL88:
+ 757 00ae EDE7     		b	.L52
+ 758              	.L64:
+ 759              		.align	2
+ 760              	.L63:
+ 761 00b0 00000000 		.word	ghal_mem32_init
+ 762 00b4 00000000 		.word	ghal_reg_table_init
+ 763 00b8 00000000 		.word	yt_debug_level
+ 764 00bc 00000000 		.word	_yt_errmsg
+ 765 00c0 00000000 		.word	_yt_prompt_msg
+ 766 00c4 00000000 		.word	.LC0
+ 767 00c8 00000000 		.word	__FUNCTION__.2
+ 768 00cc 00000000 		.word	.LC4
+ 769 00d0 34000000 		.word	.LC5
+ 770              	.LBE12:
+ 771              		.cfi_endproc
+ 772              	.LFE10:
+ 774              		.section	.rodata.hal_table_reg_normal_read.str1.4,"aMS",%progbits,1
+ 775              		.align	2
+ 776              	.LC6:
+ 777 0000 68616C5F 		.ascii	"hal_table_reg_op(unit, 0, mem_id, idx, len, pvalue)"
+ 777      7461626C 
+ 777      655F7265 
+ 777      675F6F70 
+ 777      28756E69 
+ 778 0033 00       		.ascii	"\000"
+ 779              		.section	.text.hal_table_reg_normal_read,"ax",%progbits
+ 780              		.align	1
+ 781              		.syntax unified
+ 782              		.thumb
+ 783              		.thumb_func
+ 785              	hal_table_reg_normal_read:
+ 786              	.LVL89:
+ 787              	.LFB11:
+ 271:../Switch/core/hal/hal_mem.c **** 
+ 272:../Switch/core/hal/hal_mem.c **** static uint32_t hal_table_reg_normal_read(uint8_t unit, uint32 mem_id, uint32_t idx, uint16_t len, 
+ 273:../Switch/core/hal/hal_mem.c **** {
+ 788              		.loc 1 273 1 is_stmt 1 view -0
+ 789              		.cfi_startproc
+ 790              		@ args = 4, pretend = 0, frame = 0
+ 791              		@ frame_needed = 0, uses_anonymous_args = 0
+ 792              		.loc 1 273 1 is_stmt 0 view .LVU207
+ 793 0000 30B5     		push	{r4, r5, lr}
+ 794              		.cfi_def_cfa_offset 12
+ 795              		.cfi_offset 4, -12
+ 796              		.cfi_offset 5, -8
+ 797              		.cfi_offset 14, -4
+ 798 0002 83B0     		sub	sp, sp, #12
+ 799              		.cfi_def_cfa_offset 24
+ 800 0004 069C     		ldr	r4, [sp, #24]
+ 274:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret;
+ 801              		.loc 1 274 5 is_stmt 1 view .LVU208
+ 275:../Switch/core/hal/hal_mem.c **** 
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((NULL == pvalue), CMM_ERR_NULL_POINT);
+ 802              		.loc 1 276 5 view .LVU209
+ 803              		.loc 1 276 5 view .LVU210
+ 804 0006 9CB1     		cbz	r4, .L76
+ 805              		.loc 1 276 5 discriminator 2 view .LVU211
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 806              		.loc 1 277 5 discriminator 2 view .LVU212
+ 807              		.loc 1 277 5 discriminator 2 view .LVU213
+ 808 0008 294D     		ldr	r5, .L84
+ 809 000a 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 810 000c F5B1     		cbz	r5, .L77
+ 811              		.loc 1 277 5 discriminator 2 view .LVU214
+ 278:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 812              		.loc 1 278 5 discriminator 2 view .LVU215
+ 813              		.loc 1 278 5 discriminator 2 view .LVU216
+ 814 000e 294D     		ldr	r5, .L84+4
+ 815 0010 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 816 0012 4DB3     		cbz	r5, .L78
+ 817              		.loc 1 278 5 discriminator 2 view .LVU217
+ 279:../Switch/core/hal/hal_mem.c **** 
+ 280:../Switch/core/hal/hal_mem.c **** #ifdef INTERNAL_MSG_DEBUG
+ 281:../Switch/core/hal/hal_mem.c ****     if (MEM_FLAG_MSG == tbl_reg_list[mem_id].flag)
+ 282:../Switch/core/hal/hal_mem.c ****     {
+ 283:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_dbg_msg_read(unit, mem_id, pvalue), ret);
+ 284:../Switch/core/hal/hal_mem.c ****     }
+ 285:../Switch/core/hal/hal_mem.c ****     else
+ 286:../Switch/core/hal/hal_mem.c **** #endif
+ 287:../Switch/core/hal/hal_mem.c ****     {
+ 288:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_op(unit, FALSE, mem_id, idx, len, pvalue), ret);
+ 818              		.loc 1 288 9 discriminator 2 view .LVU218
+ 819              		.loc 1 288 9 discriminator 2 view .LVU219
+ 820 0014 0194     		str	r4, [sp, #4]
+ 821 0016 0093     		str	r3, [sp]
+ 822 0018 1346     		mov	r3, r2
+ 823              	.LVL90:
+ 824              		.loc 1 288 9 is_stmt 0 discriminator 2 view .LVU220
+ 825 001a 0A46     		mov	r2, r1
+ 826              	.LVL91:
+ 827              		.loc 1 288 9 discriminator 2 view .LVU221
+ 828 001c 0021     		movs	r1, #0
+ 829              	.LVL92:
+ 830              		.loc 1 288 9 discriminator 2 view .LVU222
+ 831 001e FFF7FEFF 		bl	hal_table_reg_op
+ 832              	.LVL93:
+ 833              		.loc 1 288 9 discriminator 2 view .LVU223
+ 834 0022 0446     		mov	r4, r0
+ 835              	.LVL94:
+ 836              		.loc 1 288 9 discriminator 2 view .LVU224
+ 837 0024 10F0FF03 		ands	r3, r0, #255
+ 838 0028 2CD1     		bne	.L79
+ 289:../Switch/core/hal/hal_mem.c ****     }
+ 290:../Switch/core/hal/hal_mem.c **** 
+ 291:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 839              		.loc 1 291 12 view .LVU225
+ 840 002a 0020     		movs	r0, #0
+ 841              	.LVL95:
+ 842              	.L65:
+ 292:../Switch/core/hal/hal_mem.c **** }
+ 843              		.loc 1 292 1 view .LVU226
+ 844 002c 03B0     		add	sp, sp, #12
+ 845              		.cfi_remember_state
+ 846              		.cfi_def_cfa_offset 12
+ 847              		@ sp needed
+ 848 002e 30BD     		pop	{r4, r5, pc}
+ 849              	.LVL96:
+ 850              	.L76:
+ 851              		.cfi_restore_state
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 852              		.loc 1 276 5 is_stmt 1 discriminator 1 view .LVU227
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 853              		.loc 1 276 5 discriminator 1 view .LVU228
+ 854 0030 214B     		ldr	r3, .L84+8
+ 855              	.LVL97:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 856              		.loc 1 276 5 is_stmt 0 discriminator 1 view .LVU229
+ 857 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 858 0034 012B     		cmp	r3, #1
+ 859 0036 01D8     		bhi	.L80
+ 860              	.LVL98:
+ 861              	.L67:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 862              		.loc 1 276 5 is_stmt 1 discriminator 5 view .LVU230
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 863              		.loc 1 276 5 discriminator 5 view .LVU231
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 864              		.loc 1 276 5 discriminator 5 view .LVU232
+ 865 0038 0220     		movs	r0, #2
+ 866 003a F7E7     		b	.L65
+ 867              	.LVL99:
+ 868              	.L80:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 869              		.loc 1 276 5 discriminator 3 view .LVU233
+ 870              	.LBB13:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 871              		.loc 1 276 5 discriminator 3 view .LVU234
+ 872 003c 1F4B     		ldr	r3, .L84+12
+ 873 003e 9A68     		ldr	r2, [r3, #8]
+ 874              	.LVL100:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 875              		.loc 1 276 5 is_stmt 0 discriminator 3 view .LVU235
+ 876 0040 1F4B     		ldr	r3, .L84+16
+ 877 0042 9968     		ldr	r1, [r3, #8]
+ 878              	.LVL101:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 879              		.loc 1 276 5 discriminator 3 view .LVU236
+ 880 0044 1F48     		ldr	r0, .L84+20
+ 881              	.LVL102:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 882              		.loc 1 276 5 discriminator 3 view .LVU237
+ 883 0046 FFF7FEFF 		bl	osal_printf
+ 884              	.LVL103:
+ 885 004a F5E7     		b	.L67
+ 886              	.LVL104:
+ 887              	.L77:
+ 276:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_mem32_init), CMM_ERR_NOT_INIT);
+ 888              		.loc 1 276 5 discriminator 3 view .LVU238
+ 889              	.LBE13:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 890              		.loc 1 277 5 is_stmt 1 discriminator 1 view .LVU239
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 891              		.loc 1 277 5 discriminator 1 view .LVU240
+ 892 004c 1A4B     		ldr	r3, .L84+8
+ 893              	.LVL105:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 894              		.loc 1 277 5 is_stmt 0 discriminator 1 view .LVU241
+ 895 004e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 896 0050 012B     		cmp	r3, #1
+ 897 0052 01D8     		bhi	.L81
+ 898              	.LVL106:
+ 899              	.L70:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 900              		.loc 1 277 5 is_stmt 1 discriminator 5 view .LVU242
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 901              		.loc 1 277 5 discriminator 5 view .LVU243
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 902              		.loc 1 277 5 discriminator 5 view .LVU244
+ 903 0054 0420     		movs	r0, #4
+ 904 0056 E9E7     		b	.L65
+ 905              	.LVL107:
+ 906              	.L81:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 907              		.loc 1 277 5 discriminator 3 view .LVU245
+ 908              	.LBB14:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 909              		.loc 1 277 5 discriminator 3 view .LVU246
+ 910 0058 184B     		ldr	r3, .L84+12
+ 911 005a 1A69     		ldr	r2, [r3, #16]
+ 912              	.LVL108:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 913              		.loc 1 277 5 is_stmt 0 discriminator 3 view .LVU247
+ 914 005c 184B     		ldr	r3, .L84+16
+ 915 005e 9968     		ldr	r1, [r3, #8]
+ 916              	.LVL109:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 917              		.loc 1 277 5 discriminator 3 view .LVU248
+ 918 0060 1848     		ldr	r0, .L84+20
+ 919              	.LVL110:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 920              		.loc 1 277 5 discriminator 3 view .LVU249
+ 921 0062 FFF7FEFF 		bl	osal_printf
+ 922              	.LVL111:
+ 923 0066 F5E7     		b	.L70
+ 924              	.LVL112:
+ 925              	.L78:
+ 277:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((FALSE == ghal_reg_table_init), CMM_ERR_NOT_INIT);
+ 926              		.loc 1 277 5 discriminator 3 view .LVU250
+ 927              	.LBE14:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 928              		.loc 1 278 5 is_stmt 1 discriminator 1 view .LVU251
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 929              		.loc 1 278 5 discriminator 1 view .LVU252
+ 930 0068 134B     		ldr	r3, .L84+8
+ 931              	.LVL113:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 932              		.loc 1 278 5 is_stmt 0 discriminator 1 view .LVU253
+ 933 006a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 934 006c 012B     		cmp	r3, #1
+ 935 006e 01D8     		bhi	.L82
+ 936              	.LVL114:
+ 937              	.L72:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 938              		.loc 1 278 5 is_stmt 1 discriminator 5 view .LVU254
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 939              		.loc 1 278 5 discriminator 5 view .LVU255
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 940              		.loc 1 278 5 discriminator 5 view .LVU256
+ 941 0070 0420     		movs	r0, #4
+ 942 0072 DBE7     		b	.L65
+ 943              	.LVL115:
+ 944              	.L82:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 945              		.loc 1 278 5 discriminator 3 view .LVU257
+ 946              	.LBB15:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 947              		.loc 1 278 5 discriminator 3 view .LVU258
+ 948 0074 114B     		ldr	r3, .L84+12
+ 949 0076 1A69     		ldr	r2, [r3, #16]
+ 950              	.LVL116:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 951              		.loc 1 278 5 is_stmt 0 discriminator 3 view .LVU259
+ 952 0078 114B     		ldr	r3, .L84+16
+ 953 007a 9968     		ldr	r1, [r3, #8]
+ 954              	.LVL117:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 955              		.loc 1 278 5 discriminator 3 view .LVU260
+ 956 007c 1148     		ldr	r0, .L84+20
+ 957              	.LVL118:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 958              		.loc 1 278 5 discriminator 3 view .LVU261
+ 959 007e FFF7FEFF 		bl	osal_printf
+ 960              	.LVL119:
+ 961 0082 F5E7     		b	.L72
+ 962              	.LVL120:
+ 963              	.L79:
+ 278:../Switch/core/hal/hal_mem.c **** 
+ 964              		.loc 1 278 5 discriminator 3 view .LVU262
+ 965              	.LBE15:
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 966              		.loc 1 288 9 is_stmt 1 discriminator 1 view .LVU263
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 967              		.loc 1 288 9 discriminator 1 view .LVU264
+ 968 0084 0C4A     		ldr	r2, .L84+8
+ 969 0086 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 970 0088 012A     		cmp	r2, #1
+ 971 008a 01D8     		bhi	.L83
+ 972              	.LVL121:
+ 973              	.L73:
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 974              		.loc 1 288 9 discriminator 5 view .LVU265
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 975              		.loc 1 288 9 discriminator 5 view .LVU266
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 976              		.loc 1 288 9 discriminator 5 view .LVU267
+ 977 008c E0B2     		uxtb	r0, r4
+ 978 008e CDE7     		b	.L65
+ 979              	.LVL122:
+ 980              	.L83:
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 981              		.loc 1 288 9 discriminator 3 view .LVU268
+ 982              	.LBB16:
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 983              		.loc 1 288 9 discriminator 3 view .LVU269
+ 984 0090 142B     		cmp	r3, #20
+ 985 0092 28BF     		it	cs
+ 986 0094 1423     		movcs	r3, #20
+ 987 0096 1A46     		mov	r2, r3
+ 988 0098 0B4B     		ldr	r3, .L84+24
+ 989 009a 0093     		str	r3, [sp]
+ 990 009c 0B4B     		ldr	r3, .L84+28
+ 991 009e 0749     		ldr	r1, .L84+12
+ 992 00a0 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 993 00a4 0649     		ldr	r1, .L84+16
+ 994 00a6 8968     		ldr	r1, [r1, #8]
+ 995 00a8 0948     		ldr	r0, .L84+32
+ 996              	.LVL123:
+ 288:../Switch/core/hal/hal_mem.c ****     }
+ 997              		.loc 1 288 9 is_stmt 0 discriminator 3 view .LVU270
+ 998 00aa FFF7FEFF 		bl	osal_printf
+ 999              	.LVL124:
+ 1000 00ae EDE7     		b	.L73
+ 1001              	.L85:
+ 1002              		.align	2
+ 1003              	.L84:
+ 1004 00b0 00000000 		.word	ghal_mem32_init
+ 1005 00b4 00000000 		.word	ghal_reg_table_init
+ 1006 00b8 00000000 		.word	yt_debug_level
+ 1007 00bc 00000000 		.word	_yt_errmsg
+ 1008 00c0 00000000 		.word	_yt_prompt_msg
+ 1009 00c4 00000000 		.word	.LC0
+ 1010 00c8 00000000 		.word	__FUNCTION__.0
+ 1011 00cc 00000000 		.word	.LC6
+ 1012 00d0 34000000 		.word	.LC5
+ 1013              	.LBE16:
+ 1014              		.cfi_endproc
+ 1015              	.LFE11:
+ 1017              		.section	.text.hal_tbl_reg_field_get,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.global	hal_tbl_reg_field_get
+ 1020              		.syntax unified
+ 1021              		.thumb
+ 1022              		.thumb_func
+ 1024              	hal_tbl_reg_field_get:
+ 1025              	.LVL125:
+ 1026              	.LFB7:
+ 131:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width;
+ 1027              		.loc 1 131 1 is_stmt 1 view -0
+ 1028              		.cfi_startproc
+ 1029              		@ args = 0, pretend = 0, frame = 0
+ 1030              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1031              		@ link register save eliminated.
+ 132:../Switch/core/hal/hal_mem.c ****     uint32 value_hi, value_lo, value;
+ 1032              		.loc 1 132 5 view .LVU272
+ 133:../Switch/core/hal/hal_mem.c ****     uint32 *ptbl = (uint32_t *)entry;
+ 1033              		.loc 1 133 5 view .LVU273
+ 134:../Switch/core/hal/hal_mem.c ****     uint32 *pdata = (uint32_t *)data;
+ 1034              		.loc 1 134 5 view .LVU274
+ 135:../Switch/core/hal/hal_mem.c **** 
+ 1035              		.loc 1 135 5 view .LVU275
+ 137:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1036              		.loc 1 137 5 view .LVU276
+ 137:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1037              		.loc 1 137 8 is_stmt 0 view .LVU277
+ 1038 0000 EC28     		cmp	r0, #236
+ 1039 0002 3ED8     		bhi	.L90
+ 131:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width;
+ 1040              		.loc 1 131 1 view .LVU278
+ 1041 0004 30B4     		push	{r4, r5}
+ 1042              		.cfi_def_cfa_offset 8
+ 1043              		.cfi_offset 4, -8
+ 1044              		.cfi_offset 5, -4
+ 138:../Switch/core/hal/hal_mem.c **** 
+ 1045              		.loc 1 138 5 is_stmt 1 view .LVU279
+ 138:../Switch/core/hal/hal_mem.c **** 
+ 1046              		.loc 1 138 41 is_stmt 0 view .LVU280
+ 1047 0006 00EB400C 		add	ip, r0, r0, lsl #1
+ 1048 000a 204C     		ldr	r4, .L97
+ 1049 000c 04EBCC0C 		add	ip, r4, ip, lsl #3
+ 1050 0010 DCF81040 		ldr	r4, [ip, #16]
+ 138:../Switch/core/hal/hal_mem.c **** 
+ 1051              		.loc 1 138 8 view .LVU281
+ 1052 0014 8C42     		cmp	r4, r1
+ 1053 0016 36D9     		bls	.L91
+ 140:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1054              		.loc 1 140 5 is_stmt 1 view .LVU282
+ 140:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1055              		.loc 1 140 32 is_stmt 0 view .LVU283
+ 1056 0018 DCF81400 		ldr	r0, [ip, #20]
+ 1057              	.LVL126:
+ 140:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1058              		.loc 1 140 39 view .LVU284
+ 1059 001c 00EB8101 		add	r1, r0, r1, lsl #2
+ 1060              	.LVL127:
+ 140:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1061              		.loc 1 140 49 view .LVU285
+ 1062 0020 8D78     		ldrb	r5, [r1, #2]	@ zero_extendqisi2
+ 1063              	.LVL128:
+ 141:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 1064              		.loc 1 141 5 is_stmt 1 view .LVU286
+ 141:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 1065              		.loc 1 141 48 is_stmt 0 view .LVU287
+ 1066 0022 C878     		ldrb	r0, [r1, #3]	@ zero_extendqisi2
+ 1067              	.LVL129:
+ 142:../Switch/core/hal/hal_mem.c **** 
+ 1068              		.loc 1 142 5 is_stmt 1 view .LVU288
+ 142:../Switch/core/hal/hal_mem.c **** 
+ 1069              		.loc 1 142 50 is_stmt 0 view .LVU289
+ 1070 0024 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+ 1071              	.LVL130:
+ 144:../Switch/core/hal/hal_mem.c ****     {
+ 1072              		.loc 1 144 5 is_stmt 1 view .LVU290
+ 144:../Switch/core/hal/hal_mem.c ****     {
+ 1073              		.loc 1 144 13 is_stmt 0 view .LVU291
+ 1074 0026 0119     		adds	r1, r0, r4
+ 144:../Switch/core/hal/hal_mem.c ****     {
+ 1075              		.loc 1 144 8 view .LVU292
+ 1076 0028 1F29     		cmp	r1, #31
+ 1077 002a 0AD8     		bhi	.L88
+ 146:../Switch/core/hal/hal_mem.c ****         *pdata = (uint32)GET_FIELD(value, low, width);
+ 1078              		.loc 1 146 9 is_stmt 1 view .LVU293
+ 146:../Switch/core/hal/hal_mem.c ****         *pdata = (uint32)GET_FIELD(value, low, width);
+ 1079              		.loc 1 146 15 is_stmt 0 view .LVU294
+ 1080 002c 52F82520 		ldr	r2, [r2, r5, lsl #2]
+ 1081              	.LVL131:
+ 147:../Switch/core/hal/hal_mem.c ****     }
+ 1082              		.loc 1 147 9 is_stmt 1 view .LVU295
+ 147:../Switch/core/hal/hal_mem.c ****     }
+ 1083              		.loc 1 147 26 is_stmt 0 view .LVU296
+ 1084 0030 C240     		lsrs	r2, r2, r0
+ 1085              	.LVL132:
+ 147:../Switch/core/hal/hal_mem.c ****     }
+ 1086              		.loc 1 147 26 view .LVU297
+ 1087 0032 4FF0FF31 		mov	r1, #-1
+ 1088 0036 A140     		lsls	r1, r1, r4
+ 1089 0038 22EA0102 		bic	r2, r2, r1
+ 147:../Switch/core/hal/hal_mem.c ****     }
+ 1090              		.loc 1 147 16 view .LVU298
+ 1091 003c 1A60     		str	r2, [r3]
+ 1092              	.LVL133:
+ 165:../Switch/core/hal/hal_mem.c **** }	
+ 1093              		.loc 1 165 12 view .LVU299
+ 1094 003e 0020     		movs	r0, #0
+ 1095              	.LVL134:
+ 165:../Switch/core/hal/hal_mem.c **** }	
+ 1096              		.loc 1 165 12 view .LVU300
+ 1097 0040 22E0     		b	.L86
+ 1098              	.LVL135:
+ 1099              	.L88:
+ 151:../Switch/core/hal/hal_mem.c ****         {
+ 1100              		.loc 1 151 9 is_stmt 1 view .LVU301
+ 151:../Switch/core/hal/hal_mem.c ****         {
+ 1101              		.loc 1 151 12 is_stmt 0 view .LVU302
+ 1102 0042 08B9     		cbnz	r0, .L89
+ 151:../Switch/core/hal/hal_mem.c ****         {
+ 1103              		.loc 1 151 22 discriminator 1 view .LVU303
+ 1104 0044 202C     		cmp	r4, #32
+ 1105 0046 18D0     		beq	.L96
+ 1106              	.L89:
+ 157:../Switch/core/hal/hal_mem.c ****             value_lo = ptbl[word];
+ 1107              		.loc 1 157 13 is_stmt 1 view .LVU304
+ 157:../Switch/core/hal/hal_mem.c ****             value_lo = ptbl[word];
+ 1108              		.loc 1 157 28 is_stmt 0 view .LVU305
+ 1109 0048 6C1C     		adds	r4, r5, #1
+ 1110              	.LVL136:
+ 157:../Switch/core/hal/hal_mem.c ****             value_lo = ptbl[word];
+ 1111              		.loc 1 157 22 view .LVU306
+ 1112 004a 52F82440 		ldr	r4, [r2, r4, lsl #2]
+ 1113              	.LVL137:
+ 158:../Switch/core/hal/hal_mem.c ****             value_hi = (uint32)GET_FIELD(value_hi, 0, (width - (32 - low)));
+ 1114              		.loc 1 158 13 is_stmt 1 view .LVU307
+ 158:../Switch/core/hal/hal_mem.c ****             value_hi = (uint32)GET_FIELD(value_hi, 0, (width - (32 - low)));
+ 1115              		.loc 1 158 22 is_stmt 0 view .LVU308
+ 1116 004e 52F82550 		ldr	r5, [r2, r5, lsl #2]
+ 1117              	.LVL138:
+ 159:../Switch/core/hal/hal_mem.c ****             value_lo = (uint32)GET_FIELD(value_lo, low, (32 - low));
+ 1118              		.loc 1 159 13 is_stmt 1 view .LVU309
+ 159:../Switch/core/hal/hal_mem.c ****             value_lo = (uint32)GET_FIELD(value_lo, low, (32 - low));
+ 1119              		.loc 1 159 32 is_stmt 0 view .LVU310
+ 1120 0052 2039     		subs	r1, r1, #32
+ 1121 0054 4FF0FF3C 		mov	ip, #-1
+ 1122              	.LVL139:
+ 159:../Switch/core/hal/hal_mem.c ****             value_lo = (uint32)GET_FIELD(value_lo, low, (32 - low));
+ 1123              		.loc 1 159 32 view .LVU311
+ 1124 0058 0CFA01F1 		lsl	r1, ip, r1
+ 159:../Switch/core/hal/hal_mem.c ****             value_lo = (uint32)GET_FIELD(value_lo, low, (32 - low));
+ 1125              		.loc 1 159 22 view .LVU312
+ 1126 005c 24EA0102 		bic	r2, r4, r1
+ 1127              	.LVL140:
+ 160:../Switch/core/hal/hal_mem.c ****             *pdata = (value_hi << (32 - low)) + value_lo;
+ 1128              		.loc 1 160 13 is_stmt 1 view .LVU313
+ 160:../Switch/core/hal/hal_mem.c ****             *pdata = (value_hi << (32 - low)) + value_lo;
+ 1129              		.loc 1 160 32 is_stmt 0 view .LVU314
+ 1130 0060 25FA00F1 		lsr	r1, r5, r0
+ 1131 0064 C0F12000 		rsb	r0, r0, #32
+ 1132              	.LVL141:
+ 160:../Switch/core/hal/hal_mem.c ****             *pdata = (value_hi << (32 - low)) + value_lo;
+ 1133              		.loc 1 160 32 view .LVU315
+ 1134 0068 0CFA00FC 		lsl	ip, ip, r0
+ 160:../Switch/core/hal/hal_mem.c ****             *pdata = (value_hi << (32 - low)) + value_lo;
+ 1135              		.loc 1 160 22 view .LVU316
+ 1136 006c 21EA0C01 		bic	r1, r1, ip
+ 1137              	.LVL142:
+ 161:../Switch/core/hal/hal_mem.c ****         }
+ 1138              		.loc 1 161 13 is_stmt 1 view .LVU317
+ 161:../Switch/core/hal/hal_mem.c ****         }
+ 1139              		.loc 1 161 32 is_stmt 0 view .LVU318
+ 1140 0070 8240     		lsls	r2, r2, r0
+ 1141              	.LVL143:
+ 161:../Switch/core/hal/hal_mem.c ****         }
+ 1142              		.loc 1 161 47 view .LVU319
+ 1143 0072 0A44     		add	r2, r2, r1
+ 161:../Switch/core/hal/hal_mem.c ****         }
+ 1144              		.loc 1 161 20 view .LVU320
+ 1145 0074 1A60     		str	r2, [r3]
+ 1146              	.LVL144:
+ 165:../Switch/core/hal/hal_mem.c **** }	
+ 1147              		.loc 1 165 12 view .LVU321
+ 1148 0076 0020     		movs	r0, #0
+ 1149 0078 06E0     		b	.L86
+ 1150              	.LVL145:
+ 1151              	.L96:
+ 153:../Switch/core/hal/hal_mem.c ****         }
+ 1152              		.loc 1 153 13 is_stmt 1 view .LVU322
+ 153:../Switch/core/hal/hal_mem.c ****         }
+ 1153              		.loc 1 153 26 is_stmt 0 view .LVU323
+ 1154 007a 52F82520 		ldr	r2, [r2, r5, lsl #2]
+ 1155              	.LVL146:
+ 153:../Switch/core/hal/hal_mem.c ****         }
+ 1156              		.loc 1 153 20 view .LVU324
+ 1157 007e 1A60     		str	r2, [r3]
+ 1158 0080 02E0     		b	.L86
+ 1159              	.LVL147:
+ 1160              	.L90:
+ 1161              		.cfi_def_cfa_offset 0
+ 1162              		.cfi_restore 4
+ 1163              		.cfi_restore 5
+ 137:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1164              		.loc 1 137 31 view .LVU325
+ 1165 0082 0120     		movs	r0, #1
+ 1166              	.LVL148:
+ 166:../Switch/core/hal/hal_mem.c **** 
+ 1167              		.loc 1 166 1 view .LVU326
+ 1168 0084 7047     		bx	lr
+ 1169              	.LVL149:
+ 1170              	.L91:
+ 1171              		.cfi_def_cfa_offset 8
+ 1172              		.cfi_offset 4, -8
+ 1173              		.cfi_offset 5, -4
+ 138:../Switch/core/hal/hal_mem.c **** 
+ 1174              		.loc 1 138 61 view .LVU327
+ 1175 0086 0120     		movs	r0, #1
+ 1176              	.LVL150:
+ 1177              	.L86:
+ 166:../Switch/core/hal/hal_mem.c **** 
+ 1178              		.loc 1 166 1 view .LVU328
+ 1179 0088 30BC     		pop	{r4, r5}
+ 1180              		.cfi_restore 5
+ 1181              		.cfi_restore 4
+ 1182              		.cfi_def_cfa_offset 0
+ 1183 008a 7047     		bx	lr
+ 1184              	.L98:
+ 1185              		.align	2
+ 1186              	.L97:
+ 1187 008c 00000000 		.word	tbl_reg_list
+ 1188              		.cfi_endproc
+ 1189              	.LFE7:
+ 1191              		.section	.text.hal_tbl_reg_field_set,"ax",%progbits
+ 1192              		.align	1
+ 1193              		.global	hal_tbl_reg_field_set
+ 1194              		.syntax unified
+ 1195              		.thumb
+ 1196              		.thumb_func
+ 1198              	hal_tbl_reg_field_set:
+ 1199              	.LVL151:
+ 1200              	.LFB8:
+ 169:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width, value;
+ 1201              		.loc 1 169 1 is_stmt 1 view -0
+ 1202              		.cfi_startproc
+ 1203              		@ args = 0, pretend = 0, frame = 0
+ 1204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 170:../Switch/core/hal/hal_mem.c ****     uint32 *ptbl = (uint32_t *)entry;
+ 1205              		.loc 1 170 5 view .LVU330
+ 171:../Switch/core/hal/hal_mem.c **** 
+ 1206              		.loc 1 171 5 view .LVU331
+ 173:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1207              		.loc 1 173 5 view .LVU332
+ 173:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1208              		.loc 1 173 8 is_stmt 0 view .LVU333
+ 1209 0000 EC28     		cmp	r0, #236
+ 1210 0002 28D8     		bhi	.L102
+ 169:../Switch/core/hal/hal_mem.c ****     uint32 word, low, width, value;
+ 1211              		.loc 1 169 1 view .LVU334
+ 1212 0004 10B5     		push	{r4, lr}
+ 1213              		.cfi_def_cfa_offset 8
+ 1214              		.cfi_offset 4, -8
+ 1215              		.cfi_offset 14, -4
+ 174:../Switch/core/hal/hal_mem.c **** 
+ 1216              		.loc 1 174 5 is_stmt 1 view .LVU335
+ 174:../Switch/core/hal/hal_mem.c **** 
+ 1217              		.loc 1 174 41 is_stmt 0 view .LVU336
+ 1218 0006 00EB400C 		add	ip, r0, r0, lsl #1
+ 1219 000a 154C     		ldr	r4, .L110
+ 1220 000c 04EBCC0C 		add	ip, r4, ip, lsl #3
+ 1221 0010 DCF81040 		ldr	r4, [ip, #16]
+ 174:../Switch/core/hal/hal_mem.c **** 
+ 1222              		.loc 1 174 8 view .LVU337
+ 1223 0014 8C42     		cmp	r4, r1
+ 1224 0016 20D9     		bls	.L103
+ 176:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1225              		.loc 1 176 5 is_stmt 1 view .LVU338
+ 176:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1226              		.loc 1 176 32 is_stmt 0 view .LVU339
+ 1227 0018 DCF81400 		ldr	r0, [ip, #20]
+ 1228              	.LVL152:
+ 176:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1229              		.loc 1 176 39 view .LVU340
+ 1230 001c 00EB8101 		add	r1, r0, r1, lsl #2
+ 1231              	.LVL153:
+ 176:../Switch/core/hal/hal_mem.c ****     low = tbl_reg_list[mem_id].fields[field_id].bit_offset;
+ 1232              		.loc 1 176 49 view .LVU341
+ 1233 0020 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
+ 1234              	.LVL154:
+ 177:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 1235              		.loc 1 177 5 is_stmt 1 view .LVU342
+ 177:../Switch/core/hal/hal_mem.c ****     width = tbl_reg_list[mem_id].fields[field_id].width;
+ 1236              		.loc 1 177 48 is_stmt 0 view .LVU343
+ 1237 0022 91F803C0 		ldrb	ip, [r1, #3]	@ zero_extendqisi2
+ 1238              	.LVL155:
+ 178:../Switch/core/hal/hal_mem.c **** 
+ 1239              		.loc 1 178 5 is_stmt 1 view .LVU344
+ 178:../Switch/core/hal/hal_mem.c **** 
+ 1240              		.loc 1 178 50 is_stmt 0 view .LVU345
+ 1241 0026 91F801E0 		ldrb	lr, [r1, #1]	@ zero_extendqisi2
+ 1242              	.LVL156:
+ 180:../Switch/core/hal/hal_mem.c ****     value = (uint32)CLR_FIELD(value, low, width);
+ 1243              		.loc 1 180 5 is_stmt 1 view .LVU346
+ 180:../Switch/core/hal/hal_mem.c ****     value = (uint32)CLR_FIELD(value, low, width);
+ 1244              		.loc 1 180 11 is_stmt 0 view .LVU347
+ 1245 002a 52F82400 		ldr	r0, [r2, r4, lsl #2]
+ 1246              	.LVL157:
+ 181:../Switch/core/hal/hal_mem.c ****     if(width == 32)
+ 1247              		.loc 1 181 5 is_stmt 1 view .LVU348
+ 181:../Switch/core/hal/hal_mem.c ****     if(width == 32)
+ 1248              		.loc 1 181 21 is_stmt 0 view .LVU349
+ 1249 002e 0121     		movs	r1, #1
+ 1250 0030 01FA0EF1 		lsl	r1, r1, lr
+ 1251 0034 0139     		subs	r1, r1, #1
+ 1252 0036 01FA0CF1 		lsl	r1, r1, ip
+ 181:../Switch/core/hal/hal_mem.c ****     if(width == 32)
+ 1253              		.loc 1 181 11 view .LVU350
+ 1254 003a 20EA0101 		bic	r1, r0, r1
+ 1255              	.LVL158:
+ 182:../Switch/core/hal/hal_mem.c ****     {
+ 1256              		.loc 1 182 5 is_stmt 1 view .LVU351
+ 182:../Switch/core/hal/hal_mem.c ****     {
+ 1257              		.loc 1 182 7 is_stmt 0 view .LVU352
+ 1258 003e BEF1200F 		cmp	lr, #32
+ 1259 0042 06D0     		beq	.L109
+ 1260              	.LVL159:
+ 1261              	.L101:
+ 186:../Switch/core/hal/hal_mem.c **** 
+ 1262              		.loc 1 186 5 is_stmt 1 view .LVU353
+ 186:../Switch/core/hal/hal_mem.c **** 
+ 1263              		.loc 1 186 20 is_stmt 0 view .LVU354
+ 1264 0044 03FA0CF3 		lsl	r3, r3, ip
+ 1265              	.LVL160:
+ 186:../Switch/core/hal/hal_mem.c **** 
+ 1266              		.loc 1 186 11 view .LVU355
+ 1267 0048 0B43     		orrs	r3, r3, r1
+ 1268              	.LVL161:
+ 188:../Switch/core/hal/hal_mem.c **** 
+ 1269              		.loc 1 188 5 is_stmt 1 view .LVU356
+ 188:../Switch/core/hal/hal_mem.c **** 
+ 1270              		.loc 1 188 16 is_stmt 0 view .LVU357
+ 1271 004a 42F82430 		str	r3, [r2, r4, lsl #2]
+ 190:../Switch/core/hal/hal_mem.c **** }	
+ 1272              		.loc 1 190 5 is_stmt 1 view .LVU358
+ 190:../Switch/core/hal/hal_mem.c **** }	
+ 1273              		.loc 1 190 12 is_stmt 0 view .LVU359
+ 1274 004e 0020     		movs	r0, #0
+ 1275              	.LVL162:
+ 1276              	.L99:
+ 191:../Switch/core/hal/hal_mem.c **** 
+ 1277              		.loc 1 191 1 view .LVU360
+ 1278 0050 10BD     		pop	{r4, pc}
+ 1279              	.LVL163:
+ 1280              	.L109:
+ 184:../Switch/core/hal/hal_mem.c ****     }
+ 1281              		.loc 1 184 15 view .LVU361
+ 1282 0052 0021     		movs	r1, #0
+ 1283              	.LVL164:
+ 184:../Switch/core/hal/hal_mem.c ****     }
+ 1284              		.loc 1 184 15 view .LVU362
+ 1285 0054 F6E7     		b	.L101
+ 1286              	.LVL165:
+ 1287              	.L102:
+ 1288              		.cfi_def_cfa_offset 0
+ 1289              		.cfi_restore 4
+ 1290              		.cfi_restore 14
+ 173:../Switch/core/hal/hal_mem.c ****     if (field_id >= tbl_reg_list[mem_id].fields_num) return CMM_ERR_FAIL; //field not found
+ 1291              		.loc 1 173 31 view .LVU363
+ 1292 0056 0120     		movs	r0, #1
+ 1293              	.LVL166:
+ 191:../Switch/core/hal/hal_mem.c **** 
+ 1294              		.loc 1 191 1 view .LVU364
+ 1295 0058 7047     		bx	lr
+ 1296              	.LVL167:
+ 1297              	.L103:
+ 1298              		.cfi_def_cfa_offset 8
+ 1299              		.cfi_offset 4, -8
+ 1300              		.cfi_offset 14, -4
+ 174:../Switch/core/hal/hal_mem.c **** 
+ 1301              		.loc 1 174 61 view .LVU365
+ 1302 005a 0120     		movs	r0, #1
+ 1303              	.LVL168:
+ 174:../Switch/core/hal/hal_mem.c **** 
+ 1304              		.loc 1 174 61 view .LVU366
+ 1305 005c F8E7     		b	.L99
+ 1306              	.L111:
+ 1307 005e 00BF     		.align	2
+ 1308              	.L110:
+ 1309 0060 00000000 		.word	tbl_reg_list
+ 1310              		.cfi_endproc
+ 1311              	.LFE8:
+ 1313              		.section	.rodata.hal_table_reg_write.str1.4,"aMS",%progbits,1
+ 1314              		.align	2
+ 1315              	.LC7:
+ 1316 0000 68616C5F 		.ascii	"hal_table_reg_normal_write(unit, mem_id, idx, len, "
+ 1316      7461626C 
+ 1316      655F7265 
+ 1316      675F6E6F 
+ 1316      726D616C 
+ 1317 0033 7076616C 		.ascii	"pvalue)\000"
+ 1317      75652900 
+ 1318              		.section	.text.hal_table_reg_write,"ax",%progbits
+ 1319              		.align	1
+ 1320              		.global	hal_table_reg_write
+ 1321              		.syntax unified
+ 1322              		.thumb
+ 1323              		.thumb_func
+ 1325              	hal_table_reg_write:
+ 1326              	.LVL169:
+ 1327              	.LFB12:
+ 293:../Switch/core/hal/hal_mem.c **** 
+ 294:../Switch/core/hal/hal_mem.c **** 
+ 295:../Switch/core/hal/hal_mem.c **** uint32 hal_table_reg_write(uint8_t unit, uint32 mem_id, uint32_t idx, uint16_t len, void *pvalue)
+ 296:../Switch/core/hal/hal_mem.c **** {
+ 1328              		.loc 1 296 1 is_stmt 1 view -0
+ 1329              		.cfi_startproc
+ 1330              		@ args = 4, pretend = 0, frame = 0
+ 1331              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1332              		.loc 1 296 1 is_stmt 0 view .LVU368
+ 1333 0000 10B5     		push	{r4, lr}
+ 1334              		.cfi_def_cfa_offset 8
+ 1335              		.cfi_offset 4, -8
+ 1336              		.cfi_offset 14, -4
+ 1337 0002 82B0     		sub	sp, sp, #8
+ 1338              		.cfi_def_cfa_offset 16
+ 297:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret;
+ 1339              		.loc 1 297 5 is_stmt 1 view .LVU369
+ 298:../Switch/core/hal/hal_mem.c **** 
+ 299:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL 
+ 300:../Switch/core/hal/hal_mem.c ****     if ((HAL_REG_TBL_MODE_CMODEL == greg_tbl_mode) || (HAL_REG_TBL_MODE_BOTH == greg_tbl_mode))
+ 301:../Switch/core/hal/hal_mem.c ****     { 
+ 302:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_cmodel_write(unit, mem_id, idx, len, pvalue), ret);
+ 303:../Switch/core/hal/hal_mem.c ****     }
+ 304:../Switch/core/hal/hal_mem.c **** #endif
+ 305:../Switch/core/hal/hal_mem.c **** 
+ 306:../Switch/core/hal/hal_mem.c ****     if ((HAL_REG_TBL_MODE_NORMAL == greg_tbl_mode) || (HAL_REG_TBL_MODE_BOTH == greg_tbl_mode))
+ 1340              		.loc 1 306 5 view .LVU370
+ 1341              		.loc 1 306 52 is_stmt 0 view .LVU371
+ 1342 0004 164C     		ldr	r4, .L121
+ 1343 0006 94F800C0 		ldrb	ip, [r4]	@ zero_extendqisi2
+ 1344 000a 0CF1FF3C 		add	ip, ip, #-1
+ 1345 000e 5FFA8CFC 		uxtb	ip, ip
+ 1346              		.loc 1 306 8 view .LVU372
+ 1347 0012 BCF1010F 		cmp	ip, #1
+ 1348 0016 02D9     		bls	.L118
+ 307:../Switch/core/hal/hal_mem.c ****     {
+ 308:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_normal_write(unit, mem_id, idx, len, pvalue), ret);
+ 309:../Switch/core/hal/hal_mem.c ****     }
+ 310:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1349              		.loc 1 310 12 view .LVU373
+ 1350 0018 0020     		movs	r0, #0
+ 1351              	.LVL170:
+ 1352              	.L112:
+ 311:../Switch/core/hal/hal_mem.c **** }
+ 1353              		.loc 1 311 1 view .LVU374
+ 1354 001a 02B0     		add	sp, sp, #8
+ 1355              		.cfi_remember_state
+ 1356              		.cfi_def_cfa_offset 8
+ 1357              		@ sp needed
+ 1358 001c 10BD     		pop	{r4, pc}
+ 1359              	.LVL171:
+ 1360              	.L118:
+ 1361              		.cfi_restore_state
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1362              		.loc 1 308 9 is_stmt 1 view .LVU375
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1363              		.loc 1 308 9 view .LVU376
+ 1364 001e 049C     		ldr	r4, [sp, #16]
+ 1365 0020 0094     		str	r4, [sp]
+ 1366 0022 FFF7FEFF 		bl	hal_table_reg_normal_write
+ 1367              	.LVL172:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1368              		.loc 1 308 9 is_stmt 0 view .LVU377
+ 1369 0026 0446     		mov	r4, r0
+ 1370              	.LVL173:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1371              		.loc 1 308 9 view .LVU378
+ 1372 0028 10F0FF03 		ands	r3, r0, #255
+ 1373 002c 01D1     		bne	.L119
+ 310:../Switch/core/hal/hal_mem.c **** }
+ 1374              		.loc 1 310 12 view .LVU379
+ 1375 002e 0020     		movs	r0, #0
+ 1376              	.LVL174:
+ 310:../Switch/core/hal/hal_mem.c **** }
+ 1377              		.loc 1 310 12 view .LVU380
+ 1378 0030 F3E7     		b	.L112
+ 1379              	.LVL175:
+ 1380              	.L119:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1381              		.loc 1 308 9 is_stmt 1 discriminator 1 view .LVU381
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1382              		.loc 1 308 9 discriminator 1 view .LVU382
+ 1383 0032 0C4A     		ldr	r2, .L121+4
+ 1384 0034 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1385 0036 012A     		cmp	r2, #1
+ 1386 0038 01D8     		bhi	.L120
+ 1387              	.LVL176:
+ 1388              	.L114:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1389              		.loc 1 308 9 discriminator 5 view .LVU383
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1390              		.loc 1 308 9 discriminator 5 view .LVU384
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1391              		.loc 1 308 9 discriminator 5 view .LVU385
+ 1392 003a E0B2     		uxtb	r0, r4
+ 1393 003c EDE7     		b	.L112
+ 1394              	.LVL177:
+ 1395              	.L120:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1396              		.loc 1 308 9 discriminator 3 view .LVU386
+ 1397              	.LBB17:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1398              		.loc 1 308 9 discriminator 3 view .LVU387
+ 1399 003e 142B     		cmp	r3, #20
+ 1400 0040 28BF     		it	cs
+ 1401 0042 1423     		movcs	r3, #20
+ 1402 0044 1A46     		mov	r2, r3
+ 1403 0046 084B     		ldr	r3, .L121+8
+ 1404 0048 0093     		str	r3, [sp]
+ 1405 004a 084B     		ldr	r3, .L121+12
+ 1406 004c 0849     		ldr	r1, .L121+16
+ 1407 004e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 1408 0052 0849     		ldr	r1, .L121+20
+ 1409 0054 8968     		ldr	r1, [r1, #8]
+ 1410 0056 0848     		ldr	r0, .L121+24
+ 1411              	.LVL178:
+ 308:../Switch/core/hal/hal_mem.c ****     }
+ 1412              		.loc 1 308 9 is_stmt 0 discriminator 3 view .LVU388
+ 1413 0058 FFF7FEFF 		bl	osal_printf
+ 1414              	.LVL179:
+ 1415 005c EDE7     		b	.L114
+ 1416              	.L122:
+ 1417 005e 00BF     		.align	2
+ 1418              	.L121:
+ 1419 0060 00000000 		.word	greg_tbl_mode
+ 1420 0064 00000000 		.word	yt_debug_level
+ 1421 0068 00000000 		.word	__FUNCTION__.3
+ 1422 006c 00000000 		.word	.LC7
+ 1423 0070 00000000 		.word	_yt_errmsg
+ 1424 0074 00000000 		.word	_yt_prompt_msg
+ 1425 0078 34000000 		.word	.LC5
+ 1426              	.LBE17:
+ 1427              		.cfi_endproc
+ 1428              	.LFE12:
+ 1430              		.section	.rodata.hal_table_reg_read.str1.4,"aMS",%progbits,1
+ 1431              		.align	2
+ 1432              	.LC8:
+ 1433 0000 68616C5F 		.ascii	"hal_table_reg_normal_read(unit, mem_id, idx, len, p"
+ 1433      7461626C 
+ 1433      655F7265 
+ 1433      675F6E6F 
+ 1433      726D616C 
+ 1434 0033 76616C75 		.ascii	"value)\000"
+ 1434      652900
+ 1435              		.section	.text.hal_table_reg_read,"ax",%progbits
+ 1436              		.align	1
+ 1437              		.global	hal_table_reg_read
+ 1438              		.syntax unified
+ 1439              		.thumb
+ 1440              		.thumb_func
+ 1442              	hal_table_reg_read:
+ 1443              	.LVL180:
+ 1444              	.LFB13:
+ 312:../Switch/core/hal/hal_mem.c **** 
+ 313:../Switch/core/hal/hal_mem.c **** 
+ 314:../Switch/core/hal/hal_mem.c **** uint32 hal_table_reg_read(uint8_t unit, uint32 mem_id, uint32_t idx,uint16_t len, void *pvalue)
+ 315:../Switch/core/hal/hal_mem.c **** {
+ 1445              		.loc 1 315 1 is_stmt 1 view -0
+ 1446              		.cfi_startproc
+ 1447              		@ args = 4, pretend = 0, frame = 0
+ 1448              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1449              		.loc 1 315 1 is_stmt 0 view .LVU390
+ 1450 0000 10B5     		push	{r4, lr}
+ 1451              		.cfi_def_cfa_offset 8
+ 1452              		.cfi_offset 4, -8
+ 1453              		.cfi_offset 14, -4
+ 1454 0002 82B0     		sub	sp, sp, #8
+ 1455              		.cfi_def_cfa_offset 16
+ 316:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret;
+ 1456              		.loc 1 316 5 is_stmt 1 view .LVU391
+ 317:../Switch/core/hal/hal_mem.c **** 
+ 318:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL 
+ 319:../Switch/core/hal/hal_mem.c ****     if ((HAL_REG_TBL_MODE_CMODEL == greg_tbl_mode) || (HAL_REG_TBL_MODE_BOTH == greg_tbl_mode))
+ 320:../Switch/core/hal/hal_mem.c ****     {
+ 321:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_cmodel_read(unit, mem_id, idx, len, pvalue), ret);
+ 322:../Switch/core/hal/hal_mem.c ****     }
+ 323:../Switch/core/hal/hal_mem.c **** #endif
+ 324:../Switch/core/hal/hal_mem.c **** 
+ 325:../Switch/core/hal/hal_mem.c ****     if ((HAL_REG_TBL_MODE_NORMAL == greg_tbl_mode) || (HAL_REG_TBL_MODE_BOTH == greg_tbl_mode))
+ 1457              		.loc 1 325 5 view .LVU392
+ 1458              		.loc 1 325 52 is_stmt 0 view .LVU393
+ 1459 0004 164C     		ldr	r4, .L132
+ 1460 0006 94F800C0 		ldrb	ip, [r4]	@ zero_extendqisi2
+ 1461 000a 0CF1FF3C 		add	ip, ip, #-1
+ 1462 000e 5FFA8CFC 		uxtb	ip, ip
+ 1463              		.loc 1 325 8 view .LVU394
+ 1464 0012 BCF1010F 		cmp	ip, #1
+ 1465 0016 02D9     		bls	.L129
+ 326:../Switch/core/hal/hal_mem.c ****     {
+ 327:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_normal_read(unit, mem_id, idx, len, pvalue), ret);
+ 328:../Switch/core/hal/hal_mem.c ****     }
+ 329:../Switch/core/hal/hal_mem.c **** 
+ 330:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1466              		.loc 1 330 12 view .LVU395
+ 1467 0018 0020     		movs	r0, #0
+ 1468              	.LVL181:
+ 1469              	.L123:
+ 331:../Switch/core/hal/hal_mem.c **** }
+ 1470              		.loc 1 331 1 view .LVU396
+ 1471 001a 02B0     		add	sp, sp, #8
+ 1472              		.cfi_remember_state
+ 1473              		.cfi_def_cfa_offset 8
+ 1474              		@ sp needed
+ 1475 001c 10BD     		pop	{r4, pc}
+ 1476              	.LVL182:
+ 1477              	.L129:
+ 1478              		.cfi_restore_state
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1479              		.loc 1 327 9 is_stmt 1 view .LVU397
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1480              		.loc 1 327 9 view .LVU398
+ 1481 001e 049C     		ldr	r4, [sp, #16]
+ 1482 0020 0094     		str	r4, [sp]
+ 1483 0022 FFF7FEFF 		bl	hal_table_reg_normal_read
+ 1484              	.LVL183:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1485              		.loc 1 327 9 is_stmt 0 view .LVU399
+ 1486 0026 0446     		mov	r4, r0
+ 1487              	.LVL184:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1488              		.loc 1 327 9 view .LVU400
+ 1489 0028 10F0FF03 		ands	r3, r0, #255
+ 1490 002c 01D1     		bne	.L130
+ 330:../Switch/core/hal/hal_mem.c **** }
+ 1491              		.loc 1 330 12 view .LVU401
+ 1492 002e 0020     		movs	r0, #0
+ 1493              	.LVL185:
+ 330:../Switch/core/hal/hal_mem.c **** }
+ 1494              		.loc 1 330 12 view .LVU402
+ 1495 0030 F3E7     		b	.L123
+ 1496              	.LVL186:
+ 1497              	.L130:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1498              		.loc 1 327 9 is_stmt 1 discriminator 1 view .LVU403
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1499              		.loc 1 327 9 discriminator 1 view .LVU404
+ 1500 0032 0C4A     		ldr	r2, .L132+4
+ 1501 0034 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1502 0036 012A     		cmp	r2, #1
+ 1503 0038 01D8     		bhi	.L131
+ 1504              	.LVL187:
+ 1505              	.L125:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1506              		.loc 1 327 9 discriminator 5 view .LVU405
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1507              		.loc 1 327 9 discriminator 5 view .LVU406
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1508              		.loc 1 327 9 discriminator 5 view .LVU407
+ 1509 003a E0B2     		uxtb	r0, r4
+ 1510 003c EDE7     		b	.L123
+ 1511              	.LVL188:
+ 1512              	.L131:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1513              		.loc 1 327 9 discriminator 3 view .LVU408
+ 1514              	.LBB18:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1515              		.loc 1 327 9 discriminator 3 view .LVU409
+ 1516 003e 142B     		cmp	r3, #20
+ 1517 0040 28BF     		it	cs
+ 1518 0042 1423     		movcs	r3, #20
+ 1519 0044 1A46     		mov	r2, r3
+ 1520 0046 084B     		ldr	r3, .L132+8
+ 1521 0048 0093     		str	r3, [sp]
+ 1522 004a 084B     		ldr	r3, .L132+12
+ 1523 004c 0849     		ldr	r1, .L132+16
+ 1524 004e 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 1525 0052 0849     		ldr	r1, .L132+20
+ 1526 0054 8968     		ldr	r1, [r1, #8]
+ 1527 0056 0848     		ldr	r0, .L132+24
+ 1528              	.LVL189:
+ 327:../Switch/core/hal/hal_mem.c ****     }
+ 1529              		.loc 1 327 9 is_stmt 0 discriminator 3 view .LVU410
+ 1530 0058 FFF7FEFF 		bl	osal_printf
+ 1531              	.LVL190:
+ 1532 005c EDE7     		b	.L125
+ 1533              	.L133:
+ 1534 005e 00BF     		.align	2
+ 1535              	.L132:
+ 1536 0060 00000000 		.word	greg_tbl_mode
+ 1537 0064 00000000 		.word	yt_debug_level
+ 1538 0068 00000000 		.word	__FUNCTION__.1
+ 1539 006c 00000000 		.word	.LC8
+ 1540 0070 00000000 		.word	_yt_errmsg
+ 1541 0074 00000000 		.word	_yt_prompt_msg
+ 1542 0078 34000000 		.word	.LC5
+ 1543              	.LBE18:
+ 1544              		.cfi_endproc
+ 1545              	.LFE13:
+ 1547              		.section	.text.hal_table_reg_mode_set,"ax",%progbits
+ 1548              		.align	1
+ 1549              		.global	hal_table_reg_mode_set
+ 1550              		.syntax unified
+ 1551              		.thumb
+ 1552              		.thumb_func
+ 1554              	hal_table_reg_mode_set:
+ 1555              	.LVL191:
+ 1556              	.LFB14:
+ 332:../Switch/core/hal/hal_mem.c **** 
+ 333:../Switch/core/hal/hal_mem.c **** 
+ 334:../Switch/core/hal/hal_mem.c **** uint32 hal_table_reg_mode_set(uint8_t unit, hal_reg_tbl_mode_t mode)
+ 335:../Switch/core/hal/hal_mem.c **** {
+ 1557              		.loc 1 335 1 is_stmt 1 view -0
+ 1558              		.cfi_startproc
+ 1559              		@ args = 0, pretend = 0, frame = 0
+ 1560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1561              		@ link register save eliminated.
+ 336:../Switch/core/hal/hal_mem.c ****     CMM_UNUSED_PARAM(unit);
+ 1562              		.loc 1 336 5 view .LVU412
+ 337:../Switch/core/hal/hal_mem.c ****     
+ 338:../Switch/core/hal/hal_mem.c ****     greg_tbl_mode = mode;
+ 1563              		.loc 1 338 5 view .LVU413
+ 1564              		.loc 1 338 19 is_stmt 0 view .LVU414
+ 1565 0000 014B     		ldr	r3, .L135
+ 1566 0002 1970     		strb	r1, [r3]
+ 339:../Switch/core/hal/hal_mem.c ****     
+ 340:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1567              		.loc 1 340 5 is_stmt 1 view .LVU415
+ 341:../Switch/core/hal/hal_mem.c **** }
+ 1568              		.loc 1 341 1 is_stmt 0 view .LVU416
+ 1569 0004 0020     		movs	r0, #0
+ 1570              	.LVL192:
+ 1571              		.loc 1 341 1 view .LVU417
+ 1572 0006 7047     		bx	lr
+ 1573              	.L136:
+ 1574              		.align	2
+ 1575              	.L135:
+ 1576 0008 00000000 		.word	greg_tbl_mode
+ 1577              		.cfi_endproc
+ 1578              	.LFE14:
+ 1580              		.section	.text.hal_table_reg_mode_get,"ax",%progbits
+ 1581              		.align	1
+ 1582              		.global	hal_table_reg_mode_get
+ 1583              		.syntax unified
+ 1584              		.thumb
+ 1585              		.thumb_func
+ 1587              	hal_table_reg_mode_get:
+ 1588              	.LVL193:
+ 1589              	.LFB15:
+ 342:../Switch/core/hal/hal_mem.c **** 
+ 343:../Switch/core/hal/hal_mem.c **** 
+ 344:../Switch/core/hal/hal_mem.c **** uint32 hal_table_reg_mode_get(uint8_t unit, hal_reg_tbl_mode_t *pmode)
+ 345:../Switch/core/hal/hal_mem.c **** {
+ 1590              		.loc 1 345 1 is_stmt 1 view -0
+ 1591              		.cfi_startproc
+ 1592              		@ args = 0, pretend = 0, frame = 0
+ 1593              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1594              		.loc 1 345 1 is_stmt 0 view .LVU419
+ 1595 0000 08B5     		push	{r3, lr}
+ 1596              		.cfi_def_cfa_offset 8
+ 1597              		.cfi_offset 3, -8
+ 1598              		.cfi_offset 14, -4
+ 346:../Switch/core/hal/hal_mem.c ****     CMM_UNUSED_PARAM(unit);
+ 1599              		.loc 1 346 5 is_stmt 1 view .LVU420
+ 347:../Switch/core/hal/hal_mem.c ****     CMM_PARAM_CHK((NULL == pmode), CMM_ERR_NULL_POINT);
+ 1600              		.loc 1 347 5 view .LVU421
+ 1601              		.loc 1 347 5 view .LVU422
+ 1602 0002 21B1     		cbz	r1, .L142
+ 1603              		.loc 1 347 5 discriminator 2 view .LVU423
+ 348:../Switch/core/hal/hal_mem.c ****     
+ 349:../Switch/core/hal/hal_mem.c ****     *pmode = greg_tbl_mode;
+ 1604              		.loc 1 349 5 discriminator 2 view .LVU424
+ 1605              		.loc 1 349 12 is_stmt 0 discriminator 2 view .LVU425
+ 1606 0004 094A     		ldr	r2, .L144
+ 1607 0006 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1608 0008 0A70     		strb	r2, [r1]
+ 350:../Switch/core/hal/hal_mem.c ****     
+ 351:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1609              		.loc 1 351 5 is_stmt 1 discriminator 2 view .LVU426
+ 1610              		.loc 1 351 12 is_stmt 0 discriminator 2 view .LVU427
+ 1611 000a 0020     		movs	r0, #0
+ 1612              	.LVL194:
+ 1613              	.L137:
+ 352:../Switch/core/hal/hal_mem.c **** }
+ 1614              		.loc 1 352 1 view .LVU428
+ 1615 000c 08BD     		pop	{r3, pc}
+ 1616              	.LVL195:
+ 1617              	.L142:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1618              		.loc 1 347 5 is_stmt 1 discriminator 1 view .LVU429
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1619              		.loc 1 347 5 discriminator 1 view .LVU430
+ 1620 000e 084B     		ldr	r3, .L144+4
+ 1621 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1622 0012 012B     		cmp	r3, #1
+ 1623 0014 01D8     		bhi	.L143
+ 1624              	.LVL196:
+ 1625              	.L139:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1626              		.loc 1 347 5 discriminator 5 view .LVU431
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1627              		.loc 1 347 5 discriminator 5 view .LVU432
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1628              		.loc 1 347 5 discriminator 5 view .LVU433
+ 1629 0016 0220     		movs	r0, #2
+ 1630 0018 F8E7     		b	.L137
+ 1631              	.LVL197:
+ 1632              	.L143:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1633              		.loc 1 347 5 discriminator 3 view .LVU434
+ 1634              	.LBB19:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1635              		.loc 1 347 5 discriminator 3 view .LVU435
+ 1636 001a 064B     		ldr	r3, .L144+8
+ 1637 001c 9A68     		ldr	r2, [r3, #8]
+ 1638 001e 064B     		ldr	r3, .L144+12
+ 1639 0020 9968     		ldr	r1, [r3, #8]
+ 1640              	.LVL198:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1641              		.loc 1 347 5 is_stmt 0 discriminator 3 view .LVU436
+ 1642 0022 0648     		ldr	r0, .L144+16
+ 1643              	.LVL199:
+ 347:../Switch/core/hal/hal_mem.c ****     
+ 1644              		.loc 1 347 5 discriminator 3 view .LVU437
+ 1645 0024 FFF7FEFF 		bl	osal_printf
+ 1646              	.LVL200:
+ 1647 0028 F5E7     		b	.L139
+ 1648              	.L145:
+ 1649 002a 00BF     		.align	2
+ 1650              	.L144:
+ 1651 002c 00000000 		.word	greg_tbl_mode
+ 1652 0030 00000000 		.word	yt_debug_level
+ 1653 0034 00000000 		.word	_yt_errmsg
+ 1654 0038 00000000 		.word	_yt_prompt_msg
+ 1655 003c 00000000 		.word	.LC0
+ 1656              	.LBE19:
+ 1657              		.cfi_endproc
+ 1658              	.LFE15:
+ 1660              		.section	.text.hal_table_reg_reset,"ax",%progbits
+ 1661              		.align	1
+ 1662              		.global	hal_table_reg_reset
+ 1663              		.syntax unified
+ 1664              		.thumb
+ 1665              		.thumb_func
+ 1667              	hal_table_reg_reset:
+ 1668              	.LVL201:
+ 1669              	.LFB16:
+ 353:../Switch/core/hal/hal_mem.c **** 
+ 354:../Switch/core/hal/hal_mem.c **** 
+ 355:../Switch/core/hal/hal_mem.c **** uint32 hal_table_reg_reset(uint8_t unit, hal_reg_tbl_mode_t mode)
+ 356:../Switch/core/hal/hal_mem.c **** {
+ 1670              		.loc 1 356 1 is_stmt 1 view -0
+ 1671              		.cfi_startproc
+ 1672              		@ args = 0, pretend = 0, frame = 0
+ 1673              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1674              		@ link register save eliminated.
+ 357:../Switch/core/hal/hal_mem.c ****     cmm_err_t ret = CMM_ERR_OK;
+ 1675              		.loc 1 357 5 view .LVU439
+ 358:../Switch/core/hal/hal_mem.c ****     
+ 359:../Switch/core/hal/hal_mem.c ****     if(HAL_REG_TBL_MODE_CMODEL == mode || HAL_REG_TBL_MODE_BOTH == mode)
+ 1676              		.loc 1 359 5 view .LVU440
+ 360:../Switch/core/hal/hal_mem.c ****     {
+ 361:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL 
+ 362:../Switch/core/hal/hal_mem.c ****         CMM_ERR_CHK(hal_table_reg_cmodel_reset(unit), ret);
+ 363:../Switch/core/hal/hal_mem.c **** #else
+ 364:../Switch/core/hal/hal_mem.c ****         CMM_UNUSED_PARAM(unit);
+ 1677              		.loc 1 364 9 view .LVU441
+ 365:../Switch/core/hal/hal_mem.c ****         CMM_UNUSED_PARAM(ret);
+ 1678              		.loc 1 365 9 view .LVU442
+ 366:../Switch/core/hal/hal_mem.c **** #endif
+ 367:../Switch/core/hal/hal_mem.c ****     }
+ 368:../Switch/core/hal/hal_mem.c **** 
+ 369:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1679              		.loc 1 369 5 view .LVU443
+ 370:../Switch/core/hal/hal_mem.c **** }
+ 1680              		.loc 1 370 1 is_stmt 0 view .LVU444
+ 1681 0000 0020     		movs	r0, #0
+ 1682              	.LVL202:
+ 1683              		.loc 1 370 1 view .LVU445
+ 1684 0002 7047     		bx	lr
+ 1685              		.cfi_endproc
+ 1686              	.LFE16:
+ 1688              		.section	.text.hal_table_reg_exit,"ax",%progbits
+ 1689              		.align	1
+ 1690              		.global	hal_table_reg_exit
+ 1691              		.syntax unified
+ 1692              		.thumb
+ 1693              		.thumb_func
+ 1695              	hal_table_reg_exit:
+ 1696              	.LFB17:
+ 371:../Switch/core/hal/hal_mem.c **** 
+ 372:../Switch/core/hal/hal_mem.c **** 
+ 373:../Switch/core/hal/hal_mem.c **** uint32_t hal_table_reg_exit(void)
+ 374:../Switch/core/hal/hal_mem.c **** {
+ 1697              		.loc 1 374 1 is_stmt 1 view -0
+ 1698              		.cfi_startproc
+ 1699              		@ args = 0, pretend = 0, frame = 0
+ 1700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1701              		@ link register save eliminated.
+ 375:../Switch/core/hal/hal_mem.c ****     if(!ghal_reg_table_init)
+ 1702              		.loc 1 375 5 view .LVU447
+ 1703              		.loc 1 375 8 is_stmt 0 view .LVU448
+ 1704 0000 034B     		ldr	r3, .L149
+ 1705 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1706              		.loc 1 375 7 view .LVU449
+ 1707 0004 13B1     		cbz	r3, .L148
+ 376:../Switch/core/hal/hal_mem.c ****     {
+ 377:../Switch/core/hal/hal_mem.c ****         return CMM_ERR_OK;
+ 378:../Switch/core/hal/hal_mem.c ****     }
+ 379:../Switch/core/hal/hal_mem.c ****     
+ 380:../Switch/core/hal/hal_mem.c **** #ifdef MEM_MODE_CMODEL
+ 381:../Switch/core/hal/hal_mem.c ****     hal_table_reg_cmodel_exit();
+ 382:../Switch/core/hal/hal_mem.c **** #endif
+ 383:../Switch/core/hal/hal_mem.c **** 
+ 384:../Switch/core/hal/hal_mem.c **** #ifndef __KERNEL__
+ 385:../Switch/core/hal/hal_mem.c **** //    osal_mux_destroy(&g_cfgmux);
+ 386:../Switch/core/hal/hal_mem.c **** #endif
+ 387:../Switch/core/hal/hal_mem.c ****     ghal_reg_table_init = FALSE;
+ 1708              		.loc 1 387 5 is_stmt 1 view .LVU450
+ 1709              		.loc 1 387 25 is_stmt 0 view .LVU451
+ 1710 0006 024B     		ldr	r3, .L149
+ 1711 0008 0022     		movs	r2, #0
+ 1712 000a 1A70     		strb	r2, [r3]
+ 388:../Switch/core/hal/hal_mem.c ****     
+ 389:../Switch/core/hal/hal_mem.c ****     return CMM_ERR_OK;
+ 1713              		.loc 1 389 5 is_stmt 1 view .LVU452
+ 1714              	.L148:
+ 390:../Switch/core/hal/hal_mem.c **** }
+ 1715              		.loc 1 390 1 is_stmt 0 view .LVU453
+ 1716 000c 0020     		movs	r0, #0
+ 1717 000e 7047     		bx	lr
+ 1718              	.L150:
+ 1719              		.align	2
+ 1720              	.L149:
+ 1721 0010 00000000 		.word	ghal_reg_table_init
+ 1722              		.cfi_endproc
+ 1723              	.LFE17:
+ 1725              		.section	.rodata.__FUNCTION__.0,"a"
+ 1726              		.align	2
+ 1729              	__FUNCTION__.0:
+ 1730 0000 68616C5F 		.ascii	"hal_table_reg_normal_read\000"
+ 1730      7461626C 
+ 1730      655F7265 
+ 1730      675F6E6F 
+ 1730      726D616C 
+ 1731              		.section	.rodata.__FUNCTION__.1,"a"
+ 1732              		.align	2
+ 1735              	__FUNCTION__.1:
+ 1736 0000 68616C5F 		.ascii	"hal_table_reg_read\000"
+ 1736      7461626C 
+ 1736      655F7265 
+ 1736      675F7265 
+ 1736      616400
+ 1737              		.section	.rodata.__FUNCTION__.2,"a"
+ 1738              		.align	2
+ 1741              	__FUNCTION__.2:
+ 1742 0000 68616C5F 		.ascii	"hal_table_reg_normal_write\000"
+ 1742      7461626C 
+ 1742      655F7265 
+ 1742      675F6E6F 
+ 1742      726D616C 
+ 1743              		.section	.rodata.__FUNCTION__.3,"a"
+ 1744              		.align	2
+ 1747              	__FUNCTION__.3:
+ 1748 0000 68616C5F 		.ascii	"hal_table_reg_write\000"
+ 1748      7461626C 
+ 1748      655F7265 
+ 1748      675F7772 
+ 1748      69746500 
+ 1749              		.global	greg_tbl_mode
+ 1750              		.section	.data.greg_tbl_mode,"aw"
+ 1753              	greg_tbl_mode:
+ 1754 0000 01       		.byte	1
+ 1755              		.global	DEBUG_MODE_K
+ 1756              		.section	.bss.DEBUG_MODE_K,"aw",%nobits
+ 1757              		.align	2
+ 1760              	DEBUG_MODE_K:
+ 1761 0000 00000000 		.space	4
+ 1762              		.global	ghal_reg_table_init
+ 1763              		.section	.bss.ghal_reg_table_init,"aw",%nobits
+ 1766              	ghal_reg_table_init:
+ 1767 0000 00       		.space	1
+ 1768              		.global	ghal_mem32_init
+ 1769              		.section	.bss.ghal_mem32_init,"aw",%nobits
+ 1772              	ghal_mem32_init:
+ 1773 0000 00       		.space	1
+ 1774              		.text
+ 1775              	.Letext0:
+ 1776              		.file 2 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_types.h"
+ 1777              		.file 3 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\common\\include/yt_error.h"
+ 1778              		.file 4 "../Switch/core/hal/hal_mem.h"
+ 1779              		.file 5 "C:\\Users\\Dmitriy\\Desktop\\GD32F10x\\Switch\\core\\drv\\sw_ctrl\\ctrlif/ctrlif.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 hal_mem.c
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:19     .text.hal_mem32_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:25     .text.hal_mem32_init:00000000 hal_mem32_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:44     .text.hal_mem32_init:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1772   .bss.ghal_mem32_init:00000000 ghal_mem32_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:49     .text.hal_table_reg_init:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:55     .text.hal_table_reg_init:00000000 hal_table_reg_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:74     .text.hal_table_reg_init:0000000c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1766   .bss.ghal_reg_table_init:00000000 ghal_reg_table_init
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:79     .text.hal_mem32_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:85     .text.hal_mem32_write:00000000 hal_mem32_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:108    .text.hal_mem32_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:114    .text.hal_mem32_read:00000000 hal_mem32_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:137    .rodata.hal_table_reg_op.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:150    .text.hal_table_reg_op:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:155    .text.hal_table_reg_op:00000000 hal_table_reg_op
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:513    .text.hal_table_reg_op:0000014c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1760   .bss.DEBUG_MODE_K:00000000 DEBUG_MODE_K
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:528    .rodata.hal_table_reg_normal_write.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:536    .text.hal_table_reg_normal_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:541    .text.hal_table_reg_normal_write:00000000 hal_table_reg_normal_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:761    .text.hal_table_reg_normal_write:000000b0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1741   .rodata.__FUNCTION__.2:00000000 __FUNCTION__.2
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:775    .rodata.hal_table_reg_normal_read.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:780    .text.hal_table_reg_normal_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:785    .text.hal_table_reg_normal_read:00000000 hal_table_reg_normal_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1004   .text.hal_table_reg_normal_read:000000b0 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1729   .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1018   .text.hal_tbl_reg_field_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1024   .text.hal_tbl_reg_field_get:00000000 hal_tbl_reg_field_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1187   .text.hal_tbl_reg_field_get:0000008c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1192   .text.hal_tbl_reg_field_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1198   .text.hal_tbl_reg_field_set:00000000 hal_tbl_reg_field_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1309   .text.hal_tbl_reg_field_set:00000060 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1314   .rodata.hal_table_reg_write.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1319   .text.hal_table_reg_write:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1325   .text.hal_table_reg_write:00000000 hal_table_reg_write
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1419   .text.hal_table_reg_write:00000060 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1753   .data.greg_tbl_mode:00000000 greg_tbl_mode
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1747   .rodata.__FUNCTION__.3:00000000 __FUNCTION__.3
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1431   .rodata.hal_table_reg_read.str1.4:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1436   .text.hal_table_reg_read:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1442   .text.hal_table_reg_read:00000000 hal_table_reg_read
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1536   .text.hal_table_reg_read:00000060 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1735   .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1548   .text.hal_table_reg_mode_set:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1554   .text.hal_table_reg_mode_set:00000000 hal_table_reg_mode_set
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1576   .text.hal_table_reg_mode_set:00000008 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1581   .text.hal_table_reg_mode_get:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1587   .text.hal_table_reg_mode_get:00000000 hal_table_reg_mode_get
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1651   .text.hal_table_reg_mode_get:0000002c $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1661   .text.hal_table_reg_reset:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1667   .text.hal_table_reg_reset:00000000 hal_table_reg_reset
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1689   .text.hal_table_reg_exit:00000000 $t
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1695   .text.hal_table_reg_exit:00000000 hal_table_reg_exit
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1721   .text.hal_table_reg_exit:00000010 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1726   .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1732   .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1738   .rodata.__FUNCTION__.2:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1744   .rodata.__FUNCTION__.3:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1757   .bss.DEBUG_MODE_K:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1767   .bss.ghal_reg_table_init:00000000 $d
+C:\Users\Dmitriy\AppData\Local\Temp\ccSfxeQ1.s:1773   .bss.ghal_mem32_init:00000000 $d
+                           .group:00000000 wm4.0.353617a96a8f588ad8d04dd11dfc8225
+                           .group:00000000 wm4._newlib_version.h.4.6d111ab2e95434b664b53815e5c8ccba
+                           .group:00000000 wm4.newlib.h.27.d4bf77c18f14f545101dac22f0b54118
+                           .group:00000000 wm4.ieeefp.h.77.0ee3146e9d892bb10bc0066c30189af1
+                           .group:00000000 wm4.features.h.22.7877b139107948f7dadcf3660cc79cfd
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.185.cbb642e1ccd385e8aa504b15cb7fb086
+                           .group:00000000 wm4.cdefs.h.49.f93868eb904b9ca05b5c0257d31128ca
+                           .group:00000000 wm4.stddef.h.39.0e5f0dabba1c666ccadf0408e0d47322
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.158.5f30652bb2ea05b142c1bbee9108c999
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.77.89f7dde66c62b1f1dee32bdb6ab2d544
+                           .group:00000000 wm4.stdio.h.67.0cf8a9c281ab0b348aef5c02e7e48825
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.stddef.h.158.bfed30416c9480cd13bc4a25427d538f
+                           .group:00000000 wm4.stdbool.h.29.4a1c88fe569adb8d03217dd16982ca34
+                           .group:00000000 wm4.malloc.h.4.62bd13b8107d5245f60bd92bb5994838
+                           .group:00000000 wm4.malloc.h.152.f5d1d9a9aabeac59da0ef41ede16d2b0
+                           .group:00000000 wm4.yt_types.h.31.64aa050cf4c68d28514ce99f5dc2ddb9
+                           .group:00000000 wm4.yt_lock.h.9.5d39f1aba4451d3b9b95aa39771489dc
+                           .group:00000000 wm4.yt_error.h.38.039589275c83974021fd481937e9f4a7
+                           .group:00000000 wm4.fal_tiger_mem.h.6.e463db19434e1621ca889542a33dadb5
+                           .group:00000000 wm4.hal_mem.h.36.24f0b260778f0666559c98f574a16e4b
+                           .group:00000000 wm4.yt_util.h.17.08ae57e3898b218a2bbe57b2147a81bd
+                           .group:00000000 wm4.chipdef_tiger.h.10.ae557adb3508daebcdc97f8fb0dc9e1a
+                           .group:00000000 wm4.phy_chipdef.h.9.9a1a2dbb46f5503e32a84083ab1dbc9f
+                           .group:00000000 wm4.cal_bprofile.h.23.d6ecfc2230abc149b4da600a40b20e5b
+                           .group:00000000 wm4.bprofile_YT9215_default_demo.h.15.13aa65ba4a73c41dc1ffa3c5f8dcfda3
+                           .group:00000000 wm4.cal_cmm.h.46.eec47faa946e01877de19a2f99ee7710
+                           .group:00000000 wm4.ctrlif.h.14.25b89f4f4e1c2d9a4d8cc002d2533731
+
+UNDEFINED SYMBOLS
+ctrlif_reg_write
+ctrlif_reg_read
+osal_printf
+tbl_reg_list
+yt_debug_level
+_yt_errmsg
+_yt_prompt_msg
