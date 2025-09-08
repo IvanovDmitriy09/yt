@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <WorkBenchVersion>
+        <Version>V1.1.09</Version>
+    </WorkBenchVersion>
+    <MCUInfo>
+        <MCUSerials>AT32F407</MCUSerials>
+        <MCUName>AT32F407VGT7</MCUName>
+        <MCUPackage>LQFP100</MCUPackage>
+    </MCUInfo>
+    <CRM>
+        <Mode>
+            <ModeSub name="HEXT" value="HEXT-External-Oscillator"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="HEXT" value="HEXT_CRYSTAL"/>
+        </Parameters>
+    </CRM>
+    <DEBUG>
+        <Mode>
+            <ModeSub name="Debug interface" value="SWD"/>
+        </Mode>
+    </DEBUG>
+    <EMAC>
+        <Mode>
+            <ModeSub name="Mode" value="MII"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="EXINT19_WakeUp" value="DISABLE"/>
+            <ParametersSub name="PHY" value="YT8512"/>
+            <ParametersSub name="YT8512_PHY_address" value="29"/>
+        </Parameters>
+    </EMAC>
+    <I2C3>
+        <Mode>
+            <ModeSub name="I2C" value="I2C"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="DualAddressMode" value="DISABLE"/>
+            <ParametersSub name="GeneralCallMode" value="FALSE"/>
+        </Parameters>
+    </I2C3>
+    <SYSTEM>
+        <Mode>
+            <ModeSub name="Time_Base" value="SysTick"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="Delay_Mode" value="Interrupt"/>
+        </Parameters>
+    </SYSTEM>
+    <NVIC>
+        <PendSV_Handler>1;15;0;0;0</PendSV_Handler>
+        <SysTick_Handler>1;15;0;0;0</SysTick_Handler>
+        <FLASH_IRQHandler>0;5;0;0;0</FLASH_IRQHandler>
+        <CRM_IRQHandler>0;5;0;0;0</CRM_IRQHandler>
+        <I2C3_EVT_IRQHandler>0;0;0;0;0</I2C3_EVT_IRQHandler>
+        <I2C3_ERR_IRQHandler>0;0;0;0;0</I2C3_ERR_IRQHandler>
+        <EMAC_IRQHandler>0;0;0;0;0</EMAC_IRQHandler>
+        <EMAC_WKUP_IRQHandler>0;0;0;0;0</EMAC_WKUP_IRQHandler>
+    </NVIC>
+    <GPIO>
+        <ShowType>1</ShowType>
+        <Signal SignalName="GPIO_Output" PinName="PA9">
+            <Parameters name="GPIO_Outputlevel" value="GPIO_OUTPUTLEVEL_HIGH"/>
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
+        </Signal>
+    </GPIO>
+    <ClockConfiguration>
+        <rtcsel>0</rtcsel>
+        <hext>8.000000</hext>
+        <hextdiv>2</hextdiv>
+        <pllhextdiv>0</pllhextdiv>
+        <pllrcs>0</pllrcs>
+        <pllmult>30</pllmult>
+        <sclkselect>1</sclkselect>
+        <ahbdiv>1</ahbdiv>
+        <apb1div>2</apb1div>
+        <apb2div>2</apb2div>
+        <usbdiv>4.0</usbdiv>
+        <hicktousb>1</hicktousb>
+        <hicktosclk>0</hicktosclk>
+        <clkout>0</clkout>
+        <clkoutdiv>1</clkoutdiv>
+        <adcdiv>6</adcdiv>
+        <systicsel>1</systicsel>
+    </ClockConfiguration>
+    <PINInfo>
+        <PinSub pinname="HEXT_IN" signalname="CRM_HEXT_IN" signaltype="3"/>
+        <PinSub pinname="HEXT_OUT" signalname="CRM_HEXT_OUT" signaltype="3"/>
+        <PinSub pinname="PC1" signalname="EMAC_MDC" signaltype="2"/>
+        <PinSub pinname="PC2" signalname="EMAC_MII_TXD2" signaltype="2"/>
+        <PinSub pinname="PC3" signalname="EMAC_MII_TX_CLK" signaltype="2"/>
+        <PinSub pinname="PA0" signalname="EMAC_MII_CRS" signaltype="2"/>
+        <PinSub pinname="PA1" signalname="EMAC_MII_RX_CLK" signaltype="2"/>
+        <PinSub pinname="PA2" signalname="EMAC_MDIO" signaltype="2"/>
+        <PinSub pinname="PA3" signalname="EMAC_MII_COL" signaltype="2"/>
+        <PinSub pinname="PA7" signalname="EMAC_MII_RX_DV" signaltype="2"/>
+        <PinSub pinname="PC4" signalname="EMAC_MII_RXD0" signaltype="2"/>
+        <PinSub pinname="PC5" signalname="EMAC_MII_RXD1" signaltype="2"/>
+        <PinSub pinname="PB0" signalname="EMAC_MII_RXD2" signaltype="2"/>
+        <PinSub pinname="PB1" signalname="EMAC_MII_RXD3" signaltype="2"/>
+        <PinSub pinname="PB11" signalname="EMAC_MII_TX_EN" signaltype="2"/>
+        <PinSub pinname="PB12" signalname="EMAC_MII_TXD0" signaltype="2"/>
+        <PinSub pinname="PB13" signalname="EMAC_MII_TXD1" signaltype="2"/>
+        <PinSub pinname="PC9" signalname="I2C3_SDA" signaltype="2"/>
+        <PinSub pinname="PA8" signalname="I2C3_SCL" signaltype="2"/>
+        <PinSub pinname="PA9" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PA13" signalname="DEBUG_JTMS_SWDIO" signaltype="2"/>
+        <PinSub pinname="PA14" signalname="DEBUG_JTCK_SWCLK" signaltype="2"/>
+        <PinSub pinname="PB8" signalname="EMAC_MII_TXD3" signaltype="2"/>
+    </PINInfo>
+    <ProjectInfomation>
+        <ProjectName>AT32F407VGT7_WorkBench</ProjectName>
+        <ProjectLocation>C:/Users/Dmitriy/Desktop/AT32_Work_Bench_V1.1.09/at32</ProjectLocation>
+        <ToolchainIDE>Eclipse_gcc</ToolchainIDE>
+        <ARMCompiler>0</ARMCompiler>
+        <KeepUserCode>true</KeepUserCode>
+        <NotUsedPinAnalog>false</NotUsedPinAnalog>
+        <CodeSplitIP>true</CodeSplitIP>
+        <AddNecessaryFileFlag>true</AddNecessaryFileFlag>
+        <MinHeapSize>0x200</MinHeapSize>
+        <MinStackSize>0x400</MinStackSize>
+        <UseFirmware>false</UseFirmware>
+        <PackageVersion></PackageVersion>
+    </ProjectInfomation>
+</Root>
