@@ -73,6 +73,9 @@ extern "C" {
 #define PHY_DUPLEX_MODE                  (0x2000)     /*!< full duplex mode */
 #define PHY_SPEED_MODE                   (0x4000)     /*!< 10 mbps */
 
+extern uint8_t macaddr[];
+extern emac_control_config_type mac_control_para;
+
   /* init emac phy function. */
   error_status wk_emac_phy_init(emac_auto_negotiation_type nego, emac_duplex_type mode, emac_speed_type speed);
   error_status wk_emac_speed_config(emac_auto_negotiation_type nego, emac_duplex_type mode, emac_speed_type speed);

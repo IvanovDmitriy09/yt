@@ -28,9 +28,9 @@
 #include "at32f403a_407_wk_config.h"
 #include "wk_debug.h"
 #include "wk_emac.h"
-#include "wk_i2c.h"
 #include "wk_gpio.h"
 #include "wk_system.h"
+#include "wk_lwip.h"
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
@@ -96,11 +96,11 @@ int main(void)
   /* init gpio function. */
   wk_gpio_config();
 
-  /* init i2c3 function. */
-  wk_i2c3_init();
-
   /* init emac function. */
   wk_emac_init();
+
+  /* init lwip function. */
+  wk_lwip_init();
 
   /* add user code begin 2 */
 
@@ -108,6 +108,8 @@ int main(void)
 
   while(1)
   {
+     wk_lwip_app();
+
     /* add user code begin 3 */
 
     /* add user code end 3 */

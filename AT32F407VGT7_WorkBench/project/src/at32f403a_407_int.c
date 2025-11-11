@@ -27,6 +27,7 @@
 /* includes ------------------------------------------------------------------*/
 #include "at32f403a_407_int.h"
 #include "wk_system.h"
+#include "wk_lwip.h"
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 
@@ -216,6 +217,8 @@ void SysTick_Handler(void)
   /* add user code end SysTick_IRQ 0 */
 
   wk_timebase_handler();
+
+  wk_time_user_handler();
 
   /* add user code begin SysTick_IRQ 1 */
 

@@ -176,9 +176,6 @@ void wk_periph_clock_config(void)
 
   /* enable gpioc periph clock */
   crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
-
-  /* enable i2c3 periph clock */
-  crm_periph_clock_enable(CRM_I2C3_PERIPH_CLOCK, TRUE);
 }
 
 /**

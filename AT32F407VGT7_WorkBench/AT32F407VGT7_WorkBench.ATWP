@@ -23,23 +23,15 @@
     </DEBUG>
     <EMAC>
         <Mode>
-            <ModeSub name="Mode" value="MII"/>
+            <ModeSub name="Mode" value="RMII"/>
         </Mode>
         <Parameters>
+            <ParametersSub name="Auto_Negotiation" value="EMAC_AUTO_NEGOTIATION_ON"/>
             <ParametersSub name="EXINT19_WakeUp" value="DISABLE"/>
             <ParametersSub name="PHY" value="YT8512"/>
             <ParametersSub name="YT8512_PHY_address" value="29"/>
         </Parameters>
     </EMAC>
-    <I2C3>
-        <Mode>
-            <ModeSub name="I2C" value="I2C"/>
-        </Mode>
-        <Parameters>
-            <ParametersSub name="DualAddressMode" value="DISABLE"/>
-            <ParametersSub name="GeneralCallMode" value="FALSE"/>
-        </Parameters>
-    </I2C3>
     <SYSTEM>
         <Mode>
             <ModeSub name="Time_Base" value="SysTick"/>
@@ -48,13 +40,106 @@
             <ParametersSub name="Delay_Mode" value="Interrupt"/>
         </Parameters>
     </SYSTEM>
+    <LWIP>
+        <Mode>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="LWIP_DHCP" value="0"/>
+            <ParametersSub name="IP_ADDRESS" value="192.168.0.002"/>
+            <ParametersSub name="NETMASK_ADDRESS" value="255.255.255.000"/>
+            <ParametersSub name="GATEWAY_ADDRESS" value="192.168.0.001"/>
+            <ParametersSub name="WITH_RTOS" value="0"/>
+            <ParametersSub name="NO_SYS" value="1"/>
+            <ParametersSub name="SYS_LIGHTWEIGHT_PROT" value="0"/>
+            <ParametersSub name="MEMP_NUM_ALTCP_PCB" value="5"/>
+            <ParametersSub name="MEMP_NUM_SYS_TIMEOUT" value="5"/>
+            <ParametersSub name="MEMP_NUM_API_MSG" value="8"/>
+            <ParametersSub name="MEMP_NUM_DNS_API_MSG" value="8"/>
+            <ParametersSub name="MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA" value="8"/>
+            <ParametersSub name="MEMP_NUM_NETIFAPI_MSG" value="8"/>
+            <ParametersSub name="PBUF_LINK_HLEN" value="14"/>
+            <ParametersSub name="LWIP_ARP" value="1"/>
+            <ParametersSub name="ETHARP_TABLE_MATCH_NETIF" value="1"/>
+            <ParametersSub name="IP_REASSEMBLY" value="1"/>
+            <ParametersSub name="IP_FRAG" value="1"/>
+            <ParametersSub name="ICMP_TTL" value="255"/>
+            <ParametersSub name="RAW_TTL" value="255"/>
+            <ParametersSub name="DHCP_DOES_ARP_CHECK" value="0"/>
+            <ParametersSub name="LWIP_DHCP_MAX_DNS_SERVERS" value="2"/>
+            <ParametersSub name="LWIP_DNS_SECURE" value="7"/>
+            <ParametersSub name="UDP_TTL" value="255"/>
+            <ParametersSub name="TCP_TTL" value="255"/>
+            <ParametersSub name="TCP_WND" value="2144"/>
+            <ParametersSub name="TCP_QUEUE_OOSEQ" value="1"/>
+            <ParametersSub name="TCP_SND_BUF" value="1072"/>
+            <ParametersSub name="TCP_SND_QUEUELEN" value="9"/>
+            <ParametersSub name="TCP_SNDLOWAT" value="1071"/>
+            <ParametersSub name="TCP_SNDQUEUELOWAT" value="5"/>
+            <ParametersSub name="TCP_OOSEQ_BYTES_LIMIT(pcb)" value="0"/>
+            <ParametersSub name="TCP_OOSEQ_PBUFS_LIMIT(pcb)" value="0"/>
+            <ParametersSub name="TCP_WND_UPDATE_THRESHOLD" value="536"/>
+            <ParametersSub name="LWIP_CALLBACK_API" value="1"/>
+            <ParametersSub name="LWIP_HAVE_LOOPIF" value="0"/>
+            <ParametersSub name="LWIP_NETIF_LOOPBACK_MULTITHREADING" value="0"/>
+            <ParametersSub name="DEFAULT_UDP_RECVMBOX_SIZE" value="0"/>
+            <ParametersSub name="DEFAULT_TCP_RECVMBOX_SIZE" value="0"/>
+            <ParametersSub name="LWIP_SOCKET" value="0"/>
+            <ParametersSub name="PPPOL2TP_AUTH_SUPPORT" value="0"/>
+            <ParametersSub name="PPPOS_SUPPORT" value="0"/>
+            <ParametersSub name="LWIP_PPP_API" value="0"/>
+            <ParametersSub name="PPP_NUM_TIMEOUTS_PER_PCB" value="2"/>
+            <ParametersSub name="MEMP_NUM_PPPOS_INTERFACES" value="1"/>
+            <ParametersSub name="PPP_IPV4_SUPPORT" value="1"/>
+            <ParametersSub name="PPP_IPV6_SUPPORT" value="0"/>
+            <ParametersSub name="MPPE_SUPPORT" value="0"/>
+            <ParametersSub name="VJ_SUPPORT" value="0"/>
+            <ParametersSub name="PPP_MD5_RANDM" value="0"/>
+            <ParametersSub name="PPP_NUM_TIMEOUTS" value="0"/>
+            <ParametersSub name="LWIP_IPV6_SCOPES" value="0"/>
+            <ParametersSub name="LWIP_IPV6_REASS" value="0"/>
+            <ParametersSub name="LWIP_IPV6_AUTOCONFIG" value="0"/>
+            <ParametersSub name="LWIP_IPV6_ADDRESS_LIFETIMES" value="0"/>
+            <ParametersSub name="LWIP_DHCP6_MAX_DNS_SERVERS" value="2"/>
+            <ParametersSub name="LWIP_ICMP6" value="0"/>
+            <ParametersSub name="LWIP_IPV6_MLD" value="0"/>
+            <ParametersSub name="LWIP_ND6_QUEUEING" value="0"/>
+            <ParametersSub name="SNMP_LWIP_MIB2" value="0"/>
+            <ParametersSub name="LWIP_STATS" value="0"/>
+            <ParametersSub name="LINK_STATS" value="0"/>
+            <ParametersSub name="ETHARP_STATS" value="0"/>
+            <ParametersSub name="IP_STATS" value="0"/>
+            <ParametersSub name="IPFRAG_STATS" value="0"/>
+            <ParametersSub name="ICMP_STATS" value="0"/>
+            <ParametersSub name="IGMP_STATS" value="0"/>
+            <ParametersSub name="UDP_STATS" value="0"/>
+            <ParametersSub name="TCP_STATS" value="0"/>
+            <ParametersSub name="MEM_STATS" value="0"/>
+            <ParametersSub name="MEMP_STATS" value="0"/>
+            <ParametersSub name="SYS_STATS" value="0"/>
+            <ParametersSub name="IP6_STATS" value="0"/>
+            <ParametersSub name="ICMP6_STATS" value="0"/>
+            <ParametersSub name="IP6_FRAG_STATS" value="0"/>
+            <ParametersSub name="MLD6_STATS" value="0"/>
+            <ParametersSub name="ND6_STATS" value="0"/>
+            <ParametersSub name="MIB2_STATS" value="0"/>
+            <ParametersSub name="CHECKSUM_GEN_IP" value="0"/>
+            <ParametersSub name="CHECKSUM_GEN_UDP" value="0"/>
+            <ParametersSub name="CHECKSUM_GEN_TCP" value="0"/>
+            <ParametersSub name="CHECKSUM_GEN_ICMP" value="0"/>
+            <ParametersSub name="CHECKSUM_GEN_ICMP6" value="0"/>
+            <ParametersSub name="CHECKSUM_CHECK_IP" value="0"/>
+            <ParametersSub name="CHECKSUM_CHECK_UDP" value="0"/>
+            <ParametersSub name="CHECKSUM_CHECK_TCP" value="0"/>
+            <ParametersSub name="CHECKSUM_CHECK_ICMP" value="0"/>
+            <ParametersSub name="CHECKSUM_CHECK_ICMP6" value="0"/>
+        </Parameters>
+    </LWIP>
     <NVIC>
         <PendSV_Handler>1;15;0;0;0</PendSV_Handler>
         <SysTick_Handler>1;15;0;0;0</SysTick_Handler>
         <FLASH_IRQHandler>0;5;0;0;0</FLASH_IRQHandler>
         <CRM_IRQHandler>0;5;0;0;0</CRM_IRQHandler>
-        <I2C3_EVT_IRQHandler>0;0;0;0;0</I2C3_EVT_IRQHandler>
-        <I2C3_ERR_IRQHandler>0;0;0;0;0</I2C3_ERR_IRQHandler>
         <EMAC_IRQHandler>0;0;0;0;0</EMAC_IRQHandler>
         <EMAC_WKUP_IRQHandler>0;0;0;0;0</EMAC_WKUP_IRQHandler>
     </NVIC>
@@ -88,26 +173,17 @@
         <PinSub pinname="HEXT_IN" signalname="CRM_HEXT_IN" signaltype="3"/>
         <PinSub pinname="HEXT_OUT" signalname="CRM_HEXT_OUT" signaltype="3"/>
         <PinSub pinname="PC1" signalname="EMAC_MDC" signaltype="2"/>
-        <PinSub pinname="PC2" signalname="EMAC_MII_TXD2" signaltype="2"/>
-        <PinSub pinname="PC3" signalname="EMAC_MII_TX_CLK" signaltype="2"/>
-        <PinSub pinname="PA0" signalname="EMAC_MII_CRS" signaltype="2"/>
-        <PinSub pinname="PA1" signalname="EMAC_MII_RX_CLK" signaltype="2"/>
+        <PinSub pinname="PA1" signalname="EMAC_RMII_REF_CLK" signaltype="2"/>
         <PinSub pinname="PA2" signalname="EMAC_MDIO" signaltype="2"/>
-        <PinSub pinname="PA3" signalname="EMAC_MII_COL" signaltype="2"/>
-        <PinSub pinname="PA7" signalname="EMAC_MII_RX_DV" signaltype="2"/>
-        <PinSub pinname="PC4" signalname="EMAC_MII_RXD0" signaltype="2"/>
-        <PinSub pinname="PC5" signalname="EMAC_MII_RXD1" signaltype="2"/>
-        <PinSub pinname="PB0" signalname="EMAC_MII_RXD2" signaltype="2"/>
-        <PinSub pinname="PB1" signalname="EMAC_MII_RXD3" signaltype="2"/>
-        <PinSub pinname="PB11" signalname="EMAC_MII_TX_EN" signaltype="2"/>
-        <PinSub pinname="PB12" signalname="EMAC_MII_TXD0" signaltype="2"/>
-        <PinSub pinname="PB13" signalname="EMAC_MII_TXD1" signaltype="2"/>
-        <PinSub pinname="PC9" signalname="I2C3_SDA" signaltype="2"/>
-        <PinSub pinname="PA8" signalname="I2C3_SCL" signaltype="2"/>
+        <PinSub pinname="PA7" signalname="EMAC_RMII_CRS_DV" signaltype="2"/>
+        <PinSub pinname="PC4" signalname="EMAC_RMII_RXD0" signaltype="2"/>
+        <PinSub pinname="PC5" signalname="EMAC_RMII_RXD1" signaltype="2"/>
+        <PinSub pinname="PB11" signalname="EMAC_RMII_TX_EN" signaltype="2"/>
+        <PinSub pinname="PB12" signalname="EMAC_RMII_TXD0" signaltype="2"/>
+        <PinSub pinname="PB13" signalname="EMAC_RMII_TXD1" signaltype="2"/>
         <PinSub pinname="PA9" signalname="GPIO_Output" signaltype="3"/>
         <PinSub pinname="PA13" signalname="DEBUG_JTMS_SWDIO" signaltype="2"/>
         <PinSub pinname="PA14" signalname="DEBUG_JTCK_SWCLK" signaltype="2"/>
-        <PinSub pinname="PB8" signalname="EMAC_MII_TXD3" signaltype="2"/>
     </PINInfo>
     <ProjectInfomation>
         <ProjectName>AT32F407VGT7_WorkBench</ProjectName>
@@ -120,7 +196,7 @@
         <AddNecessaryFileFlag>true</AddNecessaryFileFlag>
         <MinHeapSize>0x200</MinHeapSize>
         <MinStackSize>0x400</MinStackSize>
-        <UseFirmware>false</UseFirmware>
-        <PackageVersion></PackageVersion>
+        <UseFirmware>true</UseFirmware>
+        <PackageVersion>V2.2.1</PackageVersion>
     </ProjectInfomation>
 </Root>

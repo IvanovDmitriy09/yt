@@ -221,31 +221,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOC, &gpio_init_struct);
 
-  /* configure the MII_TXD2 pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_2;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOC, &gpio_init_struct);
-
-  /* configure the MII_TX_CLK pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_3;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOC, &gpio_init_struct);
-
-  /* configure the MII_CRS pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_0;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  /* configure the MII_RX_CLK pin */
+  /* configure the RMII_REF_CLK pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
@@ -261,15 +237,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
-  /* configure the MII_COL pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_3;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  /* configure the MII_RX_DV pin */
+  /* configure the RMII_CRS_DV pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
@@ -277,7 +245,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
-  /* configure the MII_RXD0 pin */
+  /* configure the RMII_RXD0 pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
@@ -285,7 +253,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOC, &gpio_init_struct);
 
-  /* configure the MII_RXD1 pin */
+  /* configure the RMII_RXD1 pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
@@ -293,23 +261,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOC, &gpio_init_struct);
 
-  /* configure the MII_RXD2 pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_0;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOB, &gpio_init_struct);
-
-  /* configure the MII_RXD3 pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_1;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOB, &gpio_init_struct);
-
-  /* configure the MII_TX_EN pin */
+  /* configure the RMII_TX_EN pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
@@ -317,7 +269,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
 
-  /* configure the MII_TXD0 pin */
+  /* configure the RMII_TXD0 pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
@@ -325,7 +277,7 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
 
-  /* configure the MII_TXD1 pin */
+  /* configure the RMII_TXD1 pin */
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
@@ -333,16 +285,8 @@ error_status wk_emac_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
 
-  /* configure the MII_TXD3 pin */
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_8;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOB, &gpio_init_struct);
-
-  /* config MII */
-  gpio_pin_remap_config(MII_RMII_SEL_GMUX, FALSE); 
+  /* config RMII */
+  gpio_pin_remap_config(MII_RMII_SEL_GMUX, TRUE);
 
   /* software reset emac dma */
   emac_dma_software_reset_set();
@@ -352,7 +296,7 @@ error_status wk_emac_init(void)
   emac_clock_range_set();
 
   emac_control_para_init(&mac_control_para);
-  mac_control_para.auto_nego = EMAC_AUTO_NEGOTIATION_OFF;
+  mac_control_para.auto_nego = EMAC_AUTO_NEGOTIATION_ON;
   mac_control_para.duplex_mode = EMAC_FULL_DUPLEX;
   mac_control_para.fast_ethernet_speed = EMAC_SPEED_100MBPS;
   mac_control_para.ipv4_checksum_offload = TRUE;
